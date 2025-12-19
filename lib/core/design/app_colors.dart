@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+
+abstract final class AppColors {
+  // Основные брендовые цвета
+  static const Color primary = Color(0xFF1379F0);
+  static const Color primaryDark = Color(0xFF0C5EC9);
+  static const Color primaryLight = Color(0xFFE6F0FE);
+
+  // Статусные цвета
+  static const Color success = Color(0xFF10B981);
+  static const Color successLight = Color(0xFFDCFCE7);
+  static const Color error = Color(0xFFF04438);
+  static const Color errorLight = Color(0xFFFEE4E2);
+  static const Color warning = Color(0xFFF79009);
+  static const Color warningLight = Color(0xFFFEF0C7);
+  static const Color info = Color(0xFF4B5563);
+
+  // Базовые
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF0C111D);
+
+  // Твоя полная палитра серого (Критически важна для UI)
+  static const Color gray50 = Color(0xFFF9FAFB);
+  static const Color gray100 = Color(0xFFF2F4F7);
+  static const Color gray200 = Color(0xFFEAECF0);
+  static const Color gray300 = Color(0xFFD0D5DD);
+  static const Color gray400 = Color(0xFF98A2B3);
+  static const Color gray500 = Color(0xFF667085);
+  static const Color gray600 = Color(0xFF475467);
+  static const Color gray700 = Color(0xFF344054);
+  static const Color gray800 = Color(0xFF1D2939);
+  static const Color gray900 = Color(0xFF101828);
+
+  // Семантические цвета текста
+  static const Color textPrimary = gray900;
+  static const Color textSecondary = gray600;
+  static const Color textTertiary = gray500;
+  static const Color textDisabled = gray400;
+  static const Color textWhite = white;
+
+  // Границы и тени
+  static const Color borderLight = gray200;
+  static const Color borderMedium = gray300;
+  static const Color shadowColor = Color(0x0D101828);
+  static const Color border = Color(0xFFE2E8F0);
+
+  // Специфические цвета Sidebar (из твоего файла)
+  static const Color sidebarBackground = gray900;
+  static const Color sidebarActiveBg = Color(0xFF1D2939);
+  static const Color sidebarActiveText = white;
+  static const Color sidebarActiveIcon = success;
+  static const Color sidebarInactiveText = gray400;
+
+  // Дополнительные фоны
+  static const Color bgLight = Color(0xFFF8FAFC);
+  static const Color activeGreen = Color(0xFF00C58D);
+  static const Color inactiveBg = Color(0xFFF1F5F9);
+  static const Color successBg = Color(0xFFECFDF3);
+  static const Color successText = Color(0xFF027A48);
+
+  // Статусы (Семантика): используем четкие пары Background / Text
+
+  static const Color warningBg = Color(0xFFFFFAEB);
+  static const Color warningText = Color(0xFFB54708);
+
+  static const Color errorBg = Color(0xFFFEF3F2);
+  static const Color errorText = Color(0xFFB42318);
+
+  static const Color infoBg = Color(0xFFEFF8FF);
+  static const Color infoText = Color(0xFF175CD3);
+
+  static const Color neutralBg = Color(0xFFF2F4F7);
+  static const Color neutralText = Color(0xFF344054);
+}

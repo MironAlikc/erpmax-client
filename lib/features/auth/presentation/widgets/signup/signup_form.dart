@@ -1,0 +1,234 @@
+import 'package:erpmax_client/core/design/app_colors.dart';
+import 'package:erpmax_client/core/design/app_design.dart';
+import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/widgets/common/app_button.dart';
+import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../common/divider_with_text.dart';
+
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+
+  @override
+  State<SignupForm> createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  bool _isPasswordVisible = false;
+  bool _isConfirmVisible = false;
+  bool _isTermsAccepted = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _handleSignup() {
+    // Добавлена проверка валидности через Validator
+    if (_formKey.currentState!.validate() && _isTermsAccepted) {
+      context.go(RouteNames.journal);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SignupHeader(),
+          const SizedBox(height: AppDesign.sectionGap),
+
+          const SocialAuthButtons(),
+          const SizedBox(height: AppDesign.elementGap),
+
+          const DividerWithText(text: 'OR'),
+          const SizedBox(height: AppDesign.elementGap),
+
+          const _FieldLabel(text: 'Email'),
+          AppTextField(
+            controller: _emailController,
+            hintText: 'email@email.com',
+            keyboardType: TextInputType.emailAddress,
+            // Добавь базовую валидацию
+            validator: (value) => (value == null || !value.contains('@'))
+                ? 'Invalid email'
+                : null,
+          ),
+          const SizedBox(height: AppDesign.elementGap),
+
+          const _FieldLabel(text: 'Password'),
+          AppTextField(
+            controller: _passwordController,
+            hintText: 'Enter Password',
+            // ВАЖНО: передаем состояние видимости
+            obscureText: !_isPasswordVisible,
+            isPassword: true,
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isPasswordVisible
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
+                size: 20,
+                color: AppColors.gray400,
+              ),
+              onPressed: () =>
+                  setState(() => _isPasswordVisible = !_isPasswordVisible),
+            ),
+          ),
+          const SizedBox(height: AppDesign.elementGap),
+
+          const _FieldLabel(text: 'Confirm Password'),
+          AppTextField(
+            controller: _confirmPasswordController,
+            hintText: 'Re-enter Password',
+            // ВАЖНО: передаем состояние видимости
+            obscureText: !_isConfirmVisible,
+            isPassword: true,
+            validator: (value) {
+              if (value != _passwordController.text)
+                return 'Passwords do not match';
+              return null;
+            },
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isConfirmVisible
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
+                size: 20,
+                color: AppColors.gray400,
+              ),
+              onPressed: () =>
+                  setState(() => _isConfirmVisible = !_isConfirmVisible),
+            ),
+          ),
+          const SizedBox(height: AppDesign.elementGap),
+
+          _TermsCheckbox(
+            value: _isTermsAccepted,
+            onChanged: (v) => setState(() => _isTermsAccepted = v ?? false),
+          ),
+          const SizedBox(height: AppDesign.sectionGap),
+
+          AppButton(
+            text: 'Sign Up',
+            // Кнопка активна только при принятии условий
+            onPressed: _isTermsAccepted ? _handleSignup : null,
+            isExpanded: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ... Остальные виджеты (_SignupHeader, _FieldLabel, _TermsCheckbox) остаются без изменений
+class _SignupHeader extends StatelessWidget {
+  const _SignupHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'Sign up',
+          style: AppTextStyles.h1.copyWith(
+            fontSize: 32,
+            fontWeight: FontWeight.w800,
+            color: AppColors.gray900,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Already have an Account? ', style: AppTextStyles.bodySmall),
+            GestureDetector(
+              onTap: () => context.push(RouteNames.login),
+              child: Text(
+                'Sign in',
+                style: AppTextStyles.linkStyle.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _FieldLabel extends StatelessWidget {
+  final String text;
+  const _FieldLabel({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        text,
+        style: AppTextStyles.base.copyWith(
+          fontWeight: FontWeight.w600,
+          color: AppColors.gray900,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+}
+
+class _TermsCheckbox extends StatelessWidget {
+  final bool value;
+  final ValueChanged<bool?> onChanged;
+  const _TermsCheckbox({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onChanged(!value),
+      borderRadius: BorderRadius.circular(4),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 24,
+            width: 24,
+            child: Checkbox(
+              value: value,
+              onChanged: onChanged,
+              activeColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              side: const BorderSide(color: AppColors.gray300, width: 1.5),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'I accept the Terms & Conditions',
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

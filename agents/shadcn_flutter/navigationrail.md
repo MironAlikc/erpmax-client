@@ -17,15 +17,15 @@ int selected = 0;
   NavigationRailAlignment alignment = NavigationRailAlignment.start;
   NavigationLabelType labelType = NavigationLabelType.none;
   NavigationLabelPosition labelPosition = NavigationLabelPosition.bottom;
-  bool customButtonStyle = false;
+  bool AppButtonStyle = false;
   bool expanded = true;
 
   NavigationItem buildButton(String label, IconData icon) {
     return NavigationItem(
-      style: customButtonStyle
+      style: AppButtonStyle
           ? const ButtonStyle.muted(density: ButtonDensity.icon)
           : null,
-      selectedStyle: customButtonStyle
+      selectedStyle: AppButtonStyle
           ? const ButtonStyle.fixed(density: ButtonDensity.icon)
           : null,
       label: Text(label),
@@ -158,12 +158,12 @@ int selected = 0;
                     ),
                     // Toggle custom vs default button styles for normal/selected.
                     Checkbox(
-                      state: customButtonStyle
+                      state: AppButtonStyle
                           ? CheckboxState.checked
                           : CheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
-                          customButtonStyle = value == CheckboxState.checked;
+                          AppButtonStyle = value == CheckboxState.checked;
                         });
                       },
                       trailing: const Text('Custom Button Style'),
@@ -201,15 +201,15 @@ class NavigationRailExample1 extends StatefulWidget {
       NavigationRailAlignment alignment = NavigationRailAlignment.start;
       NavigationLabelType labelType = NavigationLabelType.none;
       NavigationLabelPosition labelPosition = NavigationLabelPosition.bottom;
-      bool customButtonStyle = false;
+      bool AppButtonStyle = false;
       bool expanded = true;
 
       NavigationItem buildButton(String label, IconData icon) {
         return NavigationItem(
-          style: customButtonStyle
+          style: AppButtonStyle
               ? const ButtonStyle.muted(density: ButtonDensity.icon)
               : null,
-          selectedStyle: customButtonStyle
+          selectedStyle: AppButtonStyle
               ? const ButtonStyle.fixed(density: ButtonDensity.icon)
               : null,
           label: Text(label),
@@ -342,12 +342,12 @@ class NavigationRailExample1 extends StatefulWidget {
                         ),
                         // Toggle custom vs default button styles for normal/selected.
                         Checkbox(
-                          state: customButtonStyle
+                          state: AppButtonStyle
                               ? CheckboxState.checked
                               : CheckboxState.unchecked,
                           onChanged: (value) {
                             setState(() {
-                              customButtonStyle = value == CheckboxState.checked;
+                              AppButtonStyle = value == CheckboxState.checked;
                             });
                           },
                           trailing: const Text('Custom Button Style'),
