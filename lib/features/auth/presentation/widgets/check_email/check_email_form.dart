@@ -1,0 +1,90 @@
+import 'package:erpmax_client/core/design/app_colors.dart';
+import 'package:erpmax_client/core/design/app_design.dart';
+import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/widgets/common/app_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+class CheckEmailForm extends StatelessWidget {
+  final String email;
+  final VoidCallback? onResend;
+
+  const CheckEmailForm({super.key, this.email = 'bob@reui.io', this.onResend});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Center(child: SvgPicture.asset('assets/svg/reminder.svg', height: 140)),
+        const SizedBox(height: AppDesign.sectionGap),
+
+        Text(
+          'Check your email',
+          style: AppTextStyles.h1.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: AppDesign.elementGap),
+
+        Text.rich(
+          textAlign: TextAlign.center,
+          TextSpan(
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.gray600,
+              height: 1.5,
+            ),
+            children: [
+              const TextSpan(text: 'Please click the link sent to your email '),
+              TextSpan(
+                text: email,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const TextSpan(text: ' to verify your account. Thank you'),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppDesign.sectionGap),
+
+        AppButton(
+          onPressed: () => context.go(RouteNames.login),
+          text: 'Back to Home',
+          isExpanded: true,
+        ),
+        const SizedBox(height: AppDesign.elementGap),
+
+        _buildResendRow(),
+      ],
+    );
+  }
+
+  Widget _buildResendRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Didn't receive an email? ",
+          style: AppTextStyles.bodySmall.copyWith(color: AppColors.gray500),
+        ),
+        GestureDetector(
+          onTap: onResend,
+          child: Text(
+            'Resend',
+            style: AppTextStyles.linkStyle.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
