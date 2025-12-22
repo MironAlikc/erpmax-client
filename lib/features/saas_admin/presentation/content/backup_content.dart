@@ -42,12 +42,7 @@ class BackupContent extends StatelessWidget {
   Widget _statItem(String title, String val, Color color, IconData icon) {
     return SizedBox(
       width: 300,
-      child: AppAppStatCard(
-        title: title,
-        value: val,
-        color: color,
-        // Добавьте параметры в ваш AppAppStatCard если их нет
-      ),
+      child: AppAppStatCard(title: title, value: val, color: color),
     );
   }
 

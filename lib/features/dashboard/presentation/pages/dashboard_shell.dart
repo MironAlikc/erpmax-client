@@ -1,3 +1,4 @@
+import 'package:erpmax_client/features/dashboard/presentation/widgets/main_content/main_content_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -18,39 +19,19 @@ class DashboardShell extends StatefulWidget {
 }
 
 class _DashboardShellState extends State<DashboardShell> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isExpanded = true;
-
-  @override
-  void didUpdateWidget(DashboardShell oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _syncTabsWithNavigation();
-  }
-
-  void _syncTabsWithNavigation() {
-    final tabService = Provider.of<TabNavigationService>(
-      context,
-      listen: false,
-    );
-    final currentIndex = widget.navigationShell.currentIndex;
-    tabService.updateActiveTabByShellIndex(currentIndex);
-  }
 
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
-    final tabService = Provider.of<TabNavigationService>(context);
+    final int currentIndex = widget.navigationShell.currentIndex;
 
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: AppColors.gray50,
       drawer: !isDesktop
           ? MobileDrawer(
-              selectedIndex: widget.navigationShell.currentIndex,
-              onSelect: (index) {
-                widget.navigationShell.goBranch(index);
-                Navigator.pop(context);
-              },
+              selectedIndex: currentIndex,
+              onSelect: (index) => _onBranchSelected(index),
             )
           : null,
       body: Row(
@@ -58,14 +39,9 @@ class _DashboardShellState extends State<DashboardShell> {
           if (isDesktop)
             AppSidebar(
               isExpanded: _isExpanded,
-              selectedIndex: widget.navigationShell.currentIndex,
+              selectedIndex: currentIndex,
               onToggle: () => setState(() => _isExpanded = !_isExpanded),
-              onSelect: (index) {
-                widget.navigationShell.goBranch(
-                  index,
-                  initialLocation: index == widget.navigationShell.currentIndex,
-                );
-              },
+              onSelect: (index) => _onBranchSelected(index),
             ),
           Expanded(
             child: Column(
@@ -74,24 +50,30 @@ class _DashboardShellState extends State<DashboardShell> {
                   isMobile: !isDesktop,
                   isSidebarExpanded: _isExpanded,
                   onToggleSidebar: () {
-                    if (isDesktop) {
+                    if (isDesktop)
                       setState(() => _isExpanded = !_isExpanded);
-                    } else {
-                      _scaffoldKey.currentState?.openDrawer();
-                    }
+                    else
+                      Scaffold.of(context).openDrawer();
                   },
                 ),
-                if (tabService.tabs.isNotEmpty && tabService.controller != null)
-                  TabChipBar(
-                    controller: tabService.controller!,
-                    tabs: tabService.tabs,
-                    isMobile: !isDesktop,
-                    onTabSelected: (index) {
-                      final targetBranchIndex =
-                          tabService.tabs[index].shellIndex;
-                      widget.navigationShell.goBranch(targetBranchIndex);
-                    },
-                  ),
+                MainContentHeader(
+                  title: _getModuleTitle(currentIndex),
+                  isDashboard: currentIndex == 0,
+                ),
+                Consumer<TabNavigationService>(
+                  builder: (context, tabService, _) {
+                    if (tabService.tabs.isEmpty ||
+                        tabService.controller == null) {
+                      return const SizedBox.shrink();
+                    }
+                    return TabChipBar(
+                      controller: tabService.controller!,
+                      tabs: tabService.tabs,
+                      isMobile: !isDesktop,
+                      onTabSelected: (index) => tabService.selectTab(index),
+                    );
+                  },
+                ),
                 Expanded(child: ClipRect(child: widget.navigationShell)),
               ],
             ),
@@ -99,5 +81,23 @@ class _DashboardShellState extends State<DashboardShell> {
         ],
       ),
     );
+  }
+
+  void _onBranchSelected(int index) {
+    context.read<TabNavigationService>().clear();
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
+    );
+  }
+
+  String _getModuleTitle(int index) {
+    return switch (index) {
+      0 => 'Dashboard',
+      1 => 'Accounting',
+      11 => 'SaaS Control',
+      14 => 'Settings',
+      _ => 'ERP Module',
+    };
   }
 }

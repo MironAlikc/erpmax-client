@@ -1,5 +1,3 @@
-// lib/core/widgets/common/app_status_mapper.dart
-
 import 'package:flutter/material.dart';
 import 'app_status_chip.dart';
 

@@ -5,21 +5,19 @@ class ModuleTabItem {
   final String name;
   final IconData icon;
   final Widget content;
-
-  // Добавляем эти поля для профессиональной навигации:
-  final int shellIndex; // Соответствие индексу ветки в GoRouter
-  final String? description; // Для подзаголовка в Header
-  final String? actionType; // Тип кнопок (dashboard, accounting и т.д.)
-  final List<Widget>? customActions; // Кастомные кнопки для этого таба
-  final String? actionLabel; // Текст главной кнопки действия
-  final IconData? actionIcon; // Иконка главной кнопки действия
+  final int shellIndex;
+  final String? description;
+  final String? actionType;
+  final List<Widget>? customActions;
+  final String? actionLabel;
+  final IconData? actionIcon;
 
   const ModuleTabItem({
     required this.id,
     required this.name,
     required this.icon,
     required this.content,
-    required this.shellIndex, // Теперь это обязательное поле
+    required this.shellIndex,
     this.description,
     this.actionType,
     this.customActions,
@@ -27,13 +25,17 @@ class ModuleTabItem {
     this.actionIcon,
   });
 
-  // Вспомогательный метод для копирования (опционально)
   ModuleTabItem copyWith({
     String? id,
     String? name,
     IconData? icon,
     Widget? content,
     int? shellIndex,
+    String? description,
+    String? actionType,
+    List<Widget>? customActions,
+    String? actionLabel,
+    IconData? actionIcon,
   }) {
     return ModuleTabItem(
       id: id ?? this.id,
@@ -41,9 +43,11 @@ class ModuleTabItem {
       icon: icon ?? this.icon,
       content: content ?? this.content,
       shellIndex: shellIndex ?? this.shellIndex,
-      description: description,
-      actionType: actionType,
-      customActions: customActions,
+      description: description ?? this.description,
+      actionType: actionType ?? this.actionType,
+      customActions: customActions ?? this.customActions,
+      actionLabel: actionLabel ?? this.actionLabel,
+      actionIcon: actionIcon ?? this.actionIcon,
     );
   }
 }

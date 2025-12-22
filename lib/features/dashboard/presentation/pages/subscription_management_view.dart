@@ -1,5 +1,3 @@
-// lib/features/subscription/presentation/pages/subscription_management_view.dart
-
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_colors.dart';
 import 'package:erpmax_client/core/design/app_text_styles.dart';
@@ -31,8 +29,11 @@ class SubscriptionManagementView extends StatefulWidget {
       _SubscriptionManagementViewState();
 }
 
-class _SubscriptionManagementViewState
-    extends State<SubscriptionManagementView> {
+class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final List<SubscriptionData> _data = [
     SubscriptionData(
       company: 'Trading Company "Al-Amal"',
@@ -58,51 +59,11 @@ class _SubscriptionManagementViewState
       amount: '4,800',
       paymentStatus: 'Late',
     ),
-    SubscriptionData(
-      company: 'Trade Establishment "Al-Safa"',
-      package: 'Full Package',
-      endDate: '04/04/2024',
-      tag: 'Expired',
-      amount: '6,000',
-      paymentStatus: 'Paid',
-    ),
-    SubscriptionData(
-      company: 'Al Fajr Electronics Company',
-      package: 'Extended Package',
-      endDate: '05/11/2024',
-      tag: 'Cancelled',
-      amount: '4,800',
-      paymentStatus: 'Received',
-    ),
-  ];
-
-  final List<ErpMaxColumn> _columns = [
-    ErpMaxColumn(
-      title: 'Company Name',
-      weight: 2.5,
-      isSortable: true,
-      sortKey: 'name',
-    ),
-    ErpMaxColumn(
-      title: 'Package',
-      weight: 1.5,
-      isSortable: true,
-      sortKey: 'package',
-    ),
-    ErpMaxColumn(
-      title: 'End Date',
-      weight: 1.2,
-      isSortable: true,
-      sortKey: 'date',
-    ),
-    ErpMaxColumn(title: 'Tags', weight: 1.0),
-    ErpMaxColumn(title: 'Amount', weight: 1.0, textAlign: TextAlign.right),
-    ErpMaxColumn(title: 'Payment Status', weight: 1.2),
-    ErpMaxColumn(title: '', weight: 0.4, textAlign: TextAlign.center),
   ];
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final bool isMobile = Responsive.isMobile(context);
 
     return Scaffold(
@@ -113,36 +74,16 @@ class _SubscriptionManagementViewState
           const Divider(height: 1, color: AppColors.gray100),
           Expanded(
             child: ErpMaxDataTable<SubscriptionData>(
-              columns: _columns,
+              columns: _getColumns(),
               items: _data,
               minWidth: 1000,
               onRowTap: (item) => _showDetails(item),
               rowBuilder: (item) => [
-                Text(
-                  item.company,
-                  style: AppTextStyles.bodyMediumBold.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                Text(
-                  item.package,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.gray600,
-                  ),
-                ),
-                Text(
-                  item.endDate,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.gray600,
-                  ),
-                ),
+                Text(item.company, style: AppTextStyles.bodyMediumBold),
+                Text(item.package, style: AppTextStyles.bodyMedium),
+                Text(item.endDate, style: AppTextStyles.bodyMedium),
                 AppStatusMapper(status: item.tag),
-                Text(
-                  '₪ ${item.amount}',
-                  style: AppTextStyles.bodyMediumBold.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                Text('₪ ${item.amount}', style: AppTextStyles.bodyMediumBold),
                 AppStatusMapper(status: item.paymentStatus),
                 const Icon(Icons.more_vert, color: AppColors.gray400, size: 20),
               ],
@@ -151,6 +92,18 @@ class _SubscriptionManagementViewState
         ],
       ),
     );
+  }
+
+  List<ErpMaxColumn> _getColumns() {
+    return [
+      ErpMaxColumn(title: 'Company Name', weight: 2.5, isSortable: true),
+      ErpMaxColumn(title: 'Package', weight: 1.5),
+      ErpMaxColumn(title: 'End Date', weight: 1.2),
+      ErpMaxColumn(title: 'Tags', weight: 1.0),
+      ErpMaxColumn(title: 'Amount', weight: 1.0, textAlign: TextAlign.right),
+      ErpMaxColumn(title: 'Status', weight: 1.2),
+      ErpMaxColumn(title: '', weight: 0.4),
+    ];
   }
 
   Widget _buildTableToolbar(bool isMobile) {

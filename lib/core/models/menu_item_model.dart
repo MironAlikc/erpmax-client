@@ -1,4 +1,3 @@
-// lib/core/models/menu_item_model.dart
 import 'package:flutter/material.dart';
 
 class MenuItemModel {

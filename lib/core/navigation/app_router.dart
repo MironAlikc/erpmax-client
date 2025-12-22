@@ -22,6 +22,7 @@ abstract final class RouteNames {
   static const passwordSuccess = '/password-success';
   static const verify2fa = '/verify-2fa';
   static const dashboard = '/dashboard';
+  static const accounting = '/accounting';
   static const journal = '/journal';
   static const inventory = '/inventory';
   static const sales = '/sales';
@@ -41,7 +42,7 @@ abstract final class RouteNames {
 class AppRouter {
   static final rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _shellDash = GlobalKey<NavigatorState>(debugLabel: 'db_dash');
-  static final _shellJour = GlobalKey<NavigatorState>(debugLabel: 'db_jour');
+  static final _shellAcc = GlobalKey<NavigatorState>(debugLabel: 'db_acc');
   static final _shellInv = GlobalKey<NavigatorState>(debugLabel: 'db_inv');
   static final _shellSls = GlobalKey<NavigatorState>(debugLabel: 'db_sls');
   static final _shellCust = GlobalKey<NavigatorState>(debugLabel: 'db_cust');
@@ -63,6 +64,9 @@ class AppRouter {
 
     redirect: (context, state) {
       final location = state.matchedLocation;
+
+      if (location == RouteNames.journal) return RouteNames.accounting;
+
       final bool isPublicAuthPage = [
         RouteNames.login,
         RouteNames.signup,
@@ -72,7 +76,6 @@ class AppRouter {
         RouteNames.passwordSuccess,
         RouteNames.verify2fa,
       ].contains(location);
-
       const bool isAuthenticated = true;
 
       if (location == RouteNames.root) return RouteNames.login;
@@ -139,8 +142,12 @@ class AppRouter {
             const Center(child: Text('Main Dashboard')),
           ),
           StatefulShellBranch(
-            navigatorKey: _shellJour,
+            navigatorKey: _shellAcc,
             routes: [
+              GoRoute(
+                path: RouteNames.accounting,
+                builder: (context, state) => const AccountingRootPage(),
+              ),
               GoRoute(
                 path: RouteNames.journal,
                 builder: (context, state) => const AccountingRootPage(),
@@ -194,7 +201,6 @@ class AppRouter {
             const Center(child: Text('HR')),
           ),
 
-          // SaaS Admin (Исправлено)
           StatefulShellBranch(
             navigatorKey: _shellSaas,
             routes: [

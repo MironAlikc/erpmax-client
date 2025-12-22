@@ -1,4 +1,3 @@
-// lib/core/models/chart_models.dart
 class ChartDataPoint {
   final double x;
   final double y;

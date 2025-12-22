@@ -23,18 +23,13 @@ class _AccountingRootPageState extends State<AccountingRootPage>
   @override
   void initState() {
     super.initState();
+
     _moduleTabs = AccountingTabsConfig.getTabs(
       (name) => _PlaceholderView(name: name),
     );
+
     _tabController = TabController(length: _moduleTabs.length, vsync: this);
-
-    _tabController.addListener(() {
-      if (!mounted) return;
-      if (!_tabController.indexIsChanging) {
-        setState(() {});
-      }
-    });
-
+    _tabController.addListener(_handleTabChange);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<TabNavigationService>().updateTabs(
@@ -45,8 +40,16 @@ class _AccountingRootPageState extends State<AccountingRootPage>
     });
   }
 
+  void _handleTabChange() {
+    if (!mounted) return;
+    if (!_tabController.indexIsChanging) {
+      setState(() {});
+    }
+  }
+
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
   }
@@ -63,12 +66,16 @@ class _AccountingRootPageState extends State<AccountingRootPage>
           body: Column(
             children: [
               AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
                 child: AccountingHeader(
                   key: ValueKey(currentTab.id),
                   currentTab: currentTab,
                 ),
               ),
+
               Expanded(
                 child: TabBarView(
                   controller: _tabController,

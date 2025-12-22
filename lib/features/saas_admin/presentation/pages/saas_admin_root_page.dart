@@ -28,7 +28,6 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
   late TabController _tabController;
   late final List<ModuleTabItem> _moduleTabs;
 
-  // Согласно вашему AppRouter, ветка SaaS Admin имеет индекс 11
   static const int saasShellIndex = 11;
 
   @override
