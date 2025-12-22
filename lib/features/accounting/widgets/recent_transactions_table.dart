@@ -27,11 +27,11 @@ class RecentTransactionsTable extends StatelessWidget {
           const SizedBox(height: 24),
           Table(
             columnWidths: const {
-              0: FlexColumnWidth(1.2), // Reference
-              1: FlexColumnWidth(1), // Date
-              2: FlexColumnWidth(2.5), // Description
-              3: FlexColumnWidth(1.2), // Amount
-              4: FlexColumnWidth(0.8), // Status
+              0: FlexColumnWidth(1.2),
+              1: FlexColumnWidth(1),
+              2: FlexColumnWidth(2.5),
+              3: FlexColumnWidth(1.2),
+              4: FlexColumnWidth(0.8),
             },
             children: [
               _header(),

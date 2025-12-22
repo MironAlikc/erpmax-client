@@ -1,4 +1,3 @@
-// lib/core/utils/responsive.dart
 import 'package:flutter/material.dart';
 import '../design/app_design.dart';
 

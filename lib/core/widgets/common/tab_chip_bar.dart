@@ -20,10 +20,46 @@ class TabChipBar extends StatefulWidget {
 }
 
 class _TabChipBarState extends State<TabChipBar> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() => setState(() {}));
+    widget.controller.addListener(_handleTabSelection);
+  }
+
+  @override
+  void didUpdateWidget(covariant TabChipBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller.removeListener(_handleTabSelection);
+      widget.controller.addListener(_handleTabSelection);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_handleTabSelection);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _handleTabSelection() {
+    if (!mounted) return;
+    if (!widget.controller.indexIsChanging) {
+      setState(() {});
+      _scrollToActiveTab();
+    }
+  }
+
+  void _scrollToActiveTab() {
+    if (!_scrollController.hasClients) return;
+    double offset = widget.controller.index * 100.0;
+    _scrollController.animateTo(
+      offset.clamp(0, _scrollController.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -35,6 +71,7 @@ class _TabChipBarState extends State<TabChipBar> {
         border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1)),
       ),
       child: ListView.builder(
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         itemCount: widget.tabs.length,
@@ -62,12 +99,16 @@ class _TabChipBarState extends State<TabChipBar> {
                     : const Color(0xFF64748B),
               ),
               selected: isSelected,
-              onSelected: (_) {
-                widget.controller.animateTo(index);
-                widget.onTabSelected?.call(index);
+              onSelected: (selected) {
+                if (selected) {
+                  widget.controller.animateTo(index);
+                  widget.onTabSelected?.call(index);
+                }
               },
               backgroundColor: Colors.transparent,
               selectedColor: const Color(0xFFF0FDF4),
+              elevation: 0,
+              pressElevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(

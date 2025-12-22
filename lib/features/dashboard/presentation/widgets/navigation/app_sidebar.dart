@@ -1,8 +1,9 @@
+import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_color_extension.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
 import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/models/menu_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppSidebar extends StatelessWidget {
   final bool isExpanded;
@@ -22,7 +23,7 @@ class AppSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = AppColorExtension.of(context);
-    final menuItems = MenuData.getAllMenuItems();
+    final menuItems = _menuData;
 
     return AnimatedContainer(
       duration: AppDesign.sidebarDuration,
@@ -54,12 +55,17 @@ class AppSidebar extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = menuItems[index];
                 return _MenuItem(
-                  index: index,
+                  index: item.index,
                   title: item.title,
                   icon: item.icon,
                   selectedIndex: selectedIndex,
                   isExpanded: isExpanded,
-                  onTap: onSelect,
+                  onTap: (targetIndex) {
+                    if (onSelect != null) {
+                      context.read<TabNavigationService>().clear();
+                      onSelect!(targetIndex);
+                    }
+                  },
                 );
               },
             ),
@@ -184,7 +190,6 @@ class _MenuItem extends StatefulWidget {
   final ValueChanged<int>? onTap;
 
   const _MenuItem({
-    super.key,
     required this.index,
     required this.selectedIndex,
     required this.icon,

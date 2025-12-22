@@ -1,4 +1,3 @@
-// lib/features/dashboard/presentation/pages/base_module_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:erpmax_client/core/design/app_colors.dart';
@@ -31,10 +30,8 @@ class _BaseModulePageState extends State<BaseModulePage>
   @override
   void initState() {
     super.initState();
-    // Инициализируем контроллер
     _tabController = TabController(length: widget.tabs.length, vsync: this);
 
-    // Передаем данные в сервис навигации после отрисовки первого кадра
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<TabNavigationService>().updateTabs(
@@ -46,7 +43,6 @@ class _BaseModulePageState extends State<BaseModulePage>
 
     _tabController.addListener(() {
       if (!mounted || _tabController.indexIsChanging) return;
-      // Принудительно обновляем UI для перерисовки Header при смене таба
       setState(() {});
     });
   }
@@ -62,25 +58,20 @@ class _BaseModulePageState extends State<BaseModulePage>
     final bool isMobile = Responsive.isMobile(context);
     final tabService = context.watch<TabNavigationService>();
 
-    // Защита: если табы еще не загружены или контроллер в сервисе отличается
     final currentTab = widget.tabs[_tabController.index];
 
     return Scaffold(
       backgroundColor: AppColors.gray50,
       body: Column(
         children: [
-          // Исправленный вызов TabChipBar со всеми нужными параметрами
           TabChipBar(
             controller: _tabController,
             tabs: widget.tabs,
             isMobile: isMobile,
             onTabSelected: (index) {
-              // Синхронизация: если нужно выполнить действие при клике на таб
               _tabController.animateTo(index);
             },
           ),
-
-          // Анимированный заголовок страницы (Header)
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (Widget child, Animation<double> animation) {
@@ -96,7 +87,6 @@ class _BaseModulePageState extends State<BaseModulePage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              // На десктопе отключаем свайп для стабильности интерфейса
               physics: isMobile
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
@@ -141,12 +131,9 @@ class _BaseModulePageState extends State<BaseModulePage>
   }
 
   Widget _buildActions(ModuleTabItem tab) {
-    // 1. Приоритет кастомным экшенам
     if (tab.customActions != null) {
       return Wrap(spacing: 12, children: tab.customActions!);
     }
-
-    // 2. Пресеты экшенов по типу модуля
     switch (tab.actionType) {
       case 'dashboard':
         return Row(
@@ -181,7 +168,6 @@ class _BaseModulePageState extends State<BaseModulePage>
           ],
         );
       default:
-        // 3. Стандартная кнопка "Добавить", если задан лейбл
         if (tab.actionLabel != null) {
           return _actionBtn(
             tab.actionLabel!,
@@ -204,9 +190,7 @@ class _BaseModulePageState extends State<BaseModulePage>
       icon: icon,
       backgroundColor: color,
       type: isPrimary ? AppButtonType.primaryDark : AppButtonType.outline,
-      onPressed: () {
-        // Здесь можно добавить callback для действий
-      },
+      onPressed: () {},
     );
   }
 }

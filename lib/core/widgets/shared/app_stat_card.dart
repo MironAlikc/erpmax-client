@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_color_extension.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
 
-// lib/core/widgets/common/app_stat_card.dart
-
 class AppAppStatCard extends StatelessWidget {
   final String title;
   final String value;

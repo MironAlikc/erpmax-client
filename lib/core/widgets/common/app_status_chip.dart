@@ -1,5 +1,3 @@
-// lib/core/widgets/common/app_status_chip.dart
-
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_colors.dart';
 

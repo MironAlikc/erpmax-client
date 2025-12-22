@@ -14,7 +14,7 @@ abstract final class AccountingTabsConfig {
         name: 'Accounting Dashboard',
         icon: Icons.grid_view_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Manage labor costs and production analysis',
+        description: 'Обзор финансовых показателей и аналитика производства',
         content: const AccountingDashboardView(),
       ),
       ModuleTabItem(
@@ -22,7 +22,7 @@ abstract final class AccountingTabsConfig {
         name: 'General Ledger',
         icon: Icons.menu_book_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Detailed account records and balances.',
+        description: 'Детальные записи по счетам и остаткам (Главная книга).',
         content: placeholderBuilder("General Ledger"),
       ),
       ModuleTabItem(
@@ -30,7 +30,7 @@ abstract final class AccountingTabsConfig {
         name: 'Journal Entries',
         icon: Icons.description_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Manage and review financial journal entries.',
+        description: 'Управление и просмотр записей в финансовом журнале.',
         content: placeholderBuilder("Journal Entries"),
       ),
       ModuleTabItem(
@@ -38,7 +38,7 @@ abstract final class AccountingTabsConfig {
         name: 'Chart of Accounts',
         icon: Icons.account_tree_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Review and organize your financial accounts',
+        description: 'План счетов: организация финансовой структуры компании.',
         content: placeholderBuilder("Chart of Accounts"),
       ),
       ModuleTabItem(
@@ -46,7 +46,8 @@ abstract final class AccountingTabsConfig {
         name: 'Funds & Banks',
         icon: Icons.account_balance_wallet_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Manage branch funds and track transactions',
+        description:
+            'Управление кассовыми фондами и отслеживание банковских транзакций.',
         content: placeholderBuilder("Funds & Banks"),
       ),
       ModuleTabItem(
@@ -54,15 +55,15 @@ abstract final class AccountingTabsConfig {
         name: 'Parties',
         icon: Icons.people_outline,
         shellIndex: accountingShellIndex,
-        description: 'Manage customer and vendor accounts',
+        description: 'Управление счетами клиентов и поставщиков (Контрагенты).',
         content: placeholderBuilder("Parties"),
       ),
       ModuleTabItem(
         id: 'acc_assets',
-        name: 'Ass',
+        name: 'Fixed Assets',
         icon: Icons.apartment_outlined,
         shellIndex: accountingShellIndex,
-        description: 'Track and manage company fixed assets',
+        description: 'Отслеживание и управление основными средствами компании.',
         content: placeholderBuilder("Fixed Assets"),
       ),
     ];

@@ -73,7 +73,7 @@ class ErpMaxTable extends StatelessWidget {
       child: Row(
         children: columns.map((col) {
           return Expanded(
-            flex: (col.weight * 1000).toInt(), // Увеличен масштаб для точности
+            flex: (col.weight * 1000).toInt(),
             child: InkWell(
               onTap: col.isSortable && col.sortKey != null
                   ? () => onSort?.call(col.sortKey!, !isAscending)
