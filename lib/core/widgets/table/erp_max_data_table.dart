@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'erpmax_table.dart';
+import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 
 class ErpMaxDataTable<T> extends StatefulWidget {
   final List<ErpMaxColumn> columns;
@@ -8,6 +8,7 @@ class ErpMaxDataTable<T> extends StatefulWidget {
   final List<Widget> Function(T item) rowBuilder;
   final void Function(T item)? onRowTap;
   final bool isBusy;
+  final double minWidth;
 
   const ErpMaxDataTable({
     super.key,
@@ -16,6 +17,7 @@ class ErpMaxDataTable<T> extends StatefulWidget {
     required this.rowBuilder,
     this.onRowTap,
     this.isBusy = false,
+    this.minWidth = 1100,
   });
 
   @override
@@ -36,12 +38,14 @@ class _ErpMaxDataTableState<T> extends State<ErpMaxDataTable<T>> {
   @override
   Widget build(BuildContext context) {
     AppColorExtension.of(context);
+
     if (widget.isBusy && widget.items.isEmpty) {
       return const SizedBox(
         height: 200,
         child: Center(child: CircularProgressIndicator()),
       );
     }
+
     if (widget.items.isEmpty) {
       return const SizedBox(
         height: 200,
@@ -49,18 +53,26 @@ class _ErpMaxDataTableState<T> extends State<ErpMaxDataTable<T>> {
       );
     }
 
-    return ErpMaxTable(
-      columns: widget.columns,
-      currentSortKey: _currentSortKey,
-      isAscending: _isAscending,
-      onSort: _handleSort,
-      rows: widget.items.map((item) {
-        return ErpMaxRow(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SizedBox(
+        width: widget.minWidth,
+        child: ErpMaxTable(
           columns: widget.columns,
-          onTap: widget.onRowTap != null ? () => widget.onRowTap!(item) : null,
-          cells: widget.rowBuilder(item),
-        );
-      }).toList(),
+          currentSortKey: _currentSortKey,
+          isAscending: _isAscending,
+          onSort: _handleSort,
+          rows: widget.items.map((item) {
+            return ErpMaxRow(
+              columns: widget.columns,
+              onTap: widget.onRowTap != null
+                  ? () => widget.onRowTap!(item)
+                  : null,
+              cells: widget.rowBuilder(item),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,3 @@
-// lib/features/dashboard/presentation/widgets/main_content/main_content_header.dart
-
 import 'package:flutter/material.dart';
 
 class MainContentHeader extends StatelessWidget {

@@ -1,33 +1,23 @@
+import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
+import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// Импорт твоих core-файлов дизайна
 import 'package:erpmax_client/core/design/app_colors.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
 import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
-
-// Импорт контента (View/Pages)
+import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/features/dashboard/presentation/views/dashboard_content.dart';
 import '../pages/reports_content.dart';
 import '../pages/subscribers_content.dart';
 import '../pages/packages_content.dart';
 import '../widgets/saas/module_management_content.dart';
 import '../pages/backup_content.dart';
-import '../pages/visitor_logs_content.dart';
-import '../pages/access_logs_content.dart';
-import '../pages/permissions_content.dart';
+import '../widgets/access_logs_content.dart';
 
 class SaaSAdminRootPage extends StatefulWidget {
-  final IconData moduleIcon;
-  final String moduleTitle;
-
-  const SaaSAdminRootPage({
-    super.key,
-    required this.moduleIcon,
-    required this.moduleTitle,
-  });
+  const SaaSAdminRootPage({super.key});
 
   @override
   State<SaaSAdminRootPage> createState() => _SaaSAdminRootPageState();
@@ -36,92 +26,84 @@ class SaaSAdminRootPage extends StatefulWidget {
 class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late final List<ModuleTabItem> _moduleTabs;
 
-  // Инициализация вкладок с использованием ID (важно для API)
-  late final List<ModuleTabItem> _moduleTabs = [
-    ModuleTabItem(
-      id: 'saas_dashboard',
-      name: 'SaaS Dashboard',
-      icon: Icons.grid_view_outlined,
-      description: 'System performance overview.',
-      content: Builder(
-        builder: (context) =>
-            DashboardContent(screenWidth: context.screenWidth),
-      ),
-      actionType: 'dashboard',
-    ),
-    ModuleTabItem(
-      id: 'saas_reports',
-      name: 'Reports',
-      icon: Icons.insert_drive_file_outlined,
-      description: 'Detailed analytical statistics.',
-      content: const ReportsContent(),
-      actionType: 'report',
-    ),
-    ModuleTabItem(
-      id: 'saas_subscribers',
-      name: 'Subscribers',
-      icon: Icons.people_outline_rounded,
-      description: 'Manage your customer base.',
-      content: const SubscribersContent(),
-      actionType: 'add',
-    ),
-    ModuleTabItem(
-      id: 'saas_packages',
-      name: 'Packages',
-      icon: Icons.inventory_2_outlined,
-      description: 'Pricing and subscription plans.',
-      content: const PackagesContent(),
-      actionType: 'add',
-    ),
-    ModuleTabItem(
-      id: 'saas_modules',
-      name: 'Module Management',
-      icon: Icons.token_outlined,
-      description: 'System feature control.',
-      content: const ModuleManagementContent(),
-      actionType: 'add',
-    ),
-    ModuleTabItem(
-      id: 'saas_backup',
-      name: 'Backup Management',
-      icon: Icons.storage_outlined,
-      description: 'Database security and snapshots.',
-      content: const BackupContent(),
-      actionType: 'none',
-    ),
-    ModuleTabItem(
-      id: 'saas_visitor_logs',
-      name: 'Visitor Log',
-      icon: Icons.language_outlined,
-      description: 'Track user sessions.',
-      content: const VisitorLogsContent(),
-      actionType: 'none',
-    ),
-    ModuleTabItem(
-      id: 'saas_access_logs',
-      name: 'Access Logs',
-      icon: Icons.history_toggle_off_outlined,
-      description: 'Security and audit trails.',
-      content: const AccessLogsContent(),
-      actionType: 'none',
-    ),
-    ModuleTabItem(
-      id: 'saas_permissions',
-      name: 'Permissions',
-      icon: Icons.shield_outlined,
-      description: 'Role management.',
-      content: const PermissionsContent(),
-      actionType: 'none',
-    ),
-  ];
+  // Согласно вашему AppRouter, ветка SaaS Admin имеет индекс 11
+  static const int saasShellIndex = 11;
 
   @override
   void initState() {
     super.initState();
+
+    _moduleTabs = [
+      ModuleTabItem(
+        id: 'saas_dashboard',
+        name: 'SaaS Dashboard',
+        icon: Icons.grid_view_outlined,
+        shellIndex: saasShellIndex,
+        description: 'System performance overview and real-time metrics.',
+        content: Builder(
+          builder: (context) =>
+              DashboardContent(screenWidth: MediaQuery.of(context).size.width),
+        ),
+        actionType: 'dashboard',
+      ),
+      const ModuleTabItem(
+        id: 'saas_reports',
+        name: 'Reports',
+        icon: Icons.insert_drive_file_outlined,
+        shellIndex: saasShellIndex,
+        description: 'Detailed analytical statistics and exports.',
+        content: ReportsContent(),
+        actionType: 'report',
+      ),
+      const ModuleTabItem(
+        id: 'saas_subscribers',
+        name: 'Subscribers',
+        icon: Icons.people_outline_rounded,
+        shellIndex: saasShellIndex,
+        description: 'Manage your customer base and subscriptions.',
+        content: SubscribersContent(),
+        actionType: 'add',
+      ),
+      const ModuleTabItem(
+        id: 'saas_packages',
+        name: 'Packages',
+        icon: Icons.inventory_2_outlined,
+        shellIndex: saasShellIndex,
+        description: 'Pricing plans and module bundles.',
+        content: PackagesContent(),
+        actionType: 'add',
+      ),
+      const ModuleTabItem(
+        id: 'saas_modules',
+        name: 'Module Management',
+        icon: Icons.token_outlined,
+        shellIndex: saasShellIndex,
+        description: 'Feature control and system extensions.',
+        content: ModuleManagementContent(),
+        actionType: 'add',
+      ),
+      const ModuleTabItem(
+        id: 'saas_backup',
+        name: 'Backup Management',
+        icon: Icons.storage_outlined,
+        shellIndex: saasShellIndex,
+        description: 'Database security and snapshot history.',
+        content: BackupContent(),
+      ),
+      const ModuleTabItem(
+        id: 'saas_access_logs',
+        name: 'Access Logs',
+        icon: Icons.history_toggle_off_outlined,
+        shellIndex: saasShellIndex,
+        description: 'Security audit trails and user activity.',
+        content: AccessLogsContent(),
+      ),
+    ];
+
     _tabController = TabController(length: _moduleTabs.length, vsync: this);
 
-    // Синхронизация с глобальным сервисом табов
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<TabNavigationService>().updateTabs(
@@ -131,41 +113,44 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
       }
     });
 
-    _tabController.addListener(_handleTabChange);
-  }
-
-  void _handleTabChange() {
-    if (mounted && !_tabController.indexIsChanging) {
-      setState(() {});
-    }
+    _tabController.addListener(() {
+      if (mounted && !_tabController.indexIsChanging) {
+        setState(() {});
+      }
+    });
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
     final currentTab = _moduleTabs[_tabController.index];
 
     return Scaffold(
       backgroundColor: AppColors.gray50,
       body: Column(
         children: [
-          // Динамический заголовок (вынесен в отдельный виджет ниже)
-          SaaSModuleHeader(currentTab: currentTab),
-
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: SaaSModuleHeader(
+              key: ValueKey(currentTab.id),
+              currentTab: currentTab,
+            ),
+          ),
           Expanded(
             child: TabBarView(
-              key: ValueKey(_moduleTabs.length),
               controller: _tabController,
-              physics: context.isMobile
+              physics: isMobile
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
-              children: _moduleTabs.map((tab) => tab.content).toList(),
+              children: _moduleTabs
+                  .map((tab) => KeepAlivePage(child: tab.content))
+                  .toList(),
             ),
           ),
         ],
@@ -174,39 +159,68 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
   }
 }
 
-// --- Виджет заголовка страницы ---
 class SaaSModuleHeader extends StatelessWidget {
   final ModuleTabItem currentTab;
-
   const SaaSModuleHeader({super.key, required this.currentTab});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final bool isMobile = Responsive.isMobile(context);
+
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        border: Border(bottom: BorderSide(color: AppColors.gray100)),
+      ),
       padding: EdgeInsets.fromLTRB(
         AppDesign.pagePadding,
-        context.isMobile ? 16 : 32,
+        isMobile ? 12 : 24,
         AppDesign.pagePadding,
-        16,
+        isMobile ? 12 : 20,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(currentTab.name, style: AppTextStyles.h1),
-                const SizedBox(height: 8),
-                Text(
-                  currentTab.description ?? '',
-                  style: AppTextStyles.bodySmall,
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(currentTab.name, style: AppTextStyles.h1),
+                    if (!isMobile) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        currentTab.description ?? '',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.gray500,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              if (!isMobile) ...[
+                const SizedBox(width: 24),
+                Expanded(
+                  flex: 1,
+                  child: AppSearchField(
+                    hintText: "Search in ${currentTab.name}...",
+                    onChanged: (val) => debugPrint("Search: $val"),
+                  ),
                 ),
               ],
-            ),
+              if (!isMobile && currentTab.actionType != 'none') ...[
+                const SizedBox(width: 24),
+                _HeaderActions(currentTab: currentTab),
+              ],
+            ],
           ),
-          if (!context.isMobile && currentTab.actionType != 'none')
-            _HeaderActions(currentTab: currentTab),
+          if (isMobile)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: AppSearchField(hintText: "Search..."),
+            ),
         ],
       ),
     );
@@ -215,18 +229,18 @@ class SaaSModuleHeader extends StatelessWidget {
 
 class _HeaderActions extends StatelessWidget {
   final ModuleTabItem currentTab;
-
   const _HeaderActions({required this.currentTab});
 
   @override
   Widget build(BuildContext context) {
     if (currentTab.actionType == 'report') {
       return Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           _ActionButton(
             label: "Print",
             icon: Icons.print_outlined,
-            onPressed: () => _handleAction(context, "Print"),
+            onPressed: () {},
           ),
           const SizedBox(width: 12),
           _ActionButton(
@@ -234,7 +248,7 @@ class _HeaderActions extends StatelessWidget {
             icon: Icons.file_download_outlined,
             isPrimary: true,
             color: AppColors.success,
-            onPressed: () => _handleAction(context, "Export"),
+            onPressed: () {},
           ),
         ],
       );
@@ -246,47 +260,26 @@ class _HeaderActions extends StatelessWidget {
         label: _getLabel(currentTab.id),
         icon: _getIcon(currentTab.id),
         isPrimary: true,
-        onPressed: () => _handleAction(context, "Add/Edit"),
+        onPressed: () {},
       );
     }
 
     return const SizedBox.shrink();
   }
 
-  void _handleAction(BuildContext context, String action) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Action: $action for ${currentTab.name}")),
-    );
-  }
-
   String _getLabel(String id) {
-    switch (id) {
-      case 'saas_modules':
-        return "Add Module";
-      case 'saas_packages':
-        return "Add Package";
-      case 'saas_subscribers':
-        return "Add Account";
-      default:
-        return "Edit Dashboard";
-    }
+    if (id.contains('module')) return "New Module";
+    if (id.contains('package')) return "Create Package";
+    if (id.contains('subscriber')) return "Add Subscriber";
+    return "Action";
   }
 
   IconData _getIcon(String id) {
-    switch (id) {
-      case 'saas_modules':
-        return Icons.token_outlined;
-      case 'saas_packages':
-        return Icons.inventory_2_outlined;
-      case 'saas_subscribers':
-        return Icons.person_add_alt_1_outlined;
-      default:
-        return Icons.grid_view_rounded;
-    }
+    if (id.contains('subscriber')) return Icons.person_add_alt_1_outlined;
+    return Icons.add;
   }
 }
 
-// --- Универсальная кнопка для хедера ---
 class _ActionButton extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -304,23 +297,24 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 18),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary
-            ? (color ?? AppColors.primary)
-            : AppColors.white,
-        foregroundColor: isPrimary ? AppColors.white : AppColors.textPrimary,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
+    return SizedBox(
+      height: 44,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 18),
+        label: Text(label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isPrimary
+              ? (color ?? const Color(0xFF12203A))
+              : AppColors.white,
+          foregroundColor: isPrimary ? AppColors.white : AppColors.textPrimary,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          side: isPrimary
+              ? BorderSide.none
+              : const BorderSide(color: AppColors.gray200),
         ),
-        side: isPrimary
-            ? BorderSide.none
-            : const BorderSide(color: AppColors.gray200),
-        elevation: 0,
       ),
     );
   }

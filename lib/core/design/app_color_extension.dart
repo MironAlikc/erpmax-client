@@ -32,7 +32,6 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.sidebarInactiveText,
   });
 
-  /// Удобный способ получения цветов в любом виджете
   static AppColorExtension of(BuildContext context) {
     return Theme.of(context).extension<AppColorExtension>()!;
   }

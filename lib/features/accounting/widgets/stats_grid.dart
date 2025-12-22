@@ -5,108 +5,135 @@ class StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buildAppStatCard(
-          "Total Revenue",
-          "\$124,500",
-          "+12.5%",
-          Icons.trending_up,
-          Colors.green,
-        ),
-        const SizedBox(width: 16),
-        _buildAppStatCard(
-          "Total Expenses",
-          "\$45,200",
-          "-2.4%",
-          Icons.trending_down,
-          Colors.red,
-        ),
-        const SizedBox(width: 16),
-        _buildAppStatCard(
-          "Net Profit",
-          "\$79,300",
-          "+8.2%",
-          Icons.attach_money,
-          Colors.blue,
-        ),
-        const SizedBox(width: 16),
-        _buildAppStatCard(
-          "Cash Flow",
-          "\$32,000",
-          "+5.1%",
-          Icons.account_balance_wallet,
-          Colors.purple,
-        ),
-      ],
-    );
-  }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double cardWidth = (constraints.maxWidth - (20 * 3)) / 4;
 
-  Widget _buildAppStatCard(
-    String title,
-    String value,
-    String trend,
-    IconData icon,
-    Color color,
-  ) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFF1F5F9)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return Wrap(
+          spacing: 20,
+          runSpacing: 20,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(icon, color: color, size: 20),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    trend,
-                    style: TextStyle(
-                      color: color,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+            _StatItem(
+              title: "Total Revenue",
+              value: "\$124,500",
+              trend: "+12.5%",
+              isUp: true,
+              icon: Icons.trending_up,
+              width: cardWidth,
             ),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: const TextStyle(color: Color(0xFF64748B), fontSize: 14),
+            _StatItem(
+              title: "Total Expenses",
+              value: "\$45,200",
+              trend: "-2.4%",
+              isUp: false,
+              icon: Icons.trending_down,
+              width: cardWidth,
             ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
-              ),
+            _StatItem(
+              title: "Net Profit",
+              value: "\$79,300",
+              trend: "+8.2%",
+              isUp: true,
+              icon: Icons.attach_money,
+              width: cardWidth,
+            ),
+            _StatItem(
+              title: "Cash Flow",
+              value: "\$32,000",
+              trend: "+5.1%",
+              isUp: true,
+              icon: Icons.account_balance_wallet_outlined,
+              width: cardWidth,
             ),
           ],
-        ),
+        );
+      },
+    );
+  }
+}
+
+class _StatItem extends StatelessWidget {
+  final String title, value, trend;
+  final bool isUp;
+  final IconData icon;
+  final double width;
+
+  const _StatItem({
+    required this.title,
+    required this.value,
+    required this.trend,
+    required this.isUp,
+    required this.icon,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width.clamp(250, 500),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFF1F5F9)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, size: 24, color: const Color(0xFF1E293B)),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: isUp
+                      ? const Color(0xFFF0FDF4)
+                      : const Color(0xFFFEF2F2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  trend,
+                  style: TextStyle(
+                    color: isUp
+                        ? const Color(0xFF166534)
+                        : const Color(0xFF991B1B),
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Color(0xFF64748B),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
+          ),
+        ],
       ),
     );
   }

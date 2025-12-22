@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/design/app_colors.dart';
 
 class RevenueLineChart extends StatelessWidget {
   const RevenueLineChart({super.key});
@@ -12,7 +13,7 @@ class RevenueLineChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (value) =>
-              FlLine(color: const Color(0xFFF1F5F9), strokeWidth: 1),
+              FlLine(color: Colors.grey.withOpacity(0.1), strokeWidth: 1),
         ),
         titlesData: FlTitlesData(
           rightTitles: const AxisTitles(
@@ -24,10 +25,10 @@ class RevenueLineChart extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 45,
+              reservedSize: 40,
               getTitlesWidget: (value, meta) => Text(
-                value.toInt().toString(),
-                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+                '${(value / 1000).toInt()}k',
+                style: const TextStyle(color: Colors.grey, fontSize: 11),
               ),
             ),
           ),
@@ -46,13 +47,10 @@ class RevenueLineChart extends StatelessWidget {
                 ];
                 if (value.toInt() >= 0 && value.toInt() < months.length) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 12),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       months[value.toInt()],
-                      style: const TextStyle(
-                        color: Color(0xFF94A3B8),
-                        fontSize: 12,
-                      ),
+                      style: const TextStyle(color: Colors.grey, fontSize: 11),
                     ),
                   );
                 }
@@ -74,9 +72,9 @@ class RevenueLineChart extends StatelessWidget {
               FlSpot(6, 75000),
             ],
             isCurved: true,
-            curveSmoothness: 0.35,
-            color: const Color(0xFF00C58D), // Основной цвет из дизайна
-            barWidth: 3,
+            color: AppColors.primary,
+            barWidth: 4,
+            isStrokeCapRound: true,
             dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: true,
@@ -84,8 +82,8 @@ class RevenueLineChart extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  const Color(0xFF00C58D).withOpacity(0.2),
-                  const Color(0xFF00C58D).withOpacity(0.0),
+                  AppColors.primary.withOpacity(0.2),
+                  AppColors.primary.withOpacity(0.0),
                 ],
               ),
             ),

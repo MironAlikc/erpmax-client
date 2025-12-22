@@ -1,5 +1,6 @@
-// lib/features/dashboard/presentation/widgets/saas/kpi_card.dart
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/design/app_colors.dart';
+import 'package:erpmax_client/core/design/app_text_styles.dart';
 
 class KpiCard extends StatelessWidget {
   final String title;
@@ -19,20 +20,15 @@ class KpiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Theme.of(context);
-    final trendColor = isPositive
-        ? const Color(0xFF027A48)
-        : const Color(0xFFB42318);
-    final trendBg = isPositive
-        ? const Color(0xFFECFDF3)
-        : const Color(0xFFFEF3F2);
+    final trendColor = isPositive ? AppColors.success : AppColors.error;
+    final trendBg = trendColor.withOpacity(0.1);
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFEAECF0)),
+        border: Border.all(color: AppColors.gray200),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -51,10 +47,10 @@ class KpiCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF2F4F7),
+                  color: AppColors.gray100,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(icon, size: 20, color: const Color(0xFF475467)),
+                child: Icon(icon, size: 20, color: AppColors.gray600),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -64,10 +60,8 @@ class KpiCard extends StatelessWidget {
                 ),
                 child: Text(
                   percentage,
-                  style: TextStyle(
+                  style: AppTextStyles.bodySmallBold.copyWith(
                     color: trendColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -77,19 +71,9 @@ class KpiCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: const TextStyle(color: Color(0xFF667085), fontSize: 14),
-              ),
+              Text(title, style: AppTextStyles.labelStyle),
               const SizedBox(height: 8),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF101828),
-                ),
-              ),
+              Text(value, style: AppTextStyles.h2),
             ],
           ),
         ],

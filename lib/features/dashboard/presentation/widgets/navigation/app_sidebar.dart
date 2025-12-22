@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_color_extension.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
 import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/features/dashboard/presentation/data/models/menu_data.dart';
 
 class AppSidebar extends StatelessWidget {
   final bool isExpanded;
   final int selectedIndex;
   final ValueChanged<int>? onSelect;
+  final VoidCallback onToggle;
 
   const AppSidebar({
     super.key,
     required this.isExpanded,
     required this.selectedIndex,
+    required this.onToggle,
     this.onSelect,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colors = AppColorExtension.of(context);
+    final menuItems = MenuData.getAllMenuItems();
 
     return AnimatedContainer(
       duration: AppDesign.sidebarDuration,
@@ -28,115 +33,149 @@ class AppSidebar extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         border: Border(
-          right: BorderSide(color: theme.dividerColor, width: 0.8),
+          right: BorderSide(
+            color: colors.textDisabled.withValues(alpha: 0.1),
+            width: 1,
+          ),
         ),
       ),
       child: Column(
         children: [
-          _buildLogo(context),
+          _buildLogo(context, colors),
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: colors.textDisabled.withValues(alpha: 0.05),
+          ),
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Column(
-                children: _menuData.map((data) {
-                  return _MenuItem(
-                    index: data.index,
-                    title: data.title,
-                    icon: data.icon,
-                    selectedIndex: selectedIndex,
-                    isExpanded: isExpanded,
-                    onTap: onSelect,
-                  );
-                }).toList(),
-              ),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              itemCount: menuItems.length,
+              itemBuilder: (context, index) {
+                final item = menuItems[index];
+                return _MenuItem(
+                  index: index,
+                  title: item.title,
+                  icon: item.icon,
+                  selectedIndex: selectedIndex,
+                  isExpanded: isExpanded,
+                  onTap: onSelect,
+                );
+              },
             ),
           ),
-          _buildBottomSection(context),
+          _buildBottomSection(context, colors),
         ],
       ),
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
-    final themeColors = Theme.of(context).extension<AppColorExtension>();
-    final successColor = themeColors?.success ?? Colors.green;
-
+  Widget _buildLogo(BuildContext context, AppColorExtension colors) {
     return Container(
+      width: double.infinity,
       height: AppDesign.headerHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: isExpanded
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.center,
-        children: [
-          Icon(Icons.blur_on, color: successColor, size: 32),
-          if (isExpanded) ...[
-            const SizedBox(width: 12),
-            Expanded(
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: 1.0,
-                child: Text(
-                  'ERP Max',
-                  style: AppTextStyles.h2.copyWith(fontSize: 18),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+      padding: EdgeInsets.symmetric(horizontal: isExpanded ? 16 : 0),
+      child: isExpanded
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.blur_on, color: colors.success, size: 28),
+                    const SizedBox(width: 10),
+                    Text(
+                      'ERP Max',
+                      style: AppTextStyles.h2.copyWith(
+                        fontSize: 16,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                _buildToggleButton(colors),
+              ],
+            )
+          : Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(Icons.blur_on, color: colors.success, size: 28),
+                Positioned(bottom: 4, child: _buildToggleButton(colors)),
+              ],
             ),
-          ],
-        ],
-      ),
     );
   }
 
-  Widget _buildBottomSection(BuildContext context) {
-    if (!isExpanded) return const SizedBox(height: 16);
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 300),
-        opacity: 1.0,
-        child: Container(
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Theme.of(
-              context,
-            ).colorScheme.surfaceVariant.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Need Help?',
-                style: AppTextStyles.bodySmall.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 36),
-                  side: BorderSide(color: Theme.of(context).dividerColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-                  ),
-                ),
-                child: const Text('Support', style: TextStyle(fontSize: 12)),
-              ),
-            ],
+  Widget _buildToggleButton(AppColorExtension colors) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onToggle,
+        borderRadius: BorderRadius.circular(6),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: AnimatedRotation(
+            turns: isExpanded ? 0 : 0.5,
+            duration: AppDesign.fastDuration,
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 14,
+              color: colors.textSecondary,
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildBottomSection(BuildContext context, AppColorExtension colors) {
+    if (!isExpanded) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Icon(Icons.help_outline, color: colors.textDisabled, size: 20),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colors.backgroundLight,
+        borderRadius: BorderRadius.circular(AppDesign.cardRadius),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'v1.0.2',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: colors.textDisabled,
+              fontSize: 10,
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(0, 32),
+                side: BorderSide(color: colors.primaryDark.withOpacity(0.2)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              child: const Text('Support', style: TextStyle(fontSize: 11)),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class _MenuItem extends StatelessWidget {
+class _MenuItem extends StatefulWidget {
   final int index;
   final int selectedIndex;
   final IconData icon;
@@ -145,6 +184,7 @@ class _MenuItem extends StatelessWidget {
   final ValueChanged<int>? onTap;
 
   const _MenuItem({
+    super.key,
     required this.index,
     required this.selectedIndex,
     required this.icon,
@@ -154,61 +194,112 @@ class _MenuItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final themeColors = Theme.of(context).extension<AppColorExtension>();
-    final bool isSelected = selectedIndex == index;
+  State<_MenuItem> createState() => _MenuItemState();
+}
 
-    // Цвета из темы (возвращены как было)
-    final activeBg =
-        themeColors?.sidebarActiveBg ?? Colors.blue.withOpacity(0.1);
-    final activeIcon = themeColors?.sidebarActiveIcon ?? Colors.blue;
-    final activeText = themeColors?.sidebarActiveText ?? Colors.blue;
-    final inactiveText = themeColors?.sidebarInactiveText ?? Colors.grey;
+class _MenuItemState extends State<_MenuItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = AppColorExtension.of(context);
+    final bool isSelected = widget.selectedIndex == widget.index;
+    final Color activeBgBase = const Color(0xFF12203A);
+    final Color activeBgLight = const Color(0xFF1A2D4D);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap != null ? () => onTap!(index) : null,
-          borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-          child: AnimatedContainer(
-            duration: AppDesign.fastDuration,
-            height: 48,
-            padding: EdgeInsets.symmetric(horizontal: isExpanded ? 12 : 0),
-            decoration: BoxDecoration(
-              color: isSelected ? activeBg : Colors.transparent,
-              borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-            ),
-            child: Row(
-              mainAxisAlignment: isExpanded
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: isSelected ? activeIcon : inactiveText,
-                  size: AppDesign.iconSize,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        cursor: SystemMouseCursors.click,
+        child: Stack(
+          children: [
+            InkWell(
+              onTap: widget.onTap != null
+                  ? () => widget.onTap!(widget.index)
+                  : null,
+              borderRadius: BorderRadius.circular(10),
+              hoverColor: Colors.transparent,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                height: 50,
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.isExpanded ? 16 : 0,
                 ),
-                if (isExpanded) ...[
-                  const SizedBox(width: 12),
-                  Flexible(
-                    child: Text(
-                      title,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: isSelected ? activeText : inactiveText,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: isSelected
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [activeBgLight, activeBgBase],
+                        )
+                      : null,
+                  color: !isSelected && _isHovered
+                      ? colors.textDisabled.withValues(alpha: 0.08)
+                      : (isSelected ? null : Colors.transparent),
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Row(
+                  mainAxisAlignment: widget.isExpanded
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      color: isSelected ? colors.success : colors.textSecondary,
+                      size: 24,
+                    ),
+                    if (widget.isExpanded) ...[
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(
+                            color: isSelected
+                                ? Colors.white
+                                : colors.textPrimary,
+                            fontSize: 14,
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
+                            letterSpacing: 0.2,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            if (isSelected)
+              Positioned(
+                left: 0,
+                top: 12,
+                bottom: 12,
+                child: Container(
+                  width: 4,
+                  decoration: BoxDecoration(
+                    color: colors.success,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      bottomRight: Radius.circular(4),
                     ),
                   ),
-                ],
-              ],
-            ),
-          ),
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -222,7 +313,6 @@ class _MenuData {
   const _MenuData(this.index, this.title, this.icon);
 }
 
-// Порядок строго соответствует branches в AppRouter
 const List<_MenuData> _menuData = [
   _MenuData(0, 'Dashboard', Icons.grid_view_rounded),
   _MenuData(1, 'Accounting', Icons.calculate_outlined),

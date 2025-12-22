@@ -1,5 +1,3 @@
-// lib/features/dashboard/presentation/data/subscription_model.dart
-
 class SubscriptionModel {
   final String subNumber,
       client,

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-
-// --- Модели данных ---
 
 class ReportStat {
   final String title;
@@ -12,7 +9,13 @@ class ReportStat {
   final bool isUp;
   final IconData icon;
 
-  const ReportStat(this.title, this.value, this.trend, this.isUp, this.icon);
+  const ReportStat({
+    required this.title,
+    required this.value,
+    required this.trend,
+    required this.isUp,
+    required this.icon,
+  });
 }
 
 class ReportSubscriber {
@@ -33,8 +36,6 @@ class ReportSubscriber {
   });
 }
 
-// --- Основной виджет ---
-
 class ReportsContent extends StatefulWidget {
   const ReportsContent({super.key});
 
@@ -45,7 +46,6 @@ class ReportsContent extends StatefulWidget {
 class _ReportsContentState extends State<ReportsContent> {
   String _selectedReportType = 'Subscriptions Report';
 
-  // Используем ErpMaxTabItem из вашего импортированного файла
   final List<ErpMaxTabItem> _reportTabs = [
     const ErpMaxTabItem(
       name: 'Subscriptions Report',
@@ -66,23 +66,62 @@ class _ReportsContentState extends State<ReportsContent> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // РЕФАКТОР: Используем универсальный фильтр вместо локального метода
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _selectedReportType,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF0F172A),
+                    ),
+                  ),
+                  const Text(
+                    "Detailed analytical statistics and exports.",
+                    style: TextStyle(color: Color(0xFF64748B)),
+                  ),
+                ],
+              ),
+              ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.download, size: 18),
+                label: const Text("Export CSV"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00C58D),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
           ErpMaxTabFilter(
             items: _reportTabs,
             selectedItem: _selectedReportType,
             onSelected: (name) => setState(() => _selectedReportType = name),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
           if (_selectedReportType == 'Subscriptions Report') ...[
             _buildStatsGrid(),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             _buildReportTableSection("New Subscribers", _newSubscribersData),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             _buildReportTableSection("Expiring Soon", _expiringSoonData),
           ] else ...[
             _buildPlaceholderContent(_selectedReportType),
@@ -93,127 +132,69 @@ class _ReportsContentState extends State<ReportsContent> {
     );
   }
 
-  // Сетка карточек статистики
   Widget _buildStatsGrid() {
     final stats = [
       const ReportStat(
-        "Active Subscriptions",
-        "1,234",
-        "+12%",
-        true,
-        Icons.group_outlined,
+        title: "Active Subscriptions",
+        value: "1,234",
+        trend: "+12%",
+        isUp: true,
+        icon: Icons.group_outlined,
       ),
       const ReportStat(
-        "New Subscribers",
-        "56",
-        "+5%",
-        true,
-        Icons.add_chart_outlined,
+        title: "New Subscribers",
+        value: "56",
+        trend: "+5%",
+        isUp: true,
+        icon: Icons.add_chart_outlined,
       ),
       const ReportStat(
-        "Expiring Soon",
-        "23",
-        "-2%",
-        false,
-        Icons.show_chart_rounded,
+        title: "Expiring Soon",
+        value: "23",
+        trend: "-2%",
+        isUp: false,
+        icon: Icons.show_chart_rounded,
       ),
     ];
 
-    return Row(
-      children: stats
-          .map(
-            (stat) => Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(right: 16),
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFF1F5F9)),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool isNarrow = constraints.maxWidth < 800;
+        return Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: stats
+              .map(
+                (stat) => _StatCard(
+                  stat: stat,
+                  width: isNarrow
+                      ? constraints.maxWidth
+                      : (constraints.maxWidth - 32) / 3,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF8FAFC),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            stat.icon,
-                            color: const Color(0xFF1E293B),
-                          ),
-                        ),
-                        _buildTrendIndicator(stat),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      stat.title,
-                      style: const TextStyle(
-                        color: Color(0xFF64748B),
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      stat.value,
-                      style: const TextStyle(
-                        color: Color(0xFF0F172A),
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _buildTrendIndicator(ReportStat stat) {
-    final color = stat.isUp ? const Color(0xFF00C58D) : const Color(0xFFF43F5E);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: stat.isUp ? const Color(0xFFE6F9F2) : const Color(0xFFFFF1F2),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            stat.isUp ? Icons.north_east : Icons.south_east,
-            size: 12,
-            color: color,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            stat.trend,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
+              )
+              .toList(),
+        );
+      },
     );
   }
 
   Widget _buildReportTableSection(String title, List<ReportSubscriber> data) {
+    final cols = [
+      ErpMaxColumn(title: "Company Name", weight: 0.25),
+      ErpMaxColumn(title: "Plan Name", weight: 0.15),
+      ErpMaxColumn(title: "Status", weight: 0.1),
+      ErpMaxColumn(title: "Start Date", weight: 0.15),
+      ErpMaxColumn(title: "End Date", weight: 0.15),
+      ErpMaxColumn(title: "Price", weight: 0.1),
+      ErpMaxColumn(title: "Actions", weight: 0.05, textAlign: TextAlign.right),
+    ];
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFF1F5F9)),
       ),
-      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -221,39 +202,49 @@ class _ReportsContentState extends State<ReportsContent> {
             padding: const EdgeInsets.all(24),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
           ),
-          ErpMaxDataTable<ReportSubscriber>(
-            items: data,
-            columns: [
-              ErpMaxColumn(title: "Company Name", weight: 0.25),
-              ErpMaxColumn(title: "Plan Name", weight: 0.15),
-              ErpMaxColumn(title: "Status", weight: 0.15),
-              ErpMaxColumn(title: "Start Date", weight: 0.15),
-              ErpMaxColumn(title: "End Date", weight: 0.15),
-              ErpMaxColumn(title: "Price", weight: 0.1),
-              ErpMaxColumn(
-                title: "Actions",
-                weight: 0.05,
-                textAlign: TextAlign.right,
-              ),
-            ],
-            rowBuilder: (item) => [
-              Text(
-                item.company,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(item.plan),
-              _StatusBadge(status: item.status),
-              Text(item.startDate),
-              Text(item.endDate),
-              Text(
-                item.price,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const Icon(Icons.more_horiz, color: Colors.grey),
-            ],
+          ErpMaxTable(
+            minWidth: 1000,
+            columns: cols,
+            rows: data
+                .map(
+                  (item) => ErpMaxRow(
+                    columns: cols,
+                    cells: [
+                      Text(
+                        item.company,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1E293B),
+                        ),
+                      ),
+                      Text(
+                        item.plan,
+                        style: const TextStyle(color: Color(0xFF64748B)),
+                      ),
+                      _StatusBadge(status: item.status),
+                      Text(
+                        item.startDate,
+                        style: const TextStyle(color: Color(0xFF64748B)),
+                      ),
+                      Text(
+                        item.endDate,
+                        style: const TextStyle(color: Color(0xFF64748B)),
+                      ),
+                      Text(
+                        item.price,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0F172A),
+                        ),
+                      ),
+                      const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+                    ],
+                  ),
+                )
+                .toList(),
           ),
         ],
       ),
@@ -261,26 +252,86 @@ class _ReportsContentState extends State<ReportsContent> {
   }
 
   Widget _buildPlaceholderContent(String name) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 80),
+        child: Column(
+          children: [
+            Icon(Icons.analytics_outlined, size: 64, color: Colors.grey[200]),
+            const SizedBox(height: 16),
+            Text(
+              "Data for $name",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "This report is being processed...",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  final ReportStat stat;
+  final double width;
+  const _StatCard({required this.stat, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    final trendColor = stat.isUp
+        ? const Color(0xFF00C58D)
+        : const Color(0xFFF43F5E);
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(80),
+      width: width,
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFF1F5F9)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.analytics_outlined, size: 64, color: Colors.grey[200]),
-          const SizedBox(height: 16),
-          Text(
-            "Analysis for $name",
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(stat.icon, color: const Color(0xFF1E293B), size: 28),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: trendColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  stat.trend,
+                  style: TextStyle(
+                    color: trendColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 20),
           Text(
-            "Detailed reporting data is being generated...",
-            style: TextStyle(color: Colors.grey[500]),
+            stat.title,
+            style: const TextStyle(color: Color(0xFF64748B), fontSize: 14),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            stat.value,
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
+            ),
           ),
         ],
       ),
@@ -293,17 +344,20 @@ class _StatusBadge extends StatelessWidget {
   const _StatusBadge({required this.status});
   @override
   Widget build(BuildContext context) {
-    bool isExpired = status == "Expired";
+    final isExpired = status == "Expired";
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isExpired ? const Color(0xFFFEE2E2) : const Color(0xFF0F172A),
+        color: isExpired ? const Color(0xFFFFF1F2) : const Color(0xFFF0FDF4),
         borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          color: isExpired ? const Color(0xFFFECDD3) : const Color(0xFFBBF7D0),
+        ),
       ),
       child: Text(
         status,
         style: TextStyle(
-          color: isExpired ? const Color(0xFFEF4444) : Colors.white,
+          color: isExpired ? const Color(0xFFE11D48) : const Color(0xFF166534),
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),
@@ -312,7 +366,6 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
-// Данные
 final _newSubscribersData = [
   const ReportSubscriber(
     company: "StartUp Inc",

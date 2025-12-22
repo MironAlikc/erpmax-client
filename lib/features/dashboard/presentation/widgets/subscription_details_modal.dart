@@ -1,5 +1,9 @@
-import 'package:erpmax_client/features/dashboard/presentation/views/subscription_management_view.dart';
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/design/app_colors.dart';
+import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/widgets/common/app_button.dart';
+import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
+import '../pages/subscription_management_view.dart';
 
 class SubscriptionDetailsModal extends StatelessWidget {
   final SubscriptionData subscription;
@@ -8,38 +12,53 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 940,
-        height: 1010,
+    return Dialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+      backgroundColor: Colors.transparent,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 900),
         child: Material(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: DefaultTabController(
             length: 4,
-            initialIndex: 1, // Pay Book по умолчанию
             child: Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.white,
               appBar: _buildAppBar(context),
               body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTopHeader(),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32),
-                    child: SubscriptionInfoCards(),
-                  ),
-                  const SizedBox(height: 24),
-                  _buildCustomTabBar(),
                   Expanded(
-                    child: TabBarView(
-                      children: [
-                        _buildTabContent(const ModulesTab()),
-                        _buildTabContent(const PayBookTab()),
-                        const Center(child: Text('General Ledger Content')),
-                        _buildTabContent(const ActivityLogTable()),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTopHeader(),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            child: SubscriptionInfoCards(),
+                          ),
+                          const SizedBox(height: 32),
+                          _buildCustomTabBar(),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            height: 500,
+                            child: TabBarView(
+                              children: [
+                                _buildTabContent(const ModulesTab()),
+                                _buildTabContent(const PayBookTab()),
+                                Center(
+                                  child: Text(
+                                    'General Ledger Content',
+                                    style: AppTextStyles.bodyMedium,
+                                  ),
+                                ),
+                                _buildTabContent(const ActivityLogTable()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   _buildFooter(context),
@@ -53,7 +72,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
   }
 
   Widget _buildTabContent(Widget child) {
-    return SingleChildScrollView(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(32, 20, 32, 32),
       child: child,
     );
@@ -61,7 +80,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   Widget _buildTopHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 24, 32, 16),
+      padding: const EdgeInsets.fromLTRB(32, 24, 32, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -74,11 +93,8 @@ class SubscriptionDetailsModal extends StatelessWidget {
               _bread('Subscription Details', last: true),
             ],
           ),
-          const SizedBox(height: 12),
-          const Text(
-            'Subscription Details',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+          const SizedBox(height: 16),
+          Text('Subscription Details', style: AppTextStyles.h1),
         ],
       ),
     );
@@ -86,51 +102,48 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   Widget _bread(String t, {bool last = false}) => Text(
     t,
-    style: TextStyle(
-      fontSize: 12,
-      color: last ? Colors.black54 : Colors.grey.shade400,
+    style: AppTextStyles.bodySmall.copyWith(
+      color: last ? AppColors.textPrimary : AppColors.gray400,
+      fontWeight: last ? FontWeight.w600 : FontWeight.w400,
     ),
   );
 
-  Widget _sep() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 6),
-    child: Icon(Icons.chevron_right, size: 14, color: Colors.grey.shade300),
+  Widget _sep() => const Padding(
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Icon(Icons.chevron_right, size: 14, color: AppColors.gray300),
   );
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: const Color(0xFFF9FAFB),
-          border: Border.all(color: Colors.grey.shade200),
-          borderRadius: BorderRadius.circular(6),
+          color: AppColors.gray50,
+          border: Border.all(color: AppColors.gray200),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Subscription Details',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-            ),
-            const SizedBox(width: 6),
-            Icon(Icons.close, size: 12, color: Colors.grey.shade400),
+            Text('Subscription Details', style: AppTextStyles.tableHeader),
+            const SizedBox(width: 8),
+            const Icon(Icons.info_outline, size: 14, color: AppColors.gray400),
           ],
         ),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.close, color: Colors.black45),
+          icon: const Icon(Icons.close, color: AppColors.gray500),
           onPressed: () => Navigator.pop(context),
         ),
         const SizedBox(width: 16),
       ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1),
-        child: Divider(height: 1, color: Colors.grey.shade100),
+      bottom: const PreferredSize(
+        preferredSize: Size.fromHeight(1),
+        child: Divider(height: 1, color: AppColors.gray100),
       ),
     );
   }
@@ -139,30 +152,27 @@ class SubscriptionDetailsModal extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Container(
-        height: 46,
+        height: 44,
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: const Color(0xFFF3F6F9),
-          borderRadius: BorderRadius.circular(8),
+          color: AppColors.gray100,
+          borderRadius: BorderRadius.circular(10),
         ),
         child: TabBar(
-          padding: const EdgeInsets.all(4),
           indicator: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(6),
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: Colors.black.withOpacity(0.05),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
             ],
           ),
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey.shade500,
-          labelStyle: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
+          labelColor: AppColors.textPrimary,
+          unselectedLabelColor: AppColors.gray500,
+          labelStyle: AppTextStyles.bodySmallBold,
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: Colors.transparent,
           tabs: const [
@@ -178,39 +188,25 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade100)),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        border: Border(top: BorderSide(color: AppColors.gray100)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          TextButton(
+          AppButton(
+            text: 'Amendment',
+            type: AppButtonType.outline,
             onPressed: () {},
-            child: const Text(
-              'Amendment',
-              style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
           const SizedBox(width: 16),
-          ElevatedButton(
+          AppButton(
+            text: 'Cancel Subscription',
+            type: AppButtonType.primaryDark,
+            backgroundColor: AppColors.error,
             onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFF1416C),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text(
-              'Cancel Subscription',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
           ),
         ],
       ),
@@ -218,53 +214,58 @@ class SubscriptionDetailsModal extends StatelessWidget {
   }
 }
 
-/* -------------------- КАРТОЧКИ (CUSTOMER / PACKAGE / DURATION) -------------------- */
 class SubscriptionInfoCards extends StatelessWidget {
   const SubscriptionInfoCards({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Если места мало, превращаем в колонку
+        final bool isColumn = constraints.maxWidth < 700;
+
+        return Flex(
+          direction: isColumn ? Axis.vertical : Axis.horizontal,
+          children: [
+            _infoCard(
+              icon: Icons.person_outline,
+              title: 'Customer Information',
+              rows: [
+                ['Customer:', 'Al Amal Trading Company'],
+                ['e-mail:', 'info@example.com'],
+              ],
+            ),
+            SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
+            _infoCard(
+              icon: Icons.card_membership_outlined,
+              title: 'Package',
+              rows: [
+                ['Package:', 'Enterprise'],
+                ['Value:', '₪ 6,000'],
+              ],
+              extra: _statusWithPrefix('Status:', 'Paid'),
+            ),
+            SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
+            _infoCard(
+              icon: Icons.calendar_today_outlined,
+              title: 'Duration',
+              rows: [
+                ['Start:', '15/1/2024'],
+                ['Expiry:', '14/1/2025'],
+              ],
+              extra: _statusWithPrefix('Condition:', 'Finished'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _statusWithPrefix(String prefix, String status) {
     return Row(
       children: [
-        _infoCard(
-          icon: Icons.person_outline,
-          title: 'Customer Information',
-          rows: [
-            ['Customer:', 'Al Amal Trading Company'],
-            ['e-mail:', 'info@example.com'],
-            ['phone number:', '+123456789'],
-          ],
-        ),
-        const SizedBox(width: 20),
-        _infoCard(
-          icon: Icons.card_membership_outlined,
-          title: 'Package Information',
-          rows: [
-            ['Package:', 'Enterprise'],
-            ['Value:', '₪ 6,000'],
-          ],
-          extra: _statusBadge(
-            'Paid',
-            const Color(0xFFE8F5E9),
-            const Color(0xFF50CD89),
-            'Payment status:',
-          ),
-        ),
-        const SizedBox(width: 20),
-        _infoCard(
-          icon: Icons.calendar_today_outlined,
-          title: 'Duration Information',
-          rows: [
-            ['Start Date:', '15/1/2024'],
-            ['Expiry date:', '14/1/2025'],
-          ],
-          extra: _statusBadge(
-            'Finished',
-            const Color(0xFFFFF8DD),
-            const Color(0xFFF1BC00),
-            'The Condition:',
-          ),
-        ),
+        Text('$prefix ', style: AppTextStyles.bodySmall),
+        AppStatusMapper(status: status),
       ],
     );
   }
@@ -277,26 +278,21 @@ class SubscriptionInfoCards extends StatelessWidget {
   }) {
     return Expanded(
       child: Container(
-        height: 140,
+        height: 150,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey.shade100),
+          border: Border.all(color: AppColors.gray100),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: Colors.grey.shade400),
+                Icon(icon, size: 20, color: AppColors.gray400),
                 const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
+                Text(title, style: AppTextStyles.bodyMediumBold),
               ],
             ),
             const Spacer(),
@@ -305,118 +301,71 @@ class SubscriptionInfoCards extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Row(
                   children: [
-                    Text(
-                      '${r[0]} ',
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 13,
-                      ),
-                    ),
+                    Text('${r[0]} ', style: AppTextStyles.bodySmall),
                     Text(
                       r[1],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmallBold.copyWith(
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            if (extra != null) extra,
+            if (extra != null) ...[const SizedBox(height: 4), extra],
           ],
         ),
       ),
     );
   }
-
-  Widget _statusBadge(String label, Color bg, Color text, String prefix) {
-    return Row(
-      children: [
-        Text(
-          '$prefix ',
-          style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-          decoration: BoxDecoration(
-            color: bg,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: text,
-              fontWeight: FontWeight.bold,
-              fontSize: 11,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
-/* -------------------- PAY BOOK (В ОДНОМ КОНТЕЙНЕРЕ) -------------------- */
 class PayBookTab extends StatelessWidget {
   const PayBookTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade100),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              'Pay Book',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
+    return _TabTableWrapper(
+      title: 'Pay Book',
+      child: DataTable(
+        headingRowHeight: 48,
+        headingRowColor: WidgetStateProperty.all(AppColors.gray50),
+        columnSpacing: 30,
+        horizontalMargin: 20,
+        columns: [
+          const DataColumn(
+            label: Icon(Icons.grid_view, size: 18, color: AppColors.gray400),
           ),
-          const Divider(height: 1),
-          _buildTable(),
+          DataColumn(
+            label: Text('Transaction', style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(label: Text('Date', style: AppTextStyles.tableHeader)),
+          DataColumn(label: Text('Amount', style: AppTextStyles.tableHeader)),
+          DataColumn(label: Text('Method', style: AppTextStyles.tableHeader)),
+          DataColumn(label: Text('Status', style: AppTextStyles.tableHeader)),
+          DataColumn(
+            label: Text('Reference', style: AppTextStyles.tableHeader),
+          ),
+        ],
+        rows: [
+          _row(
+            'PAY-001',
+            '15/1/2024',
+            '₪ 6000',
+            'Credit Card',
+            'Complete',
+            'TRX-123456',
+          ),
+          _row(
+            'PAY-002',
+            '15/1/2023',
+            '₪ 6000',
+            'Credit Card',
+            'Complete',
+            'TRX-123123',
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTable() {
-    return DataTable(
-      headingRowHeight: 48,
-      headingRowColor: MaterialStateProperty.all(const Color(0xFFF9FAFB)),
-      columnSpacing: 30,
-      columns: const [
-        DataColumn(label: Icon(Icons.grid_view, size: 18, color: Colors.grey)),
-        DataColumn(label: Text('Transaction Number')),
-        DataColumn(label: Text('Date')),
-        DataColumn(label: Text('Amount')),
-        DataColumn(label: Text('Payment Method')),
-        DataColumn(label: Text('Condition')),
-        DataColumn(label: Text('Reference Number')),
-      ],
-      rows: [
-        _row(
-          'PAY-001',
-          '15/1/2024',
-          '₪ 6000',
-          'Credit Card',
-          'Complete',
-          'TRX-123456',
-        ),
-        _row(
-          'PAY-002',
-          '15/1/2023',
-          '₪ 6000',
-          'Credit Card',
-          'Complete',
-          'TRX-123123',
-        ),
-      ],
     );
   }
 
@@ -424,115 +373,74 @@ class PayBookTab extends StatelessWidget {
     return DataRow(
       cells: [
         const DataCell(
-          Icon(Icons.drag_indicator, size: 18, color: Color(0xFFD1D5DB)),
+          Icon(Icons.drag_indicator, size: 18, color: AppColors.gray300),
         ),
-        DataCell(Text(n, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(d, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(a, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(m, style: const TextStyle(fontSize: 13))),
-        DataCell(_status(c)),
-        DataCell(Text(r, style: const TextStyle(fontSize: 13))),
+        DataCell(Text(n, style: AppTextStyles.bodySmall)),
+        DataCell(Text(d, style: AppTextStyles.bodySmall)),
+        DataCell(Text(a, style: AppTextStyles.bodySmallBold)),
+        DataCell(Text(m, style: AppTextStyles.bodySmall)),
+        DataCell(AppStatusMapper(status: c)),
+        DataCell(Text(r, style: AppTextStyles.bodySmall)),
       ],
-    );
-  }
-
-  Widget _status(String s) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        s,
-        style: const TextStyle(
-          color: Color(0xFF50CD89),
-          fontWeight: FontWeight.bold,
-          fontSize: 11,
-        ),
-      ),
     );
   }
 }
 
-/* -------------------- ACTIVITY LOG (В ОДНОМ КОНТЕЙНЕРЕ С ЗАГОЛОВКОМ) -------------------- */
 class ActivityLogTable extends StatelessWidget {
   const ActivityLogTable({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade100),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              'Activity Log',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
+    return _TabTableWrapper(
+      title: 'Activity Log',
+      child: DataTable(
+        headingRowHeight: 48,
+        headingRowColor: WidgetStateProperty.all(AppColors.gray50),
+        horizontalMargin: 20,
+        columns: [
+          const DataColumn(
+            label: Icon(Icons.grid_view, size: 18, color: AppColors.gray400),
           ),
-          const Divider(height: 1),
-          _buildTable(),
+          DataColumn(label: Text('Date', style: AppTextStyles.tableHeader)),
+          DataColumn(
+            label: Text('Procedure', style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(label: Text('User', style: AppTextStyles.tableHeader)),
+          DataColumn(label: Text('Details', style: AppTextStyles.tableHeader)),
+        ],
+        rows: [
+          _logRow(
+            '15/1/2024',
+            'Create Subscription',
+            'Ahmed Mohamed',
+            'Created successfully',
+          ),
+          _logRow(
+            '15/1/2023',
+            'Activate Subscription',
+            'Sarah Ahmed',
+            'Notes modified',
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildTable() {
-    return DataTable(
-      headingRowHeight: 48,
-      headingRowColor: MaterialStateProperty.all(const Color(0xFFF9FAFB)),
-      columns: const [
-        DataColumn(label: Icon(Icons.grid_view, size: 18, color: Colors.grey)),
-        DataColumn(label: Text('Date')),
-        DataColumn(label: Text('Procedure')),
-        DataColumn(label: Text('User')),
-        DataColumn(label: Text('Details')),
-      ],
-      rows: [
-        _row(
-          '15/1/2024',
-          'Create a Subscription',
-          'Ahmed Mohamed',
-          'Subscription created successfully',
-        ),
-        _row(
-          '15/1/2023',
-          'Activate Subscription',
-          'Sarah Ahmed',
-          'Subscription notes modified',
-        ),
-        _row(
-          '15/1/2023',
-          'Modify Subscription',
-          'Ahmed Mohamed',
-          'Activated after confirmation',
-        ),
-      ],
-    );
-  }
-
-  DataRow _row(String d, String p, String u, String det) {
+  DataRow _logRow(String d, String p, String u, String det) {
     return DataRow(
       cells: [
         const DataCell(
-          Icon(Icons.drag_indicator, size: 18, color: Color(0xFFD1D5DB)),
+          Icon(Icons.drag_indicator, size: 18, color: AppColors.gray300),
         ),
-        DataCell(Text(d, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(p, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(u, style: const TextStyle(fontSize: 13))),
-        DataCell(Text(det, style: const TextStyle(fontSize: 13))),
+        DataCell(Text(d, style: AppTextStyles.bodySmall)),
+        DataCell(Text(p, style: AppTextStyles.bodySmallBold)),
+        DataCell(Text(u, style: AppTextStyles.bodySmall)),
+        DataCell(Text(det, style: AppTextStyles.bodySmall)),
       ],
     );
   }
 }
 
-/* -------------------- MODULES -------------------- */
 class ModulesTab extends StatelessWidget {
   const ModulesTab({super.key});
 
@@ -541,48 +449,42 @@ class ModulesTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade100),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Modules',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-              const SizedBox(height: 16),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  'Sales',
-                  'Purchases',
-                  'Inventory',
-                  'Accounting',
-                  'Reports',
-                  'Manufacturing',
-                ].map((m) => _module(m)).toList(),
-              ),
-            ],
+        _TabTableWrapper(
+          title: 'Included Modules',
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                'Sales',
+                'Purchases',
+                'Inventory',
+                'Accounting',
+                'Reports',
+                'Manufacturing',
+              ].map((m) => _module(m)).toList(),
+            ),
           ),
         ),
         const SizedBox(height: 24),
-        const Text(
-          'Comments',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-        ),
+        Text('Comments', style: AppTextStyles.h3),
         const SizedBox(height: 12),
         TextField(
           maxLines: 3,
+          style: AppTextStyles.bodyMedium,
           decoration: InputDecoration(
             hintText: 'Any additional comments',
+            hintStyle: AppTextStyles.bodySmall,
+            filled: true,
+            fillColor: AppColors.gray50,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+              borderSide: const BorderSide(color: AppColors.gray200),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: AppColors.gray200),
             ),
           ),
         ),
@@ -592,24 +494,51 @@ class ModulesTab extends StatelessWidget {
 
   Widget _module(String name) {
     return Container(
-      width: 250,
+      width: 260,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
+        color: AppColors.successBg,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.success.withOpacity(0.1)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, color: Color(0xFF50CD89), size: 18),
+          const Icon(Icons.check_circle, color: AppColors.success, size: 18),
           const SizedBox(width: 8),
           Text(
             name,
-            style: const TextStyle(
-              color: Color(0xFF2E7D32),
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
+            style: AppTextStyles.bodySmallBold.copyWith(
+              color: AppColors.success,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabTableWrapper extends StatelessWidget {
+  final String title;
+  final Widget child;
+  const _TabTableWrapper({required this.title, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.gray100),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(title, style: AppTextStyles.h3),
+          ),
+          const Divider(height: 1, color: AppColors.gray100),
+          child,
         ],
       ),
     );

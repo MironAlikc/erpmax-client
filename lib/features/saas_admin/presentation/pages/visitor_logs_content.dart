@@ -10,14 +10,13 @@ class VisitorLogsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ДОБАВЛЕНО: Общий Padding для всего контента экрана
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 8), // Небольшой отступ сверху под заголовком
-          // 1. Сетка статистики
+          const SizedBox(height: 8),
+
           const Row(
             children: [
               Expanded(
@@ -25,7 +24,7 @@ class VisitorLogsContent extends StatelessWidget {
                   title: "Total Visitors",
                   value: "1,245",
                   subtitle: "+12% from last week",
-                  color: AppColors.primary, // Используем токены!
+                  color: AppColors.primary,
                 ),
               ),
               SizedBox(width: 20),
@@ -49,10 +48,8 @@ class VisitorLogsContent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 32),
-
-          // 2. Таблица логов
           _buildVisitorTable(),
-          const SizedBox(height: 40), // Отступ снизу
+          const SizedBox(height: 40),
         ],
       ),
     );
@@ -122,7 +119,6 @@ class VisitorLogsContent extends StatelessWidget {
   }
 }
 
-// --- Данные и модель остаются без изменений ---
 class VisitorRecord {
   final String ipAddress;
   final String country;

@@ -12,6 +12,8 @@ class AppButton extends StatelessWidget {
   final bool isExpanded;
   final bool isIconRight;
   final bool isLoading;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const AppButton({
     required this.text,
@@ -21,6 +23,8 @@ class AppButton extends StatelessWidget {
     this.isExpanded = false,
     this.isIconRight = false,
     this.isLoading = false,
+    this.backgroundColor,
+    this.textColor,
     super.key,
   });
 
@@ -28,56 +32,42 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appColors = AppColorExtension.of(context);
-    final (backgroundColor, foregroundColor) = _getColors(theme, appColors);
+
+    var (bg, fg) = _getColors(theme, appColors);
+    if (backgroundColor != null) bg = backgroundColor!;
+    if (textColor != null) fg = textColor!;
 
     return SizedBox(
       width: isExpanded ? double.infinity : null,
-      height: 48,
+      height: 44,
       child: ElevatedButton(
         onPressed: (isLoading || onPressed == null) ? null : onPressed,
-        style:
-            ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              disabledBackgroundColor: theme.disabledColor.withValues(
-                alpha: 0.12,
-              ),
-              disabledForegroundColor: theme.disabledColor.withValues(
-                alpha: 0.38,
-              ),
-              elevation: 0,
-              side: type == AppButtonType.outline
-                  ? BorderSide(color: theme.colorScheme.outline)
-                  : null,
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-              ),
-            ).copyWith(
-              overlayColor: WidgetStateProperty.resolveWith((states) {
-                if (states.contains(WidgetState.hovered)) {
-                  return foregroundColor.withValues(alpha: 0.08);
-                }
-                return null;
-              }),
-            ),
-        child: isLoading
-            ? _buildLoadingIndicator(foregroundColor)
-            : _buildContent(foregroundColor),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: bg,
+          foregroundColor: fg,
+          elevation: 0,
+          side: type == AppButtonType.outline
+              ? BorderSide(color: backgroundColor ?? theme.colorScheme.primary)
+              : null,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
+          ),
+        ),
+        child: isLoading ? _buildLoadingIndicator(fg) : _buildContent(fg),
       ),
     );
   }
 
   Widget _buildContent(Color contentColor) {
-    final content = [
-      if (icon != null) Icon(icon, size: 20),
+    final List<Widget> content = [
+      if (icon != null) Icon(icon, size: 18),
       if (icon != null) const SizedBox(width: 8),
       Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
       ),
     ];
-
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,10 +77,10 @@ class AppButton extends StatelessWidget {
 
   Widget _buildLoadingIndicator(Color color) {
     return SizedBox(
-      height: 20,
-      width: 20,
+      height: 18,
+      width: 18,
       child: CircularProgressIndicator(
-        strokeWidth: 2.5,
+        strokeWidth: 2,
         valueColor: AlwaysStoppedAnimation<Color>(color),
       ),
     );
@@ -100,10 +90,8 @@ class AppButton extends StatelessWidget {
     ThemeData theme,
     AppColorExtension appColors,
   ) {
-    if (onPressed == null) {
-      return (theme.disabledColor.withValues(alpha: 0.12), theme.disabledColor);
-    }
-
+    if (onPressed == null)
+      return (theme.disabledColor.withOpacity(0.12), theme.disabledColor);
     return switch (type) {
       AppButtonType.primary => (theme.colorScheme.primary, Colors.white),
       AppButtonType.primaryDark => (appColors.primaryDark, Colors.white),

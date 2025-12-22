@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 
-// --- Модель ---
 class ModuleModel {
   final String name;
   final List<String> packages;
@@ -14,11 +10,11 @@ class ModuleModel {
   final double price;
   final String description;
 
-  const ModuleModel(
-    this.name,
-    this.packages,
-    this.version,
-    this.isActive, {
+  const ModuleModel({
+    required this.name,
+    required this.packages,
+    required this.version,
+    required this.isActive,
     this.price = 0,
     this.description = "Standard ERP module with full functionality.",
   });
@@ -29,40 +25,60 @@ class ModuleManagementContent extends StatelessWidget {
 
   static const List<ModuleModel> _modules = [
     ModuleModel(
-      "Accounting",
-      ["Starter", "Professional", "Enterprise"],
-      "v 2.1.0",
-      true,
+      name: "Accounting",
+      packages: ["Starter", "Professional", "Enterprise"],
+      version: "v 2.1.0",
+      isActive: true,
     ),
-    ModuleModel("Inventory", ["Professional", "Enterprise"], "v 1.5.2", true),
     ModuleModel(
-      "Sales",
-      ["Starter", "Professional", "Enterprise"],
-      "v 2.0.1",
-      true,
+      name: "Inventory",
+      packages: ["Professional", "Enterprise"],
+      version: "v 1.5.2",
+      isActive: true,
     ),
-    ModuleModel("Purchases", ["Professional", "Enterprise"], "v 1.8.0", true),
-    ModuleModel("HR & Payroll", ["Enterprise"], "v 1.0.0", false, price: 150),
-    ModuleModel("CRM", ["Professional", "Enterprise"], "v 1.2.0", true),
-    ModuleModel("AI Analytics", ["Enterprise"], "v 0.9.5", true),
-    ModuleModel("SaaS Control", ["Enterprise"], "v 1.1.0", true),
+    ModuleModel(
+      name: "Sales",
+      packages: ["Starter", "Professional", "Enterprise"],
+      version: "v 2.0.1",
+      isActive: true,
+    ),
+    ModuleModel(
+      name: "HR & Payroll",
+      packages: ["Enterprise"],
+      version: "v 1.0.0",
+      isActive: false,
+      price: 150,
+    ),
+    ModuleModel(
+      name: "CRM",
+      packages: ["Professional", "Enterprise"],
+      version: "v 1.2.0",
+      isActive: true,
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.gray50, // Фон как на фото
+      backgroundColor: const Color(0xFFF8FAFC),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppDesign.pagePadding),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [_buildTableContainer(context)],
+          children: [
+            const Text(
+              "Module Management",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            _buildTableContainer(context),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: AppColors.activeGreen,
-        child: const Icon(Icons.add, color: Colors.white, size: 32),
+        backgroundColor: const Color(0xFF00C58D),
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
     );
   }
@@ -70,12 +86,12 @@ class ModuleManagementContent extends StatelessWidget {
   Widget _buildTableContainer(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-        border: Border.all(color: AppColors.gray200),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -84,7 +100,7 @@ class ModuleManagementContent extends StatelessWidget {
       child: ErpMaxDataTable<ModuleModel>(
         onRowTap: (item) => _showModuleDetails(context, item),
         columns: [
-          ErpMaxColumn(title: "Module Name", weight: 0.25, isSortable: true),
+          ErpMaxColumn(title: "Module Name", weight: 0.25),
           ErpMaxColumn(title: "Assigned Packages", weight: 0.35),
           ErpMaxColumn(title: "Version", weight: 0.15),
           ErpMaxColumn(title: "Status", weight: 0.15),
@@ -98,14 +114,15 @@ class ModuleManagementContent extends StatelessWidget {
         rowBuilder: (item) => [
           Text(
             item.name,
-            style: AppTextStyles.labelStyle.copyWith(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
+              color: Color(0xFF1E293B),
             ),
           ),
           _buildPackageBadges(item.packages),
-          Text(item.version, style: AppTextStyles.bodySmall),
+          Text(item.version, style: const TextStyle(color: Color(0xFF64748B))),
           StatusBadge(isActive: item.isActive),
-          const Icon(Icons.more_horiz, color: AppColors.gray400),
+          const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
         ],
       ),
     );
@@ -125,7 +142,7 @@ class ModuleManagementContent extends StatelessWidget {
       barrierDismissible: true,
       barrierLabel: '',
       barrierColor: Colors.black.withOpacity(0.4),
-      transitionDuration: AppDesign.sidebarDuration,
+      transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, __, ___) => Align(
         alignment: Alignment.centerRight,
         child: ModuleDetailsSidePanel(module: module),
@@ -134,30 +151,32 @@ class ModuleManagementContent extends StatelessWidget {
         position: Tween<Offset>(
           begin: const Offset(1, 0),
           end: Offset.zero,
-        ).animate(CurvedAnimation(parent: anim, curve: AppDesign.defaultCurve)),
+        ).animate(anim),
         child: child,
       ),
     );
   }
 }
 
-// --- Status Badge ---
 class StatusBadge extends StatelessWidget {
   final bool isActive;
   const StatusBadge({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
+    final color = isActive ? const Color(0xFF00C58D) : const Color(0xFF64748B);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.success : AppColors.gray100,
-        borderRadius: BorderRadius.circular(AppDesign.chipRadius),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Text(
         isActive ? "Active" : "Inactive",
-        style: AppTextStyles.bodySmall.copyWith(
-          color: isActive ? AppColors.white : AppColors.textSecondary,
+        style: TextStyle(
+          color: color,
+          fontSize: 11,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -165,7 +184,6 @@ class StatusBadge extends StatelessWidget {
   }
 }
 
-// --- Package Badge ---
 class PackageBadge extends StatelessWidget {
   final String label;
   const PackageBadge({super.key, required this.label});
@@ -175,22 +193,22 @@ class PackageBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppDesign.chipRadius),
-        border: Border.all(color: AppColors.gray300),
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Text(
         label,
-        style: AppTextStyles.bodySmall.copyWith(
+        style: const TextStyle(
           fontSize: 10,
-          fontWeight: FontWeight.bold,
+          color: Color(0xFF475569),
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
   }
 }
 
-// --- SIDE PANEL ---
 class ModuleDetailsSidePanel extends StatefulWidget {
   final ModuleModel module;
   const ModuleDetailsSidePanel({super.key, required this.module});
@@ -204,30 +222,32 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Material(
-      color: AppColors.white,
+      elevation: 16,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.5, // 50% экрана
-        decoration: const BoxDecoration(
-          border: Border(left: BorderSide(color: AppColors.gray200)),
-        ),
+        width: size.width * 0.45,
+        height: size.height,
+        color: Colors.white,
         child: Column(
           children: [
             _buildHeader(context),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(AppDesign.formInnerPadding),
+                padding: const EdgeInsets.all(32),
                 child: Column(
                   children: [
-                    _buildTopButtons(context),
+                    _buildActionButtons(),
                     const SizedBox(height: 32),
-                    _buildInfoCards(),
-                    const SizedBox(height: 40),
+                    _buildModuleInfoCard(),
+                    const SizedBox(height: 32),
                     _buildTabs(),
+                    const Divider(height: 1),
                     const SizedBox(height: 24),
                     _tabIndex == 0
                         ? _buildPackagesGrid()
-                        : _buildHistoryTable(),
+                        : const Center(child: Text("History Logs")),
                   ],
                 ),
               ),
@@ -240,191 +260,99 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(40, 24, 24, 0),
+      padding: const EdgeInsets.fromLTRB(32, 24, 24, 16),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xFFE2E8F0))),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Module Profile",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        OutlinedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.edit_outlined, size: 18),
+          label: const Text("Edit Module"),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: const Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(width: 12),
+        OutlinedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.print_outlined, size: 18),
+          label: const Text("Print"),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: const Color(0xFF1E293B),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildModuleInfoCard() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Module Details", style: AppTextStyles.h2),
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close),
+              Text(
+                widget.module.name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              StatusBadge(isActive: widget.module.isActive),
             ],
           ),
           const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: const BoxDecoration(
-              color: AppColors.sidebarBackground,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "1. Module Details",
-                  style: AppTextStyles.sidebarActive.copyWith(fontSize: 12),
-                ),
-                const SizedBox(width: 8),
-                const Icon(Icons.close, color: Colors.white54, size: 14),
-              ],
-            ),
+          _infoRow(Icons.vpn_key_outlined, "Version: ${widget.module.version}"),
+          _infoRow(
+            Icons.monetization_on_outlined,
+            "Base Price: ${widget.module.price} SAR",
           ),
-          const Divider(height: 1, color: AppColors.gray300),
+          const Divider(height: 32),
+          Text(
+            widget.module.description,
+            style: const TextStyle(color: Color(0xFF64748B), height: 1.5),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildTopButtons(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        _actionBtn(
-          Icons.edit_outlined,
-          "Edit Module",
-          () => _showEditDialog(context),
-        ),
-        const SizedBox(width: 12),
-        _actionBtn(Icons.print_outlined, "Print Profile", () {}),
-      ],
-    );
-  }
-
-  Widget _actionBtn(IconData icon, String label, VoidCallback onTap) {
-    return OutlinedButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon, size: 18),
-      label: Text(label),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.textPrimary,
-        side: const BorderSide(color: AppColors.gray300),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfoCards() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Левая карточка
-        Expanded(
-          flex: 3,
-          child: _card(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(widget.module.name, style: AppTextStyles.h1),
-                    StatusBadge(isActive: widget.module.isActive),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _iconLabel(
-                  Icons.code,
-                  widget.module.version,
-                  Icons.payments_outlined,
-                  "${widget.module.price} SAR",
-                ),
-                const SizedBox(height: 8),
-                _iconLabel(
-                  Icons.info_outline,
-                  "Namaa Systems",
-                  Icons.history,
-                  "Last Update: 2023-12-15",
-                ),
-                const Divider(height: 32),
-                Text(
-                  widget.module.description,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 20),
-        // Правая карточка (Статистика)
-        Expanded(
-          flex: 2,
-          child: _card(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("MODULE STATS", style: AppTextStyles.tableHeader),
-                const SizedBox(height: 20),
-                _statRow("Active Installs", "245"),
-                _statRow("Usage Rate", "85%"),
-                _statRow("Error Rate", "0.01%", color: AppColors.success),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _card(Widget child) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: AppColors.gray50,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
-      ),
-      child: child,
-    );
-  }
-
-  Widget _iconLabel(IconData i1, String t1, IconData i2, String t2) {
-    return Row(
-      children: [
-        Icon(i1, size: 14, color: AppColors.textSecondary),
-        const SizedBox(width: 4),
-        Text(
-          t1,
-          style: AppTextStyles.bodySmall.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(width: 16),
-        Icon(i2, size: 14, color: AppColors.textSecondary),
-        const SizedBox(width: 4),
-        Text(
-          t2,
-          style: AppTextStyles.bodySmall.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _statRow(String label, String val, {Color? color}) {
+  Widget _infoRow(IconData icon, String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.bodySmall),
-          Text(
-            val,
-            style: AppTextStyles.labelStyle.copyWith(
-              fontWeight: FontWeight.w900,
-              color: color,
-            ),
-          ),
+          Icon(icon, size: 16, color: const Color(0xFF64748B)),
+          const SizedBox(width: 8),
+          Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -433,176 +361,71 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
   Widget _buildTabs() {
     return Row(
       children: [
-        _tabBtn("Assigned Packages", 0),
-        const SizedBox(width: 24),
-        _tabBtn("history", 1),
+        _tabItem("Assigned Packages", 0),
+        _tabItem("Update History", 1),
       ],
     );
   }
 
-  Widget _tabBtn(String label, int index) {
+  Widget _tabItem(String label, int index) {
     bool active = _tabIndex == index;
     return InkWell(
       onTap: () => setState(() => _tabIndex = index),
-      child: Column(
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.labelStyle.copyWith(
-              color: active
-                  ? AppColors.sidebarBackground
-                  : AppColors.textSecondary,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: active ? const Color(0xFF0F172A) : Colors.transparent,
+              width: 2,
             ),
           ),
-          if (active)
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              height: 2,
-              width: 40,
-              color: AppColors.sidebarBackground,
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPackagesGrid() {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      children: widget.module.packages
-          .map(
-            (p) => Container(
-              width: 240,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.gray200),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.layers_outlined,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 12),
-                  Text(p, style: AppTextStyles.labelStyle),
-                  const Spacer(),
-                  Icon(
-                    Icons.check_circle_outline,
-                    color: AppColors.success,
-                    size: 18,
-                  ),
-                ],
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _buildHistoryTable() {
-    return const Center(child: Text("History logs content here..."));
-  }
-
-  void _showEditDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (c) => EditModuleDialog(module: widget.module),
-    );
-  }
-}
-
-// --- EDIT DIALOG ---
-class EditModuleDialog extends StatelessWidget {
-  final ModuleModel module;
-  const EditModuleDialog({super.key, required this.module});
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        width: 500,
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Edit Module", style: AppTextStyles.h2),
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            _input("Module Name (En)", module.name),
-            _input("Module Name (Ar)", " Module Nam "),
-            _input("Version", module.version),
-            _input("Price", module.price.toString()),
-            _input("Status", "Inactive", isDropdown: true),
-            _input("Description", module.description, maxLines: 3),
-            const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.sidebarBackground,
-                  ),
-                  child: const Text("Save"),
-                ),
-              ],
-            ),
-          ],
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontWeight: active ? FontWeight.bold : FontWeight.normal,
+            color: active ? const Color(0xFF0F172A) : const Color(0xFF64748B),
+          ),
         ),
       ),
     );
   }
 
-  Widget _input(
-    String label,
-    String val, {
-    bool isDropdown = false,
-    int maxLines = 1,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 140,
-            child: Text(label, style: AppTextStyles.labelStyle),
-          ),
-          Expanded(
-            child: TextField(
-              maxLines: maxLines,
-              decoration: InputDecoration(
-                hintText: val,
-                suffixIcon: isDropdown ? const Icon(Icons.unfold_more) : null,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-          ),
-        ],
+  Widget _buildPackagesGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 3,
       ),
+      itemCount: widget.module.packages.length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.layers_outlined,
+                size: 18,
+                color: Color(0xFF64748B),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                widget.module.packages[index],
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

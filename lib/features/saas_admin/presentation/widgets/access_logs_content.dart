@@ -1,25 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/design/app_colors.dart';
+import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/design/app_design.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
-
-class AccessLogRecord {
-  final String user;
-  final String company;
-  final String ipAddress;
-  final String device;
-  final String date;
-  final bool isSuccess;
-
-  const AccessLogRecord({
-    required this.user,
-    required this.company,
-    required this.ipAddress,
-    required this.device,
-    required this.date,
-    required this.isSuccess,
-  });
-}
+import 'package:erpmax_client/core/models/erp_models.dart';
 
 class AccessLogsContent extends StatelessWidget {
   const AccessLogsContent({super.key});
@@ -27,66 +13,52 @@ class AccessLogsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [_buildLogsTable(), const SizedBox(height: 40)],
+        children: [
+          _buildLogsTable(context),
+          const SizedBox(height: AppDesign.sectionGap),
+        ],
       ),
     );
   }
 
-  Widget _buildLogsTable() {
+  Widget _buildLogsTable(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppDesign.cardRadius),
+        border: Border.all(color: AppColors.gray200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(24),
-            child: Text(
-              "Access Logs",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Text("Access Logs", style: AppTextStyles.h2),
           ),
           ErpMaxDataTable<AccessLogRecord>(
             items: _mockAccessLogs,
+            minWidth: 1000,
             columns: [
-              ErpMaxColumn(title: "User", weight: 0.2),
-              ErpMaxColumn(title: "Company Name", weight: 0.2),
+              ErpMaxColumn(title: "User", weight: 0.2, isSortable: true),
+              ErpMaxColumn(title: "Company", weight: 0.2),
               ErpMaxColumn(title: "IP Address", weight: 0.15),
               ErpMaxColumn(title: "Device", weight: 0.2),
-              ErpMaxColumn(title: "Date", weight: 0.15),
-              ErpMaxColumn(title: "Status", weight: 0.1),
+              ErpMaxColumn(title: "Date", weight: 0.15, isSortable: true),
+              ErpMaxColumn(
+                title: "Status",
+                weight: 0.1,
+                textAlign: TextAlign.center,
+              ),
             ],
             rowBuilder: (item) => [
-              Text(
-                item.user,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF1E293B),
-                ),
-              ),
-              Text(
-                item.company,
-                style: const TextStyle(color: Color(0xFF64748B)),
-              ),
-              Text(
-                item.ipAddress,
-                style: const TextStyle(color: Color(0xFF1E293B)),
-              ),
-              Text(
-                item.device,
-                style: const TextStyle(color: Color(0xFF64748B)),
-              ),
-              Text(item.date, style: const TextStyle(color: Color(0xFF64748B))),
+              Text(item.user, style: AppTextStyles.bodyMediumBold),
+              Text(item.company, style: AppTextStyles.bodySmall),
+              Text(item.ipAddress, style: AppTextStyles.bodyMedium),
+              Text(item.device, style: AppTextStyles.bodySmall),
+              Text(item.date, style: AppTextStyles.bodySmall),
               item.isSuccess
                   ? AppStatusChip.success("Success")
                   : AppStatusChip.danger("Failed"),
@@ -98,7 +70,6 @@ class AccessLogsContent extends StatelessWidget {
   }
 }
 
-// Данные на основе вашего скриншота
 final List<AccessLogRecord> _mockAccessLogs = [
   const AccessLogRecord(
     user: "Ahmed Mohamed",

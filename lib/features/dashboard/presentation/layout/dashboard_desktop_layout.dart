@@ -14,30 +14,33 @@ class DashboardDesktopLayout extends StatefulWidget {
 class _DashboardDesktopLayoutState extends State<DashboardDesktopLayout> {
   bool _isExpanded = true;
 
+  void _toggleSidebar() {
+    setState(() => _isExpanded = !_isExpanded);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
-          // Боковое меню (Sidebar)
           AppSidebar(
             isExpanded: _isExpanded,
-            selectedIndex: 0, // Позже привяжем к GoRouter
+            selectedIndex: 0,
+            onToggle: _toggleSidebar,
             onSelect: (index) {},
           ),
           Expanded(
             child: Column(
               children: [
-                // 1. УНИВЕРСАЛЬНАЯ ВЕРХНЯЯ ПАНЕЛЬ
-                // Она будет всегда на месте при переходах
-                const TopNavigationBar(isMobile: false),
-
-                // 2. КОНТЕНТ СТРАНИЦЫ
+                TopNavigationBar(
+                  isMobile: false,
+                  isSidebarExpanded: _isExpanded,
+                  onToggleSidebar: _toggleSidebar,
+                ),
                 Expanded(
                   child: Container(
                     color: const Color(0xFFF9FAFB),
-                    child: widget
-                        .child, // Сюда подставляется AccountingRootPage и др.
+                    child: widget.child,
                   ),
                 ),
               ],

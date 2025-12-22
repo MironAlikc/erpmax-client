@@ -1,3 +1,5 @@
+// lib/features/subscription/presentation/pages/subscription_management_view.dart
+
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_colors.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
@@ -25,8 +27,6 @@ class SubscriberModel {
 
 class SubscribersContent extends StatelessWidget {
   const SubscribersContent({super.key});
-
-  // Данные точно как на скриншоте
   static const List<SubscriberModel> _subscribers = [
     SubscriberModel(
       companyName: "Tech Solutions Co.",
@@ -68,7 +68,7 @@ class SubscribersContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -91,17 +91,40 @@ class SubscribersContent extends StatelessWidget {
               child: Text("Subscribers", style: AppTextStyles.h2),
             ),
             ErpMaxDataTable<SubscriberModel>(
-              items: _subscribers,
+              items: _subscribers, // Теперь имя определено выше
+              minWidth: 1100,
               columns: [
                 ErpMaxColumn(
                   title: "Company Name",
-                  weight: 0.3,
+                  weight: 0.35,
                   isSortable: true,
+                  sortKey: 'company',
                 ),
-                ErpMaxColumn(title: "Plan Name", weight: 0.2, isSortable: true),
-                ErpMaxColumn(title: "Status", weight: 0.2, isSortable: true),
-                ErpMaxColumn(title: "Date", weight: 0.15, isSortable: true),
-                ErpMaxColumn(title: "Users", weight: 0.1, isSortable: true),
+                ErpMaxColumn(
+                  title: "Plan Name",
+                  weight: 0.15,
+                  isSortable: true,
+                  sortKey: 'plan',
+                ),
+                ErpMaxColumn(
+                  title: "Status",
+                  weight: 0.20,
+                  isSortable: true,
+                  sortKey: 'status',
+                ),
+                ErpMaxColumn(
+                  title: "Date",
+                  weight: 0.15,
+                  isSortable: true,
+                  sortKey: 'date',
+                ),
+                ErpMaxColumn(
+                  title: "Users",
+                  weight: 0.10,
+                  isSortable: true,
+                  sortKey: 'users',
+                  textAlign: TextAlign.center,
+                ),
                 ErpMaxColumn(
                   title: "Actions",
                   weight: 0.05,
@@ -113,12 +136,17 @@ class SubscribersContent extends StatelessWidget {
                   item.companyName,
                   style: AppTextStyles.labelStyle.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: const Color(0xFF1E293B),
                   ),
                 ),
                 Text(item.planName, style: AppTextStyles.bodyMedium),
                 _SubscriptionStatusBadge(status: item.status),
                 Text(item.date, style: AppTextStyles.bodyMedium),
-                Text(item.users.toString(), style: AppTextStyles.bodyMedium),
+                Text(
+                  item.users.toString(),
+                  style: AppTextStyles.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
                 const Icon(Icons.more_horiz, color: AppColors.gray400),
               ],
             ),
@@ -129,7 +157,7 @@ class SubscribersContent extends StatelessWidget {
   }
 }
 
-// --- Специализированный бейдж статуса подписки ---
+// --- Бейдж статуса ---
 class _SubscriptionStatusBadge extends StatelessWidget {
   final SubscriberStatus status;
   const _SubscriptionStatusBadge({required this.status});
@@ -142,18 +170,18 @@ class _SubscriptionStatusBadge extends StatelessWidget {
 
     switch (status) {
       case SubscriberStatus.active:
-        bgColor = const Color(0xFF0F172A); // Темно-синий/черный как на фото
+        bgColor = const Color(0xFF0F172A);
         textColor = Colors.white;
-        label = "Active Subscriptions";
+        label = "Active";
         break;
       case SubscriberStatus.expired:
-        bgColor = const Color(0xFFFEE2E2); // Светло-красный
-        textColor = const Color(0xFFEF4444); // Красный
+        bgColor = const Color(0xFFFEE2E2);
+        textColor = const Color(0xFFEF4444);
         label = "Expired";
         break;
       case SubscriberStatus.pending:
-        bgColor = const Color(0xFFF1F5F9); // Светло-серый
-        textColor = const Color(0xFF64748B); // Серый
+        bgColor = const Color(0xFFF1F5F9);
+        textColor = const Color(0xFF64748B);
         label = "Pending";
         break;
     }

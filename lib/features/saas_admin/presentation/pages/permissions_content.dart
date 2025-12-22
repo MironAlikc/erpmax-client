@@ -7,7 +7,7 @@ class PermissionRecord {
   final String roleName;
   final String description;
   final int usersCount;
-  final String type; // System or Custom
+  final String type;
 
   const PermissionRecord({
     required this.roleName,
@@ -25,7 +25,7 @@ class PermissionsContent extends StatefulWidget {
 }
 
 class _PermissionsContentState extends State<PermissionsContent> {
-  int _innerTabIndex = 0; // 0: Roles, 1: Resellers
+  int _innerTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +35,10 @@ class _PermissionsContentState extends State<PermissionsContent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          
-          // 1. Внутренние табы (как на фото)
           _buildInnerTabs(),
           const SizedBox(height: 24),
-
-          // 2. Строка поиска и кнопка Add Role
           _buildActionRow(),
           const SizedBox(height: 24),
-
-          // 3. Таблица прав
           _buildRolesTable(),
           const SizedBox(height: 40),
         ],
@@ -81,7 +75,11 @@ class _PermissionsContentState extends State<PermissionsContent> {
         ),
         child: Row(
           children: [
-            Icon(icon, size: 18, color: isSelected ? Colors.white : const Color(0xFF64748B)),
+            Icon(
+              icon,
+              size: 18,
+              color: isSelected ? Colors.white : const Color(0xFF64748B),
+            ),
             const SizedBox(width: 8),
             Text(
               label,
@@ -127,7 +125,9 @@ class _PermissionsContentState extends State<PermissionsContent> {
             backgroundColor: const Color(0xFF0F172A),
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             elevation: 0,
           ),
         ),
@@ -150,7 +150,10 @@ class _PermissionsContentState extends State<PermissionsContent> {
               children: [
                 Icon(Icons.shield_outlined, size: 20, color: Color(0xFF1E293B)),
                 SizedBox(width: 12),
-                Text("Roles List", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(
+                  "Roles List",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
@@ -161,16 +164,33 @@ class _PermissionsContentState extends State<PermissionsContent> {
               ErpMaxColumn(title: "Description", weight: 0.4),
               ErpMaxColumn(title: "Users Count", weight: 0.15),
               ErpMaxColumn(title: "Type", weight: 0.1),
-              ErpMaxColumn(title: "Actions", weight: 0.1, textAlign: TextAlign.right),
+              ErpMaxColumn(
+                title: "Actions",
+                weight: 0.1,
+                textAlign: TextAlign.right,
+              ),
             ],
             rowBuilder: (item) => [
-              Text(item.roleName, style: const TextStyle(fontWeight: FontWeight.w700)),
-              Text(item.description, style: const TextStyle(color: Color(0xFF64748B))),
+              Text(
+                item.roleName,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              Text(
+                item.description,
+                style: const TextStyle(color: Color(0xFF64748B)),
+              ),
               Row(
                 children: [
-                  const Icon(Icons.people_outline, size: 16, color: Color(0xFF94A3B8)),
+                  const Icon(
+                    Icons.people_outline,
+                    size: 16,
+                    color: Color(0xFF94A3B8),
+                  ),
                   const SizedBox(width: 6),
-                  Text(item.usersCount.toString(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                  Text(
+                    item.usersCount.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
               AppStatusChip.neutral(item.type),
@@ -184,7 +204,22 @@ class _PermissionsContentState extends State<PermissionsContent> {
 }
 
 final List<PermissionRecord> _mockRoles = [
-  const PermissionRecord(roleName: "Super Admin", description: "Full access to all system features", usersCount: 2, type: "System"),
-  const PermissionRecord(roleName: "Support Agent", description: "Access to subscriber details and logs", usersCount: 5, type: "Custom"),
-  const PermissionRecord(roleName: "Sales Manager", description: "Access to reports and revenue data", usersCount: 3, type: "Custom"),
+  const PermissionRecord(
+    roleName: "Super Admin",
+    description: "Full access to all system features",
+    usersCount: 2,
+    type: "System",
+  ),
+  const PermissionRecord(
+    roleName: "Support Agent",
+    description: "Access to subscriber details and logs",
+    usersCount: 5,
+    type: "Custom",
+  ),
+  const PermissionRecord(
+    roleName: "Sales Manager",
+    description: "Access to reports and revenue data",
+    usersCount: 3,
+    type: "Custom",
+  ),
 ];
