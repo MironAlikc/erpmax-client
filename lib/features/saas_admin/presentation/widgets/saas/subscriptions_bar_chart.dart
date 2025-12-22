@@ -9,8 +9,13 @@ class SubscriptionsBarChart extends StatelessWidget {
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
-        maxY: 300,
-        barTouchData: BarTouchData(enabled: true),
+        maxY: 350,
+        barTouchData: BarTouchData(
+          enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            getTooltipColor: (_) => const Color(0xFF10192D),
+          ),
+        ),
         titlesData: FlTitlesData(
           show: true,
           topTitles: const AxisTitles(
@@ -22,10 +27,10 @@ class SubscriptionsBarChart extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 40,
+              reservedSize: 35,
               getTitlesWidget: (value, meta) => Text(
                 value.toInt().toString(),
-                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11),
               ),
             ),
           ),
@@ -42,13 +47,14 @@ class SubscriptionsBarChart extends StatelessWidget {
                   'Jun',
                   'Jul',
                 ];
+                if (value.toInt() >= months.length) return const SizedBox();
                 return Padding(
-                  padding: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     months[value.toInt()],
                     style: const TextStyle(
                       color: Color(0xFF94A3B8),
-                      fontSize: 12,
+                      fontSize: 11,
                     ),
                   ),
                 );
@@ -60,7 +66,7 @@ class SubscriptionsBarChart extends StatelessWidget {
           show: true,
           drawVerticalLine: false,
           getDrawingHorizontalLine: (v) =>
-              FlLine(color: const Color(0xFFF1F5F9)),
+              FlLine(color: const Color(0xFFF1F5F9), strokeWidth: 1),
         ),
         borderData: FlBorderData(show: false),
         barGroups: [
@@ -82,16 +88,12 @@ class SubscriptionsBarChart extends StatelessWidget {
       barRods: [
         BarChartRodData(
           toY: y,
-          color: const Color(0xFF10192D), // Темный глубокий цвет из дизайна
-          width: 32, // Ширина колонок как на фото
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(4),
-            topRight: Radius.circular(4),
-          ),
-          // Добавляем фоновую подложку для колонок (как на макете)
+          color: const Color(0xFF10192D),
+          width: 32,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 300,
+            toY: 350,
             color: const Color(0xFFF8FAFC),
           ),
         ),

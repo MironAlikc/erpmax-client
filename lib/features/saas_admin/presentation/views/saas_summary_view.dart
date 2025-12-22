@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/widgets/common/app_stat_card.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/saas/revenue_line_chart.dart';
+import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/widgets/saas/subscriptions_bar_chart.dart';
 import 'package:flutter/material.dart';
 

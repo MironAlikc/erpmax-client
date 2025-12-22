@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
 
 class RecentTransactionsTable extends StatelessWidget {
   const RecentTransactionsTable({super.key});
@@ -18,64 +17,63 @@ class RecentTransactionsTable extends StatelessWidget {
         children: [
           const Text(
             "Recent Transactions",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           const Text(
             "Latest financial activities and journal entries.",
-            style: TextStyle(color: Color(0xFF64748B), fontSize: 13),
+            style: TextStyle(color: Color(0xFF64748B), fontSize: 14),
           ),
           const SizedBox(height: 24),
           Table(
             columnWidths: const {
-              0: FlexColumnWidth(1.2),
-              1: FlexColumnWidth(1),
-              2: FlexColumnWidth(2.5),
-              3: FlexColumnWidth(1.2),
-              4: FlexColumnWidth(1),
+              0: FlexColumnWidth(1.2), // Reference
+              1: FlexColumnWidth(1), // Date
+              2: FlexColumnWidth(2.5), // Description
+              3: FlexColumnWidth(1.2), // Amount
+              4: FlexColumnWidth(0.8), // Status
             },
             children: [
-              _headerRow(),
-              _dataRow(
+              _header(),
+              _row(
                 "JV-2024-001",
                 "2024-03-20",
                 "Office Rent Payment",
                 "-\$5,000",
                 "Posted",
-                isNegative: true,
+                Colors.red,
               ),
-              _dataRow(
+              _row(
                 "JV-2024-002",
                 "2024-03-19",
                 "Client Invoice #INV-001",
                 "+\$12,500",
                 "Posted",
-                isNegative: false,
+                Colors.green,
               ),
-              _dataRow(
+              _row(
                 "JV-2024-003",
                 "2024-03-18",
                 "Office Supplies",
                 "-\$450",
                 "Draft",
-                isNegative: true,
-                isDraft: true,
+                Colors.orange,
               ),
-              _dataRow(
+              _row(
                 "JV-2024-004",
                 "2024-03-18",
                 "Consulting Services",
                 "+\$3,000",
                 "Posted",
-                isNegative: false,
+                Colors.green,
               ),
-              _dataRow(
+              _row(
                 "JV-2024-005",
                 "2024-03-17",
                 "Internet Bill",
                 "-\$120",
                 "Posted",
-                isNegative: true,
+                Colors.red,
               ),
             ],
           ),
@@ -84,75 +82,49 @@ class RecentTransactionsTable extends StatelessWidget {
     );
   }
 
-  TableRow _headerRow() {
-    return const TableRow(
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9))),
+  TableRow _header() => const TableRow(
+    decoration: BoxDecoration(
+      border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9))),
+    ),
+    children: [
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Text("Reference", style: _headStl),
       ),
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            "Reference",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            "Date",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            "Description",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            "Amount",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            "Status",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Text("Date", style: _headStl),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Text("Description", style: _headStl),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Text("Amount", style: _headStl),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Text("Status", style: _headStl),
+      ),
+    ],
+  );
 
-  TableRow _dataRow(
+  static const _headStl = TextStyle(
+    color: Color(0xFF64748B),
+    fontWeight: FontWeight.w600,
+    fontSize: 13,
+  );
+
+  TableRow _row(
     String ref,
     String date,
     String desc,
-    String amount,
-    String status, {
-    bool isNegative = false,
-    bool isDraft = false,
-  }) {
+    String amt,
+    String status,
+    Color amtCol,
+  ) {
+    final bool isPosted = status == "Posted";
     return TableRow(
       children: [
         Padding(
@@ -161,7 +133,7 @@ class RecentTransactionsTable extends StatelessWidget {
             ref,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E293B),
+              color: Color(0xFF0F172A),
             ),
           ),
         ),
@@ -179,22 +151,31 @@ class RecentTransactionsTable extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            amount,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: isNegative
-                  ? const Color(0xFFEF4444)
-                  : const Color(0xFF22C55E),
-            ),
+            amt,
+            style: TextStyle(color: amtCol, fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: isDraft
-                ? AppStatusChip.warning(status)
-                : AppStatusChip.success(status),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: isPosted
+                  ? const Color(0xFFF0FDF4)
+                  : const Color(0xFFFEF3C7),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              status,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isPosted
+                    ? const Color(0xFF166534)
+                    : const Color(0xFF92400E),
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ],

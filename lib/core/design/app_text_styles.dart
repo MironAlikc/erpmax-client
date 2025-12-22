@@ -1,8 +1,11 @@
+// lib/core/design/app_text_styles.dart
+
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 abstract final class AppTextStyles {
   static const String fontFamily = 'Inter';
+
   static const TextStyle base = TextStyle(
     fontFamily: fontFamily,
     color: AppColors.textPrimary,
@@ -41,11 +44,19 @@ abstract final class AppTextStyles {
     height: 1.4,
   );
 
+  static final TextStyle bodyMediumBold = bodyMedium.copyWith(
+    fontWeight: FontWeight.w700,
+  );
+
   static final TextStyle bodySmall = base.copyWith(
     fontSize: 13,
     color: AppColors.textSecondary,
     fontWeight: FontWeight.w400,
     height: 1.3,
+  );
+
+  static final TextStyle bodySmallBold = bodySmall.copyWith(
+    fontWeight: FontWeight.w600,
   );
 
   static final TextStyle buttonText = base.copyWith(
@@ -81,7 +92,6 @@ abstract final class AppTextStyles {
     height: 1.1,
   );
 
-  // --- Sidebar ---
   static final TextStyle sidebarInactive = base.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w500,

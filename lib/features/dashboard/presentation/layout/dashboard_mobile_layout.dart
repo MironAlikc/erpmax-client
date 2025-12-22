@@ -10,22 +10,19 @@ class DashboardMobileLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Подключаем ваш Sidebar в Drawer для мобилок
       drawer: Drawer(
         child: AppSidebar(
           isExpanded: true,
           selectedIndex: 0,
+          onToggle: () => Navigator.pop(context),
           onSelect: (index) {
-            // Здесь можно добавить логику закрытия Drawer при нажатии
             Navigator.pop(context);
           },
         ),
       ),
       body: Column(
         children: [
-          // Наша панель сама покажет иконку меню, если isMobile: true
-          const TopNavigationBar(isMobile: true),
-
+          TopNavigationBar(isMobile: true, isSidebarExpanded: true),
           Expanded(child: child),
         ],
       ),

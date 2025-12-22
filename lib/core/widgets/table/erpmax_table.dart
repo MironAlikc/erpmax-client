@@ -1,4 +1,3 @@
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 import 'package:flutter/material.dart';
 
 class ErpMaxColumn {
@@ -38,11 +37,9 @@ class ErpMaxTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colors = AppColorExtension.of(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Если экран шире minWidth, растягиваем таблицу на весь экран
         final double tableWidth = constraints.maxWidth < minWidth
             ? minWidth
             : constraints.maxWidth;
@@ -55,7 +52,7 @@ class ErpMaxTable extends StatelessWidget {
               width: tableWidth,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [_buildHeader(context, colors, theme), ...rows],
+                children: [_buildHeader(context, theme), ...rows],
               ),
             ),
           ),
@@ -64,26 +61,19 @@ class ErpMaxTable extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(
-    BuildContext context,
-    AppColorExtension colors,
-    ThemeData theme,
-  ) {
+  Widget _buildHeader(BuildContext context, ThemeData theme) {
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface, // Адаптивно под тему
-        border: Border(
-          bottom: BorderSide(
-            color: colors.textDisabled.withValues(alpha: 0.1),
-            width: 1.5,
-          ),
+        color: theme.colorScheme.surface,
+        border: const Border(
+          bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1.5),
         ),
       ),
       child: Row(
         children: columns.map((col) {
           return Expanded(
-            flex: (col.weight * 100).toInt(), // Точнее расчет
+            flex: (col.weight * 1000).toInt(), // Увеличен масштаб для точности
             child: InkWell(
               onTap: col.isSortable && col.sortKey != null
                   ? () => onSort?.call(col.sortKey!, !isAscending)
@@ -93,12 +83,15 @@ class ErpMaxTable extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: _getAlignment(col.textAlign),
                   children: [
-                    Text(
-                      col.title.toUpperCase(),
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colors.textSecondary,
-                        letterSpacing: 0.5,
+                    Flexible(
+                      child: Text(
+                        col.title.toUpperCase(),
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF64748B),
+                          letterSpacing: 0.5,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     if (col.isSortable) ...[
@@ -110,7 +103,7 @@ class ErpMaxTable extends StatelessWidget {
                                   : Icons.arrow_downward)
                             : Icons.swap_vert_rounded,
                         size: 14,
-                        color: colors.textDisabled,
+                        color: const Color(0xFF94A3B8),
                       ),
                     ],
                   ],
@@ -146,25 +139,17 @@ class ErpMaxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    Theme.of(context);
-
     return InkWell(
       onTap: onTap,
-      hoverColor: colors.primaryDark.withValues(alpha: 0.05),
       child: Container(
-        height: 60,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: colors.textDisabled.withValues(alpha: 0.05),
-            ),
-          ),
+        height: 64,
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Color(0xFFF8FAFC))),
         ),
         child: Row(
           children: List.generate(cells.length, (index) {
             return Expanded(
-              flex: (columns[index].weight * 100).toInt(),
+              flex: (columns[index].weight * 1000).toInt(),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 alignment: _getCellAlignment(columns[index].textAlign),

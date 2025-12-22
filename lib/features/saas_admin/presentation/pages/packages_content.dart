@@ -26,7 +26,6 @@ class PackageModel {
 class PackagesContent extends StatelessWidget {
   const PackagesContent({super.key});
 
-  // Данные как на скриншоте
   static const List<PackageModel> _packages = [
     PackageModel(
       planName: "Starter",
@@ -54,12 +53,13 @@ class PackagesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = MediaQuery.of(context).size.width < 800;
+
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Основной контейнер таблицы
           Container(
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -74,37 +74,21 @@ class PackagesContent extends StatelessWidget {
               ],
             ),
             clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ErpMaxDataTable<PackageModel>(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: isMobile
+                  ? const BouncingScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+              child: SizedBox(
+                width: isMobile ? 800 : MediaQuery.of(context).size.width - 48,
+                child: ErpMaxDataTable<PackageModel>(
                   items: _packages,
                   columns: [
-                    ErpMaxColumn(
-                      title: "Plan Name",
-                      weight: 0.3,
-                      isSortable: true,
-                    ),
-                    ErpMaxColumn(
-                      title: "Price",
-                      weight: 0.15,
-                      isSortable: true,
-                    ),
-                    ErpMaxColumn(
-                      title: "Users Limit",
-                      weight: 0.15,
-                      isSortable: true,
-                    ),
-                    ErpMaxColumn(
-                      title: "Storage Limit",
-                      weight: 0.15,
-                      isSortable: true,
-                    ),
-                    ErpMaxColumn(
-                      title: "Status",
-                      weight: 0.15,
-                      isSortable: true,
-                    ),
+                    ErpMaxColumn(title: "Plan Name", weight: 0.25),
+                    ErpMaxColumn(title: "Price", weight: 0.15),
+                    ErpMaxColumn(title: "Users Limit", weight: 0.15),
+                    ErpMaxColumn(title: "Storage Limit", weight: 0.15),
+                    ErpMaxColumn(title: "Status", weight: 0.15),
                     ErpMaxColumn(
                       title: "Actions",
                       weight: 0.1,
@@ -112,7 +96,6 @@ class PackagesContent extends StatelessWidget {
                     ),
                   ],
                   rowBuilder: (item) => [
-                    // Plan Name + Popular Tag
                     Row(
                       children: [
                         Text(
@@ -127,7 +110,6 @@ class PackagesContent extends StatelessWidget {
                         ],
                       ],
                     ),
-                    // Price
                     RichText(
                       text: TextSpan(
                         children: [
@@ -139,7 +121,7 @@ class PackagesContent extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: " /month",
+                            text: " /mo",
                             style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -147,17 +129,13 @@ class PackagesContent extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Users Limit
                     Text(item.usersLimit, style: AppTextStyles.bodyMedium),
-                    // Storage Limit
                     Text(item.storageLimit, style: AppTextStyles.bodyMedium),
-                    // Status
                     _StatusBadge(isActive: item.isActive),
-                    // Actions
                     const Icon(Icons.more_horiz, color: AppColors.gray400),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -166,20 +144,19 @@ class PackagesContent extends StatelessWidget {
   }
 }
 
-// --- Вспомогательный виджет Popular ---
 class _PopularBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFFE6F9F2), // Светло-мятный
+        color: const Color(0xFFE6F9F2),
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Text(
         "Popular",
         style: TextStyle(
-          color: Color(0xFF00C58D), // Зеленый из скриншота
+          color: Color(0xFF00C58D),
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
@@ -188,7 +165,6 @@ class _PopularBadge extends StatelessWidget {
   }
 }
 
-// --- Вспомогательный виджет Status ---
 class _StatusBadge extends StatelessWidget {
   final bool isActive;
   const _StatusBadge({required this.isActive});

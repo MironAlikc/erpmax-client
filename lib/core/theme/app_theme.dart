@@ -21,11 +21,8 @@ class AppTheme {
         surface: AppColors.white,
         onSurface: AppColors.textPrimary,
         outline: AppColors.gray300,
-        surfaceContainerHighest:
-            AppColors.gray100, // Для Divider и тонких подложек
+        surfaceContainerHighest: AppColors.gray100,
       ),
-
-      // Твоя кастомная палитра для ERP-модулей
       extensions: const [
         AppColorExtension(
           primaryDark: AppColors.primaryDark,
@@ -48,8 +45,6 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-
-      // Настройка компонентов
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.white,
         elevation: 0,

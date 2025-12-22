@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-
-// Импорт ваших новых переиспользуемых виджетов
 import 'package:erpmax_client/core/widgets/shared/app_stat_card.dart';
 import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
 import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
 
-// --- Модель данных ---
 enum BackupStatus { success, warning }
 
 class BackupRecord {
@@ -54,15 +51,12 @@ class _BackupContentState extends State<BackupContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. Универсальный фильтр (Табы)
           ErpMaxTabFilter(
             items: _tabs,
             selectedItem: _selectedTab,
             onSelected: (name) => setState(() => _selectedTab = name),
           ),
           const SizedBox(height: 24),
-
-          // Логика переключения контента
           if (_selectedTab == 'Backup Management') ...[
             _buildActionHeader(),
             const SizedBox(height: 24),
@@ -70,7 +64,6 @@ class _BackupContentState extends State<BackupContent> {
             const SizedBox(height: 32),
             _buildBackupTable(),
           ] else ...[
-            // Используем созданный переиспользуемый виджет заглушки
             AppPlaceholder(title: _selectedTab),
           ],
           const SizedBox(height: 40),
@@ -79,7 +72,6 @@ class _BackupContentState extends State<BackupContent> {
     );
   }
 
-  // Шапка с кнопкой
   Widget _buildActionHeader() {
     return Align(
       alignment: Alignment.centerRight,
@@ -98,7 +90,6 @@ class _BackupContentState extends State<BackupContent> {
     );
   }
 
-  // Сетка статистики с использованием AppAppStatCard
   Widget _buildStatsGrid() {
     return Row(
       children: [
@@ -125,14 +116,13 @@ class _BackupContentState extends State<BackupContent> {
             title: "Next Scheduled",
             value: "22:00:00",
             subtitle: "Daily midnight",
-            color: Color(0xFF8B5CF6), // Фиолетовый акцент
+            color: Color(0xFF8B5CF6),
           ),
         ),
       ],
     );
   }
 
-  // Таблица с использованием AppStatusChip
   Widget _buildBackupTable() {
     return Container(
       decoration: BoxDecoration(
@@ -184,10 +174,8 @@ class _BackupContentState extends State<BackupContent> {
                 ],
               ),
               Text(item.date, style: const TextStyle(color: Color(0xFF64748B))),
-              // Используем нейтральный бейдж для типа
               AppStatusChip.neutral(item.type),
               Text(item.size, style: const TextStyle(color: Color(0xFF1E293B))),
-              // Используем фабричные методы бейджа для статуса
               item.status == BackupStatus.success
                   ? AppStatusChip.success("Success")
                   : AppStatusChip.warning("Warning"),
@@ -200,7 +188,6 @@ class _BackupContentState extends State<BackupContent> {
   }
 }
 
-// Данные для таблицы
 final List<BackupRecord> _mockBackups = [
   const BackupRecord(
     name: "Auto-Backup-Daily",

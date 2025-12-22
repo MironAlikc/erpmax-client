@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'saas_metric_grid.dart';
-// import 'saas_charts_view.dart'; // Разкомментируй, когда создашь файл
 
 class SaaSContent extends StatelessWidget {
   const SaaSContent({super.key});

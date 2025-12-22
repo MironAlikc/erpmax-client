@@ -6,7 +6,6 @@ class SaasMetricGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // В реальном проекте данные придут из BLoC/Provider
     final List<Map<String, dynamic>> metrics = [
       {
         'title': 'Total Revenue',

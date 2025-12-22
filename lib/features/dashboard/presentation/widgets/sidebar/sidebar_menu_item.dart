@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/models/menu_item_model.dart';
 
 class SidebarMenuItem extends StatelessWidget {
   final MenuItemModel item;

@@ -14,21 +14,39 @@ class QuickActionsPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Quick Actions", 
-            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 20),
+          const Text(
+            "Quick Actions",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 24),
           GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.4,
+            childAspectRatio: 1.3,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               _item(Icons.description_outlined, "New Invoice"),
               _item(Icons.account_balance_wallet_outlined, "Record Expense"),
               _item(Icons.swap_horiz, "Transfer"),
               _item(Icons.file_download_outlined, "Import Statement"),
+              _item(Icons.menu_book, "General Ledger"),
             ],
+          ),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              mini: true,
+              onPressed: () {},
+              backgroundColor: const Color(0xFF00C58D),
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -44,9 +62,17 @@ class QuickActionsPanel extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: Colors.white, size: 24),
+          Icon(icon, color: Colors.white, size: 28),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 11)),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );

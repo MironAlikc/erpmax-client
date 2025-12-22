@@ -1,5 +1,3 @@
-// lib/features/dashboard/presentation/widgets/sidebar/sidebar_header.dart
-
 import 'package:flutter/material.dart';
 
 class SidebarHeader extends StatelessWidget {

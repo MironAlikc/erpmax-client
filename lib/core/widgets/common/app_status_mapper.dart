@@ -1,3 +1,5 @@
+// lib/core/widgets/common/app_status_mapper.dart
+
 import 'package:flutter/material.dart';
 import 'app_status_chip.dart';
 
@@ -15,18 +17,18 @@ class AppStatusMapper extends StatelessWidget {
       'active' ||
       'paid' ||
       'success' ||
+      'received' ||
       'completed' => AppStatusChip.success(status),
-
       'draft' ||
       'late' ||
       'pending' ||
       'warning' => AppStatusChip.warning(status),
-
       'expired' ||
       'cancelled' ||
       'danger' ||
-      'failed' => AppStatusChip.danger(status),
-
+      'failed' ||
+      'error' => AppStatusChip.danger(status),
+      'info' => AppStatusChip.info(status),
       _ => AppStatusChip.neutral(status),
     };
   }

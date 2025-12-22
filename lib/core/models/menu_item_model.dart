@@ -1,9 +1,10 @@
+// lib/core/models/menu_item_model.dart
 import 'package:flutter/material.dart';
 
 class MenuItemModel {
   final IconData icon;
   final String title;
-  final String? route; // Для навигации
+  final String? route;
   final List<MenuItemModel>? children;
 
   const MenuItemModel({

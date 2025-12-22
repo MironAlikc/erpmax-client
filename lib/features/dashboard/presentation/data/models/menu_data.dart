@@ -1,10 +1,9 @@
 // lib/features/dashboard/presentation/data/models/menu_data.dart
 
+import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/models/menu_item_model.dart';
 
 abstract final class MenuData {
-  // --- Основные Модули ---
   static final List<MenuItemModel> coreModules = [
     MenuItemModel(title: 'Dashboards', icon: Icons.dashboard_outlined),
     MenuItemModel(title: 'Sales', icon: Icons.shopping_cart_outlined),
@@ -37,14 +36,11 @@ abstract final class MenuData {
       ],
     ),
   ];
-  // --- Управление Бизнесом ---
   static final List<MenuItemModel> businessManagement = [
     MenuItemModel(title: 'Customer Management', icon: Icons.people_outline),
     MenuItemModel(title: 'Human Resources', icon: Icons.badge_outlined),
     MenuItemModel(title: 'Projects', icon: Icons.work_outline),
   ];
-
-  // --- Системные Инструменты ---
   static final List<MenuItemModel> systemTools = [
     MenuItemModel(
       title: 'Workflow & Automation',
@@ -53,8 +49,6 @@ abstract final class MenuData {
     MenuItemModel(title: 'Calendar', icon: Icons.calendar_today_outlined),
     MenuItemModel(title: 'SaaS Admin', icon: Icons.cloud_queue_outlined),
   ];
-
-  // --- Настройки и Прочее ---
   static final List<MenuItemModel> settings = [
     MenuItemModel(title: 'Setting', icon: Icons.settings_outlined),
     MenuItemModel(title: 'Help', icon: Icons.help_outline),
