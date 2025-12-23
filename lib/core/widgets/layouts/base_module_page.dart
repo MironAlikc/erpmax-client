@@ -56,7 +56,7 @@ class _BaseModulePageState extends State<BaseModulePage>
   @override
   Widget build(BuildContext context) {
     final bool isMobile = Responsive.isMobile(context);
-    final tabService = context.watch<TabNavigationService>();
+    // final tabService = context.watch<TabNavigationService>();
 
     final currentTab = widget.tabs[_tabController.index];
 
