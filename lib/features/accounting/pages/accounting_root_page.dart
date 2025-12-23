@@ -1,12 +1,13 @@
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/features/accounting/config/accounting_tabs_config.dart';
+import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_header_dispatcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../core/design/app_colors.dart';
 import '../../../../core/design/app_text_styles.dart';
 import '../../../../core/navigation/tab_navigation_service.dart';
 import '../../../../core/widgets/common/keep_alive_page.dart';
-import '../widgets/accounting_header.dart';
 
 class AccountingRootPage extends StatefulWidget {
   const AccountingRootPage({super.key});
@@ -70,7 +71,7 @@ class _AccountingRootPageState extends State<AccountingRootPage>
                 transitionBuilder: (child, animation) {
                   return FadeTransition(opacity: animation, child: child);
                 },
-                child: AccountingHeader(
+                child: AccountingHeaderDispatcher(
                   key: ValueKey(currentTab.id),
                   currentTab: currentTab,
                 ),

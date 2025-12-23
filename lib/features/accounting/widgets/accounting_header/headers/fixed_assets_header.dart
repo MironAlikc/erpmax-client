@@ -1,9 +1,9 @@
-import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_base_header.dart';
+import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 
-class AccountingHeader extends StatelessWidget {
-  final ModuleTabItem currentTab;
-  const AccountingHeader({super.key, required this.currentTab});
+class FixedAssetsHeader extends AccountingBaseHeader {
+  const FixedAssetsHeader({super.key, required super.currentTab});
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +38,27 @@ class AccountingHeader extends StatelessWidget {
           Wrap(
             spacing: 12,
             children: [
-              _HeaderBtn(
+              AccountingHeaderBtn(
                 label: "Export",
                 icon: Icons.ios_share,
                 isOutline: true,
               ),
-              _HeaderBtn(
+              AccountingHeaderBtn(
                 label: "Journal Entry",
                 icon: Icons.add,
                 color: const Color(0xFF12203A),
               ),
-              _HeaderBtn(
+              AccountingHeaderBtn(
                 label: "Cash Journal",
                 icon: Icons.account_balance_wallet,
                 color: const Color(0xFF00C58D),
               ),
-              _HeaderBtn(
+              AccountingHeaderBtn(
                 label: "In",
                 icon: Icons.arrow_downward,
                 color: const Color(0xFF22C55E),
               ),
-              _HeaderBtn(
+              AccountingHeaderBtn(
                 label: "Out",
                 icon: Icons.arrow_upward,
                 color: const Color(0xFFEF4444),
@@ -66,46 +66,6 @@ class AccountingHeader extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HeaderBtn extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color? color;
-  final bool isOutline;
-
-  const _HeaderBtn({
-    required this.label,
-    required this.icon,
-    this.color,
-    this.isOutline = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: () {},
-      icon: Icon(icon, size: 16),
-      label: Text(
-        label,
-        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-      ),
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: isOutline
-            ? Colors.white
-            : (color ?? const Color(0xFF12203A)),
-        foregroundColor: isOutline ? const Color(0xFF1E293B) : Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: isOutline
-              ? const BorderSide(color: Color(0xFFE2E8F0))
-              : BorderSide.none,
-        ),
       ),
     );
   }
