@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/app_scroll_behavior.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
