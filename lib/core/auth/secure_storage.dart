@@ -23,4 +23,22 @@ class SecureStorage {
 
   /// Delete authentication token
   Future<void> deleteToken() => delete('auth_token');
+
+  /// Get access token
+  Future<String?> getAccessToken() => read('access_token');
+
+  /// Save access token
+  Future<void> saveAccessToken(String token) => write('access_token', token);
+
+  /// Delete access token
+  Future<void> deleteAccessToken() => delete('access_token');
+
+  /// Get refresh token
+  Future<String?> getRefreshToken() => read('refresh_token');
+
+  /// Save refresh token
+  Future<void> saveRefreshToken(String token) => write('refresh_token', token);
+
+  /// Delete refresh token
+  Future<void> deleteRefreshToken() => delete('refresh_token');
 }
