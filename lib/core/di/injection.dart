@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../auth/secure_storage.dart';
 import '../api/api_client.dart';
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
+import '../../features/tenant/data/datasources/tenant_remote_datasource.dart';
 import 'injection.config.dart';
 
 final getIt = GetIt.instance;
@@ -42,4 +43,8 @@ abstract class RegisterModule {
 
   @lazySingleton
   AuthRemoteDataSource get authRemoteDataSource => AuthRemoteDataSource(dio);
+
+  @lazySingleton
+  TenantRemoteDataSource get tenantRemoteDataSource =>
+      TenantRemoteDataSource(dio);
 }
