@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/design/app_colors.dart';
 import 'package:erpmax_client/core/design/app_design.dart';
 import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/mocks/dashboard_mocks.dart';
+import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/widgets/saas/subscriptions_bar_chart.dart';
 import '../widgets/charts/revenue_line_chart.dart';
 
@@ -19,6 +19,9 @@ class DashboardContent extends StatelessWidget {
         screenWidth < AppDesign.desktopBreakpoint && !isMobile;
     final bool stackCharts = screenWidth < 1100;
 
+    final dataSource = DashboardLocalDataSourceImpl();
+    final summaryData = dataSource.getSummaryData();
+
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: AppDesign.pagePadding,
@@ -32,7 +35,7 @@ class DashboardContent extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: DashboardMocks.summaryData.length,
+            itemCount: summaryData.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: isMobile ? 1 : (isTablet ? 2 : 4),
               crossAxisSpacing: 20,
@@ -40,7 +43,7 @@ class DashboardContent extends StatelessWidget {
               childAspectRatio: isMobile ? 2.2 : (isTablet ? 1.8 : 1.6),
             ),
             itemBuilder: (context, index) {
-              final data = DashboardMocks.summaryData[index];
+              final data = summaryData[index];
               return StatCard(
                 title: data.title,
                 value: "${data.currency}${data.value.toStringAsFixed(0)}",
