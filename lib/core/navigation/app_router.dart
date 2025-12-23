@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:erpmax_client/core/navigation/fade_transition_page.dart';
-import 'package:erpmax_client/features/auth/presentation/pages/login_page.dart';
-import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart';
-import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
+import 'package:erpmax_client/features/accounting/pages/accounting_root_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/check_email_page.dart';
+import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
+import 'package:erpmax_client/features/auth/presentation/pages/login_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/reset_password_new_password_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/reset_password_success_page.dart';
+import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/verify_2fa_page.dart';
 import 'package:erpmax_client/features/dashboard/presentation/pages/dashboard_shell.dart';
-import 'package:erpmax_client/features/accounting/pages/accounting_root_page.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/pages/saas_admin_root_page.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 abstract final class RouteNames {
   static const root = '/';
@@ -232,6 +232,7 @@ class AppRouter {
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Error: ${state.error}'))),
   );
+
   static StatefulShellBranch _createBranch(
     GlobalKey<NavigatorState> key,
     String path,
