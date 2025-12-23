@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import '../auth/secure_storage.dart';
 import '../api/api_client.dart';
+import '../config/api_config.dart';
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart';
 import 'injection.config.dart';
@@ -28,18 +29,15 @@ abstract class RegisterModule {
   @lazySingleton
   Dio get dio => Dio(
     BaseOptions(
-      baseUrl: 'http://localhost:8000',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      baseUrl: ApiConfig.baseUrl,
+      connectTimeout: ApiConfig.connectTimeout,
+      receiveTimeout: ApiConfig.receiveTimeout,
+      headers: ApiConfig.defaultHeaders,
     ),
   );
 
   @lazySingleton
-  ApiClient get apiClient => ApiClient(baseUrl: 'http://localhost:8000/api/v1');
+  ApiClient get apiClient => ApiClient(baseUrl: ApiConfig.apiBaseUrl);
 
   @lazySingleton
   AuthRemoteDataSource get authRemoteDataSource => AuthRemoteDataSource(dio);
