@@ -34,11 +34,13 @@ abstract final class MenuData {
       ],
     ),
   ];
+  
   static final List<MenuItemModel> businessManagement = [
     MenuItemModel(title: 'Customer Management', icon: Icons.people_outline),
     MenuItemModel(title: 'Human Resources', icon: Icons.badge_outlined),
     MenuItemModel(title: 'Projects', icon: Icons.work_outline),
   ];
+  
   static final List<MenuItemModel> systemTools = [
     MenuItemModel(
       title: 'Workflow & Automation',
@@ -47,6 +49,7 @@ abstract final class MenuData {
     MenuItemModel(title: 'Calendar', icon: Icons.calendar_today_outlined),
     MenuItemModel(title: 'SaaS Admin', icon: Icons.cloud_queue_outlined),
   ];
+  
   static final List<MenuItemModel> settings = [
     MenuItemModel(title: 'Setting', icon: Icons.settings_outlined),
     MenuItemModel(title: 'Help', icon: Icons.help_outline),
