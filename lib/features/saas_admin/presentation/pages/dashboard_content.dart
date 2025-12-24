@@ -2,7 +2,7 @@ import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/widgets/stat_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/stat_card.dart';
 import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

@@ -1,32 +1,29 @@
-import 'package:flutter/material.dart';
 import '../../domain/entities/stat_entity.dart';
 
 class StatModel extends StatEntity {
-  final IconData icon;
-  final Color color;
-
   const StatModel({
     required super.title,
     required super.value,
     required super.trend,
     required super.isPositive,
-    required this.icon,
-    required this.color,
   });
 
-  factory StatModel.fromEntity(
-    StatEntity entity, {
-    required IconData icon,
-    required Color color,
-  }) {
+  factory StatModel.fromJson(Map<String, dynamic> json) {
     return StatModel(
-      title: entity.title,
-      value: entity.value,
-      trend: entity.trend,
-      isPositive: entity.isPositive,
-      icon: icon,
-      color: color,
+      title: json['title'] as String,
+      value: json['value'] as String,
+      trend: json['trend'] as String,
+      isPositive: json['isPositive'] as bool,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'value': value,
+      'trend': trend,
+      'isPositive': isPositive,
+    };
   }
 
   StatEntity toEntity() {
