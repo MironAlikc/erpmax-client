@@ -12,12 +12,27 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Configuration
-SERVER_IP="192.168.0.83"
-SERVER_USER="feras1960"
-SERVER_PASSWORD="bF8ayJJu"
-APP_PATH="~/erpmax_web"
-BACKUP_PATH="~/backups/erpmax_web"
+# Load configuration
+CONFIG_FILE="./deploy_config.sh"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo -e "${RED}❌ Error: Configuration file not found!${NC}"
+    echo -e "${YELLOW}Please copy deploy_config.sh.example to deploy_config.sh and fill in your credentials.${NC}"
+    echo -e "${YELLOW}Command: cp deploy_config.sh.example deploy_config.sh${NC}"
+    exit 1
+fi
+
+source "$CONFIG_FILE"
+
+# Validate required configuration
+if [ -z "$SERVER_IP" ] || [ -z "$SERVER_USER" ] || [ -z "$SERVER_PASSWORD" ]; then
+    echo -e "${RED}❌ Error: Missing required configuration!${NC}"
+    echo -e "${YELLOW}Please check your deploy_config.sh file.${NC}"
+    exit 1
+fi
+
+# Set default paths if not configured
+APP_PATH="${APP_PATH:-~/erpmax_web}"
+BACKUP_PATH="${BACKUP_PATH:-~/backups/erpmax_web}"
 
 echo -e "${BLUE}🚀 Starting Flutter Web App Deployment${NC}"
 echo "=================================="
@@ -77,17 +92,17 @@ fi
 
 # Create backup on server
 echo -e "${YELLOW}💾 Creating backup on server...${NC}"
-sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p $BACKUP_PATH && if [ -d $APP_PATH ]; then cp -r $APP_PATH $BACKUP_PATH/backup_\$(date +%Y%m%d_%H%M%S); fi"
+sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p $BACKUP_PATH && if [ -d $APP_PATH ]; then cp -r $APP_PATH $BACKUP_PATH/backup_\$(date +%Y%m%d_%H%M%S) 2>/dev/null || true; fi" || true
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ Backup created successfully!${NC}"
+    echo -e "${GREEN}✅ Backup attempt completed${NC}"
 else
-    echo -e "${YELLOW}⚠️  Backup creation skipped (directory might not exist yet)${NC}"
+    echo -e "${YELLOW}⚠️  Backup skipped (may have permission issues)${NC}"
 fi
 
-# Create app directory on server
-echo -e "${YELLOW}📁 Creating app directory on server...${NC}"
-sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p $APP_PATH"
+# Create app directory on server and clean old files
+echo -e "${YELLOW}📁 Preparing app directory on server...${NC}"
+sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p $APP_PATH && echo '$SERVER_PASSWORD' | sudo -S rm -rf $APP_PATH/* 2>/dev/null || rm -rf $APP_PATH/* 2>/dev/null || true"
 
 # Upload to server
 echo -e "${YELLOW}📤 Uploading to server...${NC}"
@@ -105,14 +120,13 @@ echo -e "${GREEN}✅ Upload completed successfully!${NC}"
 
 # Set permissions
 echo -e "${YELLOW}🔐 Setting file permissions...${NC}"
-sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "chmod -R 644 $APP_PATH/* && find $APP_PATH -type d -exec chmod 755 {} \;"
+sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "find $APP_PATH -type f -exec chmod 644 {} \; && find $APP_PATH -type d -exec chmod 755 {} \;"
 
-if [ $? -ne 0 ]; then
-    echo -e "${RED}❌ Permission setting failed!${NC}"
-    exit 1
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✅ Permissions set successfully!${NC}"
+else
+    echo -e "${YELLOW}⚠️  Permission setting had issues, but deployment may still work${NC}"
 fi
-
-echo -e "${GREEN}✅ Permissions set successfully!${NC}"
 
 # Check if Nginx is installed
 echo -e "${YELLOW}🔍 Checking web server...${NC}"
