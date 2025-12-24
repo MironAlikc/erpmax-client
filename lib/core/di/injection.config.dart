@@ -41,6 +41,22 @@ import '../../features/billing/domain/usecases/get_invoices_usecase.dart'
 import '../../features/billing/domain/usecases/get_plans_usecase.dart' as _i311;
 import '../../features/billing/domain/usecases/get_subscription_usecase.dart'
     as _i232;
+import '../../features/provisioning/data/datasources/provisioning_remote_datasource.dart'
+    as _i615;
+import '../../features/provisioning/data/repositories/provisioning_repository_impl.dart'
+    as _i317;
+import '../../features/provisioning/domain/repositories/provisioning_repository.dart'
+    as _i861;
+import '../../features/provisioning/domain/usecases/cancel_job_usecase.dart'
+    as _i56;
+import '../../features/provisioning/domain/usecases/create_job_usecase.dart'
+    as _i854;
+import '../../features/provisioning/domain/usecases/get_job_by_id_usecase.dart'
+    as _i298;
+import '../../features/provisioning/domain/usecases/get_jobs_usecase.dart'
+    as _i516;
+import '../../features/provisioning/domain/usecases/retry_job_usecase.dart'
+    as _i699;
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart'
     as _i402;
 import '../../features/tenant/data/repositories/tenant_repository_impl.dart'
@@ -87,6 +103,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i504.BillingRemoteDataSource>(
       () => registerModule.billingRemoteDataSource,
     );
+    gh.lazySingleton<_i615.ProvisioningRemoteDataSource>(
+      () => registerModule.provisioningRemoteDataSource,
+    );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
         remoteDataSource: gh<_i161.AuthRemoteDataSource>(),
@@ -107,6 +126,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i253.SwitchTenantUseCase>(
       () => _i253.SwitchTenantUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.lazySingleton<_i861.ProvisioningRepository>(
+      () => _i317.ProvisioningRepositoryImpl(
+        remoteDataSource: gh<_i615.ProvisioningRemoteDataSource>(),
+      ),
     );
     gh.lazySingleton<_i728.TenantRepository>(
       () => _i981.TenantRepositoryImpl(
@@ -153,6 +177,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i232.GetSubscriptionUseCase>(
       () => _i232.GetSubscriptionUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i56.CancelJobUseCase>(
+      () => _i56.CancelJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i854.CreateJobUseCase>(
+      () => _i854.CreateJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i298.GetJobByIdUseCase>(
+      () => _i298.GetJobByIdUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i516.GetJobsUseCase>(
+      () => _i516.GetJobsUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i699.RetryJobUseCase>(
+      () => _i699.RetryJobUseCase(gh<_i861.ProvisioningRepository>()),
     );
     return this;
   }
