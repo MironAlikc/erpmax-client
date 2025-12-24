@@ -3,8 +3,7 @@ import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/widgets/stat_card.dart';
 import 'package:erpmax_client/features/dashboard/presentation/data/mocks/dashboard_mocks.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
-import 'package:erpmax_client/features/saas_admin/presentation/widgets/saas/subscriptions_bar_chart.dart';
+import 'package:erpmax_client/features/saas_admin/presentation/pages/dashboard_content.dart';
 import 'package:flutter/material.dart';
 
 class DashboardContent extends StatelessWidget {

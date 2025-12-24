@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/models/summary_model.dart';
+import 'package:erpmax_client/features/dashboard/data/models/summary_model.dart';
 import 'package:flutter/material.dart';
 
 abstract final class DashboardMocks {
@@ -29,8 +29,8 @@ abstract final class DashboardMocks {
         title: 'New Customers',
         value: 12.0,
         changePercentage: -2.4,
-        iconColor: Color(0xFF6366F1),
-        iconBgColor: Color(0xFFEEF2FF),
+        iconColor: theme.accentIndigo,
+        iconBgColor: theme.accentIndigoLight,
       ),
       SummaryModel(
         icon: Icons.account_balance_wallet_outlined,

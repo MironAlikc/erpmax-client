@@ -1,7 +1,5 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
 
@@ -53,91 +51,86 @@ class PackagesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-    final bool isMobile = MediaQuery.of(context).size.width < 800;
+    final bool isMobile = MediaQuery.of(context).size.width < 900;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [_buildPackagesTable(context, isMobile)],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPackagesTable(BuildContext context, bool isMobile) {
+    final theme = context.theme.appColor;
+
+    final List<ErpMaxColumn> columns = [
+      ErpMaxColumn(title: "Plan Name", weight: 0.25),
+      ErpMaxColumn(title: "Price", weight: 0.15),
+      ErpMaxColumn(title: "Users Limit", weight: 0.15),
+      ErpMaxColumn(title: "Storage Limit", weight: 0.15),
+      ErpMaxColumn(title: "Status", weight: 0.2),
+      ErpMaxColumn(title: "Actions", weight: 0.1, textAlign: TextAlign.right),
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: theme.border),
+        boxShadow: [
+          BoxShadow(
+            color: theme.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: theme.white,
-              borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-              border: Border.all(color: theme.gray200),
-              boxShadow: [
-                BoxShadow(
-                  color: theme.black.withValues(alpha: 0.04),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: isMobile
-                  ? const BouncingScrollPhysics()
-                  : const NeverScrollableScrollPhysics(),
-              child: SizedBox(
-                width: isMobile ? 800 : MediaQuery.of(context).size.width - 48,
-                child: ErpMaxDataTable<PackageModel>(
-                  items: _packages,
-                  columns: [
-                    ErpMaxColumn(title: "Plan Name", weight: 0.25),
-                    ErpMaxColumn(title: "Price", weight: 0.15),
-                    ErpMaxColumn(title: "Users Limit", weight: 0.15),
-                    ErpMaxColumn(title: "Storage Limit", weight: 0.15),
-                    ErpMaxColumn(title: "Status", weight: 0.15),
-                    ErpMaxColumn(
-                      title: "Actions",
-                      weight: 0.1,
-                      textAlign: TextAlign.right,
-                    ),
-                  ],
-                  rowBuilder: (item) => [
-                    Row(
-                      children: [
-                        Text(
-                          item.planName,
-                          style: AppTextStyles.labelStyle.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+          ErpMaxTable(
+            columns: columns,
+            minWidth: 850,
+            rows: _packages.map((item) {
+              return ErpMaxRow(
+                columns: columns,
+                cells: [
+                  Row(
+                    children: [
+                      Text(
+                        item.planName,
+                        style: AppTextStyles.labelStyle.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                        if (item.isPopular) ...[
-                          const SizedBox(width: 8),
-                          _PopularBadge(),
-                        ],
-                      ],
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "\$${item.price}",
-                            style: AppTextStyles.labelStyle.copyWith(
-                              fontWeight: FontWeight.w900,
-                              color: theme.textPrimary,
-                            ),
-                          ),
-                          TextSpan(
-                            text: " /mo",
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: theme.textSecondary,
-                            ),
-                          ),
-                        ],
                       ),
+                      if (item.isPopular) ...[
+                        const SizedBox(width: 8),
+                        _PopularBadge(),
+                      ],
+                    ],
+                  ),
+                  Text(
+                    "\$${item.price}/mo",
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: theme.textSecondary,
                     ),
-                    Text(item.usersLimit, style: AppTextStyles.bodyMedium),
-                    Text(item.storageLimit, style: AppTextStyles.bodyMedium),
-                    _StatusBadge(isActive: item.isActive),
-                    Icon(Icons.more_horiz, color: theme.gray400),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                  Text(item.usersLimit),
+                  Text(item.storageLimit),
+                  _StatusBadge(isActive: item.isActive),
+                  Icon(Icons.more_horiz, color: theme.gray400),
+                ],
+              );
+            }).toList(),
           ),
         ],
       ),
@@ -154,11 +147,11 @@ class _PopularBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         color: theme.successLight,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         "Popular",
-        style: AppTextStyles.bodySmall.copyWith(
+        style: TextStyle(
           color: theme.activeGreen,
           fontSize: 10,
           fontWeight: FontWeight.bold,
@@ -187,7 +180,8 @@ class _StatusBadge extends StatelessWidget {
         isActive ? "Active" : "Inactive",
         style: AppTextStyles.bodySmallBold.copyWith(
           color: isActive ? theme.activeGreen : theme.gray500,
-          fontSize: 12,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

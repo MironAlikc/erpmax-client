@@ -2,14 +2,12 @@ import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/main_content/main_content_header.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/mobile/mobile_drawer.dart';
+import 'package:erpmax_client/features/dashboard/presentation/widgets/navigation/app_sidebar.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/widgets/navigation/top_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/navigation/app_sidebar.dart';
 
 class DashboardShell extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -59,10 +57,10 @@ class _DashboardShellState extends State<DashboardShell> {
                       Scaffold.of(context).openDrawer();
                   },
                 ),
-                MainContentHeader(
-                  title: _getModuleTitle(currentIndex),
-                  isDashboard: currentIndex == 0,
-                ),
+                // MainContentHeader(
+                //   title: _getModuleTitle(currentIndex),
+                //   isDashboard: currentIndex == 0,
+                // ),
                 Consumer<TabNavigationService>(
                   builder: (context, tabService, _) {
                     if (tabService.tabs.isEmpty ||

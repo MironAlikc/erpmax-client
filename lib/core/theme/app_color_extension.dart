@@ -54,6 +54,12 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color bgDisabled;
   final Color sidebarActiveBgBase;
   final Color sidebarActiveBgLight;
+  final Color accentIndigo;
+  final Color accentIndigoLight;
+  final Color indigoBg;
+  final Color indigoText;
+  final Color violetBg;
+  final Color violetText;
 
   const AppColorExtension({
     required this.primary,
@@ -108,6 +114,12 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.bgDisabled,
     required this.sidebarActiveBgBase,
     required this.sidebarActiveBgLight,
+    required this.accentIndigo,
+    required this.accentIndigoLight,
+    required this.indigoBg,
+    required this.indigoText,
+    required this.violetBg,
+    required this.violetText,
   });
 
   @override
@@ -164,6 +176,12 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     Color? bgDisabled,
     Color? sidebarActiveBgBase,
     Color? sidebarActiveBgLight,
+    Color? accentIndigo,
+    Color? accentIndigoLight,
+    Color? indigoBg,
+    Color? indigoText,
+    Color? violetBg,
+    Color? violetText,
   }) {
     return AppColorExtension(
       primary: primary ?? this.primary,
@@ -218,6 +236,12 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       bgDisabled: bgDisabled ?? this.bgDisabled,
       sidebarActiveBgBase: sidebarActiveBgBase ?? this.sidebarActiveBgBase,
       sidebarActiveBgLight: sidebarActiveBgLight ?? this.sidebarActiveBgLight,
+      accentIndigo: accentIndigo ?? this.accentIndigo,
+      accentIndigoLight: accentIndigoLight ?? this.accentIndigoLight,
+      indigoBg: indigoBg ?? this.indigoBg,
+      indigoText: indigoText ?? this.indigoText,
+      violetBg: violetBg ?? this.violetBg,
+      violetText: violetText ?? this.violetText,
     );
   }
 
@@ -301,6 +325,16 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
         other.sidebarActiveBgLight,
         t,
       )!,
+      accentIndigo: Color.lerp(accentIndigo, other.accentIndigo, t)!,
+      accentIndigoLight: Color.lerp(
+        accentIndigoLight,
+        other.accentIndigoLight,
+        t,
+      )!,
+      indigoBg: Color.lerp(indigoBg, other.indigoBg, t)!,
+      indigoText: Color.lerp(indigoText, other.indigoText, t)!,
+      violetBg: Color.lerp(violetBg, other.violetBg, t)!,
+      violetText: Color.lerp(violetText, other.violetText, t)!,
     );
   }
 }

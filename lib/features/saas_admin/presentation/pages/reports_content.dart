@@ -75,49 +75,6 @@ class _ReportsContentState extends State<ReportsContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _selectedReportType,
-                        style: AppTextStyles.h1.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                      Text(
-                        "Detailed analytical statistics and exports.",
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.download, size: 18),
-                label: const Text("Export CSV"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.activeGreen,
-                  foregroundColor: theme.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
-              ),
-            ],
-          ),
           const SizedBox(height: 24),
           ErpMaxTabFilter(
             items: _reportTabs,

@@ -1,7 +1,7 @@
+import 'package:erpmax_client/core/config/menu_data.dart';
 import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/features/dashboard/presentation/data/models/menu_data.dart';
 import 'package:flutter/material.dart';
 
 import 'sidebar_menu_item.dart';
