@@ -12,11 +12,13 @@ import 'package:provider/provider.dart';
 class BaseModulePage extends StatefulWidget {
   final List<ModuleTabItem> tabs;
   final String moduleTitle;
+  final int branchIndex;
 
   const BaseModulePage({
     super.key,
     required this.tabs,
     required this.moduleTitle,
+    required this.branchIndex,
   });
 
   @override
@@ -37,6 +39,7 @@ class _BaseModulePageState extends State<BaseModulePage>
         context.read<TabNavigationService>().updateTabs(
           widget.tabs,
           _tabController,
+          branchIndex: widget.branchIndex,
         );
       }
     });
@@ -56,10 +59,7 @@ class _BaseModulePageState extends State<BaseModulePage>
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-
     final bool isMobile = Responsive.isMobile(context);
-    // final tabService = context.watch<TabNavigationService>();
-
     final currentTab = widget.tabs[_tabController.index];
 
     return Scaffold(

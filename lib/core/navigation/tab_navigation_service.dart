@@ -1,36 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:erpmax_client/core/models/module_tab_item.dart';
 
 class TabNavigationService extends ChangeNotifier {
-  List<ModuleTabItem> _currentTabs = [];
-  TabController? _controller;
+  final Map<int, List<ModuleTabItem>> _tabsByBranch = {};
+  final Map<int, TabController> _controllersByBranch = {};
+  int _currentBranch = -1;
+  List<ModuleTabItem> get tabs => _tabsByBranch[_currentBranch] ?? [];
+  TabController? get controller => _controllersByBranch[_currentBranch];
 
-  List<ModuleTabItem> get tabs => _currentTabs;
-  TabController? get controller => _controller;
+  void setBranch(int branchIndex) {
+    if (_currentBranch == branchIndex) return;
+    _currentBranch = branchIndex;
 
-  void updateTabs(List<ModuleTabItem> newTabs, TabController newController) {
-    if (_currentTabs == newTabs && _controller == newController) return;
-
-    _currentTabs = List.from(newTabs);
-    _controller = newController;
-
+    print(
+      '🔄 Branch switched to: $branchIndex. Has controller: ${_controllersByBranch.containsKey(branchIndex)}',
+    );
     _safeNotify();
   }
 
+  void updateTabs(
+    List<ModuleTabItem> newTabs,
+    TabController newController, {
+    required int branchIndex,
+  }) {
+    _tabsByBranch[branchIndex] = List.from(newTabs);
+    _controllersByBranch[branchIndex] = newController;
+
+    print('💾 Saved tabs and controller for branch $branchIndex');
+    if (_currentBranch == branchIndex) {
+      _safeNotify();
+    }
+  }
+
   void selectTab(int index) {
-    if (_controller != null && index >= 0 && index < _currentTabs.length) {
-      _controller!.animateTo(index);
+    final currentController = _controllersByBranch[_currentBranch];
+    if (currentController != null && index >= 0 && index < tabs.length) {
+      currentController.animateTo(index);
       notifyListeners();
     }
   }
 
-  void clear() {
-    if (_currentTabs.isNotEmpty) {
-      _currentTabs = [];
-      _controller = null;
-      _safeNotify();
-    }
+  void clear(int branchIndex) {
+    _tabsByBranch.remove(branchIndex);
+    _controllersByBranch.remove(branchIndex);
+    _safeNotify();
   }
 
   void _safeNotify() {
@@ -40,5 +54,11 @@ class TabNavigationService extends ChangeNotifier {
     } else {
       notifyListeners();
     }
+  }
+
+  @override
+  void dispose() {
+    _controllersByBranch.clear();
+    super.dispose();
   }
 }
