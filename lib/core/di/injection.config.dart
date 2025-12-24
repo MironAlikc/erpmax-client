@@ -57,6 +57,12 @@ import '../../features/provisioning/domain/usecases/get_jobs_usecase.dart'
     as _i516;
 import '../../features/provisioning/domain/usecases/retry_job_usecase.dart'
     as _i699;
+import '../../features/sso/data/datasources/sso_remote_datasource.dart'
+    as _i490;
+import '../../features/sso/data/repositories/sso_repository_impl.dart' as _i359;
+import '../../features/sso/domain/repositories/sso_repository.dart' as _i983;
+import '../../features/sso/domain/usecases/generate_sso_token_usecase.dart'
+    as _i319;
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart'
     as _i402;
 import '../../features/tenant/data/repositories/tenant_repository_impl.dart'
@@ -106,6 +112,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i615.ProvisioningRemoteDataSource>(
       () => registerModule.provisioningRemoteDataSource,
     );
+    gh.lazySingleton<_i490.SSORemoteDataSource>(
+      () => registerModule.ssoRemoteDataSource,
+    );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
         remoteDataSource: gh<_i161.AuthRemoteDataSource>(),
@@ -135,6 +144,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i728.TenantRepository>(
       () => _i981.TenantRepositoryImpl(
         remoteDataSource: gh<_i402.TenantRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i983.SSORepository>(
+      () => _i359.SSORepositoryImpl(
+        remoteDataSource: gh<_i490.SSORemoteDataSource>(),
       ),
     );
     gh.factory<_i236.GetCurrentTenantUseCase>(
@@ -192,6 +206,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i699.RetryJobUseCase>(
       () => _i699.RetryJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i319.GenerateSSOTokenUseCase>(
+      () => _i319.GenerateSSOTokenUseCase(gh<_i983.SSORepository>()),
     );
     return this;
   }
