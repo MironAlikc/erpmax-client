@@ -1,9 +1,7 @@
-import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppSidebar extends StatelessWidget {
   final bool isExpanded;
@@ -61,7 +59,6 @@ class AppSidebar extends StatelessWidget {
                   isExpanded: isExpanded,
                   onTap: (targetIndex) {
                     if (onSelect != null) {
-                      context.read<TabNavigationService>().clear();
                       onSelect!(targetIndex);
                     }
                   },

@@ -35,6 +35,7 @@ class _AccountingRootPageState extends State<AccountingRootPage>
         context.read<TabNavigationService>().updateTabs(
           _moduleTabs,
           _tabController,
+          branchIndex: 1, // Явно указываем ветку Accounting
         );
       }
     });

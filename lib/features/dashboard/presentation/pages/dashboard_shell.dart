@@ -23,10 +23,14 @@ class _DashboardShellState extends State<DashboardShell> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-
     final bool isDesktop = Responsive.isDesktop(context);
     final int currentIndex = widget.navigationShell.currentIndex;
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<TabNavigationService>().setBranch(currentIndex);
+      }
+    });
     return Scaffold(
       backgroundColor: theme.gray50,
       drawer: !isDesktop
@@ -85,7 +89,8 @@ class _DashboardShellState extends State<DashboardShell> {
   }
 
   void _onBranchSelected(int index) {
-    context.read<TabNavigationService>().clear();
+    context.read<TabNavigationService>().setBranch(index);
+
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,
