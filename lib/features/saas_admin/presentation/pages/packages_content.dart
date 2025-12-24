@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class PackageModel {
   final String planName;
@@ -53,6 +53,7 @@ class PackagesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final bool isMobile = MediaQuery.of(context).size.width < 800;
 
     return SingleChildScrollView(
@@ -62,12 +63,12 @@ class PackagesContent extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: theme.white,
               borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-              border: Border.all(color: AppColors.gray200),
+              border: Border.all(color: theme.gray200),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.black.withOpacity(0.04),
+                  color: theme.black.withValues(alpha: 0.04),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -117,13 +118,13 @@ class PackagesContent extends StatelessWidget {
                             text: "\$${item.price}",
                             style: AppTextStyles.labelStyle.copyWith(
                               fontWeight: FontWeight.w900,
-                              color: AppColors.textPrimary,
+                              color: theme.textPrimary,
                             ),
                           ),
                           TextSpan(
                             text: " /mo",
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary,
+                              color: theme.textSecondary,
                             ),
                           ),
                         ],
@@ -132,7 +133,7 @@ class PackagesContent extends StatelessWidget {
                     Text(item.usersLimit, style: AppTextStyles.bodyMedium),
                     Text(item.storageLimit, style: AppTextStyles.bodyMedium),
                     _StatusBadge(isActive: item.isActive),
-                    const Icon(Icons.more_horiz, color: AppColors.gray400),
+                    Icon(Icons.more_horiz, color: theme.gray400),
                   ],
                 ),
               ),
@@ -147,16 +148,18 @@ class PackagesContent extends StatelessWidget {
 class _PopularBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFFE6F9F2),
+        color: theme.successLight,
         borderRadius: BorderRadius.circular(4),
       ),
-      child: const Text(
+      child: Text(
         "Popular",
-        style: TextStyle(
-          color: Color(0xFF00C58D),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: theme.activeGreen,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
@@ -167,22 +170,24 @@ class _PopularBadge extends StatelessWidget {
 
 class _StatusBadge extends StatelessWidget {
   final bool isActive;
+
   const _StatusBadge({required this.isActive});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFFE6F9F2) : AppColors.gray100,
+        color: isActive ? theme.successLight : theme.gray100,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         isActive ? "Active" : "Inactive",
-        style: TextStyle(
-          color: isActive ? const Color(0xFF00C58D) : AppColors.gray500,
+        style: AppTextStyles.bodySmallBold.copyWith(
+          color: isActive ? theme.activeGreen : theme.gray500,
           fontSize: 12,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );

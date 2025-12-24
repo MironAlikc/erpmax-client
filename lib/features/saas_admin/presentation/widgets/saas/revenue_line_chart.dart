@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,8 @@ class RevenueLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return LineChart(
       LineChartData(
         gridData: FlGridData(show: true, drawVerticalLine: false),
@@ -18,7 +22,13 @@ class RevenueLineChart extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
                 if (value.toInt() < months.length) {
-                  return Text(months[value.toInt()], style: const TextStyle(fontSize: 10));
+                  return Text(
+                    months[value.toInt()],
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: theme.textSecondary,
+                      fontSize: 10,
+                    ),
+                  );
                 }
                 return const SizedBox();
               },
@@ -37,11 +47,11 @@ class RevenueLineChart extends StatelessWidget {
               const FlSpot(5, 6),
             ],
             isCurved: true,
-            color: const Color(0xFF6366F1),
+            color: theme.primary,
             barWidth: 3,
             belowBarData: BarAreaData(
               show: true,
-              color: const Color(0xFF6366F1).withOpacity(0.1),
+              color: theme.primary.withValues(alpha: 0.1),
             ),
           ),
         ],

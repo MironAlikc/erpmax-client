@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class ErpMaxDataTable<T> extends StatefulWidget {
   final List<ErpMaxColumn> columns;
@@ -37,8 +36,6 @@ class _ErpMaxDataTableState<T> extends State<ErpMaxDataTable<T>> {
 
   @override
   Widget build(BuildContext context) {
-    AppColorExtension.of(context);
-
     if (widget.isBusy && widget.items.isEmpty) {
       return const SizedBox(
         height: 200,

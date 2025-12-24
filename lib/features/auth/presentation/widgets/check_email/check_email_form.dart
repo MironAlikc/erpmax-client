@@ -1,7 +1,7 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,16 +36,16 @@ class CheckEmailForm extends StatelessWidget {
           textAlign: TextAlign.center,
           TextSpan(
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.gray600,
+              color: context.theme.appColor.gray600,
               height: 1.5,
             ),
             children: [
               const TextSpan(text: 'Please click the link sent to your email '),
               TextSpan(
                 text: email,
-                style: const TextStyle(
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: context.theme.appColor.textPrimary,
                 ),
               ),
               const TextSpan(text: ' to verify your account. Thank you'),
@@ -61,19 +61,21 @@ class CheckEmailForm extends StatelessWidget {
         ),
         const SizedBox(height: AppDesign.elementGap),
 
-        _buildResendRow(),
+        _buildResendRow(context),
       ],
     );
   }
 
-  Widget _buildResendRow() {
+  Widget _buildResendRow(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "Didn't receive an email? ",
-          style: AppTextStyles.bodySmall.copyWith(color: AppColors.gray500),
+          style: AppTextStyles.bodySmall.copyWith(
+            color: context.theme.appColor.gray500,
+          ),
         ),
         GestureDetector(
           onTap: onResend,

@@ -1,11 +1,12 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../common/divider_with_text.dart';
 
 class SignupForm extends StatefulWidget {
@@ -34,7 +35,6 @@ class _SignupFormState extends State<SignupForm> {
   }
 
   void _handleSignup() {
-    // Добавлена проверка валидности через Validator
     if (_formKey.currentState!.validate() && _isTermsAccepted) {
       context.go(RouteNames.journal);
     }
@@ -42,6 +42,8 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Form(
       key: _formKey,
       child: Column(
@@ -62,7 +64,6 @@ class _SignupFormState extends State<SignupForm> {
             controller: _emailController,
             hintText: 'email@email.com',
             keyboardType: TextInputType.emailAddress,
-            // Добавь базовую валидацию
             validator: (value) => (value == null || !value.contains('@'))
                 ? 'Invalid email'
                 : null,
@@ -82,7 +83,7 @@ class _SignupFormState extends State<SignupForm> {
                     ? Icons.visibility_outlined
                     : Icons.visibility_off_outlined,
                 size: 20,
-                color: AppColors.gray400,
+                color: theme.gray400,
               ),
               onPressed: () =>
                   setState(() => _isPasswordVisible = !_isPasswordVisible),
@@ -108,7 +109,7 @@ class _SignupFormState extends State<SignupForm> {
                     ? Icons.visibility_outlined
                     : Icons.visibility_off_outlined,
                 size: 20,
-                color: AppColors.gray400,
+                color: theme.gray400,
               ),
               onPressed: () =>
                   setState(() => _isConfirmVisible = !_isConfirmVisible),
@@ -124,7 +125,6 @@ class _SignupFormState extends State<SignupForm> {
 
           AppButton(
             text: 'Sign Up',
-            // Кнопка активна только при принятии условий
             onPressed: _isTermsAccepted ? _handleSignup : null,
             isExpanded: true,
           ),
@@ -134,12 +134,13 @@ class _SignupFormState extends State<SignupForm> {
   }
 }
 
-// ... Остальные виджеты (_SignupHeader, _FieldLabel, _TermsCheckbox) остаются без изменений
 class _SignupHeader extends StatelessWidget {
   const _SignupHeader();
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       children: [
         Text(
@@ -147,7 +148,7 @@ class _SignupHeader extends StatelessWidget {
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
-            color: AppColors.gray900,
+            color: theme.gray900,
           ),
           textAlign: TextAlign.center,
         ),
@@ -184,7 +185,7 @@ class _FieldLabel extends StatelessWidget {
         text,
         style: AppTextStyles.base.copyWith(
           fontWeight: FontWeight.w600,
-          color: AppColors.gray900,
+          color: context.theme.appColor.gray900,
           fontSize: 14,
         ),
       ),
@@ -199,6 +200,8 @@ class _TermsCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return InkWell(
       onTap: () => onChanged(!value),
       borderRadius: BorderRadius.circular(4),
@@ -210,11 +213,11 @@ class _TermsCheckbox extends StatelessWidget {
             child: Checkbox(
               value: value,
               onChanged: onChanged,
-              activeColor: AppColors.primary,
+              activeColor: theme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
-              side: const BorderSide(color: AppColors.gray300, width: 1.5),
+              side: BorderSide(color: theme.gray300, width: 1.5),
             ),
           ),
           const SizedBox(width: 8),
@@ -222,7 +225,7 @@ class _TermsCheckbox extends StatelessWidget {
             child: Text(
               'I accept the Terms & Conditions',
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textPrimary,
+                color: theme.textPrimary,
                 fontWeight: FontWeight.w500,
               ),
             ),

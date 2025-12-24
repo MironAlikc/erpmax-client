@@ -1,11 +1,12 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
 import 'package:erpmax_client/core/widgets/shared/app_stat_card.dart';
 import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
-import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
+import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
+import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
+import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 enum BackupStatus { success, warning }
 
@@ -58,11 +59,11 @@ class _BackupContentState extends State<BackupContent> {
           ),
           const SizedBox(height: 24),
           if (_selectedTab == 'Backup Management') ...[
-            _buildActionHeader(),
+            _buildActionHeader(context),
             const SizedBox(height: 24),
-            _buildStatsGrid(),
+            _buildStatsGrid(context),
             const SizedBox(height: 32),
-            _buildBackupTable(),
+            _buildBackupTable(context),
           ] else ...[
             AppPlaceholder(title: _selectedTab),
           ],
@@ -72,16 +73,18 @@ class _BackupContentState extends State<BackupContent> {
     );
   }
 
-  Widget _buildActionHeader() {
+  Widget _buildActionHeader(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Align(
       alignment: Alignment.centerRight,
       child: ElevatedButton.icon(
         onPressed: () {},
-        icon: const Icon(Icons.storage_rounded, size: 18, color: Colors.white),
-        label: const Text("Create Backup"),
+        icon: Icon(Icons.storage_rounded, size: 18, color: theme.white),
+        label: Text("Create Backup", style: AppTextStyles.buttonText),
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF0F172A),
-          foregroundColor: Colors.white,
+          backgroundColor: theme.gray900,
+          foregroundColor: theme.white,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
@@ -90,7 +93,9 @@ class _BackupContentState extends State<BackupContent> {
     );
   }
 
-  Widget _buildStatsGrid() {
+  Widget _buildStatsGrid(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
         Expanded(
@@ -98,50 +103,48 @@ class _BackupContentState extends State<BackupContent> {
             title: "Last Backup",
             value: "2 hours ago",
             subtitle: "Automated Daily",
-            color: AppColors.primary,
+            color: theme.primary,
           ),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: AppAppStatCard(
             title: "Backup Size",
             value: "1.2 GB",
             subtitle: "Used: 45 GB",
-            color: AppColors.success,
+            color: theme.success,
           ),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: AppAppStatCard(
             title: "Next Scheduled",
             value: "22:00:00",
             subtitle: "Daily midnight",
-            color: Color(0xFF8B5CF6),
+            color: theme.warning,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildBackupTable() {
+  Widget _buildBackupTable(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.gray100),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(24),
+          Padding(
+            padding: const EdgeInsets.all(24),
             child: Text(
               "Recent Backups",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
-              ),
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
           ),
           ErpMaxDataTable<BackupRecord>(
@@ -161,25 +164,33 @@ class _BackupContentState extends State<BackupContent> {
             rowBuilder: (item) => [
               Row(
                 children: [
-                  const Icon(
-                    Icons.storage_outlined,
-                    size: 18,
-                    color: Color(0xFF94A3B8),
-                  ),
+                  Icon(Icons.storage_outlined, size: 18, color: theme.gray400),
                   const SizedBox(width: 12),
                   Text(
                     item.name,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    style: AppTextStyles.bodyMediumBold.copyWith(
+                      color: theme.textPrimary,
+                    ),
                   ),
                 ],
               ),
-              Text(item.date, style: const TextStyle(color: Color(0xFF64748B))),
+              Text(
+                item.date,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textSecondary,
+                ),
+              ),
               AppStatusChip.neutral(item.type),
-              Text(item.size, style: const TextStyle(color: Color(0xFF1E293B))),
+              Text(
+                item.size,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textPrimary,
+                ),
+              ),
               item.status == BackupStatus.success
                   ? AppStatusChip.success("Success")
                   : AppStatusChip.warning("Warning"),
-              const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+              Icon(Icons.more_horiz, color: theme.gray400),
             ],
           ),
         ],

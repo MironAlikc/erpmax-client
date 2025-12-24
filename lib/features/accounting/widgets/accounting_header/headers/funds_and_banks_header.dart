@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_base_header.dart';
 import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ class FundsAndBanksHeader extends AccountingBaseHeader {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       color: Colors.white,
@@ -18,17 +22,16 @@ class FundsAndBanksHeader extends AccountingBaseHeader {
               children: [
                 Text(
                   currentTab.name,
-                  style: const TextStyle(
+                  style: AppTextStyles.h1.copyWith(
+                    color: theme.textPrimary,
                     fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF0F172A),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   currentTab.description ?? '',
-                  style: const TextStyle(
-                    color: Color(0xFF64748B),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: theme.textSecondary,
                     fontSize: 14,
                   ),
                 ),
@@ -46,22 +49,22 @@ class FundsAndBanksHeader extends AccountingBaseHeader {
               AccountingHeaderBtn(
                 label: "Journal Entry",
                 icon: Icons.add,
-                color: const Color(0xFF12203A),
+                color: theme.black,
               ),
               AccountingHeaderBtn(
                 label: "Cash Journal",
                 icon: Icons.account_balance_wallet,
-                color: const Color(0xFF00C58D),
+                color: theme.activeGreen,
               ),
               AccountingHeaderBtn(
                 label: "In",
                 icon: Icons.arrow_downward,
-                color: const Color(0xFF22C55E),
+                color: theme.success,
               ),
               AccountingHeaderBtn(
                 label: "Out",
                 icon: Icons.arrow_upward,
-                color: const Color(0xFFEF4444),
+                color: theme.error,
               ),
             ],
           ),

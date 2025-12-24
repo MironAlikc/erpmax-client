@@ -1,5 +1,5 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
@@ -20,18 +20,18 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trendColor = isPositive
-        ? const Color(0xFF10B981)
-        : const Color(0xFFF04438);
+    final theme = context.theme.appColor;
+
+    final Color trendColor = isPositive ? theme.success : theme.error;
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: theme.shadowColor,
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -46,7 +46,7 @@ class StatCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: color, size: 22),
@@ -54,7 +54,7 @@ class StatCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: trendColor.withOpacity(0.1),
+                  color: trendColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -69,7 +69,7 @@ class StatCard extends StatelessWidget {
           const Spacer(),
           Text(
             title,
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.gray500),
+            style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
           ),
           const SizedBox(height: 4),
           FittedBox(
@@ -96,7 +96,7 @@ class _IconBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.08),
+        color: color.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Icon(icon, color: color, size: 20),
@@ -112,14 +112,14 @@ class _TrendBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color trendColor = isPositive
-        ? const Color(0xFF22C55E)
-        : const Color(0xFFEF4444);
+    final theme = context.theme.appColor;
+
+    final Color trendColor = isPositive ? theme.success : theme.error;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: trendColor.withOpacity(0.08),
+        color: trendColor.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

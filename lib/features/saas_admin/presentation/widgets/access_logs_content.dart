@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
+import 'package:erpmax_client/core/models/erp_models.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
-import 'package:erpmax_client/core/models/erp_models.dart';
+import 'package:flutter/material.dart';
 
 class AccessLogsContent extends StatelessWidget {
   const AccessLogsContent({super.key});
@@ -25,11 +25,13 @@ class AccessLogsContent extends StatelessWidget {
   }
 
   Widget _buildLogsTable(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: theme.gray200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

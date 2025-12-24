@@ -1,6 +1,7 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
 
 class AppPlaceholder extends StatelessWidget {
   final String title;
@@ -16,18 +17,15 @@ class AppPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.white,
         borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-        border: Border.all(
-          color: theme.colorScheme.outline.withValues(alpha: 0.1),
-        ),
+        border: Border.all(color: theme.gray300.withValues(alpha: 0.1)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,21 +34,21 @@ class AppPlaceholder extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: colors.backgroundLight,
+              color: theme.bgLight,
               shape: BoxShape.circle,
             ),
             child: Icon(
               icon,
               size: 48,
-              color: colors.textDisabled.withValues(alpha: 0.5),
+              color: theme.textDisabled.withValues(alpha: 0.5),
             ),
           ),
           const SizedBox(height: 24),
           Text(
             title,
-            style: theme.textTheme.titleLarge?.copyWith(
+            style: AppTextStyles.h2.copyWith(
               fontWeight: FontWeight.bold,
-              color: colors.textPrimary,
+              color: theme.textPrimary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -58,8 +56,8 @@ class AppPlaceholder extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               subtitle!,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colors.textSecondary,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: theme.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),

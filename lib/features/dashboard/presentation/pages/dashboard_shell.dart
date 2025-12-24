@@ -1,13 +1,14 @@
-import 'package:erpmax_client/features/dashboard/presentation/widgets/main_content/main_content_header.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
-import 'package:erpmax_client/features/saas_admin/presentation/widgets/navigation/top_nav_bar.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
+import 'package:erpmax_client/features/dashboard/presentation/widgets/main_content/main_content_header.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/mobile/mobile_drawer.dart';
+import 'package:erpmax_client/features/saas_admin/presentation/widgets/navigation/top_nav_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
 import '../widgets/navigation/app_sidebar.dart';
 
 class DashboardShell extends StatefulWidget {
@@ -23,11 +24,13 @@ class _DashboardShellState extends State<DashboardShell> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final bool isDesktop = Responsive.isDesktop(context);
     final int currentIndex = widget.navigationShell.currentIndex;
 
     return Scaffold(
-      backgroundColor: AppColors.gray50,
+      backgroundColor: theme.gray50,
       drawer: !isDesktop
           ? MobileDrawer(
               selectedIndex: currentIndex,

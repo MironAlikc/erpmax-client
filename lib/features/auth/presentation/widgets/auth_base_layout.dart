@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import '../../../../core/design/app_design.dart';
 
 class AuthBaseLayout extends StatelessWidget {
   final Widget child;
@@ -14,13 +14,12 @@ class AuthBaseLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppDesign.desktopBreakpoint;
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: theme.gray50,
       resizeToAvoidBottomInset: true,
       body: Row(
         children: [
@@ -29,7 +28,7 @@ class AuthBaseLayout extends StatelessWidget {
           Expanded(
             flex: isDesktop ? AppDesign.authFormFlex : 1,
             child: Container(
-              color: theme.colorScheme.surface,
+              color: theme.white,
               height: double.infinity,
               child: Center(
                 child: SingleChildScrollView(
@@ -44,16 +43,16 @@ class AuthBaseLayout extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(AppDesign.formInnerPadding),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.surface,
+                        color: theme.white,
                         borderRadius: BorderRadius.circular(
                           AppDesign.cardRadius,
                         ),
                         border: Border.all(
-                          color: colors.textDisabled.withValues(alpha: 0.1),
+                          color: theme.textDisabled.withValues(alpha: 0.1),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: colors.textPrimary.withValues(alpha: 0.05),
+                            color: theme.textPrimary.withValues(alpha: 0.05),
                             blurRadius: 40,
                             offset: const Offset(0, 12),
                           ),

@@ -1,8 +1,8 @@
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppSidebar extends StatelessWidget {
@@ -21,8 +21,7 @@ class AppSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = AppColorExtension.of(context);
+    final theme = context.theme.appColor;
     final menuItems = _menuData;
 
     return AnimatedContainer(
@@ -32,21 +31,21 @@ class AppSidebar extends StatelessWidget {
           ? AppDesign.sidebarExpandedWidth
           : AppDesign.sidebarCollapsedWidth,
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: theme.white,
         border: Border(
           right: BorderSide(
-            color: colors.textDisabled.withValues(alpha: 0.1),
+            color: theme.textDisabled.withValues(alpha: 0.1),
             width: 1,
           ),
         ),
       ),
       child: Column(
         children: [
-          _buildLogo(context, colors),
+          _buildLogo(context),
           Divider(
             height: 1,
             thickness: 1,
-            color: colors.textDisabled.withValues(alpha: 0.05),
+            color: theme.textDisabled.withValues(alpha: 0.05),
           ),
           Expanded(
             child: ListView.builder(
@@ -70,13 +69,15 @@ class AppSidebar extends StatelessWidget {
               },
             ),
           ),
-          _buildBottomSection(context, colors),
+          _buildBottomSection(context),
         ],
       ),
     );
   }
 
-  Widget _buildLogo(BuildContext context, AppColorExtension colors) {
+  Widget _buildLogo(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: double.infinity,
       height: AppDesign.headerHeight,
@@ -88,7 +89,7 @@ class AppSidebar extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.blur_on, color: colors.success, size: 28),
+                    Icon(Icons.blur_on, color: theme.success, size: 28),
                     const SizedBox(width: 10),
                     Text(
                       'ERP Max',
@@ -99,20 +100,22 @@ class AppSidebar extends StatelessWidget {
                     ),
                   ],
                 ),
-                _buildToggleButton(colors),
+                _buildToggleButton(context),
               ],
             )
           : Stack(
               alignment: Alignment.center,
               children: [
-                Icon(Icons.blur_on, color: colors.success, size: 28),
-                Positioned(bottom: 4, child: _buildToggleButton(colors)),
+                Icon(Icons.blur_on, color: theme.success, size: 28),
+                Positioned(bottom: 4, child: _buildToggleButton(context)),
               ],
             ),
     );
   }
 
-  Widget _buildToggleButton(AppColorExtension colors) {
+  Widget _buildToggleButton(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -126,7 +129,7 @@ class AppSidebar extends StatelessWidget {
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 14,
-              color: colors.textSecondary,
+              color: theme.textSecondary,
             ),
           ),
         ),
@@ -134,11 +137,13 @@ class AppSidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomSection(BuildContext context, AppColorExtension colors) {
+  Widget _buildBottomSection(BuildContext context) {
+    final theme = context.theme.appColor;
+
     if (!isExpanded) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Icon(Icons.help_outline, color: colors.textDisabled, size: 20),
+        child: Icon(Icons.help_outline, color: theme.textDisabled, size: 20),
       );
     }
 
@@ -146,7 +151,7 @@ class AppSidebar extends StatelessWidget {
       margin: const EdgeInsets.all(12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colors.backgroundLight,
+        color: theme.bgLight,
         borderRadius: BorderRadius.circular(AppDesign.cardRadius),
       ),
       child: Column(
@@ -155,7 +160,7 @@ class AppSidebar extends StatelessWidget {
           Text(
             'v1.0.2',
             style: AppTextStyles.bodySmall.copyWith(
-              color: colors.textDisabled,
+              color: theme.textDisabled,
               fontSize: 10,
             ),
           ),
@@ -167,7 +172,9 @@ class AppSidebar extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: const Size(0, 32),
-                side: BorderSide(color: colors.primaryDark.withOpacity(0.2)),
+                side: BorderSide(
+                  color: theme.primaryDark.withValues(alpha: 0.2),
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -207,10 +214,8 @@ class _MenuItemState extends State<_MenuItem> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
+    final theme = context.theme.appColor;
     final bool isSelected = widget.selectedIndex == widget.index;
-    final Color activeBgBase = const Color(0xFF12203A);
-    final Color activeBgLight = const Color(0xFF1A2D4D);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -238,11 +243,14 @@ class _MenuItemState extends State<_MenuItem> {
                       ? LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [activeBgLight, activeBgBase],
+                          colors: [
+                            theme.sidebarActiveBgLight,
+                            theme.sidebarActiveBgBase,
+                          ],
                         )
                       : null,
                   color: !isSelected && _isHovered
-                      ? colors.textDisabled.withValues(alpha: 0.08)
+                      ? theme.textDisabled.withValues(alpha: 0.08)
                       : (isSelected ? null : Colors.transparent),
                   boxShadow: isSelected
                       ? [
@@ -261,7 +269,7 @@ class _MenuItemState extends State<_MenuItem> {
                   children: [
                     Icon(
                       widget.icon,
-                      color: isSelected ? colors.success : colors.textSecondary,
+                      color: isSelected ? theme.success : theme.textSecondary,
                       size: 24,
                     ),
                     if (widget.isExpanded) ...[
@@ -270,9 +278,7 @@ class _MenuItemState extends State<_MenuItem> {
                         child: Text(
                           widget.title,
                           style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : colors.textPrimary,
+                            color: isSelected ? theme.white : theme.textPrimary,
                             fontSize: 14,
                             fontWeight: isSelected
                                 ? FontWeight.w700
@@ -296,7 +302,7 @@ class _MenuItemState extends State<_MenuItem> {
                 child: Container(
                   width: 4,
                   decoration: BoxDecoration(
-                    color: colors.success,
+                    color: theme.success,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(4),
                       bottomRight: Radius.circular(4),

@@ -1,16 +1,18 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/saas/saas_metric_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/widgets/common/app_button.dart';
 
 class SaaSContent extends StatelessWidget {
   const SaaSContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return ListView(
       padding: EdgeInsets.all(AppDesign.pagePadding),
       children: [
@@ -24,9 +26,9 @@ class SaaSContent extends StatelessWidget {
           height: 400,
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: theme.white,
             borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-            border: Border.all(color: AppColors.gray200),
+            border: Border.all(color: theme.gray200),
           ),
           child: const RevenueLineChart(),
         ),
@@ -35,6 +37,8 @@ class SaaSContent extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -45,9 +49,7 @@ class SaaSContent extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               'Overview of your platform performance',
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.gray500,
-              ),
+              style: AppTextStyles.bodyMedium.copyWith(color: theme.gray500),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 
 class ErpMaxTabItem {
   final String name;
@@ -21,15 +21,14 @@ class ErpMaxTabFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Container(
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colors.textDisabled.withValues(alpha: 0.1)),
+        border: Border.all(color: theme.textDisabled.withValues(alpha: 0.1)),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -45,16 +44,16 @@ class ErpMaxTabFilter extends StatelessWidget {
                 avatar: Icon(
                   item.icon,
                   size: 16,
-                  color: isSelected ? Colors.white : colors.textSecondary,
+                  color: isSelected ? theme.white : theme.textSecondary,
                 ),
                 selected: isSelected,
                 onSelected: (bool selected) {
                   if (selected) onSelected(item.name);
                 },
-                selectedColor: colors.primaryDark,
+                selectedColor: theme.primaryDark,
                 backgroundColor: Colors.transparent,
                 labelStyle: TextStyle(
-                  color: isSelected ? Colors.white : colors.textSecondary,
+                  color: isSelected ? theme.white : theme.textSecondary,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),

@@ -1,9 +1,9 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/features/accounting/widgets/accounts_watchlist.dart';
 import 'package:erpmax_client/features/accounting/widgets/quick_actions_panel.dart';
 import 'package:erpmax_client/features/accounting/widgets/recent_transactions_table.dart';
 import 'package:erpmax_client/features/accounting/widgets/stats_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
 
 class AccountingDashboardView extends StatelessWidget {
   const AccountingDashboardView({super.key});

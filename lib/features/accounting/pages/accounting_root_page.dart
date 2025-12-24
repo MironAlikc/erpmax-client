@@ -1,13 +1,12 @@
 import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
 import 'package:erpmax_client/features/accounting/config/accounting_tabs_config.dart';
 import 'package:erpmax_client/features/accounting/widgets/accounting_header/accounting_header_dispatcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../core/design/app_colors.dart';
-import '../../../../core/design/app_text_styles.dart';
-import '../../../../core/navigation/tab_navigation_service.dart';
-import '../../../../core/widgets/common/keep_alive_page.dart';
 
 class AccountingRootPage extends StatefulWidget {
   const AccountingRootPage({super.key});
@@ -63,7 +62,7 @@ class _AccountingRootPageState extends State<AccountingRootPage>
         final currentTab = _moduleTabs[_tabController.index];
 
         return Scaffold(
-          backgroundColor: AppColors.gray50,
+          backgroundColor: context.theme.appColor.gray50,
           body: Column(
             children: [
               AnimatedSwitcher(
@@ -102,20 +101,18 @@ class _PlaceholderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.construction_rounded,
-            size: 48,
-            color: AppColors.gray300,
-          ),
+          Icon(Icons.construction_rounded, size: 48, color: theme.gray300),
           const SizedBox(height: 16),
           Text(
             "$name\nComing Soon",
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodyLarge.copyWith(color: AppColors.gray400),
+            style: AppTextStyles.bodyLarge.copyWith(color: theme.gray400),
           ),
         ],
       ),

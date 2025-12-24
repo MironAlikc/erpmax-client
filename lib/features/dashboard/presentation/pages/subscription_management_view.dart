@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-import 'package:erpmax_client/core/utils/responsive.dart';
+import 'package:flutter/material.dart';
+
 import '../widgets/subscription_details_modal.dart';
 
 class SubscriptionData {
@@ -64,14 +65,15 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final theme = context.theme.appColor;
     final bool isMobile = Responsive.isMobile(context);
 
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.white,
       body: Column(
         children: [
           _buildTableToolbar(isMobile),
-          const Divider(height: 1, color: AppColors.gray100),
+          Divider(height: 1, color: theme.gray100),
           Expanded(
             child: ErpMaxDataTable<SubscriptionData>(
               columns: _getColumns(),
@@ -85,7 +87,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
                 AppStatusMapper(status: item.tag),
                 Text('₪ ${item.amount}', style: AppTextStyles.bodyMediumBold),
                 AppStatusMapper(status: item.paymentStatus),
-                const Icon(Icons.more_vert, color: AppColors.gray400, size: 20),
+                Icon(Icons.more_vert, color: theme.gray400, size: 20),
               ],
             ),
           ),
@@ -115,7 +117,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
               children: [
                 Text('Subscribers', style: AppTextStyles.h2),
                 const SizedBox(height: 16),
-                _buildSearchField(isFullWidth: true),
+                _buildSearchField(context, isFullWidth: true),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -130,7 +132,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
               children: [
                 Text('Subscribers', style: AppTextStyles.h2),
                 const Spacer(),
-                _buildSearchField(isFullWidth: false),
+                _buildSearchField(context, isFullWidth: false),
                 const SizedBox(width: 12),
                 _buildResetButton(),
                 const SizedBox(width: 12),
@@ -140,7 +142,9 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
     );
   }
 
-  Widget _buildSearchField({required bool isFullWidth}) {
+  Widget _buildSearchField(BuildContext context, {required bool isFullWidth}) {
+    final theme = context.theme.appColor;
+
     return SizedBox(
       width: isFullWidth ? double.infinity : 280,
       height: 44,
@@ -148,22 +152,18 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
         style: AppTextStyles.bodyMedium,
         decoration: InputDecoration(
           hintText: 'Search company...',
-          hintStyle: AppTextStyles.bodySmall.copyWith(color: AppColors.gray400),
-          prefixIcon: const Icon(
-            Icons.search,
-            size: 20,
-            color: AppColors.gray400,
-          ),
+          hintStyle: AppTextStyles.bodySmall.copyWith(color: theme.gray400),
+          prefixIcon: Icon(Icons.search, size: 20, color: theme.gray400),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           filled: true,
-          fillColor: AppColors.gray50,
+          fillColor: theme.gray50,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-            borderSide: const BorderSide(color: AppColors.gray200),
+            borderSide: BorderSide(color: theme.gray200),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-            borderSide: const BorderSide(color: AppColors.gray200),
+            borderSide: BorderSide(color: theme.gray200),
           ),
         ),
       ),

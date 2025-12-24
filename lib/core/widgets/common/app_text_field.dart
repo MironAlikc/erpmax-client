@@ -1,5 +1,6 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 
 class AppTextField extends StatefulWidget {
   final String? label;
@@ -50,8 +51,7 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,8 +60,8 @@ class _AppTextFieldState extends State<AppTextField> {
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: widget.enabled ? colors.textPrimary : colors.textDisabled,
+            style: AppTextStyles.labelStyle.copyWith(
+              color: widget.enabled ? theme.textPrimary : theme.textDisabled,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -79,8 +79,8 @@ class _AppTextFieldState extends State<AppTextField> {
           enabled: widget.enabled,
           onChanged: widget.onChanged,
           textInputAction: widget.textInputAction,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: widget.enabled ? colors.textPrimary : colors.textDisabled,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: widget.enabled ? theme.textPrimary : theme.textDisabled,
           ),
           decoration: InputDecoration(
             hintText: widget.hintText,
@@ -92,7 +92,7 @@ class _AppTextFieldState extends State<AppTextField> {
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
                       size: 20,
-                      color: colors.textSecondary,
+                      color: theme.textSecondary,
                     ),
                     onPressed: widget.enabled
                         ? () => setState(

@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 
 class KpiCard extends StatelessWidget {
   final String title;
@@ -20,18 +20,19 @@ class KpiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trendColor = isPositive ? AppColors.success : AppColors.error;
-    final trendBg = trendColor.withOpacity(0.1);
+    final theme = context.theme.appColor;
+    final trendColor = isPositive ? theme.success : theme.error;
+    final trendBg = trendColor.withValues(alpha: 0.1);
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: theme.gray200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: theme.shadowColor,
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -47,10 +48,10 @@ class KpiCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.gray100,
+                  color: theme.gray100,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(icon, size: 20, color: AppColors.gray600),
+                child: Icon(icon, size: 20, color: theme.gray600),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),

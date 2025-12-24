@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
-import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
 import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
+import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BaseModulePage extends StatefulWidget {
   final List<ModuleTabItem> tabs;
@@ -55,13 +55,15 @@ class _BaseModulePageState extends State<BaseModulePage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final bool isMobile = Responsive.isMobile(context);
-    final tabService = context.watch<TabNavigationService>();
+    // final tabService = context.watch<TabNavigationService>();
 
     final currentTab = widget.tabs[_tabController.index];
 
     return Scaffold(
-      backgroundColor: AppColors.gray50,
+      backgroundColor: theme.gray50,
       body: Column(
         children: [
           TabChipBar(
@@ -78,6 +80,7 @@ class _BaseModulePageState extends State<BaseModulePage>
               return FadeTransition(opacity: animation, child: child);
             },
             child: _buildPageHeader(
+              context,
               currentTab,
               isMobile,
               key: ValueKey(currentTab.id),
@@ -100,7 +103,12 @@ class _BaseModulePageState extends State<BaseModulePage>
     );
   }
 
-  Widget _buildPageHeader(ModuleTabItem tab, bool isMobile, {Key? key}) {
+  Widget _buildPageHeader(
+    BuildContext context,
+    ModuleTabItem tab,
+    bool isMobile, {
+    Key? key,
+  }) {
     return Container(
       key: key,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -117,7 +125,7 @@ class _BaseModulePageState extends State<BaseModulePage>
                   Text(
                     tab.description!,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: Colors.grey[600],
+                      color: context.theme.appColor.gray600,
                     ),
                   ),
                 ],
@@ -131,6 +139,8 @@ class _BaseModulePageState extends State<BaseModulePage>
   }
 
   Widget _buildActions(ModuleTabItem tab) {
+    final theme = context.theme.appColor;
+
     if (tab.customActions != null) {
       return Wrap(spacing: 12, children: tab.customActions!);
     }
@@ -157,14 +167,10 @@ class _BaseModulePageState extends State<BaseModulePage>
             _actionBtn(
               "Cash Journal",
               Icons.account_balance_wallet,
-              color: const Color(0xFF56D0A0),
+              color: theme.activeGreen,
             ),
-            _actionBtn(
-              "Receipts",
-              Icons.arrow_downward,
-              color: AppColors.success,
-            ),
-            _actionBtn("Payments", Icons.arrow_upward, color: AppColors.error),
+            _actionBtn("Receipts", Icons.arrow_downward, color: theme.success),
+            _actionBtn("Payments", Icons.arrow_upward, color: theme.error),
           ],
         );
       default:

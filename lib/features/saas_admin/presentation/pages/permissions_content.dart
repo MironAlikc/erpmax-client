@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-import 'package:erpmax_client/core/widgets/shared/app_status_chip.dart';
+import 'package:flutter/material.dart';
 
 class PermissionRecord {
   final String roleName;
@@ -47,10 +49,12 @@ class _PermissionsContentState extends State<PermissionsContent> {
   }
 
   Widget _buildInnerTabs() {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: theme.gray100,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -64,13 +68,15 @@ class _PermissionsContentState extends State<PermissionsContent> {
   }
 
   Widget _innerTabItem(String label, int index, IconData icon) {
+    final theme = context.theme.appColor;
     final isSelected = _innerTabIndex == index;
+
     return GestureDetector(
       onTap: () => setState(() => _innerTabIndex = index),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF0F172A) : Colors.transparent,
+          color: isSelected ? theme.gray900 : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -78,15 +84,16 @@ class _PermissionsContentState extends State<PermissionsContent> {
             Icon(
               icon,
               size: 18,
-              color: isSelected ? Colors.white : const Color(0xFF64748B),
+              color: isSelected ? theme.white : theme.gray500,
             ),
             const SizedBox(width: 8),
             Text(
               label,
-              style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF64748B),
-                fontWeight: FontWeight.w600,
-              ),
+              style: isSelected
+                  ? AppTextStyles.sidebarActive.copyWith(color: theme.white)
+                  : AppTextStyles.sidebarInactive.copyWith(
+                      color: theme.gray500,
+                    ),
             ),
           ],
         ),
@@ -95,35 +102,41 @@ class _PermissionsContentState extends State<PermissionsContent> {
   }
 
   Widget _buildActionRow() {
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
         Expanded(
           child: TextField(
             decoration: InputDecoration(
               hintText: "Search Roles...",
-              prefixIcon: const Icon(Icons.search, color: Color(0xFF94A3B8)),
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
+                color: theme.gray400,
+              ),
+              prefixIcon: Icon(Icons.search, color: theme.gray400),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: theme.white,
               contentPadding: const EdgeInsets.symmetric(vertical: 0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: BorderSide(color: theme.borderLight),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: BorderSide(color: theme.borderLight),
               ),
             ),
+            style: AppTextStyles.bodyMedium,
           ),
         ),
         const SizedBox(width: 16),
         ElevatedButton.icon(
           onPressed: () {},
           icon: const Icon(Icons.add, size: 18),
-          label: const Text("Add Role"),
+          label: Text("Add Role", style: AppTextStyles.buttonText),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0F172A),
-            foregroundColor: Colors.white,
+            backgroundColor: theme.gray900,
+            foregroundColor: theme.white,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -136,23 +149,25 @@ class _PermissionsContentState extends State<PermissionsContent> {
   }
 
   Widget _buildRolesTable() {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.gray100),
       ),
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(24),
+          Padding(
+            padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                Icon(Icons.shield_outlined, size: 20, color: Color(0xFF1E293B)),
-                SizedBox(width: 12),
+                Icon(Icons.shield_outlined, size: 20, color: theme.gray800),
+                const SizedBox(width: 12),
                 Text(
                   "Roles List",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
                 ),
               ],
             ),
@@ -173,28 +188,30 @@ class _PermissionsContentState extends State<PermissionsContent> {
             rowBuilder: (item) => [
               Text(
                 item.roleName,
-                style: const TextStyle(fontWeight: FontWeight.w700),
+                style: AppTextStyles.bodyMediumBold.copyWith(
+                  color: theme.textPrimary,
+                ),
               ),
               Text(
                 item.description,
-                style: const TextStyle(color: Color(0xFF64748B)),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textSecondary,
+                ),
               ),
               Row(
                 children: [
-                  const Icon(
-                    Icons.people_outline,
-                    size: 16,
-                    color: Color(0xFF94A3B8),
-                  ),
+                  Icon(Icons.people_outline, size: 16, color: theme.gray400),
                   const SizedBox(width: 6),
                   Text(
                     item.usersCount.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    style: AppTextStyles.bodyMediumBold.copyWith(
+                      color: theme.textPrimary,
+                    ),
                   ),
                 ],
               ),
               AppStatusChip.neutral(item.type),
-              const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+              Icon(Icons.more_horiz, color: theme.gray400),
             ],
           ),
         ],

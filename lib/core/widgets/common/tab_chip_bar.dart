@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:flutter/material.dart';
 
 class TabChipBar extends StatefulWidget {
   final TabController controller;
@@ -64,11 +65,13 @@ class _TabChipBarState extends State<TabChipBar> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       height: 56,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1)),
+      decoration: BoxDecoration(
+        color: theme.white,
+        border: Border(bottom: BorderSide(color: theme.borderLight, width: 1)),
       ),
       child: ListView.builder(
         controller: _scrollController,
@@ -86,17 +89,13 @@ class _TabChipBarState extends State<TabChipBar> {
               avatar: Icon(
                 tab.icon,
                 size: 18,
-                color: isSelected
-                    ? const Color(0xFF00C58D)
-                    : const Color(0xFF94A3B8),
+                color: isSelected ? theme.activeGreen : theme.textDisabled,
               ),
               label: Text(tab.name),
               labelStyle: TextStyle(
                 fontSize: 13,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected
-                    ? const Color(0xFF0F172A)
-                    : const Color(0xFF64748B),
+                color: isSelected ? theme.textPrimary : theme.textSecondary,
               ),
               selected: isSelected,
               onSelected: (selected) {
@@ -106,15 +105,15 @@ class _TabChipBarState extends State<TabChipBar> {
                 }
               },
               backgroundColor: Colors.transparent,
-              selectedColor: const Color(0xFFF0FDF4),
+              selectedColor: theme.successBg,
               elevation: 0,
               pressElevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(
                   color: isSelected
-                      ? const Color(0xFF00C58D).withOpacity(0.5)
-                      : const Color(0xFFE2E8F0),
+                      ? theme.activeGreen.withValues(alpha: 0.5)
+                      : theme.borderLight,
                 ),
               ),
             ),

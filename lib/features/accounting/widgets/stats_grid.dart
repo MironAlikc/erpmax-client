@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class StatsGrid extends StatelessWidget {
@@ -69,13 +71,15 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: width.clamp(250, 500),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.borderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,10 +90,10 @@ class _StatItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFC),
+                  color: theme.borderLight.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, size: 24, color: const Color(0xFF1E293B)),
+                child: Icon(icon, size: 24, color: theme.textPrimary),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -98,16 +102,14 @@ class _StatItem extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isUp
-                      ? const Color(0xFFF0FDF4)
-                      : const Color(0xFFFEF2F2),
+                      ? theme.success.withValues(alpha: 0.1)
+                      : theme.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   trend,
-                  style: TextStyle(
-                    color: isUp
-                        ? const Color(0xFF166534)
-                        : const Color(0xFF991B1B),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: isUp ? theme.success : theme.error,
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                   ),
@@ -118,8 +120,8 @@ class _StatItem extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             title,
-            style: const TextStyle(
-              color: Color(0xFF64748B),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: theme.textSecondary,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -127,10 +129,10 @@ class _StatItem extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
+            style: AppTextStyles.h1.copyWith(
               fontSize: 28,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: theme.textPrimary,
             ),
           ),
         ],

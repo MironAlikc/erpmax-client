@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
+import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
+import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class SubscriptionData {
   final String company;
@@ -110,8 +110,10 @@ class _SubscriptionManagementViewState
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isMobile = constraints.maxWidth < 900;
@@ -122,7 +124,7 @@ class _SubscriptionManagementViewState
               const PageTabs(),
               _buildAdaptiveToolbar(isMobile),
               const QuickFilterBar(),
-              const Divider(height: 1, color: AppColors.gray200),
+              Divider(height: 1, color: theme.gray200),
               Expanded(
                 child: ErpMaxDataTable<SubscriptionData>(
                   columns: _columns,
@@ -136,14 +138,14 @@ class _SubscriptionManagementViewState
                     Text(
                       '₪ ${item.amount}',
                       style: AppTextStyles.bodyMediumBold.copyWith(
-                        color: AppColors.primary,
+                        color: theme.primary,
                       ),
                     ),
                     AppStatusMapper(status: item.paymentStatus),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.more_vert,
-                        color: AppColors.gray400,
+                        color: theme.gray400,
                         size: 20,
                       ),
                       onPressed: () {},
@@ -231,11 +233,13 @@ class _PageTabsState extends State<PageTabs> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: AppColors.gray200)),
+        border: Border(bottom: BorderSide(color: theme.gray200)),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -251,7 +255,7 @@ class _PageTabsState extends State<PageTabs> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: isActive ? AppColors.primary : Colors.transparent,
+                      color: isActive ? theme.primary : Colors.transparent,
                       width: 2,
                     ),
                   ),
@@ -260,7 +264,7 @@ class _PageTabsState extends State<PageTabs> {
                   tabs[index],
                   style: TextStyle(
                     fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                    color: isActive ? AppColors.primary : AppColors.gray500,
+                    color: isActive ? theme.primary : theme.gray500,
                   ),
                 ),
               ),
@@ -277,10 +281,12 @@ class QuickFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.gray100)),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: theme.gray100)),
       ),
       child: Row(
         children: [
@@ -289,11 +295,11 @@ class QuickFilterBar extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _filterChip('All SUB'),
-                  _filterChip('Client'),
-                  _filterChip('All Date'),
-                  _filterChip('All Packages'),
-                  _filterChip('All Statuses'),
+                  _filterChip('All SUB', context),
+                  _filterChip('Client', context),
+                  _filterChip('All Date', context),
+                  _filterChip('All Packages', context),
+                  _filterChip('All Statuses', context),
                 ],
               ),
             ),
@@ -308,31 +314,29 @@ class QuickFilterBar extends StatelessWidget {
     );
   }
 
-  Widget _filterChip(String label) {
+  Widget _filterChip(String label, BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.gray50,
-        border: Border.all(color: AppColors.gray200),
+        color: theme.gray50,
+        border: Border.all(color: theme.gray200),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: AppColors.gray700,
+              color: theme.gray700,
             ),
           ),
           const SizedBox(width: 4),
-          const Icon(
-            Icons.keyboard_arrow_down,
-            size: 16,
-            color: AppColors.gray400,
-          ),
+          Icon(Icons.keyboard_arrow_down, size: 16, color: theme.gray400),
         ],
       ),
     );

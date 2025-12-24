@@ -1,11 +1,11 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/widgets/stat_card.dart';
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/features/dashboard/presentation/data/mocks/dashboard_mocks.dart';
+import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/widgets/saas/subscriptions_bar_chart.dart';
-import '../widgets/charts/revenue_line_chart.dart';
+import 'package:flutter/material.dart';
 
 class DashboardContent extends StatelessWidget {
   final double screenWidth;
@@ -27,12 +27,12 @@ class DashboardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader("Overview"),
+          _buildSectionHeader(context, "Overview"),
           const SizedBox(height: 20),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: DashboardMocks.summaryData.length,
+            itemCount: DashboardMocks.getSummaryData(context).length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: isMobile ? 1 : (isTablet ? 2 : 4),
               crossAxisSpacing: 20,
@@ -40,7 +40,7 @@ class DashboardContent extends StatelessWidget {
               childAspectRatio: isMobile ? 2.2 : (isTablet ? 1.8 : 1.6),
             ),
             itemBuilder: (context, index) {
-              final data = DashboardMocks.summaryData[index];
+              final data = DashboardMocks.getSummaryData(context)[index];
               return StatCard(
                 title: data.title,
                 value: "${data.currency}${data.value.toStringAsFixed(0)}",
@@ -48,13 +48,13 @@ class DashboardContent extends StatelessWidget {
                     "${data.changePercentage > 0 ? '+' : ''}${data.changePercentage}%",
                 isPositive: data.changePercentage > 0,
                 icon: data.icon,
-                color: _getCardColor(index),
+                color: _getCardColor(context, index),
               );
             },
           ),
 
           const SizedBox(height: 32),
-          _buildSectionHeader("Analytics"),
+          _buildSectionHeader(context, "Analytics"),
           const SizedBox(height: 20),
           Flex(
             direction: stackCharts ? Axis.vertical : Axis.horizontal,
@@ -85,11 +85,11 @@ class DashboardContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
     return Text(
       title,
       style: AppTextStyles.h2.copyWith(
-        color: AppColors.textPrimary,
+        color: context.theme.appColor.textPrimary,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -99,10 +99,12 @@ class DashboardContent extends StatelessWidget {
     return isVertical ? const SizedBox(height: 24) : const SizedBox(width: 24);
   }
 
-  Color _getCardColor(int index) {
+  Color _getCardColor(BuildContext context, int index) {
+    final theme = context.theme.appColor;
+
     final List<Color> colors = [
-      AppColors.primary,
-      AppColors.success,
+      theme.primary,
+      theme.success,
       const Color(0xFFF59E0B),
       const Color(0xFF8B5CF6),
     ];
@@ -123,15 +125,17 @@ class _ChartWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray100),
+        border: Border.all(color: theme.gray100),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: theme.shadowColor,
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -153,7 +157,7 @@ class _ChartWrapper extends StatelessWidget {
                       Text(
                         subtitle!,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.gray500,
+                          color: theme.gray500,
                         ),
                       ),
                     ],
@@ -165,9 +169,9 @@ class _ChartWrapper extends StatelessWidget {
                 child: InkWell(
                   onTap: () {},
                   borderRadius: BorderRadius.circular(8),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(4.0),
-                    child: Icon(Icons.more_horiz, color: AppColors.gray400),
+                    child: Icon(Icons.more_horiz, color: theme.gray400),
                   ),
                 ),
               ),

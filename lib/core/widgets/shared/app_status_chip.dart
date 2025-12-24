@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
 
 enum AppStatusType { success, warning, danger, neutral }
 
@@ -27,11 +27,13 @@ class AppStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final (bgColor, textColor) = switch (type) {
-      AppStatusType.success => (AppColors.successBg, AppColors.successText),
-      AppStatusType.warning => (AppColors.warningBg, AppColors.warningText),
-      AppStatusType.danger => (AppColors.errorBg, AppColors.errorText),
-      AppStatusType.neutral => (AppColors.neutralBg, AppColors.neutralText),
+      AppStatusType.success => (theme.successBg, theme.successText),
+      AppStatusType.warning => (theme.warningBg, theme.warningText),
+      AppStatusType.danger => (theme.errorBg, theme.errorText),
+      AppStatusType.neutral => (theme.neutralBg, theme.neutralText),
     };
 
     return Container(

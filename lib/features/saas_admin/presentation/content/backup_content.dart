@@ -1,9 +1,11 @@
+import 'package:erpmax_client/core/models/saas_models.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/common/app_status_chip.dart';
 import 'package:erpmax_client/core/widgets/shared/app_stat_card.dart';
+import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/models/saas_models.dart';
-import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
-import 'package:erpmax_client/core/widgets/common/app_status_chip.dart';
 
 class BackupContent extends StatelessWidget {
   const BackupContent({super.key});
@@ -14,27 +16,29 @@ class BackupContent extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       child: Column(
         children: [
-          _buildStats(),
+          _buildStats(context),
           const SizedBox(height: 32),
-          _buildBackupTable(),
+          _buildBackupTable(context),
         ],
       ),
     );
   }
 
-  Widget _buildStats() {
+  Widget _buildStats(BuildContext context) {
+    final colors = context.theme.appColor;
+
     return Wrap(
       spacing: 16,
       runSpacing: 16,
       children: [
-        _statItem("Last Backup", "2 hours ago", Colors.blue, Icons.history),
+        _statItem("Last Backup", "2 hours ago", colors.primary, Icons.history),
         _statItem(
           "Storage Used",
           "1.2 GB / 50 GB",
-          Colors.green,
+          colors.success,
           Icons.cloud_done,
         ),
-        _statItem("Next Schedule", "Today 22:00", Colors.purple, Icons.timer),
+        _statItem("Next Schedule", "Today 22:00", colors.warning, Icons.timer),
       ],
     );
   }
@@ -46,21 +50,23 @@ class BackupContent extends StatelessWidget {
     );
   }
 
-  Widget _buildBackupTable() {
+  Widget _buildBackupTable(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.gray100),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(24),
+          Padding(
+            padding: const EdgeInsets.all(24),
             child: Text(
               "Recent Backups",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
           ),
           ErpMaxDataTable<BackupRecord>(
@@ -77,15 +83,24 @@ class BackupContent extends StatelessWidget {
                 children: [
                   Text(
                     item.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: AppTextStyles.bodyMediumBold.copyWith(
+                      color: theme.textPrimary,
+                    ),
                   ),
                   Text(
                     item.date,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: theme.textTertiary,
+                    ),
                   ),
                 ],
               ),
-              Text(item.size),
+              Text(
+                item.size,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textPrimary,
+                ),
+              ),
               AppStatusChip.neutral(item.type),
               item.isSuccess
                   ? AppStatusChip.success("Completed")

@@ -1,6 +1,6 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,6 +41,8 @@ class _Verify2faFormState extends State<Verify2faForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -49,10 +51,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
           child: SvgPicture.asset(
             'assets/svg/smartphone.svg',
             height: 80,
-            colorFilter: const ColorFilter.mode(
-              AppColors.primary,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(theme.primary, BlendMode.srcIn),
           ),
         ),
         const SizedBox(height: 24),
@@ -68,7 +67,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
         Text(
           'Enter the verification code we sent to\n******7859',
           style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.gray500,
+            color: theme.gray500,
             height: 1.5,
           ),
           textAlign: TextAlign.center,
@@ -89,7 +88,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
         ),
 
         const SizedBox(height: AppDesign.sectionGap),
-        _buildResendTimer(),
+        _buildResendTimer(context),
         const SizedBox(height: AppDesign.sectionGap),
 
         AppButton(
@@ -102,14 +101,14 @@ class _Verify2faFormState extends State<Verify2faForm> {
     );
   }
 
-  Widget _buildResendTimer() {
+  Widget _buildResendTimer(BuildContext context) {
     return Center(
       child: Column(
         children: [
           Text(
             "Didn't receive a code? (37s)",
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.gray500,
+              color: context.theme.appColor.gray500,
               fontSize: 13,
             ),
           ),
@@ -138,6 +137,8 @@ class _OtpField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return SizedBox(
       width: 48,
       height: 48,
@@ -156,11 +157,11 @@ class _OtpField extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: AppColors.gray200),
+            borderSide: BorderSide(color: theme.gray200),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+            borderSide: BorderSide(color: theme.primary, width: 1.5),
           ),
         ),
         onChanged: (value) {

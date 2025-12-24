@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class ReportStat {
   final String title;
@@ -65,6 +67,8 @@ class _ReportsContentState extends State<ReportsContent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -77,17 +81,22 @@ class _ReportsContentState extends State<ReportsContent> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _selectedReportType,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
-                  const Text(
-                    "Detailed analytical statistics and exports.",
-                    style: TextStyle(color: Color(0xFF64748B)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _selectedReportType,
+                        style: AppTextStyles.h1.copyWith(
+                          color: theme.textPrimary,
+                        ),
+                      ),
+                      Text(
+                        "Detailed analytical statistics and exports.",
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: theme.textSecondary,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -96,8 +105,8 @@ class _ReportsContentState extends State<ReportsContent> {
                 icon: const Icon(Icons.download, size: 18),
                 label: const Text("Export CSV"),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00C58D),
-                  foregroundColor: Colors.white,
+                  backgroundColor: theme.activeGreen,
+                  foregroundColor: theme.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -179,6 +188,8 @@ class _ReportsContentState extends State<ReportsContent> {
   }
 
   Widget _buildReportTableSection(String title, List<ReportSubscriber> data) {
+    final theme = context.theme.appColor;
+
     final cols = [
       ErpMaxColumn(title: "Company Name", weight: 0.25),
       ErpMaxColumn(title: "Plan Name", weight: 0.15),
@@ -191,9 +202,9 @@ class _ReportsContentState extends State<ReportsContent> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.inactiveBg),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,7 +213,10 @@ class _ReportsContentState extends State<ReportsContent> {
             padding: const EdgeInsets.all(24),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+              style: AppTextStyles.h3.copyWith(
+                color: theme.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
           ErpMaxTable(
@@ -215,32 +229,37 @@ class _ReportsContentState extends State<ReportsContent> {
                     cells: [
                       Text(
                         item.company,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1E293B),
+                        style: AppTextStyles.bodyMediumBold.copyWith(
+                          color: theme.textPrimary,
                         ),
                       ),
+
                       Text(
                         item.plan,
-                        style: const TextStyle(color: Color(0xFF64748B)),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: theme.textSecondary,
+                        ),
                       ),
                       _StatusBadge(status: item.status),
                       Text(
                         item.startDate,
-                        style: const TextStyle(color: Color(0xFF64748B)),
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: theme.textSecondary,
+                        ),
                       ),
                       Text(
                         item.endDate,
-                        style: const TextStyle(color: Color(0xFF64748B)),
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: theme.textSecondary,
+                        ),
                       ),
                       Text(
                         item.price,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0F172A),
+                        style: AppTextStyles.bodyMediumBold.copyWith(
+                          color: theme.textPrimary,
                         ),
                       ),
-                      const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+                      Icon(Icons.more_horiz, color: theme.textDisabled),
                     ],
                   ),
                 )
@@ -252,20 +271,24 @@ class _ReportsContentState extends State<ReportsContent> {
   }
 
   Widget _buildPlaceholderContent(String name) {
+    final theme = context.theme.appColor;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 80),
         child: Column(
           children: [
-            Icon(Icons.analytics_outlined, size: 64, color: Colors.grey[200]),
+            Icon(Icons.analytics_outlined, size: 64, color: theme.inactiveBg),
             const SizedBox(height: 16),
             Text(
               "Data for $name",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
-            const Text(
+            Text(
               "This report is being processed...",
-              style: TextStyle(color: Colors.grey),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: theme.textSecondary,
+              ),
             ),
           ],
         ),
@@ -281,16 +304,16 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trendColor = stat.isUp
-        ? const Color(0xFF00C58D)
-        : const Color(0xFFF43F5E);
+    final theme = context.theme.appColor;
+    final trendColor = stat.isUp ? theme.activeGreen : theme.error;
+
     return Container(
       width: width,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.inactiveBg),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,21 +321,20 @@ class _StatCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(stat.icon, color: const Color(0xFF1E293B), size: 28),
+              Icon(stat.icon, color: theme.textPrimary, size: 28),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: trendColor.withOpacity(0.1),
+                  color: trendColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   stat.trend,
-                  style: TextStyle(
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: trendColor,
-                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -322,15 +344,18 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             stat.title,
-            style: const TextStyle(color: Color(0xFF64748B), fontSize: 14),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: theme.textSecondary,
+              fontSize: 14,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             stat.value,
-            style: const TextStyle(
+            style: AppTextStyles.h1.copyWith(
               fontSize: 32,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: theme.textPrimary,
             ),
           ),
         ],
@@ -342,24 +367,34 @@ class _StatCard extends StatelessWidget {
 class _StatusBadge extends StatelessWidget {
   final String status;
   const _StatusBadge({required this.status});
+
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final isExpired = status == "Expired";
+
+    final bgColor = isExpired
+        ? theme.error.withValues(alpha: 0.1)
+        : theme.success.withValues(alpha: 0.1);
+    final borderColor = isExpired
+        ? theme.error.withValues(alpha: 0.2)
+        : theme.success.withValues(alpha: 0.2);
+    final textColor = isExpired ? theme.error : theme.success;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isExpired ? const Color(0xFFFFF1F2) : const Color(0xFFF0FDF4),
+        color: bgColor,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(
-          color: isExpired ? const Color(0xFFFECDD3) : const Color(0xFFBBF7D0),
-        ),
+        border: Border.all(color: borderColor),
       ),
       child: Text(
-        status,
-        style: TextStyle(
-          color: isExpired ? const Color(0xFFE11D48) : const Color(0xFF166534),
-          fontSize: 11,
+        status.toUpperCase(),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: textColor,
+          fontSize: 10,
           fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
         ),
       ),
     );

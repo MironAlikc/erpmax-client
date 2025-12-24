@@ -1,3 +1,6 @@
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class AccountsWatchlist extends StatelessWidget {
@@ -5,12 +8,14 @@ class AccountsWatchlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: theme.borderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,17 +25,24 @@ class AccountsWatchlist extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          _item("Cash on Hand", "1110 - Current Assets", "\$12,450"),
-          _divider(),
-          _item("Bank Al-Bilad", "1120 - Bank Accounts", "\$85,200"),
-          _divider(),
-          _item("Accounts Receivable", "1130 - Current Assets", "\$45,100"),
+          _item(context, "Cash on Hand", "1110 - Current Assets", "\$12,450"),
+          _divider(theme),
+          _item(context, "Bank Al-Bilad", "1120 - Bank Accounts", "\$85,200"),
+          _divider(theme),
+          _item(
+            context,
+            "Accounts Receivable",
+            "1130 - Current Assets",
+            "\$45,100",
+          ),
         ],
       ),
     );
   }
 
-  Widget _item(String title, String sub, String val) {
+  Widget _item(BuildContext context, String title, String sub, String val) {
+    final theme = context.theme.appColor;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -39,30 +51,33 @@ class AccountsWatchlist extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
+                color: theme.textPrimary,
               ),
             ),
             Text(
               sub,
-              style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+              style: AppTextStyles.bodySmall.copyWith(
+                color: theme.textDisabled,
+                fontSize: 12,
+              ),
             ),
           ],
         ),
         Text(
           val,
-          style: const TextStyle(
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1E293B),
+            color: theme.textPrimary,
           ),
         ),
       ],
     );
   }
 
-  Widget _divider() => Padding(
+  Widget _divider(AppColorExtension theme) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 12),
-    child: Divider(color: Colors.grey[100], height: 1),
+    child: Divider(color: theme.borderLight, height: 1),
   );
 }

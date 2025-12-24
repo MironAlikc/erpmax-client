@@ -1,7 +1,5 @@
-// lib/features/auth/presentation/widgets/common/language_selector.dart
-
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class LanguageOption {
@@ -31,6 +29,8 @@ class _LanguageSelectorState extends State<LanguageSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return PopupMenuButton<LanguageOption>(
       initialValue: _current,
       tooltip: 'Select Language',
@@ -43,7 +43,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
           child: Text(
             '${lang.flag} ${lang.name}',
             style: AppTextStyles.base.copyWith(
-              color: isSelected ? AppColors.primary : AppColors.textPrimary,
+              color: isSelected ? theme.primary : theme.textPrimary,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
@@ -57,13 +57,13 @@ class _LanguageSelectorState extends State<LanguageSelector> {
             Text(
               '${_current.flag} ${_current.name}',
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary,
+                color: theme.textSecondary,
               ),
             ),
-            const Icon(
+            Icon(
               Icons.keyboard_arrow_down,
               size: 18,
-              color: AppColors.textDisabled,
+              color: theme.textDisabled,
             ),
           ],
         ),

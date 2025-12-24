@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
 
 enum AppButtonType { primary, primaryDark, success, danger, outline, ghost }
 
@@ -30,10 +30,9 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appColors = AppColorExtension.of(context);
+    final theme = context.theme.appColor;
 
-    var (bg, fg) = _getColors(theme, appColors);
+    var (bg, fg) = _getColors(context);
     if (backgroundColor != null) bg = backgroundColor!;
     if (textColor != null) fg = textColor!;
 
@@ -47,7 +46,7 @@ class AppButton extends StatelessWidget {
           foregroundColor: fg,
           elevation: 0,
           side: type == AppButtonType.outline
-              ? BorderSide(color: backgroundColor ?? theme.colorScheme.primary)
+              ? BorderSide(color: backgroundColor ?? theme.primary)
               : null,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           shape: RoundedRectangleBorder(
@@ -86,19 +85,20 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  (Color bg, Color fg) _getColors(
-    ThemeData theme,
-    AppColorExtension appColors,
-  ) {
-    if (onPressed == null)
-      return (theme.disabledColor.withOpacity(0.12), theme.disabledColor);
+  (Color bg, Color fg) _getColors(BuildContext context) {
+    final theme = context.theme.appColor;
+
+    if (onPressed == null) {
+      return (theme.bgDisabled, theme.textDisabled);
+    }
+
     return switch (type) {
-      AppButtonType.primary => (theme.colorScheme.primary, Colors.white),
-      AppButtonType.primaryDark => (appColors.primaryDark, Colors.white),
-      AppButtonType.success => (appColors.success, Colors.white),
-      AppButtonType.danger => (theme.colorScheme.error, Colors.white),
-      AppButtonType.outline => (Colors.transparent, theme.colorScheme.primary),
-      AppButtonType.ghost => (Colors.transparent, appColors.textSecondary),
+      AppButtonType.primary => (theme.primary, theme.white),
+      AppButtonType.primaryDark => (theme.primaryDark, theme.white),
+      AppButtonType.success => (theme.success, theme.white),
+      AppButtonType.danger => (theme.error, theme.white),
+      AppButtonType.outline => (Colors.transparent, theme.primary),
+      AppButtonType.ghost => (Colors.transparent, theme.textSecondary),
     };
   }
 }

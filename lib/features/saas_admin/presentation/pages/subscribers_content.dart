@@ -1,11 +1,9 @@
-// lib/features/subscription/presentation/pages/subscription_management_view.dart
-
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 enum SubscriberStatus { active, expired, pending }
 
@@ -67,16 +65,18 @@ class SubscribersContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: theme.white,
           borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-          border: Border.all(color: AppColors.gray200),
+          border: Border.all(color: theme.gray200),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withOpacity(0.04),
+              color: theme.black.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -91,7 +91,7 @@ class SubscribersContent extends StatelessWidget {
               child: Text("Subscribers", style: AppTextStyles.h2),
             ),
             ErpMaxDataTable<SubscriberModel>(
-              items: _subscribers, // Теперь имя определено выше
+              items: _subscribers,
               minWidth: 1100,
               columns: [
                 ErpMaxColumn(
@@ -136,7 +136,7 @@ class SubscribersContent extends StatelessWidget {
                   item.companyName,
                   style: AppTextStyles.labelStyle.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF1E293B),
+                    color: theme.textPrimary,
                   ),
                 ),
                 Text(item.planName, style: AppTextStyles.bodyMedium),
@@ -147,7 +147,7 @@ class SubscribersContent extends StatelessWidget {
                   style: AppTextStyles.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
-                const Icon(Icons.more_horiz, color: AppColors.gray400),
+                Icon(Icons.more_horiz, color: theme.gray400),
               ],
             ),
           ],

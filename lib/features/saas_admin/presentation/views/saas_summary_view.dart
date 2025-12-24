@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/widgets/common/app_stat_card.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/saas_admin/presentation/widgets/saas/subscriptions_bar_chart.dart';
@@ -90,12 +91,14 @@ class _ChartBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
