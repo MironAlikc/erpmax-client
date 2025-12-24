@@ -11,4 +11,3 @@ class StatEntity {
     required this.isPositive,
   });
 }
-
