@@ -1,14 +1,10 @@
-// lib/core/design/app_text_styles.dart
-
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
 
 abstract final class AppTextStyles {
   static const String fontFamily = 'Inter';
 
   static const TextStyle base = TextStyle(
     fontFamily: fontFamily,
-    color: AppColors.textPrimary,
     fontSize: 15,
     height: 1.2,
     leadingDistribution: TextLeadingDistribution.even,
@@ -50,7 +46,6 @@ abstract final class AppTextStyles {
 
   static final TextStyle bodySmall = base.copyWith(
     fontSize: 13,
-    color: AppColors.textSecondary,
     fontWeight: FontWeight.w400,
     height: 1.3,
   );
@@ -62,12 +57,10 @@ abstract final class AppTextStyles {
   static final TextStyle buttonText = base.copyWith(
     fontSize: 15,
     fontWeight: FontWeight.w600,
-    color: AppColors.white,
     letterSpacing: 0.2,
   );
 
   static final TextStyle linkStyle = base.copyWith(
-    color: AppColors.primary,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.underline,
   );
@@ -75,32 +68,27 @@ abstract final class AppTextStyles {
   static final TextStyle labelStyle = base.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: AppColors.gray700,
   );
 
   static final TextStyle tableHeader = base.copyWith(
     fontSize: 12,
     fontWeight: FontWeight.w600,
-    color: AppColors.gray500,
     letterSpacing: 0.5,
   );
 
   static final TextStyle bannerTitle = base.copyWith(
     fontSize: 32,
     fontWeight: FontWeight.w900,
-    color: AppColors.white,
     height: 1.1,
   );
 
   static final TextStyle sidebarInactive = base.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: AppColors.sidebarInactiveText,
   );
 
   static final TextStyle sidebarActive = base.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w600,
-    color: AppColors.sidebarActiveText,
   );
 }

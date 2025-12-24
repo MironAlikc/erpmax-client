@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class QuickFilterBar extends StatelessWidget {
@@ -24,7 +26,7 @@ class QuickFilterBar extends StatelessWidget {
                   'All Date',
                   'All Packages',
                   'All Statuses',
-                ].map((filter) => _buildFilterChip(filter)).toList(),
+                ].map((filter) => _buildFilterChip(context, filter)).toList(),
               ),
             ),
           ),
@@ -38,21 +40,24 @@ class QuickFilterBar extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip(String label) {
+  Widget _buildFilterChip(BuildContext context, String label) {
     return Container(
       margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFEAECF0)),
+        border: Border.all(color: context.theme.appColor.borderLight),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            style: AppTextStyles.bodySmall.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.theme.appColor.textSecondary,
+            ),
           ),
-          const Icon(Icons.keyboard_arrow_down, size: 16),
+          Icon(Icons.keyboard_arrow_down, size: 16),
         ],
       ),
     );

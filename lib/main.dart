@@ -2,6 +2,7 @@ import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
 import 'package:erpmax_client/core/theme/app_scroll_behavior.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'ERPMax Client',
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
       debugShowCheckedModeBanner: false,
       scrollBehavior: AppScrollBehavior(),
       routerConfig: AppRouter.router,
@@ -37,12 +39,12 @@ class MyApp extends StatelessWidget {
         ErrorWidget.builder = (FlutterErrorDetails details) {
           return Material(
             child: Container(
-              color: Colors.white,
+              color: context.theme.appColor.white,
               child: Center(
                 child: Text(
                   "Something went wrong. Please refresh.",
-                  style: TextStyle(
-                    color: Colors.red[700],
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: context.theme.appColor.error,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

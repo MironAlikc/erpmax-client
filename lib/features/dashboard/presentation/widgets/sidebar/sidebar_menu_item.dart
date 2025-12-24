@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/models/menu_item_model.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 
 class SidebarMenuItem extends StatelessWidget {
   final MenuItemModel item;
@@ -18,15 +18,14 @@ class SidebarMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final customColors = theme.extension<AppColorExtension>()!;
+    final theme = context.theme.appColor;
 
     final Color bgColor = isSelected
-        ? customColors.sidebarActiveBg
+        ? theme.sidebarActiveBg
         : Colors.transparent;
     final Color contentColor = isSelected
-        ? customColors.sidebarActiveText
-        : customColors.sidebarInactiveText;
+        ? theme.sidebarActiveText
+        : theme.sidebarInactiveText;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),

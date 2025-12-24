@@ -91,6 +91,31 @@
 
 //   @override
 //   Widget build(BuildContext context) {
+//     final theme = context.theme.appColor;
+
+//     return Container(
+//       padding: const EdgeInsets.all(24),
+//       decoration: BoxDecoration(
+//         color: theme.white,
+//         borderRadius: BorderRadius.circular(16),
+//         border: Border.all(color: theme.border),
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             title,
+//             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//           ),
+//           const SizedBox(height: 32),
+//           SizedBox(height: 300, child: chart),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//   @override
+//   Widget build(BuildContext context) {
 //     return Container(
 //       padding: const EdgeInsets.all(24),
 //       decoration: BoxDecoration(

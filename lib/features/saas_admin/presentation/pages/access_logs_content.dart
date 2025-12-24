@@ -1,8 +1,9 @@
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 
 class AccessLogRecord {
   final String user;
@@ -43,6 +44,8 @@ class AccessLogsContent extends StatelessWidget {
   }
 
   Widget _buildLogsTable(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final List<ErpMaxColumn> columns = [
       ErpMaxColumn(
         title: "User",
@@ -64,12 +67,12 @@ class AccessLogsContent extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: theme.gray200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: theme.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -91,13 +94,13 @@ class AccessLogsContent extends StatelessWidget {
                     Text(
                       item.company,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.gray600,
+                        color: theme.gray600,
                       ),
                     ),
                     Text(item.ipAddress, style: AppTextStyles.bodyMedium),
                     Text(item.device, style: AppTextStyles.bodySmall),
                     Text(item.date, style: AppTextStyles.bodySmall),
-                    _buildStatusBadge(item.isSuccess),
+                    _buildStatusBadge(theme, item.isSuccess),
                   ],
                 );
               }).toList(),
@@ -108,22 +111,22 @@ class AccessLogsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(bool isSuccess) {
+  Widget _buildStatusBadge(AppColorExtension colors, bool isSuccess) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: isSuccess ? const Color(0xFFECFDF5) : const Color(0xFFFEF2F2),
+        color: isSuccess ? colors.successBg : colors.errorBg,
         borderRadius: BorderRadius.circular(100),
         border: Border.all(
-          color: isSuccess
-              ? const Color(0xFF10B981).withOpacity(0.2)
-              : const Color(0xFFEF4444).withOpacity(0.2),
+          color: (isSuccess ? colors.success : colors.error).withValues(
+            alpha: 0.2,
+          ),
         ),
       ),
       child: Text(
         isSuccess ? "Success" : "Failed",
-        style: TextStyle(
-          color: isSuccess ? const Color(0xFF059669) : const Color(0xFFDC2626),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: isSuccess ? colors.successText : colors.errorText,
           fontSize: 11,
           fontWeight: FontWeight.w600,
         ),

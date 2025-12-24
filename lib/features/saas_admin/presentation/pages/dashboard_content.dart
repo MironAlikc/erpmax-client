@@ -1,10 +1,11 @@
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/widgets/stat_card.dart';
 import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class DashboardContent extends StatelessWidget {
   final double screenWidth;
@@ -13,12 +14,13 @@ class DashboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final bool isMobile = screenWidth < AppDesign.mobileBreakpoint;
     final bool isTablet =
         screenWidth < AppDesign.desktopBreakpoint && !isMobile;
     final bool stackCharts = screenWidth < 1100;
 
-    final dataSource = DashboardLocalDataSourceImpl();
+    final dataSource = DashboardLocalDataSourceImpl(colors: theme);
     final summaryData = dataSource.getSummaryData();
 
     return SingleChildScrollView(
@@ -50,7 +52,7 @@ class DashboardContent extends StatelessWidget {
                     "${data.changePercentage > 0 ? '+' : ''}${data.changePercentage}%",
                 isPositive: data.changePercentage > 0,
                 icon: data.icon,
-                color: CardColorHelper.getCardColor(index),
+                color: CardColorHelper.getCardColor(theme, index),
               );
             },
           ),
@@ -97,7 +99,7 @@ class SectionHeader extends StatelessWidget {
     return Text(
       title,
       style: AppTextStyles.h2.copyWith(
-        color: AppColors.textPrimary,
+        color: context.theme.appColor.textPrimary,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -116,14 +118,14 @@ class ChartSpacing extends StatelessWidget {
 }
 
 class CardColorHelper {
-  static Color getCardColor(int index) {
-    final List<Color> colors = [
-      AppColors.primary,
-      AppColors.success,
-      const Color(0xFFF59E0B),
-      const Color(0xFF8B5CF6),
+  static Color getCardColor(AppColorExtension colors, int index) {
+    final List<Color> palette = [
+      colors.primary,
+      colors.success,
+      colors.warning,
+      colors.infoText,
     ];
-    return colors[index % colors.length];
+    return palette[index % palette.length];
   }
 }
 
@@ -141,15 +143,17 @@ class ChartWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray100),
+        border: Border.all(color: theme.gray100),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: theme.black.withValues(alpha: 0.03),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -175,6 +179,8 @@ class ChartHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -187,9 +193,7 @@ class ChartHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   subtitle!,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.gray500,
-                  ),
+                  style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
                 ),
               ],
             ],
@@ -200,9 +204,9 @@ class ChartHeader extends StatelessWidget {
           child: InkWell(
             onTap: () {},
             borderRadius: BorderRadius.circular(8),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.all(4.0),
-              child: Icon(Icons.more_horiz, color: AppColors.gray400),
+              child: Icon(Icons.more_horiz, color: theme.gray400),
             ),
           ),
         ),
@@ -216,6 +220,8 @@ class RevenueLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return LineChart(
       LineChartData(
         gridData: FlGridData(
@@ -223,7 +229,7 @@ class RevenueLineChart extends StatelessWidget {
           drawVerticalLine: false,
           horizontalInterval: 20000,
           getDrawingHorizontalLine: (value) {
-            return FlLine(color: const Color(0xFFE5E7EB), strokeWidth: 1);
+            return FlLine(color: theme.borderLight, strokeWidth: 1);
           },
         ),
         titlesData: FlTitlesData(
@@ -240,8 +246,8 @@ class RevenueLineChart extends StatelessWidget {
               reservedSize: 30,
               interval: 1,
               getTitlesWidget: (double value, TitleMeta meta) {
-                const style = TextStyle(
-                  color: Color(0xFF9CA3AF),
+                final style = AppTextStyles.bodySmall.copyWith(
+                  color: theme.gray400,
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
                 );
@@ -285,8 +291,8 @@ class RevenueLineChart extends StatelessWidget {
               getTitlesWidget: (double value, TitleMeta meta) {
                 return Text(
                   '${(value ~/ 1000)}000',
-                  style: const TextStyle(
-                    color: Color(0xFF9CA3AF),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: theme.gray400,
                     fontWeight: FontWeight.w500,
                     fontSize: 13,
                   ),
@@ -323,10 +329,10 @@ class RevenueLineChart extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  const Color(0xFF6EE7B7).withOpacity(0.5),
-                  const Color(0xFF6EE7B7).withOpacity(0.3),
-                  const Color(0xFF6EE7B7).withOpacity(0.1),
-                  const Color(0xFF6EE7B7).withOpacity(0.0),
+                  theme.activeGreen.withValues(alpha: 0.5),
+                  theme.activeGreen.withValues(alpha: 0.3),
+                  theme.activeGreen.withValues(alpha: 0.1),
+                  theme.activeGreen.withValues(alpha: 0.0),
                 ],
               ),
             ),
@@ -342,6 +348,8 @@ class SubscriptionsBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
@@ -359,8 +367,8 @@ class SubscriptionsBarChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (double value, TitleMeta meta) {
-                const style = TextStyle(
-                  color: Color(0xFF9CA3AF),
+                final style = AppTextStyles.bodySmall.copyWith(
+                  color: theme.gray400,
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
                 );
@@ -405,10 +413,9 @@ class SubscriptionsBarChart extends StatelessWidget {
               getTitlesWidget: (double value, TitleMeta meta) {
                 return Text(
                   value.toInt().toString(),
-                  style: const TextStyle(
-                    color: Color(0xFF9CA3AF),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: theme.gray400,
                     fontWeight: FontWeight.w500,
-                    fontSize: 13,
                   ),
                   textAlign: TextAlign.left,
                 );
@@ -421,7 +428,7 @@ class SubscriptionsBarChart extends StatelessWidget {
           drawVerticalLine: false,
           horizontalInterval: 75,
           getDrawingHorizontalLine: (value) {
-            return FlLine(color: const Color(0xFFE5E7EB), strokeWidth: 1);
+            return FlLine(color: theme.borderLight, strokeWidth: 1);
           },
         ),
         borderData: FlBorderData(show: false),
@@ -431,7 +438,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 85,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -444,7 +451,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 125,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -457,7 +464,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 160,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -470,7 +477,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 195,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -483,7 +490,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 235,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -496,7 +503,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 265,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),
@@ -509,7 +516,7 @@ class SubscriptionsBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: 290,
-                color: const Color(0xFF0F172A),
+                color: theme.textPrimary,
                 width: 40,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(4),

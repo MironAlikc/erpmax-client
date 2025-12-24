@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
+import 'package:flutter/material.dart';
+
 import '../pages/subscription_management_view.dart';
 
 class SubscriptionDetailsModal extends StatelessWidget {
@@ -12,19 +13,21 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
       backgroundColor: Colors.transparent,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 900),
         child: Material(
-          color: AppColors.white,
+          color: theme.white,
           borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: DefaultTabController(
             length: 4,
             child: Scaffold(
-              backgroundColor: AppColors.white,
+              backgroundColor: theme.white,
               appBar: _buildAppBar(context),
               body: Column(
                 children: [
@@ -33,13 +36,13 @@ class SubscriptionDetailsModal extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildTopHeader(),
+                          _buildTopHeader(context),
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 32),
                             child: SubscriptionInfoCards(),
                           ),
                           const SizedBox(height: 32),
-                          _buildCustomTabBar(),
+                          _buildCustomTabBar(context),
                           const SizedBox(height: 12),
                           SizedBox(
                             height: 500,
@@ -78,7 +81,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
     );
   }
 
-  Widget _buildTopHeader() {
+  Widget _buildTopHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 24, 32, 24),
       child: Column(
@@ -86,11 +89,11 @@ class SubscriptionDetailsModal extends StatelessWidget {
         children: [
           Row(
             children: [
-              _bread('SaaS Admin'),
-              _sep(),
-              _bread('Subscription Management'),
-              _sep(),
-              _bread('Subscription Details', last: true),
+              _bread('SaaS Admin', context),
+              _sep(context),
+              _bread('Subscription Management', context),
+              _sep(context),
+              _bread('Subscription Details', context, last: true),
             ],
           ),
           const SizedBox(height: 16),
@@ -100,29 +103,39 @@ class SubscriptionDetailsModal extends StatelessWidget {
     );
   }
 
-  Widget _bread(String t, {bool last = false}) => Text(
-    t,
-    style: AppTextStyles.bodySmall.copyWith(
-      color: last ? AppColors.textPrimary : AppColors.gray400,
-      fontWeight: last ? FontWeight.w600 : FontWeight.w400,
+  Widget _bread(String t, BuildContext context, {bool last = false}) {
+    final theme = context.theme.appColor;
+
+    return Text(
+      t,
+      style: AppTextStyles.bodySmall.copyWith(
+        color: last ? theme.textPrimary : theme.gray400,
+        fontWeight: last ? FontWeight.w600 : FontWeight.w400,
+      ),
+    );
+  }
+
+  Widget _sep(BuildContext context) => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Icon(
+      Icons.chevron_right,
+      size: 14,
+      color: context.theme.appColor.gray300,
     ),
   );
 
-  Widget _sep() => const Padding(
-    padding: EdgeInsets.symmetric(horizontal: 8),
-    child: Icon(Icons.chevron_right, size: 14, color: AppColors.gray300),
-  );
-
   PreferredSizeWidget _buildAppBar(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return AppBar(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.white,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.gray50,
-          border: Border.all(color: AppColors.gray200),
+          color: theme.gray50,
+          border: Border.all(color: theme.gray200),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -130,48 +143,50 @@ class SubscriptionDetailsModal extends StatelessWidget {
           children: [
             Text('Subscription Details', style: AppTextStyles.tableHeader),
             const SizedBox(width: 8),
-            const Icon(Icons.info_outline, size: 14, color: AppColors.gray400),
+            Icon(Icons.info_outline, size: 14, color: theme.gray400),
           ],
         ),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.close, color: AppColors.gray500),
+          icon: Icon(Icons.close, color: theme.gray500),
           onPressed: () => Navigator.pop(context),
         ),
         const SizedBox(width: 16),
       ],
-      bottom: const PreferredSize(
+      bottom: PreferredSize(
         preferredSize: Size.fromHeight(1),
-        child: Divider(height: 1, color: AppColors.gray100),
+        child: Divider(height: 1, color: theme.gray100),
       ),
     );
   }
 
-  Widget _buildCustomTabBar() {
+  Widget _buildCustomTabBar(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Container(
         height: 44,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: AppColors.gray100,
+          color: theme.gray100,
           borderRadius: BorderRadius.circular(10),
         ),
         child: TabBar(
           indicator: BoxDecoration(
-            color: AppColors.white,
+            color: theme.white,
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: theme.black.withValues(alpha: 0.05),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
             ],
           ),
-          labelColor: AppColors.textPrimary,
-          unselectedLabelColor: AppColors.gray500,
+          labelColor: theme.textPrimary,
+          unselectedLabelColor: theme.gray500,
           labelStyle: AppTextStyles.bodySmallBold,
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: Colors.transparent,
@@ -187,11 +202,13 @@ class SubscriptionDetailsModal extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        border: Border(top: BorderSide(color: AppColors.gray100)),
+      decoration: BoxDecoration(
+        color: theme.white,
+        border: Border(top: BorderSide(color: theme.gray100)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -205,7 +222,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
           AppButton(
             text: 'Cancel Subscription',
             type: AppButtonType.primaryDark,
-            backgroundColor: AppColors.error,
+            backgroundColor: theme.error,
             onPressed: () {},
           ),
         ],
@@ -221,13 +238,13 @@ class SubscriptionInfoCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Если места мало, превращаем в колонку
         final bool isColumn = constraints.maxWidth < 700;
 
         return Flex(
           direction: isColumn ? Axis.vertical : Axis.horizontal,
           children: [
             _infoCard(
+              context: context,
               icon: Icons.person_outline,
               title: 'Customer Information',
               rows: [
@@ -237,6 +254,7 @@ class SubscriptionInfoCards extends StatelessWidget {
             ),
             SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
             _infoCard(
+              context: context,
               icon: Icons.card_membership_outlined,
               title: 'Package',
               rows: [
@@ -247,6 +265,7 @@ class SubscriptionInfoCards extends StatelessWidget {
             ),
             SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
             _infoCard(
+              context: context,
               icon: Icons.calendar_today_outlined,
               title: 'Duration',
               rows: [
@@ -271,26 +290,29 @@ class SubscriptionInfoCards extends StatelessWidget {
   }
 
   Widget _infoCard({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required List<List<String>> rows,
     Widget? extra,
   }) {
+    final theme = context.theme.appColor;
+
     return Expanded(
       child: Container(
         height: 150,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: theme.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.gray100),
+          border: Border.all(color: theme.gray100),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: AppColors.gray400),
+                Icon(icon, size: 20, color: theme.gray400),
                 const SizedBox(width: 10),
                 Text(title, style: AppTextStyles.bodyMediumBold),
               ],
@@ -305,7 +327,7 @@ class SubscriptionInfoCards extends StatelessWidget {
                     Text(
                       r[1],
                       style: AppTextStyles.bodySmallBold.copyWith(
-                        color: AppColors.textPrimary,
+                        color: theme.textPrimary,
                       ),
                     ),
                   ],
@@ -325,16 +347,18 @@ class PayBookTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return _TabTableWrapper(
       title: 'Pay Book',
       child: DataTable(
         headingRowHeight: 48,
-        headingRowColor: WidgetStateProperty.all(AppColors.gray50),
+        headingRowColor: WidgetStateProperty.all(theme.gray50),
         columnSpacing: 30,
         horizontalMargin: 20,
         columns: [
-          const DataColumn(
-            label: Icon(Icons.grid_view, size: 18, color: AppColors.gray400),
+          DataColumn(
+            label: Icon(Icons.grid_view, size: 18, color: theme.gray400),
           ),
           DataColumn(
             label: Text('Transaction', style: AppTextStyles.tableHeader),
@@ -349,6 +373,7 @@ class PayBookTab extends StatelessWidget {
         ],
         rows: [
           _row(
+            context,
             'PAY-001',
             '15/1/2024',
             '₪ 6000',
@@ -357,6 +382,7 @@ class PayBookTab extends StatelessWidget {
             'TRX-123456',
           ),
           _row(
+            context,
             'PAY-002',
             '15/1/2023',
             '₪ 6000',
@@ -369,12 +395,20 @@ class PayBookTab extends StatelessWidget {
     );
   }
 
-  DataRow _row(String n, String d, String a, String m, String c, String r) {
+  DataRow _row(
+    BuildContext context,
+    String n,
+    String d,
+    String a,
+    String m,
+    String c,
+    String r,
+  ) {
+    final theme = context.theme.appColor;
+
     return DataRow(
       cells: [
-        const DataCell(
-          Icon(Icons.drag_indicator, size: 18, color: AppColors.gray300),
-        ),
+        DataCell(Icon(Icons.drag_indicator, size: 18, color: theme.gray300)),
         DataCell(Text(n, style: AppTextStyles.bodySmall)),
         DataCell(Text(d, style: AppTextStyles.bodySmall)),
         DataCell(Text(a, style: AppTextStyles.bodySmallBold)),
@@ -391,15 +425,17 @@ class ActivityLogTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return _TabTableWrapper(
       title: 'Activity Log',
       child: DataTable(
         headingRowHeight: 48,
-        headingRowColor: WidgetStateProperty.all(AppColors.gray50),
+        headingRowColor: WidgetStateProperty.all(theme.gray50),
         horizontalMargin: 20,
         columns: [
-          const DataColumn(
-            label: Icon(Icons.grid_view, size: 18, color: AppColors.gray400),
+          DataColumn(
+            label: Icon(Icons.grid_view, size: 18, color: theme.gray400),
           ),
           DataColumn(label: Text('Date', style: AppTextStyles.tableHeader)),
           DataColumn(
@@ -410,12 +446,14 @@ class ActivityLogTable extends StatelessWidget {
         ],
         rows: [
           _logRow(
+            context,
             '15/1/2024',
             'Create Subscription',
             'Ahmed Mohamed',
             'Created successfully',
           ),
           _logRow(
+            context,
             '15/1/2023',
             'Activate Subscription',
             'Sarah Ahmed',
@@ -426,12 +464,18 @@ class ActivityLogTable extends StatelessWidget {
     );
   }
 
-  DataRow _logRow(String d, String p, String u, String det) {
+  DataRow _logRow(
+    BuildContext context,
+    String d,
+    String p,
+    String u,
+    String det,
+  ) {
+    final theme = context.theme.appColor;
+
     return DataRow(
       cells: [
-        const DataCell(
-          Icon(Icons.drag_indicator, size: 18, color: AppColors.gray300),
-        ),
+        DataCell(Icon(Icons.drag_indicator, size: 18, color: theme.gray300)),
         DataCell(Text(d, style: AppTextStyles.bodySmall)),
         DataCell(Text(p, style: AppTextStyles.bodySmallBold)),
         DataCell(Text(u, style: AppTextStyles.bodySmall)),
@@ -446,6 +490,8 @@ class ModulesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -463,7 +509,7 @@ class ModulesTab extends StatelessWidget {
                 'Accounting',
                 'Reports',
                 'Manufacturing',
-              ].map((m) => _module(m)).toList(),
+              ].map((m) => _module(context, m)).toList(),
             ),
           ),
         ),
@@ -477,14 +523,14 @@ class ModulesTab extends StatelessWidget {
             hintText: 'Any additional comments',
             hintStyle: AppTextStyles.bodySmall,
             filled: true,
-            fillColor: AppColors.gray50,
+            fillColor: theme.gray50,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: AppColors.gray200),
+              borderSide: BorderSide(color: theme.gray200),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: AppColors.gray200),
+              borderSide: BorderSide(color: theme.gray200),
             ),
           ),
         ),
@@ -492,24 +538,24 @@ class ModulesTab extends StatelessWidget {
     );
   }
 
-  Widget _module(String name) {
+  Widget _module(BuildContext context, String name) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: 260,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.successBg,
+        color: theme.successBg,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.success.withOpacity(0.1)),
+        border: Border.all(color: theme.success.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, color: AppColors.success, size: 18),
+          Icon(Icons.check_circle, color: theme.success, size: 18),
           const SizedBox(width: 8),
           Text(
             name,
-            style: AppTextStyles.bodySmallBold.copyWith(
-              color: AppColors.success,
-            ),
+            style: AppTextStyles.bodySmallBold.copyWith(color: theme.success),
           ),
         ],
       ),
@@ -524,11 +570,13 @@ class _TabTableWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.gray100),
+        border: Border.all(color: theme.gray100),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -537,7 +585,7 @@ class _TabTableWrapper extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Text(title, style: AppTextStyles.h3),
           ),
-          const Divider(height: 1, color: AppColors.gray100),
+          Divider(height: 1, color: theme.gray100),
           child,
         ],
       ),

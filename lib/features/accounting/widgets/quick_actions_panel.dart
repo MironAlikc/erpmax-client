@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class QuickActionsPanel extends StatelessWidget {
@@ -5,22 +7,20 @@ class QuickActionsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A),
+        color: theme.black,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Quick Actions",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.h2.copyWith(color: theme.white, fontSize: 20),
           ),
           const SizedBox(height: 24),
           GridView.count(
@@ -31,11 +31,15 @@ class QuickActionsPanel extends StatelessWidget {
             childAspectRatio: 1.3,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              _item(Icons.description_outlined, "New Invoice"),
-              _item(Icons.account_balance_wallet_outlined, "Record Expense"),
-              _item(Icons.swap_horiz, "Transfer"),
-              _item(Icons.file_download_outlined, "Import Statement"),
-              _item(Icons.menu_book, "General Ledger"),
+              _item(context, Icons.description_outlined, "New Invoice"),
+              _item(
+                context,
+                Icons.account_balance_wallet_outlined,
+                "Record Expense",
+              ),
+              _item(context, Icons.swap_horiz, "Transfer"),
+              _item(context, Icons.file_download_outlined, "Import Statement"),
+              _item(context, Icons.menu_book, "General Ledger"),
             ],
           ),
           const SizedBox(height: 12),
@@ -44,8 +48,8 @@ class QuickActionsPanel extends StatelessWidget {
             child: FloatingActionButton(
               mini: true,
               onPressed: () {},
-              backgroundColor: const Color(0xFF00C58D),
-              child: const Icon(Icons.add, color: Colors.white),
+              backgroundColor: theme.activeGreen,
+              child: Icon(Icons.add, color: theme.white),
             ),
           ),
         ],
@@ -53,24 +57,26 @@ class QuickActionsPanel extends StatelessWidget {
     );
   }
 
-  Widget _item(IconData icon, String label) {
+  Widget _item(BuildContext context, IconData icon, String label) {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: theme.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: Colors.white, size: 28),
+          Icon(icon, color: theme.white, size: 28),
           const SizedBox(height: 8),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: theme.textPrimary,
               fontWeight: FontWeight.w500,
+              fontSize: 12,
             ),
           ),
         ],

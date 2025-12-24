@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class ErpMaxColumn {
@@ -36,8 +38,6 @@ class ErpMaxTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final double tableWidth = constraints.maxWidth < minWidth
@@ -52,7 +52,7 @@ class ErpMaxTable extends StatelessWidget {
               width: tableWidth,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [_buildHeader(context, theme), ...rows],
+                children: [_buildHeader(context), ...rows],
               ),
             ),
           ),
@@ -61,13 +61,15 @@ class ErpMaxTable extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, ThemeData theme) {
+  Widget _buildHeader(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        border: const Border(
-          bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1.5),
+        color: theme.white,
+        border: Border(
+          bottom: BorderSide(color: theme.borderLight, width: 1.5),
         ),
       ),
       child: Row(
@@ -86,9 +88,9 @@ class ErpMaxTable extends StatelessWidget {
                     Flexible(
                       child: Text(
                         col.title.toUpperCase(),
-                        style: theme.textTheme.labelMedium?.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: const Color(0xFF64748B),
+                          color: theme.textSecondary,
                           letterSpacing: 0.5,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -103,7 +105,7 @@ class ErpMaxTable extends StatelessWidget {
                                   : Icons.arrow_downward)
                             : Icons.swap_vert_rounded,
                         size: 14,
-                        color: const Color(0xFF94A3B8),
+                        color: theme.textDisabled,
                       ),
                     ],
                   ],

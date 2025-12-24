@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
-import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
+import 'package:flutter/material.dart';
 
 enum BackupStatus { success, warning }
 
@@ -33,11 +35,13 @@ class _BackupContentState extends State<BackupContent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       children: [
         Container(
           width: double.infinity,
-          decoration: const BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: theme.white),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           child: ErpMaxTabFilter(
             items: _tabs,
@@ -70,6 +74,8 @@ class _BackupContentState extends State<BackupContent> {
   }
 
   Widget _buildActionButton() {
+    final theme = context.theme.appColor;
+
     return Align(
       alignment: Alignment.centerRight,
       child: ElevatedButton.icon(
@@ -77,8 +83,8 @@ class _BackupContentState extends State<BackupContent> {
         icon: const Icon(Icons.add, size: 20),
         label: const Text("Create Backup"),
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF0F172A),
-          foregroundColor: Colors.white,
+          backgroundColor: theme.gray900,
+          foregroundColor: theme.white,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
@@ -88,6 +94,8 @@ class _BackupContentState extends State<BackupContent> {
   }
 
   Widget _buildMetricGrid() {
+    final theme = context.theme.appColor;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 900;
@@ -96,22 +104,22 @@ class _BackupContentState extends State<BackupContent> {
             title: "Last Backup",
             value: "2 hours ago",
             subTitle: "Automated Daily Backup",
-            bgColor: const Color(0xFFEEF2FF),
-            textColor: const Color(0xFF4F46E5),
+            bgColor: theme.indigoBg,
+            textColor: theme.indigoText,
           ),
           _buildColorStatCard(
             title: "Backup Size",
             value: "1.2 GB",
             subTitle: "Total storage used: 45 GB",
-            bgColor: const Color(0xFFF0FDF4),
-            textColor: const Color(0xFF16A34A),
+            bgColor: theme.successBg,
+            textColor: theme.activeGreen,
           ),
           _buildColorStatCard(
             title: "Next Scheduled",
             value: "22:00:00",
             subTitle: "Daily at midnight",
-            bgColor: const Color(0xFFF5F3FF),
-            textColor: const Color(0xFF7C3AED),
+            bgColor: theme.violetBg,
+            textColor: theme.violetText,
           ),
         ];
 
@@ -149,6 +157,8 @@ class _BackupContentState extends State<BackupContent> {
     required Color bgColor,
     required Color textColor,
   }) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(24),
       height: 140,
@@ -162,7 +172,7 @@ class _BackupContentState extends State<BackupContent> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               color: textColor,
               fontWeight: FontWeight.w600,
               fontSize: 13,
@@ -170,15 +180,18 @@ class _BackupContentState extends State<BackupContent> {
           ),
           Text(
             value,
-            style: const TextStyle(
+            style: AppTextStyles.h1.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E293B),
+              color: theme.textPrimary,
             ),
           ),
           Text(
             subTitle,
-            style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: theme.textSecondary,
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -186,6 +199,8 @@ class _BackupContentState extends State<BackupContent> {
   }
 
   Widget _buildBackupTable() {
+    final theme = context.theme.appColor;
+
     final List<ErpMaxColumn> columns = [
       ErpMaxColumn(title: "Backup Name", weight: 0.3, isSortable: true),
       ErpMaxColumn(title: "Date", weight: 0.2, isSortable: true),
@@ -197,9 +212,9 @@ class _BackupContentState extends State<BackupContent> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.gray100),
       ),
       child: ErpMaxTable(
         columns: columns,
@@ -210,29 +225,33 @@ class _BackupContentState extends State<BackupContent> {
             cells: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.storage_outlined,
-                    size: 18,
-                    color: Color(0xFF94A3B8),
-                  ),
+                  Icon(Icons.storage_outlined, size: 18, color: theme.gray400),
                   const SizedBox(width: 12),
                   Text(
                     item.name,
-                    style: const TextStyle(
+                    style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF334155),
+                      color: theme.gray700,
                     ),
                   ),
                 ],
               ),
-              Text(item.date, style: const TextStyle(color: Color(0xFF64748B))),
+              Text(
+                item.date,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: theme.textSecondary,
+                ),
+              ),
               _buildTypeBadge(item.type),
               Text(
                 item.size,
-                style: const TextStyle(fontWeight: FontWeight.w500),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: theme.textPrimary,
+                ),
               ),
               _buildStatusBadge(item.status),
-              const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+              Icon(Icons.more_horiz, color: theme.gray400),
             ],
           );
         }).toList(),
@@ -241,32 +260,44 @@ class _BackupContentState extends State<BackupContent> {
   }
 
   Widget _buildTypeBadge(String type) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.border),
       ),
       child: Text(
         type,
-        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+        style: AppTextStyles.bodySmall.copyWith(
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+          color: theme.textSecondary,
+          letterSpacing: 0.5,
+        ),
       ),
     );
   }
 
   Widget _buildStatusBadge(BackupStatus status) {
+    final theme = context.theme.appColor;
     final isSuccess = status == BackupStatus.success;
+
+    final bgColor = isSuccess ? theme.successLight : theme.errorLight;
+    final textColor = isSuccess ? theme.successText : theme.errorText;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isSuccess ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),
+        color: bgColor,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         isSuccess ? "Success" : "Warning",
-        style: TextStyle(
-          color: isSuccess ? const Color(0xFF166534) : const Color(0xFF991B1B),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),

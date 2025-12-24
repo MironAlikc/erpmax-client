@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
 
 class MobileDrawer extends StatelessWidget {
   final int selectedIndex;
@@ -14,8 +14,10 @@ class MobileDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Drawer(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Column(
         children: [

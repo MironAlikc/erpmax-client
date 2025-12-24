@@ -1,5 +1,6 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 
 class AppSearchField extends StatefulWidget {
   final String hintText;
@@ -46,8 +47,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Container(
       width:
@@ -55,31 +55,29 @@ class _AppSearchFieldState extends State<AppSearchField> {
           (MediaQuery.sizeOf(context).width > 600 ? 320 : double.infinity),
       height: 44,
       decoration: BoxDecoration(
-        color: colors.backgroundLight,
+        color: theme.bgLight,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: theme.colorScheme.outline.withValues(alpha: 0.2),
-        ),
+        border: Border.all(color: theme.borderLight.withValues(alpha: 0.2)),
       ),
       child: Center(
         child: TextField(
           controller: _internalController,
           onChanged: widget.onChanged,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: colors.textPrimary,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: theme.textPrimary,
             decoration: TextDecoration.none,
           ),
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             isDense: true,
             hintText: widget.hintText,
-            hintStyle: theme.textTheme.bodySmall?.copyWith(
-              color: colors.textDisabled,
+            hintStyle: AppTextStyles.bodySmall.copyWith(
+              color: theme.textDisabled,
             ),
             prefixIcon: Icon(
               Icons.search_rounded,
               size: 20,
-              color: colors.textDisabled,
+              color: theme.textDisabled,
             ),
             suffixIcon: _internalController.text.isNotEmpty
                 ? GestureDetector(
@@ -91,7 +89,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
                     child: Icon(
                       Icons.close_rounded,
                       size: 18,
-                      color: colors.textSecondary,
+                      color: theme.textSecondary,
                     ),
                   )
                 : null,

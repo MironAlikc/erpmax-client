@@ -1,6 +1,7 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
 
 class AppAppStatCard extends StatelessWidget {
   final String title;
@@ -20,19 +21,18 @@ class AppAppStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
-    final accent = color ?? colors.primaryDark;
+    final theme = context.theme.appColor;
+    final accent = color ?? theme.primaryDark;
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.white,
         borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-        border: Border.all(color: accent.withOpacity(0.1), width: 2),
+        border: Border.all(color: accent.withValues(alpha: 0.1), width: 2),
         boxShadow: [
           BoxShadow(
-            color: accent.withOpacity(0.04),
+            color: accent.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -46,22 +46,22 @@ class AppAppStatCard extends StatelessWidget {
             children: [
               Text(
                 title.toUpperCase(),
-                style: theme.textTheme.labelMedium?.copyWith(
+                style: AppTextStyles.labelStyle.copyWith(
                   color: accent,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
                 ),
               ),
               if (icon != null)
-                Icon(icon, size: 20, color: accent.withOpacity(0.5)),
+                Icon(icon, size: 20, color: accent.withValues(alpha: 0.5)),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             value,
-            style: theme.textTheme.headlineMedium?.copyWith(
+            style: AppTextStyles.h1.copyWith(
               fontWeight: FontWeight.w800,
-              color: colors.textPrimary,
+              color: theme.textPrimary,
               fontSize: 24,
             ),
           ),
@@ -69,8 +69,8 @@ class AppAppStatCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               subtitle!,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: colors.textSecondary,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: theme.textSecondary,
               ),
             ),
           ],

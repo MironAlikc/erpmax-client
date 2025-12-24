@@ -1,10 +1,10 @@
+import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/navigation/app_router.dart';
-import 'package:erpmax_client/core/widgets/common/app_button.dart';
 
 class CheckEmailContent extends StatelessWidget {
   final String email;
@@ -14,6 +14,8 @@ class CheckEmailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,7 +27,7 @@ class CheckEmailContent extends StatelessWidget {
           style: AppTextStyles.h1.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w800,
-            color: AppColors.gray900,
+            color: theme.gray900,
           ),
           textAlign: TextAlign.center,
         ),
@@ -34,7 +36,7 @@ class CheckEmailContent extends StatelessWidget {
           textAlign: TextAlign.center,
           text: TextSpan(
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.gray600,
+              color: theme.gray600,
               fontSize: 14,
               height: 1.5,
             ),
@@ -42,9 +44,9 @@ class CheckEmailContent extends StatelessWidget {
               const TextSpan(text: 'Please click the link sent to your email '),
               TextSpan(
                 text: email,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.black,
+                  color: theme.black,
                 ),
               ),
               const TextSpan(text: ' to verify your account. Thank you'),
@@ -63,7 +65,7 @@ class CheckEmailContent extends StatelessWidget {
           children: [
             Text(
               "Didn't receive an email? ",
-              style: AppTextStyles.bodySmall.copyWith(color: AppColors.gray500),
+              style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
             ),
             GestureDetector(
               onTap: onResend,

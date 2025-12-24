@@ -1,4 +1,7 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+
 import 'saas_metric_grid.dart';
 
 class SaaSContent extends StatelessWidget {
@@ -31,9 +34,11 @@ class SaaSContent extends StatelessWidget {
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            const Text(
+            Text(
               'Overview of your platform performance',
-              style: TextStyle(color: Colors.grey),
+              style: AppTextStyles.bodySmall.copyWith(
+                color: context.theme.appColor.gray500,
+              ),
             ),
           ],
         ),

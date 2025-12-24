@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
+import 'package:flutter/material.dart';
 
 class SaaSModuleHeader extends StatelessWidget {
   final ModuleTabItem currentTab;
@@ -12,13 +12,10 @@ class SaaSModuleHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      decoration: const BoxDecoration(
-        //  color: AppColors.white,
-        // border: Border(bottom: BorderSide(color: AppColors.gray100)),
-      ),
       padding: EdgeInsets.fromLTRB(
         AppDesign.pagePadding,
         isMobile ? 12 : 24,
@@ -40,7 +37,7 @@ class SaaSModuleHeader extends StatelessWidget {
                       Text(
                         currentTab.description ?? '',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.gray500,
+                          color: theme.gray500,
                         ),
                       ),
                     ],
@@ -94,7 +91,7 @@ class _HeaderActions extends StatelessWidget {
             label: "Export",
             icon: Icons.file_download_outlined,
             isPrimary: true,
-            color: AppColors.success,
+            color: context.theme.appColor.success,
             onPressed: () {},
           ),
         ],
@@ -144,6 +141,8 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return SizedBox(
       height: 44,
       child: ElevatedButton.icon(
@@ -153,14 +152,12 @@ class _ActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: isPrimary
               ? (color ?? const Color(0xFF12203A))
-              : AppColors.white,
-          foregroundColor: isPrimary ? AppColors.white : AppColors.textPrimary,
+              : theme.white,
+          foregroundColor: isPrimary ? theme.white : theme.textPrimary,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          side: isPrimary
-              ? BorderSide.none
-              : const BorderSide(color: AppColors.gray200),
+          side: isPrimary ? BorderSide.none : BorderSide(color: theme.gray200),
         ),
       ),
     );

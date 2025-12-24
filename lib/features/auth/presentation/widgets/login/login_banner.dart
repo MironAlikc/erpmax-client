@@ -1,8 +1,7 @@
-// lib/features/auth/presentation/widgets/login/login_banner.dart
-
 import 'dart:async';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
+
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class LoginSlideData {
@@ -83,7 +82,7 @@ class _LoginBannerState extends State<LoginBanner> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.white,
+      color: context.theme.appColor.white,
       child: Stack(
         children: [
           PageView.builder(
@@ -136,6 +135,8 @@ class _SlideContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -145,7 +146,7 @@ class _SlideContent extends StatelessWidget {
           style: AppTextStyles.bannerTitle.copyWith(
             fontSize: 38,
             fontWeight: FontWeight.w800,
-            color: Colors.white,
+            color: theme.white,
           ),
         ),
         const SizedBox(height: 16),
@@ -153,7 +154,7 @@ class _SlideContent extends StatelessWidget {
           sub,
           textAlign: TextAlign.center,
           style: AppTextStyles.base.copyWith(
-            color: Colors.white.withOpacity(0.9),
+            color: theme.white.withValues(alpha: 0.9),
             fontSize: 18,
             height: 1.4,
           ),
@@ -186,13 +187,15 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       height: 8,
       width: isActive ? 24 : 8,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.4),
+        color: isActive ? theme.white : theme.white.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(4),
       ),
     );
@@ -210,7 +213,10 @@ class _BottomGradient extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+            colors: [
+              Colors.transparent,
+              context.theme.appColor.textPrimary.withValues(alpha: 0.7),
+            ],
           ),
         ),
       ),
@@ -227,7 +233,7 @@ class _BannerLogo extends StatelessWidget {
       'ERPMax',
       style: AppTextStyles.bannerTitle.copyWith(
         fontSize: 32,
-        color: Colors.white,
+        color: context.theme.appColor.white,
         fontWeight: FontWeight.w900,
       ),
     );

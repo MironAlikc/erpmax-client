@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class NewPasswordForm extends StatefulWidget {
   const NewPasswordForm({super.key});
@@ -19,7 +19,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
   bool _isLoading = false;
-  bool _isPasswordVisible = false; // Добавлено для удобства управления
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -59,7 +59,9 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
           const SizedBox(height: 8),
           Text(
             'Enter your new password to regain access.',
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.gray500),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: context.theme.appColor.gray500,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppDesign.sectionGap),
@@ -88,7 +90,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
             hintText: 'Repeat your password',
             controller: _confirmController,
             isPassword: true,
-            obscureText: true, // Для подтверждения обычно оставляют скрытым
+            obscureText: true,
             enabled: !_isLoading,
             validator: (val) => val == _passwordController.text
                 ? null
@@ -122,7 +124,7 @@ class _FieldLabel extends StatelessWidget {
         style: AppTextStyles.base.copyWith(
           fontWeight: FontWeight.w600,
           fontSize: 14,
-          color: AppColors.gray900,
+          color: context.theme.appColor.gray900,
         ),
       ),
     );

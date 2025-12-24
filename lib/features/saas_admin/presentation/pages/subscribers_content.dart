@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 enum SubscriberStatus { active, expired, trial, suspended }
 
@@ -248,9 +249,9 @@ class SubscribersContent extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: AppTextStyles.labelStyle.copyWith(
                     fontSize: 13,
-                    color: color.withOpacity(0.7),
+                    color: color.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

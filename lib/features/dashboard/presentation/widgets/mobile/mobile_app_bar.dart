@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -9,7 +9,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
+    final theme = context.theme.appColor;
 
     return AppBar(
       title: Text(
@@ -17,18 +17,18 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: colors.textPrimary,
+          color: theme.textPrimary,
         ),
       ),
       centerTitle: true,
       elevation: 0,
       scrolledUnderElevation: 0,
-      backgroundColor: Colors.white,
-      foregroundColor: colors.textPrimary,
+      backgroundColor: theme.white,
+      foregroundColor: theme.textPrimary,
       actions: actions,
       shape: Border(
         bottom: BorderSide(
-          color: colors.textDisabled.withValues(alpha: 0.1),
+          color: theme.textDisabled.withValues(alpha: 0.1),
           width: 1,
         ),
       ),

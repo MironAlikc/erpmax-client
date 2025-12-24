@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class PageTabs extends StatefulWidget {
@@ -21,13 +22,13 @@ class _PageTabsState extends State<PageTabs> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        border: Border(bottom: BorderSide(color: theme.dividerColor)),
+        color: theme.white,
+        border: Border(bottom: BorderSide(color: theme.borderLight)),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -43,9 +44,7 @@ class _PageTabsState extends State<PageTabs> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: isActive
-                          ? theme.colorScheme.primary
-                          : Colors.transparent,
+                      color: isActive ? theme.primary : Colors.transparent,
                       width: 2,
                     ),
                   ),
@@ -54,7 +53,7 @@ class _PageTabsState extends State<PageTabs> {
                   entry.value,
                   style: TextStyle(
                     fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                    color: isActive ? theme.colorScheme.primary : Colors.grey,
+                    color: isActive ? theme.primary : theme.textSecondary,
                   ),
                 ),
               ),

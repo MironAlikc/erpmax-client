@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
-import '../common/divider_with_text.dart';
+import 'package:erpmax_client/features/auth/presentation/widgets/common/divider_with_text.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -35,7 +35,6 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Имитация запроса к бэкенду
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
@@ -116,7 +115,7 @@ class _FormHeader extends StatelessWidget {
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
-            color: AppColors.gray900,
+            color: context.theme.appColor.gray900,
           ),
           textAlign: TextAlign.center,
         ),
@@ -157,6 +156,8 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,7 +168,7 @@ class _PasswordField extends StatelessWidget {
               'Password',
               style: AppTextStyles.base.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.gray900,
+                color: theme.gray900,
               ),
             ),
             GestureDetector(
@@ -195,7 +196,7 @@ class _PasswordField extends StatelessWidget {
                   ? Icons.visibility_off_outlined
                   : Icons.visibility_outlined,
               size: 20,
-              color: AppColors.gray400,
+              color: theme.gray400,
             ),
             onPressed: onToggle,
           ),
@@ -213,6 +214,8 @@ class _RememberMeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: InkWell(
@@ -227,18 +230,18 @@ class _RememberMeRow extends StatelessWidget {
               child: Checkbox(
                 value: value,
                 onChanged: onChanged,
-                activeColor: AppColors.primary,
+                activeColor: theme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                side: const BorderSide(color: AppColors.gray300, width: 1.5),
+                side: BorderSide(color: theme.gray300, width: 1.5),
               ),
             ),
             const SizedBox(width: 8),
             Text(
               'Remember me',
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.gray600,
+                color: theme.gray600,
                 fontWeight: FontWeight.w500,
               ),
             ),

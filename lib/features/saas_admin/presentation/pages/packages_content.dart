@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class PackageModel {
   final String planName;
@@ -67,6 +69,8 @@ class PackagesContent extends StatelessWidget {
   }
 
   Widget _buildPackagesTable(BuildContext context, bool isMobile) {
+    final theme = context.theme.appColor;
+
     final List<ErpMaxColumn> columns = [
       ErpMaxColumn(title: "Plan Name", weight: 0.25),
       ErpMaxColumn(title: "Price", weight: 0.15),
@@ -78,12 +82,12 @@ class PackagesContent extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: theme.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -103,9 +107,8 @@ class PackagesContent extends StatelessWidget {
                     children: [
                       Text(
                         item.planName,
-                        style: const TextStyle(
+                        style: AppTextStyles.labelStyle.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1E293B),
                         ),
                       ),
                       if (item.isPopular) ...[
@@ -116,12 +119,15 @@ class PackagesContent extends StatelessWidget {
                   ),
                   Text(
                     "\$${item.price}/mo",
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: theme.textSecondary,
+                    ),
                   ),
                   Text(item.usersLimit),
                   Text(item.storageLimit),
                   _StatusBadge(isActive: item.isActive),
-                  const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+                  Icon(Icons.more_horiz, color: theme.gray400),
                 ],
               );
             }).toList(),
@@ -135,16 +141,18 @@ class PackagesContent extends StatelessWidget {
 class _PopularBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFFDCFCE7),
+        color: theme.successLight,
         borderRadius: BorderRadius.circular(6),
       ),
-      child: const Text(
+      child: Text(
         "Popular",
         style: TextStyle(
-          color: Color(0xFF166534),
+          color: theme.activeGreen,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
@@ -155,20 +163,23 @@ class _PopularBadge extends StatelessWidget {
 
 class _StatusBadge extends StatelessWidget {
   final bool isActive;
+
   const _StatusBadge({required this.isActive});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFFDCFCE7) : const Color(0xFFF1F5F9),
+        color: isActive ? theme.successLight : theme.gray100,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         isActive ? "Active" : "Inactive",
-        style: TextStyle(
-          color: isActive ? const Color(0xFF166534) : const Color(0xFF64748B),
+        style: AppTextStyles.bodySmallBold.copyWith(
+          color: isActive ? theme.activeGreen : theme.gray500,
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:flutter/material.dart';
 
 class ModuleModel {
   final String name;
@@ -83,8 +83,7 @@ class _ModuleManagementContentState extends State<ModuleManagementContent> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.stretch, // Растягиваем колонку
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [const SizedBox(height: 32), _buildModuleTable()],
             ),
           ),

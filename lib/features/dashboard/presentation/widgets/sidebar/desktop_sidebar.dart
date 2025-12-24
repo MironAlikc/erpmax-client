@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class DesktopSidebar extends StatelessWidget {
@@ -5,11 +7,16 @@ class DesktopSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       width: 260,
-      color: Colors.grey.shade900,
-      child: const Center(
-        child: Text('Sidebar', style: TextStyle(color: Colors.white)),
+      color: theme.sidebarBackground,
+      child: Center(
+        child: Text(
+          'Sidebar',
+          style: AppTextStyles.bodyMedium.copyWith(color: theme.textWhite),
+        ),
       ),
     );
   }

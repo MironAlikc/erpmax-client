@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:flutter/material.dart';
-import '../design/app_design.dart';
 
 class Responsive extends StatelessWidget {
   final Widget mobile;

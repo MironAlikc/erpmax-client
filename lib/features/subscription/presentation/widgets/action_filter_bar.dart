@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class ActionAndFilterBar extends StatelessWidget {
@@ -5,19 +7,16 @@ class ActionAndFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
 
     return Container(
-      color: theme.colorScheme.surface,
+      color: theme.white,
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       child: Row(
         children: [
           Text(
             "Subscription Management",
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-            ),
+            style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
           ),
           const Spacer(),
           _buildSearchField(context),
@@ -31,6 +30,8 @@ class ActionAndFilterBar extends StatelessWidget {
   }
 
   Widget _buildSearchField(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return SizedBox(
       width: 240,
       height: 40,
@@ -39,10 +40,10 @@ class ActionAndFilterBar extends StatelessWidget {
           hintText: "Search subscriptions...",
           prefixIcon: const Icon(Icons.search, size: 20),
           filled: true,
-          fillColor: const Color(0xFFF9FAFB),
+          fillColor: theme.gray50,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFFEAECF0)),
+            borderSide: BorderSide(color: theme.borderLight),
           ),
           contentPadding: const EdgeInsets.symmetric(vertical: 0),
         ),
@@ -56,25 +57,25 @@ class ActionAndFilterBar extends StatelessWidget {
     IconData icon,
     bool isPrimary,
   ) {
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
     if (isPrimary) {
       return ElevatedButton.icon(
         onPressed: () {},
         icon: Icon(icon, size: 18),
         label: Text(text),
         style: ElevatedButton.styleFrom(
-          backgroundColor: theme.colorScheme.primary,
-          foregroundColor: theme.colorScheme.onPrimary,
+          backgroundColor: theme.primary,
+          foregroundColor: theme.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       );
     }
     return OutlinedButton.icon(
       onPressed: () {},
-      icon: Icon(icon, size: 18, color: Colors.grey),
-      label: Text(text, style: const TextStyle(color: Colors.grey)),
+      icon: Icon(icon, size: 18, color: theme.gray500),
+      label: Text(text, style: TextStyle(color: theme.textSecondary)),
       style: OutlinedButton.styleFrom(
-        side: const BorderSide(color: Color(0xFFEAECF0)),
+        side: BorderSide(color: theme.borderMedium),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );

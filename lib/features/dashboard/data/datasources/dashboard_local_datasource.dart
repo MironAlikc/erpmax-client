@@ -1,7 +1,7 @@
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/features/dashboard/data/models/subscription_model.dart';
+import 'package:erpmax_client/features/dashboard/data/models/summary_model.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_colors.dart';
-import '../models/summary_model.dart';
-import '../models/subscription_model.dart';
 
 abstract class DashboardLocalDataSource {
   List<SummaryModel> getSummaryData();
@@ -9,40 +9,44 @@ abstract class DashboardLocalDataSource {
 }
 
 class DashboardLocalDataSourceImpl implements DashboardLocalDataSource {
+  final AppColorExtension colors;
+
+  DashboardLocalDataSourceImpl({required this.colors});
+
   @override
   List<SummaryModel> getSummaryData() {
-    return const [
+    return [
       SummaryModel(
         icon: Icons.attach_money_rounded,
         title: 'Total Revenue',
         value: 12450.75,
         changePercentage: 12.5,
-        iconColor: AppColors.primary,
-        iconBgColor: AppColors.primaryLight,
+        iconColor: colors.primary,
+        iconBgColor: colors.primaryLight,
       ),
       SummaryModel(
         icon: Icons.shopping_bag_outlined,
         title: 'Active Orders',
         value: 85.0,
         changePercentage: 8.2,
-        iconColor: AppColors.success,
-        iconBgColor: AppColors.successBg,
+        iconColor: colors.success,
+        iconBgColor: colors.successBg,
       ),
       SummaryModel(
         icon: Icons.people_outline_rounded,
         title: 'New Customers',
         value: 12.0,
         changePercentage: -2.4,
-        iconColor: Color(0xFF6366F1),
-        iconBgColor: Color(0xFFEEF2FF),
+        iconColor: colors.accentIndigo,
+        iconBgColor: colors.accentIndigoLight,
       ),
       SummaryModel(
         icon: Icons.account_balance_wallet_outlined,
         title: 'Total Expenses',
         value: 4320.50,
         changePercentage: 5.1,
-        iconColor: AppColors.error,
-        iconBgColor: AppColors.errorBg,
+        iconColor: colors.error,
+        iconBgColor: colors.errorBg,
       ),
     ];
   }

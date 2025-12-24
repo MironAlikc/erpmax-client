@@ -1,8 +1,7 @@
-// lib/features/auth/presentation/widgets/forgot_password/forgot_password_form.dart
-import 'package:erpmax_client/core/design/app_colors.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
-import 'package:erpmax_client/core/design/app_text_styles.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ class ForgotPasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -22,16 +22,14 @@ class ForgotPasswordForm extends StatelessWidget {
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
-            color: AppColors.gray900,
+            color: theme.gray900,
           ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
           'Enter your email to reset password',
-          style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary,
-          ),
+          style: AppTextStyles.bodySmall.copyWith(color: theme.textSecondary),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppDesign.sectionGap),
@@ -56,7 +54,7 @@ class ForgotPasswordForm extends StatelessWidget {
           child: Text(
             'Back to Sign In',
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.gray600,
+              color: theme.gray600,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -66,7 +64,6 @@ class ForgotPasswordForm extends StatelessWidget {
   }
 }
 
-// Дублируем локальный хелпер лейбла для независимости файла
 class _FieldLabel extends StatelessWidget {
   final String text;
   const _FieldLabel({required this.text});
@@ -79,7 +76,7 @@ class _FieldLabel extends StatelessWidget {
         text,
         style: AppTextStyles.base.copyWith(
           fontWeight: FontWeight.w600,
-          color: AppColors.gray900,
+          color: context.theme.appColor.gray900,
           fontSize: 14,
         ),
       ),

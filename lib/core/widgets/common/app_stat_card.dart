@@ -1,6 +1,7 @@
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/design/app_color_extension.dart';
-import 'package:erpmax_client/core/design/app_design.dart';
 
 class AppStatCard extends StatelessWidget {
   final String title;
@@ -20,23 +21,22 @@ class AppStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorExtension.of(context);
-    final theme = Theme.of(context);
+    final theme = context.theme.appColor;
     final Color trendColor = isPositive == null
-        ? colors.textSecondary
-        : (isPositive! ? colors.success : colors.warning);
+        ? theme.textSecondary
+        : (isPositive! ? theme.success : theme.warning);
 
     final Color trendBg = trendColor.withValues(alpha: 0.1);
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.white,
         borderRadius: BorderRadius.circular(AppDesign.cardRadius),
-        border: Border.all(color: colors.textDisabled.withValues(alpha: 0.1)),
+        border: Border.all(color: theme.textDisabled.withValues(alpha: 0.1)),
         boxShadow: [
           BoxShadow(
-            color: colors.textPrimary.withValues(alpha: 0.02),
+            color: theme.textPrimary.withValues(alpha: 0.02),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -48,15 +48,15 @@ class AppStatCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildIconBox(colors, theme),
+              _buildIconBox(context),
               if (trend != "0%")
                 _buildTrendBadge(trendColor, trendBg)
               else
                 Text(
                   trend,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: colors.textDisabled,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: theme.textDisabled,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
             ],
@@ -64,8 +64,8 @@ class AppStatCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             title,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colors.textSecondary,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: theme.textSecondary,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -74,9 +74,9 @@ class AppStatCard extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               value,
-              style: theme.textTheme.headlineMedium?.copyWith(
+              style: AppTextStyles.h1.copyWith(
                 fontWeight: FontWeight.w800,
-                color: colors.textPrimary,
+                color: theme.textPrimary,
                 letterSpacing: -1,
               ),
             ),
@@ -86,15 +86,17 @@ class AppStatCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIconBox(AppColorExtension colors, ThemeData theme) {
+  Widget _buildIconBox(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: colors.backgroundLight,
+        color: theme.bgLight,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: colors.textDisabled.withValues(alpha: 0.05)),
+        border: Border.all(color: theme.textDisabled.withValues(alpha: 0.05)),
       ),
-      child: Icon(icon, color: colors.primaryDark, size: 22),
+      child: Icon(icon, color: theme.primaryDark, size: 22),
     );
   }
 
