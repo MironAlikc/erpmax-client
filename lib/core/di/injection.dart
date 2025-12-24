@@ -7,6 +7,7 @@ import '../api/api_client.dart';
 import '../config/api_config.dart';
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart';
+import '../../features/billing/data/datasources/billing_remote_datasource.dart';
 import 'injection.config.dart';
 
 final getIt = GetIt.instance;
@@ -45,4 +46,8 @@ abstract class RegisterModule {
   @lazySingleton
   TenantRemoteDataSource get tenantRemoteDataSource =>
       TenantRemoteDataSource(dio);
+
+  @lazySingleton
+  BillingRemoteDataSource get billingRemoteDataSource =>
+      BillingRemoteDataSource(dio);
 }

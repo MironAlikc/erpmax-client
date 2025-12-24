@@ -26,6 +26,21 @@ import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/domain/usecases/switch_tenant_usecase.dart'
     as _i253;
+import '../../features/billing/data/datasources/billing_remote_datasource.dart'
+    as _i504;
+import '../../features/billing/data/repositories/billing_repository_impl.dart'
+    as _i632;
+import '../../features/billing/domain/repositories/billing_repository.dart'
+    as _i276;
+import '../../features/billing/domain/usecases/cancel_subscription_usecase.dart'
+    as _i452;
+import '../../features/billing/domain/usecases/create_checkout_usecase.dart'
+    as _i924;
+import '../../features/billing/domain/usecases/get_invoices_usecase.dart'
+    as _i834;
+import '../../features/billing/domain/usecases/get_plans_usecase.dart' as _i311;
+import '../../features/billing/domain/usecases/get_subscription_usecase.dart'
+    as _i232;
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart'
     as _i402;
 import '../../features/tenant/data/repositories/tenant_repository_impl.dart'
@@ -68,6 +83,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i402.TenantRemoteDataSource>(
       () => registerModule.tenantRemoteDataSource,
+    );
+    gh.lazySingleton<_i504.BillingRemoteDataSource>(
+      () => registerModule.billingRemoteDataSource,
     );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
@@ -115,6 +133,26 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i191.UpdateUserRoleUseCase>(
       () => _i191.UpdateUserRoleUseCase(gh<_i728.TenantRepository>()),
+    );
+    gh.lazySingleton<_i276.BillingRepository>(
+      () => _i632.BillingRepositoryImpl(
+        remoteDataSource: gh<_i504.BillingRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i452.CancelSubscriptionUseCase>(
+      () => _i452.CancelSubscriptionUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i924.CreateCheckoutUseCase>(
+      () => _i924.CreateCheckoutUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i834.GetInvoicesUseCase>(
+      () => _i834.GetInvoicesUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i311.GetPlansUseCase>(
+      () => _i311.GetPlansUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i232.GetSubscriptionUseCase>(
+      () => _i232.GetSubscriptionUseCase(gh<_i276.BillingRepository>()),
     );
     return this;
   }
