@@ -50,4 +50,13 @@ abstract final class AppColors {
   static const Color infoText = Color(0xFF175CD3);
   static const Color neutralBg = Color(0xFFF2F4F7);
   static const Color neutralText = Color(0xFF344054);
+  static const primaryTeal = Color(0xFF0D9488);
+  static const borderGray = Color(0xFFE2E8F0);
+  static const textMain = Color(0xFF0F172A);
+
+  static const textMuted = Color(0xFF94A3B8);
+
+  static const cardActive = Color(0xFF4F46E5);
+  static const cardRevenue = Color(0xFF0D9488);
+  static const cardChurn = Color(0xFFEF4444);
 }

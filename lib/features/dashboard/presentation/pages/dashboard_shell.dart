@@ -1,4 +1,3 @@
-import 'package:erpmax_client/features/dashboard/presentation/widgets/main_content/main_content_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -56,10 +55,10 @@ class _DashboardShellState extends State<DashboardShell> {
                       Scaffold.of(context).openDrawer();
                   },
                 ),
-                MainContentHeader(
-                  title: _getModuleTitle(currentIndex),
-                  isDashboard: currentIndex == 0,
-                ),
+                // MainContentHeader(
+                //   title: _getModuleTitle(currentIndex),
+                //   isDashboard: currentIndex == 0,
+                // ),
                 Consumer<TabNavigationService>(
                   builder: (context, tabService, _) {
                     if (tabService.tabs.isEmpty ||

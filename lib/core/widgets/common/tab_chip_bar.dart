@@ -29,15 +29,6 @@ class _TabChipBarState extends State<TabChipBar> {
   }
 
   @override
-  void didUpdateWidget(covariant TabChipBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.controller != oldWidget.controller) {
-      oldWidget.controller.removeListener(_handleTabSelection);
-      widget.controller.addListener(_handleTabSelection);
-    }
-  }
-
-  @override
   void dispose() {
     widget.controller.removeListener(_handleTabSelection);
     _scrollController.dispose();
@@ -48,78 +39,113 @@ class _TabChipBarState extends State<TabChipBar> {
     if (!mounted) return;
     if (!widget.controller.indexIsChanging) {
       setState(() {});
-      _scrollToActiveTab();
     }
-  }
-
-  void _scrollToActiveTab() {
-    if (!_scrollController.hasClients) return;
-    double offset = widget.controller.index * 100.0;
-    _scrollController.animateTo(
-      offset.clamp(0, _scrollController.position.maxScrollExtent),
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1)),
       ),
-      child: ListView.builder(
-        controller: _scrollController,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemCount: widget.tabs.length,
-        itemBuilder: (context, index) {
-          final isSelected = widget.controller.index == index;
-          final tab = widget.tabs[index];
+      child: Row(
+        children: [
+          // Левая часть: Скроллируемые табы (как были по цветам)
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: List.generate(widget.tabs.length, (index) {
+                  final isSelected = widget.controller.index == index;
+                  final tab = widget.tabs[index];
 
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: ChoiceChip(
-              showCheckmark: false,
-              avatar: Icon(
-                tab.icon,
-                size: 18,
-                color: isSelected
-                    ? const Color(0xFF00C58D)
-                    : const Color(0xFF94A3B8),
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      showCheckmark: false,
+                      avatar: Icon(
+                        tab.icon,
+                        size: 18,
+                        color: isSelected
+                            ? const Color(0xFF00C58D) // Возвращен зеленый
+                            : const Color(0xFF94A3B8),
+                      ),
+                      label: Text(tab.name),
+                      labelStyle: TextStyle(
+                        fontSize: 13,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                        color: isSelected
+                            ? const Color(0xFF0F172A)
+                            : const Color(0xFF64748B),
+                      ),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        if (selected) {
+                          widget.controller.animateTo(index);
+                          widget.onTabSelected?.call(index);
+                        }
+                      },
+                      // Возвращены оригинальные цвета фона
+                      backgroundColor: Colors.transparent,
+                      selectedColor: const Color(0xFFF0FDF4),
+                      elevation: 0,
+                      pressElevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(
+                          color: isSelected
+                              ? const Color(0xFF00C58D).withOpacity(0.5)
+                              : const Color(0xFFE2E8F0),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
               ),
-              label: Text(tab.name),
-              labelStyle: TextStyle(
-                fontSize: 13,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected
-                    ? const Color(0xFF0F172A)
-                    : const Color(0xFF64748B),
-              ),
-              selected: isSelected,
-              onSelected: (selected) {
-                if (selected) {
-                  widget.controller.animateTo(index);
-                  widget.onTabSelected?.call(index);
-                }
-              },
-              backgroundColor: Colors.transparent,
-              selectedColor: const Color(0xFFF0FDF4),
-              elevation: 0,
-              pressElevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                  color: isSelected
-                      ? const Color(0xFF00C58D).withOpacity(0.5)
-                      : const Color(0xFFE2E8F0),
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          // Правая часть: Поиск (остается на месте)
+          if (!widget.isMobile)
+            SizedBox(
+              width: 300,
+              height: 40,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search by name, code, or serial...",
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF94A3B8),
+                    fontSize: 13,
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF94A3B8),
+                    size: 18,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.zero,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF0F172A)),
+                  ),
                 ),
               ),
             ),
-          );
-        },
+        ],
       ),
     );
   }

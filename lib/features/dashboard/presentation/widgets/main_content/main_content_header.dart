@@ -17,10 +17,7 @@ class MainContentHeader extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.onPrimary,
-        border: Border(bottom: BorderSide(color: theme.dividerColor, width: 1)),
-      ),
+      decoration: BoxDecoration(color: theme.colorScheme.onPrimary),
       child: Row(
         children: [
           Expanded(
