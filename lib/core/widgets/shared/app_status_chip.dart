@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 enum AppStatusType { success, warning, danger, neutral }
@@ -45,11 +46,7 @@ class AppStatusChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
+        style: AppTextStyles.tableHeader.copyWith(color: textColor),
       ),
     );
   }

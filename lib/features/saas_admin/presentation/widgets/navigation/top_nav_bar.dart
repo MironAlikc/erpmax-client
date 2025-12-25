@@ -1,7 +1,10 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/l10n/locale_cubit.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TopNavigationBar extends StatelessWidget {
   final bool isMobile;
@@ -18,6 +21,7 @@ class TopNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       height: AppDesign.headerHeight,
@@ -39,7 +43,7 @@ class TopNavigationBar extends StatelessWidget {
 
           if (!isMobile) const SizedBox(width: 16),
           if (!isMobile)
-            const Expanded(
+            Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -48,23 +52,23 @@ class TopNavigationBar extends StatelessWidget {
                     children: [
                       _QuickActionButton(
                         icon: Icons.groups_outlined,
-                        label: "Customers",
+                        label: localizations.customers,
                       ),
                       _QuickActionButton(
                         icon: Icons.shopping_cart_outlined,
-                        label: "Sales",
+                        label: localizations.sales,
                       ),
                       _QuickActionButton(
                         icon: Icons.local_mall_outlined,
-                        label: "Purchases",
+                        label: localizations.purchases,
                       ),
                       _QuickActionButton(
                         icon: Icons.account_balance_wallet_outlined,
-                        label: "Funds",
+                        label: localizations.funds,
                       ),
                       _QuickActionButton(
                         icon: Icons.description_outlined,
-                        label: "Journal",
+                        label: localizations.journal,
                       ),
                     ],
                   ),
@@ -166,22 +170,39 @@ class _UserSection extends StatelessWidget {
             children: [
               Text(
                 "Good Morning",
-                style: TextStyle(color: theme.gray400, fontSize: 11),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: theme.gray400,
+                  fontSize: 11,
+                ),
               ),
               Text(
                 "07:22 AM",
-                style: TextStyle(
+                style: AppTextStyles.base.copyWith(
                   color: theme.textPrimary,
                   fontWeight: FontWeight.w800,
-                  fontSize: 15,
                 ),
               ),
             ],
           ),
           const SizedBox(width: 20),
-          Text(
-            "AR",
-            style: AppTextStyles.bodyMediumBold.copyWith(fontSize: 13),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(6),
+              onTap: () {
+                context.read<LocaleCubit>().toggleLanguage();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  "AR",
+                  style: AppTextStyles.bodyMediumBold.copyWith(
+                    fontSize: 13,
+                    color: theme.textPrimary,
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(width: 20),
           const _NotificationBadge(),
@@ -199,7 +220,10 @@ class _UserSection extends StatelessWidget {
             ),
             Text(
               "System Admin",
-              style: TextStyle(color: theme.gray400, fontSize: 11),
+              style: AppTextStyles.bodySmall.copyWith(
+                color: theme.gray400,
+                fontSize: 11,
+              ),
             ),
           ],
         ),

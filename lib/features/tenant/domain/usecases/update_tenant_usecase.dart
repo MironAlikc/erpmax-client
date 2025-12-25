@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/auth/domain/entities/tenant_entity.dart';
+import 'package:erpmax_client/features/tenant/domain/repositories/tenant_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../../../auth/domain/entities/tenant_entity.dart';
-import '../repositories/tenant_repository.dart';
 
 @injectable
 class UpdateTenantUseCase {
@@ -15,10 +15,6 @@ class UpdateTenantUseCase {
     String? name,
     Map<String, dynamic>? settings,
   }) {
-    return repository.updateTenant(
-      id,
-      name: name,
-      settings: settings,
-    );
+    return repository.updateTenant(id, name: name, settings: settings);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -11,13 +12,16 @@ class AppPlaceholder extends StatelessWidget {
   const AppPlaceholder({
     super.key,
     required this.title,
-    this.subtitle = "Detailed data is being generated...",
+    this.subtitle,
     this.icon = Icons.analytics_outlined,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
+    final placeholderSubtitle = subtitle ?? localizations.defaultSubtitle;
 
     return Container(
       width: double.infinity,
@@ -52,16 +56,14 @@ class AppPlaceholder extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          if (subtitle != null) ...[
-            const SizedBox(height: 8),
-            Text(
-              subtitle!,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: theme.textSecondary,
-              ),
-              textAlign: TextAlign.center,
+          const SizedBox(height: 8),
+          Text(
+            placeholderSubtitle,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: theme.textSecondary,
             ),
-          ],
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

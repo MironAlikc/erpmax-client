@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/auth/domain/entities/tenant_entity.dart';
+import 'package:erpmax_client/features/tenant/data/datasources/tenant_remote_datasource.dart';
+import 'package:erpmax_client/features/tenant/domain/entities/tenant_user_entity.dart';
+import 'package:erpmax_client/features/tenant/domain/repositories/tenant_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../../../auth/domain/entities/tenant_entity.dart';
-import '../../domain/entities/tenant_user_entity.dart';
-import '../../domain/repositories/tenant_repository.dart';
-import '../datasources/tenant_remote_datasource.dart';
 
 @LazySingleton(as: TenantRepository)
 class TenantRepositoryImpl implements TenantRepository {
@@ -64,13 +64,10 @@ class TenantRepositoryImpl implements TenantRepository {
     Map<String, dynamic>? settings,
   }) async {
     try {
-      final response = await remoteDataSource.updateTenant(
-        id,
-        {
-          if (name != null) 'name': name,
-          if (settings != null) 'settings': settings,
-        },
-      );
+      final response = await remoteDataSource.updateTenant(id, {
+        if (name != null) 'name': name,
+        if (settings != null) 'settings': settings,
+      });
 
       return Right(response.data.toEntity());
     } on DioException catch (e) {
@@ -109,13 +106,10 @@ class TenantRepositoryImpl implements TenantRepository {
     required String role,
   }) async {
     try {
-      await remoteDataSource.inviteUser(
-        tenantId,
-        {
-          'email': email,
-          'role': role,
-        },
-      );
+      await remoteDataSource.inviteUser(tenantId, {
+        'email': email,
+        'role': role,
+      });
 
       return const Right(null);
     } on DioException catch (e) {
@@ -132,11 +126,7 @@ class TenantRepositoryImpl implements TenantRepository {
     required String role,
   }) async {
     try {
-      await remoteDataSource.updateUserRole(
-        tenantId,
-        userId,
-        {'role': role},
-      );
+      await remoteDataSource.updateUserRole(tenantId, userId, {'role': role});
 
       return const Right(null);
     } on DioException catch (e) {

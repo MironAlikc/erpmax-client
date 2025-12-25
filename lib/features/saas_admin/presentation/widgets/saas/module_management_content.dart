@@ -69,9 +69,9 @@ class ModuleManagementContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Module Management",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: AppTextStyles.h2.copyWith(fontSize: 24),
             ),
             const SizedBox(height: 24),
             _buildTableContainer(context),
@@ -183,7 +183,7 @@ class StatusBadge extends StatelessWidget {
       ),
       child: Text(
         isActive ? "Active" : "Inactive",
-        style: TextStyle(
+        style: AppTextStyles.bodySmall.copyWith(
           color: color,
           fontSize: 11,
           fontWeight: FontWeight.bold,

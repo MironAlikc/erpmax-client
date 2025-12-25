@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class AccountingHeaderBtn extends StatelessWidget {
@@ -22,10 +23,7 @@ class AccountingHeaderBtn extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: () {},
       icon: Icon(icon, size: 16),
-      label: Text(
-        label,
-        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-      ),
+      label: Text(label, style: AppTextStyles.bodySmallBold),
       style: ElevatedButton.styleFrom(
         elevation: 0,
         backgroundColor: isOutline ? theme.white : (color ?? theme.black),

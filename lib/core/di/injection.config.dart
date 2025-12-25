@@ -13,6 +13,7 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart'
     as _i161;
@@ -84,16 +85,21 @@ import '../../features/tenant/domain/usecases/update_user_role_usecase.dart'
     as _i191;
 import '../api/api_client.dart' as _i277;
 import '../auth/secure_storage.dart' as _i934;
+import '../l10n/locale_cubit.dart' as _i171;
 import 'injection.dart' as _i464;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => registerModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
     );
@@ -114,6 +120,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i490.SSORemoteDataSource>(
       () => registerModule.ssoRemoteDataSource,
+    );
+    gh.lazySingleton<_i171.LocaleCubit>(
+      () => _i171.LocaleCubit(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(

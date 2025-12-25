@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -42,6 +43,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,7 +58,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
         ),
         const SizedBox(height: 24),
         Text(
-          'Verify your phone',
+          localizations.verifyPhone,
           style: AppTextStyles.h1.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w800,
@@ -65,7 +67,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
         ),
         const SizedBox(height: 12),
         Text(
-          'Enter the verification code we sent to\n******7859',
+          localizations.enterCodeSent,
           style: AppTextStyles.bodySmall.copyWith(
             color: theme.gray500,
             height: 1.5,
@@ -88,12 +90,12 @@ class _Verify2faFormState extends State<Verify2faForm> {
         ),
 
         const SizedBox(height: AppDesign.sectionGap),
-        _buildResendTimer(context),
+        _buildResendTimer(),
         const SizedBox(height: AppDesign.sectionGap),
 
         AppButton(
           onPressed: _isLoading ? null : _onVerify,
-          text: 'Continue',
+          text: localizations.continueBtn,
           isLoading: _isLoading,
           isExpanded: true,
         ),
@@ -101,12 +103,14 @@ class _Verify2faFormState extends State<Verify2faForm> {
     );
   }
 
-  Widget _buildResendTimer(BuildContext context) {
+  Widget _buildResendTimer() {
+    final localizations = AppLocalizations.of(context);
+
     return Center(
       child: Column(
         children: [
           Text(
-            "Didn't receive a code? (37s)",
+            localizations.didNotReceiveCode('37'),
             style: AppTextStyles.bodySmall.copyWith(
               color: context.theme.appColor.gray500,
               fontSize: 13,
@@ -116,7 +120,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
           TextButton(
             onPressed: () {},
             child: Text(
-              'Resend',
+              localizations.resend,
               style: AppTextStyles.linkStyle.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,

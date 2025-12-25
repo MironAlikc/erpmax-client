@@ -1,4 +1,4 @@
-import '../../domain/entities/stat_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/stat_entity.dart';
 
 class StatModel extends StatEntity {
   const StatModel({

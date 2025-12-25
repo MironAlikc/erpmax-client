@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
 
@@ -44,9 +45,11 @@ class _ErpMaxDataTableState<T> extends State<ErpMaxDataTable<T>> {
     }
 
     if (widget.items.isEmpty) {
-      return const SizedBox(
+      return SizedBox(
         height: 200,
-        child: Center(child: Text("No data available")),
+        child: Center(
+          child: Text(AppLocalizations.of(context).noDataAvailable),
+        ),
       );
     }
 
