@@ -115,6 +115,7 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
         context.read<TabNavigationService>().updateTabs(
           _moduleTabs,
           _tabController,
+          branchIndex: 11, // Явно указываем ветку
         );
       }
     });
@@ -166,42 +167,42 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final VoidCallback onPressed;
-  final bool isPrimary;
-  final Color? color;
+// class _ActionButton extends StatelessWidget {
+//   final String label;
+//   final IconData icon;
+//   final VoidCallback onPressed;
+//   final bool isPrimary;
+//   final Color? color;
 
-  const _ActionButton(
-    this.color, {
-    required this.label,
-    required this.icon,
-    required this.onPressed,
-    required this.isPrimary,
-  });
+//   const _ActionButton(
+//     this.color, {
+//     required this.label,
+//     required this.icon,
+//     required this.onPressed,
+//     required this.isPrimary,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
+//   @override
+//   Widget build(BuildContext context) {
+//     final theme = context.theme.appColor;
 
-    return SizedBox(
-      height: 44,
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 18),
-        label: Text(label),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isPrimary
-              ? (color ?? const Color(0xFF12203A))
-              : theme.white,
-          foregroundColor: isPrimary ? theme.white : theme.textPrimary,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          side: isPrimary ? BorderSide.none : BorderSide(color: theme.gray200),
-        ),
-      ),
-    );
-  }
-}
+//     return SizedBox(
+//       height: 44,
+//       child: ElevatedButton.icon(
+//         onPressed: onPressed,
+//         icon: Icon(icon, size: 18),
+//         label: Text(label),
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: isPrimary
+//               ? (color ?? const Color(0xFF12203A))
+//               : theme.white,
+//           foregroundColor: isPrimary ? theme.white : theme.textPrimary,
+//           elevation: 0,
+//           padding: const EdgeInsets.symmetric(horizontal: 16),
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//           side: isPrimary ? BorderSide.none : BorderSide(color: theme.gray200),
+//         ),
+//       ),
+//     );
+//   }
+// }

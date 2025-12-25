@@ -5,11 +5,11 @@
 # deploy_config.sh is gitignored for security
 
 # Server Configuration
-export SERVER_IP="192.168.0.83"
-export SERVER_USER="feras1960"
-export SERVER_PASSWORD="your_password_here"
-export APP_PATH="/opt/erpmax_web"
-export BACKUP_PATH="/opt/backups/erpmax_web"
+export SERVER_IP="your_server_ip"
+export SERVER_USER="your_username"
+export SERVER_PASSWORD="your_password"
+export APP_PATH="~/erpmax_web"
+export BACKUP_PATH="~/backups/erpmax_web"
 
 # Optional: Backend API Configuration
 export BACKEND_PORT="8080"

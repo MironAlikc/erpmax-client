@@ -27,6 +27,43 @@ import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/domain/usecases/switch_tenant_usecase.dart'
     as _i253;
+import '../../features/billing/data/datasources/billing_remote_datasource.dart'
+    as _i504;
+import '../../features/billing/data/repositories/billing_repository_impl.dart'
+    as _i632;
+import '../../features/billing/domain/repositories/billing_repository.dart'
+    as _i276;
+import '../../features/billing/domain/usecases/cancel_subscription_usecase.dart'
+    as _i452;
+import '../../features/billing/domain/usecases/create_checkout_usecase.dart'
+    as _i924;
+import '../../features/billing/domain/usecases/get_invoices_usecase.dart'
+    as _i834;
+import '../../features/billing/domain/usecases/get_plans_usecase.dart' as _i311;
+import '../../features/billing/domain/usecases/get_subscription_usecase.dart'
+    as _i232;
+import '../../features/provisioning/data/datasources/provisioning_remote_datasource.dart'
+    as _i615;
+import '../../features/provisioning/data/repositories/provisioning_repository_impl.dart'
+    as _i317;
+import '../../features/provisioning/domain/repositories/provisioning_repository.dart'
+    as _i861;
+import '../../features/provisioning/domain/usecases/cancel_job_usecase.dart'
+    as _i56;
+import '../../features/provisioning/domain/usecases/create_job_usecase.dart'
+    as _i854;
+import '../../features/provisioning/domain/usecases/get_job_by_id_usecase.dart'
+    as _i298;
+import '../../features/provisioning/domain/usecases/get_jobs_usecase.dart'
+    as _i516;
+import '../../features/provisioning/domain/usecases/retry_job_usecase.dart'
+    as _i699;
+import '../../features/sso/data/datasources/sso_remote_datasource.dart'
+    as _i490;
+import '../../features/sso/data/repositories/sso_repository_impl.dart' as _i359;
+import '../../features/sso/domain/repositories/sso_repository.dart' as _i983;
+import '../../features/sso/domain/usecases/generate_sso_token_usecase.dart'
+    as _i319;
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart'
     as _i402;
 import '../../features/tenant/data/repositories/tenant_repository_impl.dart'
@@ -75,6 +112,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i402.TenantRemoteDataSource>(
       () => registerModule.tenantRemoteDataSource,
     );
+    gh.lazySingleton<_i504.BillingRemoteDataSource>(
+      () => registerModule.billingRemoteDataSource,
+    );
+    gh.lazySingleton<_i615.ProvisioningRemoteDataSource>(
+      () => registerModule.provisioningRemoteDataSource,
+    );
+    gh.lazySingleton<_i490.SSORemoteDataSource>(
+      () => registerModule.ssoRemoteDataSource,
+    );
     gh.lazySingleton<_i171.LocaleCubit>(
       () => _i171.LocaleCubit(gh<_i460.SharedPreferences>()),
     );
@@ -99,9 +145,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i253.SwitchTenantUseCase>(
       () => _i253.SwitchTenantUseCase(gh<_i787.AuthRepository>()),
     );
+    gh.lazySingleton<_i861.ProvisioningRepository>(
+      () => _i317.ProvisioningRepositoryImpl(
+        remoteDataSource: gh<_i615.ProvisioningRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i728.TenantRepository>(
       () => _i981.TenantRepositoryImpl(
         remoteDataSource: gh<_i402.TenantRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i983.SSORepository>(
+      () => _i359.SSORepositoryImpl(
+        remoteDataSource: gh<_i490.SSORemoteDataSource>(),
       ),
     );
     gh.factory<_i236.GetCurrentTenantUseCase>(
@@ -124,6 +180,44 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i191.UpdateUserRoleUseCase>(
       () => _i191.UpdateUserRoleUseCase(gh<_i728.TenantRepository>()),
+    );
+    gh.lazySingleton<_i276.BillingRepository>(
+      () => _i632.BillingRepositoryImpl(
+        remoteDataSource: gh<_i504.BillingRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i452.CancelSubscriptionUseCase>(
+      () => _i452.CancelSubscriptionUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i924.CreateCheckoutUseCase>(
+      () => _i924.CreateCheckoutUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i834.GetInvoicesUseCase>(
+      () => _i834.GetInvoicesUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i311.GetPlansUseCase>(
+      () => _i311.GetPlansUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i232.GetSubscriptionUseCase>(
+      () => _i232.GetSubscriptionUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i56.CancelJobUseCase>(
+      () => _i56.CancelJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i854.CreateJobUseCase>(
+      () => _i854.CreateJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i298.GetJobByIdUseCase>(
+      () => _i298.GetJobByIdUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i516.GetJobsUseCase>(
+      () => _i516.GetJobsUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i699.RetryJobUseCase>(
+      () => _i699.RetryJobUseCase(gh<_i861.ProvisioningRepository>()),
+    );
+    gh.factory<_i319.GenerateSSOTokenUseCase>(
+      () => _i319.GenerateSSOTokenUseCase(gh<_i983.SSORepository>()),
     );
     return this;
   }

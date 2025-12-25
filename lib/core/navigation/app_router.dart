@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/navigation/fade_transition_page.dart';
-import 'package:erpmax_client/features/accounting/pages/accounting_root_page.dart';
+import 'package:erpmax_client/features/accounting/presentation/pages/accounting_root_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/check_email_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/login_page.dart';

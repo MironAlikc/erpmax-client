@@ -67,8 +67,6 @@ class _ReportsContentState extends State<ReportsContent> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

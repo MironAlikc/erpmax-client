@@ -3,6 +3,9 @@ import 'package:erpmax_client/core/api/api_client.dart';
 import 'package:erpmax_client/core/auth/secure_storage.dart';
 import 'package:erpmax_client/core/config/api_config.dart';
 import 'package:erpmax_client/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:erpmax_client/features/billing/data/datasources/billing_remote_datasource.dart';
+import 'package:erpmax_client/features/provisioning/data/datasources/provisioning_remote_datasource.dart';
+import 'package:erpmax_client/features/sso/data/datasources/sso_remote_datasource.dart';
 import 'package:erpmax_client/features/tenant/data/datasources/tenant_remote_datasource.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -50,4 +53,15 @@ abstract class RegisterModule {
   @lazySingleton
   TenantRemoteDataSource get tenantRemoteDataSource =>
       TenantRemoteDataSource(dio);
+
+  @lazySingleton
+  BillingRemoteDataSource get billingRemoteDataSource =>
+      BillingRemoteDataSource(dio);
+
+  @lazySingleton
+  ProvisioningRemoteDataSource get provisioningRemoteDataSource =>
+      ProvisioningRemoteDataSource(dio);
+
+  @lazySingleton
+  SSORemoteDataSource get ssoRemoteDataSource => SSORemoteDataSource(dio);
 }
