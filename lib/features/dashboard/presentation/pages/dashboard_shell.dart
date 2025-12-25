@@ -55,10 +55,11 @@ class _DashboardShellState extends State<DashboardShell> {
                   isMobile: !isDesktop,
                   isSidebarExpanded: _isExpanded,
                   onToggleSidebar: () {
-                    if (isDesktop)
+                    if (isDesktop) {
                       setState(() => _isExpanded = !_isExpanded);
-                    else
+                    } else {
                       Scaffold.of(context).openDrawer();
+                    }
                   },
                 ),
                 // MainContentHeader(

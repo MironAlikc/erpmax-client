@@ -399,6 +399,660 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Min 6 characters'**
   String get errorMinLength;
+
+  /// No description provided for @checkYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email'**
+  String get checkYourEmail;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @resetPassInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password to regain access.'**
+  String get resetPassInstruction;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @min8Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 8 characters'**
+  String get min8Characters;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password too short'**
+  String get passwordTooShort;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @repeatPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat your password'**
+  String get repeatPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password is changed'**
+  String get passwordChanged;
+
+  /// No description provided for @passwordChangedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been successfully updated.\nYour account security is our priority.'**
+  String get passwordChangedDesc;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email'**
+  String get invalidEmail;
+
+  /// No description provided for @reEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter Password'**
+  String get reEnterPassword;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an Account? '**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @acceptTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the Terms & Conditions'**
+  String get acceptTerms;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Password'**
+  String get enterPassword;
+
+  /// No description provided for @errInvalidRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid request'**
+  String get errInvalidRequest;
+
+  /// No description provided for @errUnauthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized'**
+  String get errUnauthorized;
+
+  /// No description provided for @errForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Forbidden'**
+  String get errForbidden;
+
+  /// No description provided for @errNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource not found'**
+  String get errNotFound;
+
+  /// No description provided for @errServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error'**
+  String get errServerError;
+
+  /// No description provided for @errUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get errUnknown;
+
+  /// No description provided for @errTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout'**
+  String get errTimeout;
+
+  /// No description provided for @errNoInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get errNoInternet;
+
+  /// No description provided for @colCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get colCompanyName;
+
+  /// No description provided for @colPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get colPackage;
+
+  /// No description provided for @colEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get colEndDate;
+
+  /// No description provided for @colTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get colTags;
+
+  /// No description provided for @subscribers.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribers'**
+  String get subscribers;
+
+  /// No description provided for @searchCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Search company...'**
+  String get searchCompany;
+
+  /// No description provided for @btnNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get btnNew;
+
+  /// No description provided for @btnReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get btnReset;
+
+  /// No description provided for @overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overview;
+
+  /// No description provided for @analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get analytics;
+
+  /// No description provided for @revenueForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue Forecast'**
+  String get revenueForecast;
+
+  /// No description provided for @monthlyRevenueProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly revenue projection'**
+  String get monthlyRevenueProjection;
+
+  /// No description provided for @activeSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Subscriptions'**
+  String get activeSubscriptions;
+
+  /// No description provided for @growthByPackageType.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth by package type'**
+  String get growthByPackageType;
+
+  /// No description provided for @dashboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back! Here\'s what\'s happening.'**
+  String get dashboardSubtitle;
+
+  /// No description provided for @manageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage {title}'**
+  String manageTitle(Object title);
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @menuDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get menuDashboard;
+
+  /// No description provided for @menuAccounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting'**
+  String get menuAccounting;
+
+  /// No description provided for @menuInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get menuInventory;
+
+  /// No description provided for @menuSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get menuSales;
+
+  /// No description provided for @menuCustomerManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Management'**
+  String get menuCustomerManagement;
+
+  /// No description provided for @menuRealEstate.
+  ///
+  /// In en, this message translates to:
+  /// **'Real Estate Asset'**
+  String get menuRealEstate;
+
+  /// No description provided for @menuPOS.
+  ///
+  /// In en, this message translates to:
+  /// **'POS'**
+  String get menuPOS;
+
+  /// No description provided for @menuExchange.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange & Remittances'**
+  String get menuExchange;
+
+  /// No description provided for @menuPurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get menuPurchases;
+
+  /// No description provided for @menuManufacturing.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturing'**
+  String get menuManufacturing;
+
+  /// No description provided for @menuHR.
+  ///
+  /// In en, this message translates to:
+  /// **'HR Management'**
+  String get menuHR;
+
+  /// No description provided for @menuSaaS.
+  ///
+  /// In en, this message translates to:
+  /// **'SaaS Control'**
+  String get menuSaaS;
+
+  /// No description provided for @menuAI.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Analytics'**
+  String get menuAI;
+
+  /// No description provided for @menuAuthPages.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth Pages'**
+  String get menuAuthPages;
+
+  /// No description provided for @menuSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get menuSettings;
+
+  /// No description provided for @saasAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'SaaS Analytics'**
+  String get saasAnalytics;
+
+  /// No description provided for @saasAnalyticsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview of your platform performance'**
+  String get saasAnalyticsDesc;
+
+  /// No description provided for @exportReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Report'**
+  String get exportReport;
+
+  /// No description provided for @statusPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
+  String get statusPosted;
+
+  /// No description provided for @statusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraft;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @sidebar.
+  ///
+  /// In en, this message translates to:
+  /// **'Sidebar'**
+  String get sidebar;
+
+  /// No description provided for @business.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get business;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @generalLedgerContent.
+  ///
+  /// In en, this message translates to:
+  /// **'General Ledger Content'**
+  String get generalLedgerContent;
+
+  /// No description provided for @saasAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'SaaS Admin'**
+  String get saasAdmin;
+
+  /// No description provided for @subscriptionManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Management'**
+  String get subscriptionManagement;
+
+  /// No description provided for @subscriptionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Details'**
+  String get subscriptionDetails;
+
+  /// No description provided for @modules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules'**
+  String get modules;
+
+  /// No description provided for @payBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Book'**
+  String get payBook;
+
+  /// No description provided for @generalLedger.
+  ///
+  /// In en, this message translates to:
+  /// **'General Ledger'**
+  String get generalLedger;
+
+  /// No description provided for @activityLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Log'**
+  String get activityLog;
+
+  /// No description provided for @amendment.
+  ///
+  /// In en, this message translates to:
+  /// **'Amendment'**
+  String get amendment;
+
+  /// No description provided for @cancelSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Subscription'**
+  String get cancelSubscription;
+
+  /// No description provided for @customerInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Information'**
+  String get customerInformation;
+
+  /// No description provided for @package.
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get package;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @transaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction'**
+  String get transaction;
+
+  /// No description provided for @method.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get method;
+
+  /// No description provided for @procedure.
+  ///
+  /// In en, this message translates to:
+  /// **'Procedure'**
+  String get procedure;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
+  /// No description provided for @details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
+
+  /// No description provided for @reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get reports;
+
+  /// No description provided for @manufacturing.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturing'**
+  String get manufacturing;
+
+  /// No description provided for @comments.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get comments;
+
+  /// No description provided for @anyAdditionalComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Any additional comments'**
+  String get anyAdditionalComments;
+
+  /// No description provided for @labelCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer:'**
+  String get labelCustomer;
+
+  /// No description provided for @labelEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail:'**
+  String get labelEmail;
+
+  /// No description provided for @labelPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Package:'**
+  String get labelPackage;
+
+  /// No description provided for @labelValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Value:'**
+  String get labelValue;
+
+  /// No description provided for @labelStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status:'**
+  String get labelStatus;
+
+  /// No description provided for @labelStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start:'**
+  String get labelStart;
+
+  /// No description provided for @labelExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry:'**
+  String get labelExpiry;
+
+  /// No description provided for @labelCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'Condition:'**
+  String get labelCondition;
+
+  /// No description provided for @includedModules.
+  ///
+  /// In en, this message translates to:
+  /// **'Included Modules'**
+  String get includedModules;
+
+  /// No description provided for @recentBackups.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Backups'**
+  String get recentBackups;
+
+  /// No description provided for @fileName.
+  ///
+  /// In en, this message translates to:
+  /// **'File Name'**
+  String get fileName;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @partial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get partial;
+
+  /// No description provided for @lastBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Backup'**
+  String get lastBackup;
+
+  /// No description provided for @storageUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage Used'**
+  String get storageUsed;
+
+  /// No description provided for @nextSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Schedule'**
+  String get nextSchedule;
+
+  /// No description provided for @timeAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours ago'**
+  String timeAgo(Object hours);
+
+  /// No description provided for @todayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Today {time}'**
+  String todayAt(Object time);
 }
 
 class _AppLocalizationsDelegate

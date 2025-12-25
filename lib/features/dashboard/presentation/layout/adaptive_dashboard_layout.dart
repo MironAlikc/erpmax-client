@@ -1,5 +1,6 @@
+import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/utils/responsive.dart';
+
 import 'dashboard_desktop_layout.dart';
 import 'dashboard_mobile_layout.dart';
 

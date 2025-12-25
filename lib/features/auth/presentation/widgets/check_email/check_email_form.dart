@@ -26,7 +26,7 @@ class CheckEmailForm extends StatelessWidget {
         const SizedBox(height: AppDesign.sectionGap),
 
         Text(
-          'Check your email',
+          localizations.checkYourEmail,
           style: AppTextStyles.h1.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w800,

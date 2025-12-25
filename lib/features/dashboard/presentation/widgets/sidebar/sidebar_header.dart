@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class SidebarHeader extends StatelessWidget {
@@ -38,10 +40,9 @@ class SidebarHeader extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                'ERPMax Client',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                AppLocalizations.of(context).appTitle,
+                style: AppTextStyles.h3.copyWith(
+                  fontWeight: FontWeight.w700,
                   color: textTheme.titleMedium!.color,
                 ),
                 overflow: TextOverflow.ellipsis,

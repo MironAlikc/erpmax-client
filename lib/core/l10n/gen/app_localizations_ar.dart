@@ -162,4 +162,339 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorMinLength => '6 أحرف كحد أدنى';
+
+  @override
+  String get checkYourEmail => 'تحقق من بريدك الإلكتروني';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get resetPassword => 'إعادة تعيين كلمة السر';
+
+  @override
+  String get resetPassInstruction =>
+      'أدخل كلمة السر الجديدة لاستعادة الوصول إلى حسابك.';
+
+  @override
+  String get newPassword => 'كلمة السر الجديدة';
+
+  @override
+  String get min8Characters => '8 أحرف كحد أدنى';
+
+  @override
+  String get passwordTooShort => 'كلمة السر قصيرة جداً';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة السر';
+
+  @override
+  String get repeatPassword => 'كرر كلمة السر الخاصة بك';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمات السر غير متطابقة';
+
+  @override
+  String get submit => 'إرسال';
+
+  @override
+  String get passwordChanged => 'تم تغيير كلمة السر';
+
+  @override
+  String get passwordChangedDesc =>
+      'تم تحديث كلمة السر الخاصة بك بنجاح.\nأمان حسابك هو أولويتنا القصوى.';
+
+  @override
+  String get invalidEmail => 'البريد الإلكتروني غير صحيح';
+
+  @override
+  String get reEnterPassword => 'أعد إدخال كلمة السر';
+
+  @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل؟ ';
+
+  @override
+  String get acceptTerms => 'أوافق على الشروط والأحكام';
+
+  @override
+  String get enterPassword => 'أدخل كلمة السر';
+
+  @override
+  String get errInvalidRequest => 'طلب غير صالحة';
+
+  @override
+  String get errUnauthorized => 'غير مصرح به';
+
+  @override
+  String get errForbidden => 'غير مسموح به';
+
+  @override
+  String get errNotFound => 'المورد غير موجود';
+
+  @override
+  String get errServerError => 'خطأ في الخادم';
+
+  @override
+  String get errUnknown => 'خطأ غير معروف';
+
+  @override
+  String get errTimeout => 'انتهت مهلة الاتصال';
+
+  @override
+  String get errNoInternet => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get colCompanyName => 'اسم الشركة';
+
+  @override
+  String get colPackage => 'الباقة';
+
+  @override
+  String get colEndDate => 'تاريخ الانتهاء';
+
+  @override
+  String get colTags => 'الوسوم';
+
+  @override
+  String get subscribers => 'المشتركين';
+
+  @override
+  String get searchCompany => 'البحث عن شركة...';
+
+  @override
+  String get btnNew => 'جديد';
+
+  @override
+  String get btnReset => 'إعادة ضبط';
+
+  @override
+  String get overview => 'نظرة عامة';
+
+  @override
+  String get analytics => 'التحليلات';
+
+  @override
+  String get revenueForecast => 'توقعات الإيرادات';
+
+  @override
+  String get monthlyRevenueProjection => 'توقعات الإيرادات الشهرية';
+
+  @override
+  String get activeSubscriptions => 'الاشتراكات النشطة';
+
+  @override
+  String get growthByPackageType => 'النمو حسب نوع الباقة';
+
+  @override
+  String get dashboardSubtitle => 'أهلاً بك من جديد! إليك ما يحدث الآن.';
+
+  @override
+  String manageTitle(Object title) {
+    return 'إدارة $title';
+  }
+
+  @override
+  String get support => 'الدعم الفني';
+
+  @override
+  String get menuDashboard => 'لوحة القيادة';
+
+  @override
+  String get menuAccounting => 'المحاسبة';
+
+  @override
+  String get menuInventory => 'المخزون';
+
+  @override
+  String get menuSales => 'المبيعات';
+
+  @override
+  String get menuCustomerManagement => 'إدارة العملاء';
+
+  @override
+  String get menuRealEstate => 'الأصول العقارية';
+
+  @override
+  String get menuPOS => 'نقطة البيع';
+
+  @override
+  String get menuExchange => 'الصرافة والحوالات';
+
+  @override
+  String get menuPurchases => 'المشتريات';
+
+  @override
+  String get menuManufacturing => 'التصنيع';
+
+  @override
+  String get menuHR => 'إدارة الموارد البشرية';
+
+  @override
+  String get menuSaaS => 'التحكم في SaaS';
+
+  @override
+  String get menuAI => 'تحليلات الذكاء الاصطناعي';
+
+  @override
+  String get menuAuthPages => 'صفحات المصادقة';
+
+  @override
+  String get menuSettings => 'الإعدادات';
+
+  @override
+  String get saasAnalytics => 'تحليلات SaaS';
+
+  @override
+  String get saasAnalyticsDesc => 'نظرة عامة على أداء منصتك';
+
+  @override
+  String get exportReport => 'تصدير التقرير';
+
+  @override
+  String get statusPosted => 'تم النشر';
+
+  @override
+  String get statusDraft => 'مسودة';
+
+  @override
+  String get statusPending => 'قيد الانتظار';
+
+  @override
+  String get sidebar => 'الشريط الجانبي';
+
+  @override
+  String get business => 'الأعمال';
+
+  @override
+  String get system => 'النظام';
+
+  @override
+  String get generalLedgerContent => 'محتوى دفتر الأستاذ العام';
+
+  @override
+  String get saasAdmin => 'مسؤول SaaS';
+
+  @override
+  String get subscriptionManagement => 'إدارة الاشتراكات';
+
+  @override
+  String get subscriptionDetails => 'تفاصيل الاشتراك';
+
+  @override
+  String get modules => 'الوحدات البرمجية';
+
+  @override
+  String get payBook => 'دفتر المدفوعات';
+
+  @override
+  String get generalLedger => 'دفتر الأستاذ العام';
+
+  @override
+  String get activityLog => 'سجل الأنشطة';
+
+  @override
+  String get amendment => 'تعديل';
+
+  @override
+  String get cancelSubscription => 'إلغاء الاشتراك';
+
+  @override
+  String get customerInformation => 'معلومات العميل';
+
+  @override
+  String get package => 'الباقة';
+
+  @override
+  String get duration => 'المدة';
+
+  @override
+  String get transaction => 'معاملة مالية';
+
+  @override
+  String get method => 'الطريقة';
+
+  @override
+  String get procedure => 'الإجراء';
+
+  @override
+  String get user => 'المستخدم';
+
+  @override
+  String get details => 'التفاصيل';
+
+  @override
+  String get reports => 'التقارير';
+
+  @override
+  String get manufacturing => 'التصنيع';
+
+  @override
+  String get comments => 'التعليقات';
+
+  @override
+  String get anyAdditionalComments => 'أي تعليقات إضافية';
+
+  @override
+  String get labelCustomer => 'العميل:';
+
+  @override
+  String get labelEmail => 'البريد الإلكتروني:';
+
+  @override
+  String get labelPackage => 'الباقة:';
+
+  @override
+  String get labelValue => 'القيمة:';
+
+  @override
+  String get labelStatus => 'الحالة:';
+
+  @override
+  String get labelStart => 'تاريخ البدء:';
+
+  @override
+  String get labelExpiry => 'تاريخ الانتهاء:';
+
+  @override
+  String get labelCondition => 'الشرط:';
+
+  @override
+  String get includedModules => 'الوحدات المضمنة';
+
+  @override
+  String get recentBackups => 'نسخ احتياطية حديثة';
+
+  @override
+  String get fileName => 'اسم الملف';
+
+  @override
+  String get size => 'الحجم';
+
+  @override
+  String get type => 'النوع';
+
+  @override
+  String get completed => 'مكتمل';
+
+  @override
+  String get partial => 'جزئي';
+
+  @override
+  String get lastBackup => 'آخر نسخة احتياطية';
+
+  @override
+  String get storageUsed => 'المساحة المستخدمة';
+
+  @override
+  String get nextSchedule => 'الجدول القادم';
+
+  @override
+  String timeAgo(Object hours) {
+    return 'منذ $hours ساعات';
+  }
+
+  @override
+  String todayAt(Object time) {
+    return 'اليوم $time';
+  }
 }

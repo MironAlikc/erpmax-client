@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/saas_models.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -26,19 +27,30 @@ class BackupContent extends StatelessWidget {
 
   Widget _buildStats(BuildContext context) {
     final colors = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Wrap(
       spacing: 16,
       runSpacing: 16,
       children: [
-        _statItem("Last Backup", "2 hours ago", colors.primary, Icons.history),
         _statItem(
-          "Storage Used",
+          localizations.lastBackup,
+          localizations.timeAgo('2'),
+          colors.primary,
+          Icons.history,
+        ),
+        _statItem(
+          localizations.storageUsed,
           "1.2 GB / 50 GB",
           colors.success,
           Icons.cloud_done,
         ),
-        _statItem("Next Schedule", "Today 22:00", colors.warning, Icons.timer),
+        _statItem(
+          localizations.nextSchedule,
+          localizations.todayAt("22:00"),
+          colors.warning,
+          Icons.timer,
+        ),
       ],
     );
   }
@@ -52,6 +64,7 @@ class BackupContent extends StatelessWidget {
 
   Widget _buildBackupTable(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -65,17 +78,17 @@ class BackupContent extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              "Recent Backups",
+              localizations.recentBackups,
               style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
           ),
           ErpMaxDataTable<BackupRecord>(
             items: _mockBackups,
             columns: [
-              ErpMaxColumn(title: "File Name", weight: 3),
-              ErpMaxColumn(title: "Size", weight: 1),
-              ErpMaxColumn(title: "Type", weight: 1),
-              ErpMaxColumn(title: "Status", weight: 1),
+              ErpMaxColumn(title: localizations.fileName, weight: 3),
+              ErpMaxColumn(title: localizations.size, weight: 1),
+              ErpMaxColumn(title: localizations.type, weight: 1),
+              ErpMaxColumn(title: localizations.status, weight: 1),
             ],
             rowBuilder: (item) => [
               Column(
@@ -103,8 +116,8 @@ class BackupContent extends StatelessWidget {
               ),
               AppStatusChip.neutral(item.type),
               item.isSuccess
-                  ? AppStatusChip.success("Completed")
-                  : AppStatusChip.warning("Partial"),
+                  ? AppStatusChip.success(localizations.completed)
+                  : AppStatusChip.warning(localizations.partial),
             ],
           ),
         ],

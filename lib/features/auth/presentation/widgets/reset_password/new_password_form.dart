@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -42,6 +43,8 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -49,7 +52,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Reset Password',
+            localizations.resetPassword,
             style: AppTextStyles.h1.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w800,
@@ -58,7 +61,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Enter your new password to regain access.',
+            localizations.resetPassInstruction,
             style: AppTextStyles.bodySmall.copyWith(
               color: context.theme.appColor.gray500,
             ),
@@ -66,9 +69,9 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
           ),
           const SizedBox(height: AppDesign.sectionGap),
 
-          const _FieldLabel(text: 'New Password'),
+          _FieldLabel(text: localizations.newPassword),
           AppTextField(
-            hintText: 'Minimum 8 characters',
+            hintText: localizations.min8Characters,
             controller: _passwordController,
             isPassword: true,
             obscureText: !_isPasswordVisible,
@@ -80,28 +83,29 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
               onPressed: () =>
                   setState(() => _isPasswordVisible = !_isPasswordVisible),
             ),
-            validator: (val) =>
-                (val != null && val.length >= 8) ? null : 'Password too short',
+            validator: (val) => (val != null && val.length >= 8)
+                ? null
+                : localizations.passwordTooShort,
           ),
           const SizedBox(height: AppDesign.elementGap),
 
-          const _FieldLabel(text: 'Confirm Password'),
+          _FieldLabel(text: localizations.confirmPassword),
           AppTextField(
-            hintText: 'Repeat your password',
+            hintText: localizations.repeatPassword,
             controller: _confirmController,
             isPassword: true,
             obscureText: true,
             enabled: !_isLoading,
             validator: (val) => val == _passwordController.text
                 ? null
-                : 'Passwords do not match',
+                : localizations.passwordsDoNotMatch,
           ),
 
           const SizedBox(height: AppDesign.sectionGap),
 
           AppButton(
             onPressed: _isLoading ? null : _onResetPressed,
-            text: 'Submit',
+            text: localizations.submit,
             isLoading: _isLoading,
             isExpanded: true,
           ),

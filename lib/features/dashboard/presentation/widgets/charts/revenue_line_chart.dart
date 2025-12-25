@@ -1,6 +1,8 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RevenueLineChart extends StatelessWidget {
   const RevenueLineChart({super.key});
@@ -30,7 +32,10 @@ class RevenueLineChart extends StatelessWidget {
               reservedSize: 40,
               getTitlesWidget: (value, meta) => Text(
                 '${(value / 1000).toInt()}k',
-                style: TextStyle(color: theme.textSecondary, fontSize: 11),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: theme.textSecondary,
+                  fontSize: 11,
+                ),
               ),
             ),
           ),
@@ -38,21 +43,20 @@ class RevenueLineChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                const months = [
-                  'Jan',
-                  'Feb',
-                  'Mar',
-                  'Apr',
-                  'May',
-                  'Jun',
-                  'Jul',
-                ];
-                if (value.toInt() >= 0 && value.toInt() < months.length) {
+                final index = value.toInt();
+                if (index >= 0 && index < 12) {
+                  final date = DateTime(2024, index + 1);
+
+                  // 'Jan', 'Янв', 'يناير'
+                  final monthName = DateFormat.MMM(
+                    Localizations.localeOf(context).languageCode,
+                  ).format(date);
+
                   return Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
-                      months[value.toInt()],
-                      style: TextStyle(
+                      monthName,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: theme.textSecondary,
                         fontSize: 11,
                       ),
@@ -98,92 +102,3 @@ class RevenueLineChart extends StatelessWidget {
     );
   }
 }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LineChart(
-//       LineChartData(
-//         gridData: FlGridData(
-//           show: true,
-//           drawVerticalLine: false,
-//           getDrawingHorizontalLine: (value) =>
-//               FlLine(color: Colors.grey.withOpacity(0.1), strokeWidth: 1),
-//         ),
-//         titlesData: FlTitlesData(
-//           rightTitles: const AxisTitles(
-//             sideTitles: SideTitles(showTitles: false),
-//           ),
-//           topTitles: const AxisTitles(
-//             sideTitles: SideTitles(showTitles: false),
-//           ),
-//           leftTitles: AxisTitles(
-//             sideTitles: SideTitles(
-//               showTitles: true,
-//               reservedSize: 40,
-//               getTitlesWidget: (value, meta) => Text(
-//                 '${(value / 1000).toInt()}k',
-//                 style: const TextStyle(color: Colors.grey, fontSize: 11),
-//               ),
-//             ),
-//           ),
-//           bottomTitles: AxisTitles(
-//             sideTitles: SideTitles(
-//               showTitles: true,
-//               getTitlesWidget: (value, meta) {
-//                 const months = [
-//                   'Jan',
-//                   'Feb',
-//                   'Mar',
-//                   'Apr',
-//                   'May',
-//                   'Jun',
-//                   'Jul',
-//                 ];
-//                 if (value.toInt() >= 0 && value.toInt() < months.length) {
-//                   return Padding(
-//                     padding: const EdgeInsets.only(top: 10),
-//                     child: Text(
-//                       months[value.toInt()],
-//                       style: const TextStyle(color: Colors.grey, fontSize: 11),
-//                     ),
-//                   );
-//                 }
-//                 return const SizedBox();
-//               },
-//             ),
-//           ),
-//         ),
-//         borderData: FlBorderData(show: false),
-//         lineBarsData: [
-//           LineChartBarData(
-//             spots: const [
-//               FlSpot(0, 40000),
-//               FlSpot(1, 30000),
-//               FlSpot(2, 45000),
-//               FlSpot(3, 50000),
-//               FlSpot(4, 58000),
-//               FlSpot(5, 52000),
-//               FlSpot(6, 75000),
-//             ],
-//             isCurved: true,
-//             color: AppColors.primary,
-//             barWidth: 4,
-//             isStrokeCapRound: true,
-//             dotData: const FlDotData(show: false),
-//             belowBarData: BarAreaData(
-//               show: true,
-//               gradient: LinearGradient(
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//                 colors: [
-//                   AppColors.primary.withOpacity(0.2),
-//                   AppColors.primary.withOpacity(0.0),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

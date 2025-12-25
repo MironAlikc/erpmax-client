@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,10 +15,9 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+        style: AppTextStyles.h3.copyWith(
           color: theme.textPrimary,
+          fontWeight: FontWeight.w700,
         ),
       ),
       centerTitle: true,

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
-import '../entities/provisioning_job_entity.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/provisioning/domain/entities/provisioning_job_entity.dart';
 
 abstract class ProvisioningRepository {
   Future<Either<Failure, List<ProvisioningJobEntity>>> getJobs({

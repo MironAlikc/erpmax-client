@@ -1,5 +1,6 @@
 import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class SidebarMenuItem extends StatelessWidget {
@@ -53,7 +54,7 @@ class SidebarMenuItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     item.title,
-                    style: TextStyle(
+                    style: AppTextStyles.base.copyWith(
                       color: contentColor,
                       fontWeight: isSelected
                           ? FontWeight.w600

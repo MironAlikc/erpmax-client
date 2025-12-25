@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -20,7 +21,7 @@ class AppSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    final menuItems = _menuData;
+    final menuItems = _menuData(context);
 
     return AnimatedContainer(
       duration: AppDesign.sidebarDuration,
@@ -51,9 +52,11 @@ class AppSidebar extends StatelessWidget {
               itemCount: menuItems.length,
               itemBuilder: (context, index) {
                 final item = menuItems[index];
+                final l10n = AppLocalizations.of(context);
+
                 return _MenuItem(
                   index: item.index,
-                  title: item.title,
+                  title: item.title(l10n),
                   icon: item.icon,
                   selectedIndex: selectedIndex,
                   isExpanded: isExpanded,
@@ -176,7 +179,10 @@ class AppSidebar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
               ),
-              child: const Text('Support', style: TextStyle(fontSize: 11)),
+              child: Text(
+                AppLocalizations.of(context).support,
+                style: AppTextStyles.bodySmall.copyWith(fontSize: 11),
+              ),
             ),
           ),
         ],
@@ -274,9 +280,8 @@ class _MenuItemState extends State<_MenuItem> {
                       Expanded(
                         child: Text(
                           widget.title,
-                          style: TextStyle(
+                          style: AppTextStyles.labelStyle.copyWith(
                             color: isSelected ? theme.white : theme.textPrimary,
-                            fontSize: 14,
                             fontWeight: isSelected
                                 ? FontWeight.w700
                                 : FontWeight.w500,
@@ -316,25 +321,28 @@ class _MenuItemState extends State<_MenuItem> {
 
 class _MenuData {
   final int index;
-  final String title;
+  final String Function(AppLocalizations) title;
   final IconData icon;
-  const _MenuData(this.index, this.title, this.icon);
+
+  _MenuData(this.index, this.title, this.icon);
 }
 
-const List<_MenuData> _menuData = [
-  _MenuData(0, 'Dashboard', Icons.grid_view_rounded),
-  _MenuData(1, 'Accounting', Icons.calculate_outlined),
-  _MenuData(2, 'Inventory', Icons.layers_outlined),
-  _MenuData(3, 'Sales', Icons.shopping_cart_outlined),
-  _MenuData(4, 'Customer Management', Icons.people_outline_rounded),
-  _MenuData(5, 'Real Estate Asset', Icons.domain_rounded),
-  _MenuData(6, 'POS', Icons.crop_free_rounded),
-  _MenuData(7, 'Exchange & Remittances', Icons.swap_horiz_rounded),
-  _MenuData(8, 'Purchases', Icons.shopping_bag_outlined),
-  _MenuData(9, 'Manufacturing', Icons.analytics_outlined),
-  _MenuData(10, 'HR Management', Icons.manage_accounts_outlined),
-  _MenuData(11, 'SaaS Control', Icons.workspace_premium_outlined),
-  _MenuData(12, 'AI Analytics', Icons.psychology_outlined),
-  _MenuData(13, 'authPages', Icons.lock_outline_rounded),
-  _MenuData(14, 'Settings', Icons.settings_outlined),
-];
+List<_MenuData> _menuData(BuildContext context) {
+  return [
+    _MenuData(0, (l) => l.menuDashboard, Icons.grid_view_rounded),
+    _MenuData(1, (l) => l.menuAccounting, Icons.calculate_outlined),
+    _MenuData(2, (l) => l.menuInventory, Icons.layers_outlined),
+    _MenuData(3, (l) => l.menuSales, Icons.shopping_cart_outlined),
+    _MenuData(4, (l) => l.menuCustomerManagement, Icons.people_outline_rounded),
+    _MenuData(5, (l) => l.menuRealEstate, Icons.domain_rounded),
+    _MenuData(6, (l) => l.menuPOS, Icons.crop_free_rounded),
+    _MenuData(7, (l) => l.menuExchange, Icons.swap_horiz_rounded),
+    _MenuData(8, (l) => l.menuPurchases, Icons.shopping_bag_outlined),
+    _MenuData(9, (l) => l.menuManufacturing, Icons.analytics_outlined),
+    _MenuData(10, (l) => l.menuHR, Icons.manage_accounts_outlined),
+    _MenuData(11, (l) => l.menuSaaS, Icons.workspace_premium_outlined),
+    _MenuData(12, (l) => l.menuAI, Icons.psychology_outlined),
+    _MenuData(13, (l) => l.menuAuthPages, Icons.lock_outline_rounded),
+    _MenuData(14, (l) => l.menuSettings, Icons.settings_outlined),
+  ];
+}

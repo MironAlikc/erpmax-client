@@ -44,8 +44,8 @@ class CheckEmailContent extends StatelessWidget {
               const TextSpan(text: 'Please click the link sent to your email '),
               TextSpan(
                 text: email,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.base.copyWith(
+                  fontWeight: FontWeight.w700,
                   color: theme.black,
                 ),
               ),

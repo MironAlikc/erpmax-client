@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -13,6 +14,7 @@ class DashboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final bool isMobile = screenWidth < AppDesign.mobileBreakpoint;
     final bool isTablet =
         screenWidth < AppDesign.desktopBreakpoint && !isMobile;
@@ -26,7 +28,7 @@ class DashboardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader(context, "Overview"),
+          _buildSectionHeader(context, localizations.overview),
           const SizedBox(height: 20),
           GridView.builder(
             shrinkWrap: true,
@@ -53,7 +55,7 @@ class DashboardContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 32),
-          _buildSectionHeader(context, "Analytics"),
+          _buildSectionHeader(context, localizations.analytics),
           const SizedBox(height: 20),
           Flex(
             direction: stackCharts ? Axis.vertical : Axis.horizontal,
@@ -62,8 +64,8 @@ class DashboardContent extends StatelessWidget {
               Expanded(
                 flex: stackCharts ? 0 : 1,
                 child: _ChartWrapper(
-                  title: "Revenue Forecast",
-                  subtitle: "Monthly revenue projection",
+                  title: localizations.revenueForecast,
+                  subtitle: localizations.monthlyRevenueProjection,
                   chart: const RevenueLineChart(),
                 ),
               ),
@@ -71,8 +73,8 @@ class DashboardContent extends StatelessWidget {
               Expanded(
                 flex: stackCharts ? 0 : 1,
                 child: _ChartWrapper(
-                  title: "Active Subscriptions",
-                  subtitle: "Growth by package type",
+                  title: localizations.activeSubscriptions,
+                  subtitle: localizations.growthByPackageType,
                   chart: const SubscriptionsBarChart(),
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class MainContentHeader extends StatelessWidget {
@@ -14,6 +15,7 @@ class MainContentHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -33,8 +35,8 @@ class MainContentHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   isDashboard
-                      ? "Welcome back! Here's what's happening."
-                      : 'Manage $title',
+                      ? localizations.dashboardSubtitle
+                      : localizations.manageTitle(title),
                   style: textTheme.bodySmall!.copyWith(
                     color: theme.disabledColor,
                   ),

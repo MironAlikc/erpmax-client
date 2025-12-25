@@ -1,7 +1,9 @@
 import 'package:erpmax_client/core/config/menu_data.dart';
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/menu_item_model.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 import 'sidebar_menu_item.dart';
@@ -20,6 +22,8 @@ class SidebarMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     final allItems = MenuData.getAllMenuItems();
 
     return ScrollConfiguration(
@@ -28,15 +32,30 @@ class SidebarMenu extends StatelessWidget {
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(vertical: isExpanded ? 8 : 16),
         children: [
-          _buildSection(context, 'Accounting', MenuData.coreModules, allItems),
           _buildSection(
             context,
-            'Business',
+            localizations.menuAccounting,
+            MenuData.coreModules,
+            allItems,
+          ),
+          _buildSection(
+            context,
+            localizations.business,
             MenuData.businessManagement,
             allItems,
           ),
-          _buildSection(context, 'System', MenuData.systemTools, allItems),
-          _buildSection(context, 'Settings', MenuData.settings, allItems),
+          _buildSection(
+            context,
+            localizations.system,
+            MenuData.systemTools,
+            allItems,
+          ),
+          _buildSection(
+            context,
+            localizations.menuSettings,
+            MenuData.settings,
+            allItems,
+          ),
           if (isExpanded) _buildHelpSection(context),
         ],
       ),
@@ -111,10 +130,7 @@ class SidebarMenu extends StatelessWidget {
         children: [
           const Icon(Icons.help_center_outlined, color: Colors.blue),
           const SizedBox(height: 8),
-          const Text(
-            "Support Center",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-          ),
+          Text("Support Center", style: AppTextStyles.bodySmallBold),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {},
@@ -124,7 +140,7 @@ class SidebarMenu extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text("Get Help", style: TextStyle(fontSize: 12)),
+            child: Text("Get Help", style: AppTextStyles.tableHeader),
           ),
         ],
       ),

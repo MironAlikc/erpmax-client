@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/features/provisioning/data/models/provisioning_job_model.dart';
 import 'package:retrofit/retrofit.dart';
-import '../models/provisioning_job_model.dart';
 
 part 'provisioning_remote_datasource.g.dart';
 
@@ -16,9 +16,7 @@ abstract class ProvisioningRemoteDataSource {
   });
 
   @GET('/provisioning/jobs/{id}')
-  Future<HttpResponse<ProvisioningJobModel>> getJobById(
-    @Path('id') String id,
-  );
+  Future<HttpResponse<ProvisioningJobModel>> getJobById(@Path('id') String id);
 
   @POST('/provisioning/jobs')
   Future<HttpResponse<ProvisioningJobModel>> createJob(
@@ -26,12 +24,8 @@ abstract class ProvisioningRemoteDataSource {
   );
 
   @POST('/provisioning/jobs/{id}/retry')
-  Future<HttpResponse<ProvisioningJobModel>> retryJob(
-    @Path('id') String id,
-  );
+  Future<HttpResponse<ProvisioningJobModel>> retryJob(@Path('id') String id);
 
   @POST('/provisioning/jobs/{id}/cancel')
-  Future<HttpResponse<void>> cancelJob(
-    @Path('id') String id,
-  );
+  Future<HttpResponse<void>> cancelJob(@Path('id') String id);
 }
