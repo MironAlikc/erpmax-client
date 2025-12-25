@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../models/sso_token_model.dart';
+import '../models/sso_token_validation_model.dart';
 
 part 'sso_remote_datasource.g.dart';
 
@@ -10,4 +11,9 @@ abstract class SSORemoteDataSource {
 
   @POST('/sso/token')
   Future<HttpResponse<SSOTokenModel>> generateToken();
+
+  @GET('/sso/erpnext/validate/{token}')
+  Future<HttpResponse<SSOTokenValidationModel>> validateToken(
+    @Path('token') String token,
+  );
 }
