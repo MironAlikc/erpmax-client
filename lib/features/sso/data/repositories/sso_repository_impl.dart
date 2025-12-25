@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/sso_token_entity.dart';
+import '../../domain/entities/sso_token_validation_entity.dart';
 import '../../domain/repositories/sso_repository.dart';
 import '../datasources/sso_remote_datasource.dart';
 
@@ -16,6 +17,20 @@ class SSORepositoryImpl implements SSORepository {
   Future<Either<Failure, SSOTokenEntity>> generateToken() async {
     try {
       final response = await remoteDataSource.generateToken();
+      return Right(response.data.toEntity());
+    } on DioException catch (e) {
+      return Left(_handleDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SSOTokenValidationEntity>> validateToken(
+    String token,
+  ) async {
+    try {
+      final response = await remoteDataSource.validateToken(token);
       return Right(response.data.toEntity());
     } on DioException catch (e) {
       return Left(_handleDioException(e));
