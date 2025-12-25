@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -45,11 +46,10 @@ class MobileDrawer extends StatelessWidget {
         children: [
           Icon(Icons.blur_on, color: Theme.of(context).primaryColor, size: 32),
           const SizedBox(width: 12),
-          const Text(
+          Text(
             'ERP Max',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.h2.copyWith(
+              fontWeight: FontWeight.w700,
               letterSpacing: -0.5,
             ),
           ),

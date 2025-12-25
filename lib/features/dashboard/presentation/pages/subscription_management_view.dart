@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -6,9 +7,8 @@ import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:erpmax_client/features/dashboard/presentation/widgets/subscription_details_modal.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/subscription_details_modal.dart';
 
 class SubscriptionData {
   final String company, package, endDate, tag, amount, paymentStatus;
@@ -97,27 +97,39 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
   }
 
   List<ErpMaxColumn> _getColumns() {
+    final localizations = AppLocalizations.of(context);
+
     return [
-      ErpMaxColumn(title: 'Company Name', weight: 2.5, isSortable: true),
-      ErpMaxColumn(title: 'Package', weight: 1.5),
-      ErpMaxColumn(title: 'End Date', weight: 1.2),
-      ErpMaxColumn(title: 'Tags', weight: 1.0),
-      ErpMaxColumn(title: 'Amount', weight: 1.0, textAlign: TextAlign.right),
-      ErpMaxColumn(title: 'Status', weight: 1.2),
+      ErpMaxColumn(
+        title: localizations.colCompanyName,
+        weight: 2.5,
+        isSortable: true,
+      ),
+      ErpMaxColumn(title: localizations.colPackage, weight: 1.5),
+      ErpMaxColumn(title: localizations.colEndDate, weight: 1.2),
+      ErpMaxColumn(title: localizations.colTags, weight: 1.0),
+      ErpMaxColumn(
+        title: localizations.amount,
+        weight: 1.0,
+        textAlign: TextAlign.right,
+      ),
+      ErpMaxColumn(title: localizations.status, weight: 1.2),
       ErpMaxColumn(title: '', weight: 0.4),
     ];
   }
 
   Widget _buildTableToolbar(bool isMobile) {
+    final localizations = AppLocalizations.of(context);
+
     return Padding(
       padding: EdgeInsets.all(isMobile ? 16.0 : 24.0),
       child: isMobile
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Subscribers', style: AppTextStyles.h2),
+                Text(localizations.subscribers, style: AppTextStyles.h2),
                 const SizedBox(height: 16),
-                _buildSearchField(context, isFullWidth: true),
+                _buildSearchField(isFullWidth: true),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -130,9 +142,9 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
             )
           : Row(
               children: [
-                Text('Subscribers', style: AppTextStyles.h2),
+                Text(localizations.subscribers, style: AppTextStyles.h2),
                 const Spacer(),
-                _buildSearchField(context, isFullWidth: false),
+                _buildSearchField(isFullWidth: false),
                 const SizedBox(width: 12),
                 _buildResetButton(),
                 const SizedBox(width: 12),
@@ -142,7 +154,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
     );
   }
 
-  Widget _buildSearchField(BuildContext context, {required bool isFullWidth}) {
+  Widget _buildSearchField({required bool isFullWidth}) {
     final theme = context.theme.appColor;
 
     return SizedBox(
@@ -151,7 +163,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
       child: TextField(
         style: AppTextStyles.bodyMedium,
         decoration: InputDecoration(
-          hintText: 'Search company...',
+          hintText: AppLocalizations.of(context).searchCompany,
           hintStyle: AppTextStyles.bodySmall.copyWith(color: theme.gray400),
           prefixIcon: Icon(Icons.search, size: 20, color: theme.gray400),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
@@ -172,7 +184,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
 
   Widget _buildResetButton() {
     return AppButton(
-      text: 'Reset',
+      text: AppLocalizations.of(context).btnReset,
       type: AppButtonType.outline,
       icon: Icons.filter_list,
       onPressed: () {},
@@ -181,7 +193,7 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
 
   Widget _buildNewSubscriptionButton() {
     return AppButton(
-      text: 'New',
+      text: AppLocalizations.of(context).btnNew,
       type: AppButtonType.primary,
       icon: Icons.add,
       onPressed: () {},

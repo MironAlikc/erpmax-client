@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -11,6 +12,8 @@ class PasswordSuccessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -19,7 +22,7 @@ class PasswordSuccessContent extends StatelessWidget {
         SvgPicture.asset('assets/svg/success_illustration.svg', height: 150),
         const SizedBox(height: 32),
         Text(
-          'Your password is changed',
+          localizations.passwordChanged,
           textAlign: TextAlign.center,
           style: AppTextStyles.h1.copyWith(
             fontSize: 22,
@@ -28,7 +31,7 @@ class PasswordSuccessContent extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          'Your password has been successfully updated.\nYour account security is our priority.',
+          localizations.passwordChangedDesc,
           textAlign: TextAlign.center,
           style: AppTextStyles.bodySmall.copyWith(
             color: context.theme.appColor.gray500,
@@ -38,7 +41,7 @@ class PasswordSuccessContent extends StatelessWidget {
         const SizedBox(height: 32),
         AppButton(
           onPressed: () => context.go(RouteNames.login),
-          text: 'Sign In',
+          text: localizations.signIn,
           isExpanded: true,
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
 
     return PopupMenuButton<LanguageOption>(
       initialValue: _current,
-      tooltip: 'Select Language',
+      tooltip: AppLocalizations.of(context).selectLanguage,
       onSelected: (lang) => setState(() => _current = lang),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       itemBuilder: (context) => availableLanguages.map((lang) {

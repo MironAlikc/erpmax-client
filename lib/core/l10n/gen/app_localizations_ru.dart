@@ -165,4 +165,339 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errorMinLength => 'Минимум 6 символов';
+
+  @override
+  String get checkYourEmail => 'Проверьте почту';
+
+  @override
+  String get selectLanguage => 'Выберите язык';
+
+  @override
+  String get resetPassword => 'Сброс пароля';
+
+  @override
+  String get resetPassInstruction =>
+      'Введите новый пароль, чтобы восстановить доступ.';
+
+  @override
+  String get newPassword => 'Новый пароль';
+
+  @override
+  String get min8Characters => 'Минимум 8 символов';
+
+  @override
+  String get passwordTooShort => 'Пароль слишком короткий';
+
+  @override
+  String get confirmPassword => 'Подтвердите пароль';
+
+  @override
+  String get repeatPassword => 'Повторите ваш пароль';
+
+  @override
+  String get passwordsDoNotMatch => 'Пароли не совпадают';
+
+  @override
+  String get submit => 'Отправить';
+
+  @override
+  String get passwordChanged => 'Пароль изменен';
+
+  @override
+  String get passwordChangedDesc =>
+      'Ваш пароль был успешно обновлен.\nБезопасность вашего аккаунта — наш приоритет.';
+
+  @override
+  String get invalidEmail => 'Некорректный email';
+
+  @override
+  String get reEnterPassword => 'Введите пароль еще раз';
+
+  @override
+  String get alreadyHaveAccount => 'Уже есть аккаунт? ';
+
+  @override
+  String get acceptTerms => 'Я принимаю Условия и Положения';
+
+  @override
+  String get enterPassword => 'Введите пароль';
+
+  @override
+  String get errInvalidRequest => 'Неверный запрос';
+
+  @override
+  String get errUnauthorized => 'Ошибка авторизации';
+
+  @override
+  String get errForbidden => 'Доступ запрещен';
+
+  @override
+  String get errNotFound => 'Ресурс не найден';
+
+  @override
+  String get errServerError => 'Ошибка сервера';
+
+  @override
+  String get errUnknown => 'Неизвестная ошибка';
+
+  @override
+  String get errTimeout => 'Время ожидания истекло';
+
+  @override
+  String get errNoInternet => 'Нет интернет-соединения';
+
+  @override
+  String get colCompanyName => 'Название компании';
+
+  @override
+  String get colPackage => 'Пакет';
+
+  @override
+  String get colEndDate => 'Дата окончания';
+
+  @override
+  String get colTags => 'Теги';
+
+  @override
+  String get subscribers => 'Подписчики';
+
+  @override
+  String get searchCompany => 'Поиск компании...';
+
+  @override
+  String get btnNew => 'Создать';
+
+  @override
+  String get btnReset => 'Сбросить';
+
+  @override
+  String get overview => 'Обзор';
+
+  @override
+  String get analytics => 'Аналитика';
+
+  @override
+  String get revenueForecast => 'Прогноз выручки';
+
+  @override
+  String get monthlyRevenueProjection => 'Прогноз ежемесячной выручки';
+
+  @override
+  String get activeSubscriptions => 'Активные подписки';
+
+  @override
+  String get growthByPackageType => 'Рост по типам пакетов';
+
+  @override
+  String get dashboardSubtitle => 'С возвращением! Вот что происходит.';
+
+  @override
+  String manageTitle(Object title) {
+    return 'Управление: $title';
+  }
+
+  @override
+  String get support => 'Поддержка';
+
+  @override
+  String get menuDashboard => 'Панель управления';
+
+  @override
+  String get menuAccounting => 'Бухгалтерия';
+
+  @override
+  String get menuInventory => 'Инвентаризация';
+
+  @override
+  String get menuSales => 'Продажи';
+
+  @override
+  String get menuCustomerManagement => 'Управление клиентами';
+
+  @override
+  String get menuRealEstate => 'Недвижимость';
+
+  @override
+  String get menuPOS => 'Точка продаж (POS)';
+
+  @override
+  String get menuExchange => 'Обмен и переводы';
+
+  @override
+  String get menuPurchases => 'Закупки';
+
+  @override
+  String get menuManufacturing => 'Производство';
+
+  @override
+  String get menuHR => 'Управление персоналом';
+
+  @override
+  String get menuSaaS => 'Управление SaaS';
+
+  @override
+  String get menuAI => 'AI Аналитика';
+
+  @override
+  String get menuAuthPages => 'Страницы входа';
+
+  @override
+  String get menuSettings => 'Настройки';
+
+  @override
+  String get saasAnalytics => 'SaaS Аналитика';
+
+  @override
+  String get saasAnalyticsDesc => 'Обзор производительности вашей платформы';
+
+  @override
+  String get exportReport => 'Экспорт отчета';
+
+  @override
+  String get statusPosted => 'Опубликовано';
+
+  @override
+  String get statusDraft => 'Черновик';
+
+  @override
+  String get statusPending => 'В ожидании';
+
+  @override
+  String get sidebar => 'Боковое меню';
+
+  @override
+  String get business => 'Бизнес';
+
+  @override
+  String get system => 'Система';
+
+  @override
+  String get generalLedgerContent => 'Содержание главной книги';
+
+  @override
+  String get saasAdmin => 'SaaS Админ';
+
+  @override
+  String get subscriptionManagement => 'Управление подписками';
+
+  @override
+  String get subscriptionDetails => 'Детали подписки';
+
+  @override
+  String get modules => 'Модули';
+
+  @override
+  String get payBook => 'Расчетная книжка';
+
+  @override
+  String get generalLedger => 'Главная книга';
+
+  @override
+  String get activityLog => 'Журнал активности';
+
+  @override
+  String get amendment => 'Поправка';
+
+  @override
+  String get cancelSubscription => 'Отменить подписку';
+
+  @override
+  String get customerInformation => 'Информация о клиенте';
+
+  @override
+  String get package => 'Пакет';
+
+  @override
+  String get duration => 'Длительность';
+
+  @override
+  String get transaction => 'Транзакция';
+
+  @override
+  String get method => 'Метод';
+
+  @override
+  String get procedure => 'Процедура';
+
+  @override
+  String get user => 'Пользователь';
+
+  @override
+  String get details => 'Детали';
+
+  @override
+  String get reports => 'Отчеты';
+
+  @override
+  String get manufacturing => 'Производство';
+
+  @override
+  String get comments => 'Комментарии';
+
+  @override
+  String get anyAdditionalComments => 'Любые дополнительные комментарии';
+
+  @override
+  String get labelCustomer => 'Клиент:';
+
+  @override
+  String get labelEmail => 'E-mail:';
+
+  @override
+  String get labelPackage => 'Пакет:';
+
+  @override
+  String get labelValue => 'Стоимость:';
+
+  @override
+  String get labelStatus => 'Статус:';
+
+  @override
+  String get labelStart => 'Начало:';
+
+  @override
+  String get labelExpiry => 'Истекает:';
+
+  @override
+  String get labelCondition => 'Состояние:';
+
+  @override
+  String get includedModules => 'Включенные модули';
+
+  @override
+  String get recentBackups => 'Последние копии';
+
+  @override
+  String get fileName => 'Имя файла';
+
+  @override
+  String get size => 'Размер';
+
+  @override
+  String get type => 'Тип';
+
+  @override
+  String get completed => 'Завершено';
+
+  @override
+  String get partial => 'Частично';
+
+  @override
+  String get lastBackup => 'Последний бэкап';
+
+  @override
+  String get storageUsed => 'Использовано место';
+
+  @override
+  String get nextSchedule => 'След. по графику';
+
+  @override
+  String timeAgo(Object hours) {
+    return '$hours ч. назад';
+  }
+
+  @override
+  String todayAt(Object time) {
+    return 'Сегодня $time';
+  }
 }

@@ -1,13 +1,13 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
+import 'package:erpmax_client/features/auth/presentation/widgets/common/divider_with_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../common/divider_with_text.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -43,6 +43,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Form(
       key: _formKey,
@@ -56,25 +57,24 @@ class _SignupFormState extends State<SignupForm> {
           const SocialAuthButtons(),
           const SizedBox(height: AppDesign.elementGap),
 
-          const DividerWithText(text: 'OR'),
+          DividerWithText(text: localizations.or),
           const SizedBox(height: AppDesign.elementGap),
 
-          const _FieldLabel(text: 'Email'),
+          _FieldLabel(text: localizations.email),
           AppTextField(
             controller: _emailController,
             hintText: 'email@email.com',
             keyboardType: TextInputType.emailAddress,
             validator: (value) => (value == null || !value.contains('@'))
-                ? 'Invalid email'
+                ? localizations.invalidEmail
                 : null,
           ),
           const SizedBox(height: AppDesign.elementGap),
 
-          const _FieldLabel(text: 'Password'),
+          _FieldLabel(text: localizations.password),
           AppTextField(
             controller: _passwordController,
-            hintText: 'Enter Password',
-            // ВАЖНО: передаем состояние видимости
+            hintText: localizations.enterPassword,
             obscureText: !_isPasswordVisible,
             isPassword: true,
             suffixIcon: IconButton(
@@ -91,16 +91,16 @@ class _SignupFormState extends State<SignupForm> {
           ),
           const SizedBox(height: AppDesign.elementGap),
 
-          const _FieldLabel(text: 'Confirm Password'),
+          _FieldLabel(text: localizations.confirmPassword),
           AppTextField(
             controller: _confirmPasswordController,
-            hintText: 'Re-enter Password',
-            // ВАЖНО: передаем состояние видимости
+            hintText: localizations.reEnterPassword,
             obscureText: !_isConfirmVisible,
             isPassword: true,
             validator: (value) {
-              if (value != _passwordController.text)
-                return 'Passwords do not match';
+              if (value != _passwordController.text) {
+                return localizations.passwordsDoNotMatch;
+              }
               return null;
             },
             suffixIcon: IconButton(
@@ -124,7 +124,7 @@ class _SignupFormState extends State<SignupForm> {
           const SizedBox(height: AppDesign.sectionGap),
 
           AppButton(
-            text: 'Sign Up',
+            text: localizations.signUp,
             onPressed: _isTermsAccepted ? _handleSignup : null,
             isExpanded: true,
           ),
@@ -140,11 +140,12 @@ class _SignupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Column(
       children: [
         Text(
-          'Sign up',
+          localizations.signUp,
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
@@ -156,11 +157,14 @@ class _SignupHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Already have an Account? ', style: AppTextStyles.bodySmall),
+            Text(
+              localizations.alreadyHaveAccount,
+              style: AppTextStyles.bodySmall,
+            ),
             GestureDetector(
               onTap: () => context.push(RouteNames.login),
               child: Text(
-                'Sign in',
+                localizations.signIn,
                 style: AppTextStyles.linkStyle.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -223,7 +227,7 @@ class _TermsCheckbox extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'I accept the Terms & Conditions',
+              AppLocalizations.of(context).acceptTerms,
               style: AppTextStyles.bodySmall.copyWith(
                 color: theme.textPrimary,
                 fontWeight: FontWeight.w500,

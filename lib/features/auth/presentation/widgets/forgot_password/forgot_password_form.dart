@@ -37,7 +37,7 @@ class ForgotPasswordForm extends StatelessWidget {
         ),
         const SizedBox(height: AppDesign.sectionGap),
 
-        const _FieldLabel(text: 'Email'),
+        _FieldLabel(text: localizations.email),
         const AppTextField(
           hintText: 'email@email.com',
           keyboardType: TextInputType.emailAddress,

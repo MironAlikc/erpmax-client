@@ -1,10 +1,10 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
+import 'package:erpmax_client/features/dashboard/presentation/pages/subscription_management_view.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/subscription_management_view.dart';
 
 class SubscriptionDetailsModal extends StatelessWidget {
   final SubscriptionData subscription;
@@ -14,6 +14,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
@@ -52,7 +53,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
                                 _buildTabContent(const PayBookTab()),
                                 Center(
                                   child: Text(
-                                    'General Ledger Content',
+                                    localizations.generalLedgerContent,
                                     style: AppTextStyles.bodyMedium,
                                   ),
                                 ),
@@ -82,6 +83,8 @@ class SubscriptionDetailsModal extends StatelessWidget {
   }
 
   Widget _buildTopHeader(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 24, 32, 24),
       child: Column(
@@ -89,15 +92,15 @@ class SubscriptionDetailsModal extends StatelessWidget {
         children: [
           Row(
             children: [
-              _bread('SaaS Admin', context),
+              _bread(localizations.saasAdmin, context),
               _sep(context),
-              _bread('Subscription Management', context),
+              _bread(localizations.subscriptionManagement, context),
               _sep(context),
-              _bread('Subscription Details', context, last: true),
+              _bread(localizations.subscriptionDetails, context, last: true),
             ],
           ),
           const SizedBox(height: 16),
-          Text('Subscription Details', style: AppTextStyles.h1),
+          Text(localizations.subscriptionDetails, style: AppTextStyles.h1),
         ],
       ),
     );
@@ -126,6 +129,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return AppBar(
       backgroundColor: theme.white,
@@ -141,7 +145,10 @@ class SubscriptionDetailsModal extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Subscription Details', style: AppTextStyles.tableHeader),
+            Text(
+              localizations.subscriptionDetails,
+              style: AppTextStyles.tableHeader,
+            ),
             const SizedBox(width: 8),
             Icon(Icons.info_outline, size: 14, color: theme.gray400),
           ],
@@ -163,6 +170,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   Widget _buildCustomTabBar(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -190,11 +198,11 @@ class SubscriptionDetailsModal extends StatelessWidget {
           labelStyle: AppTextStyles.bodySmallBold,
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: Colors.transparent,
-          tabs: const [
-            Tab(text: 'Modules'),
-            Tab(text: 'Pay Book'),
-            Tab(text: 'General Ledger'),
-            Tab(text: 'Activity Log'),
+          tabs: [
+            Tab(text: localizations.modules),
+            Tab(text: localizations.payBook),
+            Tab(text: localizations.generalLedger),
+            Tab(text: localizations.activityLog),
           ],
         ),
       ),
@@ -203,6 +211,7 @@ class SubscriptionDetailsModal extends StatelessWidget {
 
   Widget _buildFooter(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -214,13 +223,13 @@ class SubscriptionDetailsModal extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           AppButton(
-            text: 'Amendment',
+            text: localizations.amendment,
             type: AppButtonType.outline,
             onPressed: () {},
           ),
           const SizedBox(width: 16),
           AppButton(
-            text: 'Cancel Subscription',
+            text: localizations.cancelSubscription,
             type: AppButtonType.primaryDark,
             backgroundColor: theme.error,
             onPressed: () {},
@@ -236,6 +245,8 @@ class SubscriptionInfoCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isColumn = constraints.maxWidth < 700;
@@ -246,33 +257,36 @@ class SubscriptionInfoCards extends StatelessWidget {
             _infoCard(
               context: context,
               icon: Icons.person_outline,
-              title: 'Customer Information',
+              title: localizations.customerInformation,
               rows: [
-                ['Customer:', 'Al Amal Trading Company'],
-                ['e-mail:', 'info@example.com'],
+                [localizations.labelCustomer, 'Al Amal Trading Company'],
+                [localizations.labelEmail, 'info@example.com'],
               ],
             ),
             SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
             _infoCard(
               context: context,
               icon: Icons.card_membership_outlined,
-              title: 'Package',
+              title: localizations.package,
               rows: [
-                ['Package:', 'Enterprise'],
-                ['Value:', '₪ 6,000'],
+                [localizations.labelPackage, 'Enterprise'],
+                [localizations.labelValue, '₪ 6,000'],
               ],
-              extra: _statusWithPrefix('Status:', 'Paid'),
+              extra: _statusWithPrefix(localizations.labelStatus, 'Paid'),
             ),
             SizedBox(width: isColumn ? 0 : 20, height: isColumn ? 16 : 0),
             _infoCard(
               context: context,
               icon: Icons.calendar_today_outlined,
-              title: 'Duration',
+              title: localizations.duration,
               rows: [
-                ['Start:', '15/1/2024'],
-                ['Expiry:', '14/1/2025'],
+                [localizations.labelStart, '15/1/2024'],
+                [localizations.labelExpiry, '14/1/2025'],
               ],
-              extra: _statusWithPrefix('Condition:', 'Finished'),
+              extra: _statusWithPrefix(
+                localizations.labelCondition,
+                'Finished',
+              ),
             ),
           ],
         );
@@ -348,9 +362,10 @@ class PayBookTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return _TabTableWrapper(
-      title: 'Pay Book',
+      title: localizations.payBook,
       child: DataTable(
         headingRowHeight: 48,
         headingRowColor: WidgetStateProperty.all(theme.gray50),
@@ -361,14 +376,28 @@ class PayBookTab extends StatelessWidget {
             label: Icon(Icons.grid_view, size: 18, color: theme.gray400),
           ),
           DataColumn(
-            label: Text('Transaction', style: AppTextStyles.tableHeader),
+            label: Text(
+              localizations.transaction,
+              style: AppTextStyles.tableHeader,
+            ),
           ),
-          DataColumn(label: Text('Date', style: AppTextStyles.tableHeader)),
-          DataColumn(label: Text('Amount', style: AppTextStyles.tableHeader)),
-          DataColumn(label: Text('Method', style: AppTextStyles.tableHeader)),
-          DataColumn(label: Text('Status', style: AppTextStyles.tableHeader)),
           DataColumn(
-            label: Text('Reference', style: AppTextStyles.tableHeader),
+            label: Text(localizations.date, style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(
+            label: Text(localizations.amount, style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(
+            label: Text(localizations.method, style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(
+            label: Text(localizations.status, style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(
+            label: Text(
+              localizations.reference,
+              style: AppTextStyles.tableHeader,
+            ),
           ),
         ],
         rows: [
@@ -426,9 +455,10 @@ class ActivityLogTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return _TabTableWrapper(
-      title: 'Activity Log',
+      title: localizations.activityLog,
       child: DataTable(
         headingRowHeight: 48,
         headingRowColor: WidgetStateProperty.all(theme.gray50),
@@ -437,12 +467,24 @@ class ActivityLogTable extends StatelessWidget {
           DataColumn(
             label: Icon(Icons.grid_view, size: 18, color: theme.gray400),
           ),
-          DataColumn(label: Text('Date', style: AppTextStyles.tableHeader)),
           DataColumn(
-            label: Text('Procedure', style: AppTextStyles.tableHeader),
+            label: Text(localizations.date, style: AppTextStyles.tableHeader),
           ),
-          DataColumn(label: Text('User', style: AppTextStyles.tableHeader)),
-          DataColumn(label: Text('Details', style: AppTextStyles.tableHeader)),
+          DataColumn(
+            label: Text(
+              localizations.procedure,
+              style: AppTextStyles.tableHeader,
+            ),
+          ),
+          DataColumn(
+            label: Text(localizations.user, style: AppTextStyles.tableHeader),
+          ),
+          DataColumn(
+            label: Text(
+              localizations.details,
+              style: AppTextStyles.tableHeader,
+            ),
+          ),
         ],
         rows: [
           _logRow(
@@ -491,36 +533,37 @@ class ModulesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _TabTableWrapper(
-          title: 'Included Modules',
+          title: localizations.includedModules,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Wrap(
               spacing: 12,
               runSpacing: 12,
               children: [
-                'Sales',
-                'Purchases',
-                'Inventory',
-                'Accounting',
-                'Reports',
-                'Manufacturing',
+                localizations.sales,
+                localizations.purchases,
+                localizations.menuInventory,
+                localizations.menuAccounting,
+                localizations.reports,
+                localizations.manufacturing,
               ].map((m) => _module(context, m)).toList(),
             ),
           ),
         ),
         const SizedBox(height: 24),
-        Text('Comments', style: AppTextStyles.h3),
+        Text(localizations.comments, style: AppTextStyles.h3),
         const SizedBox(height: 12),
         TextField(
           maxLines: 3,
           style: AppTextStyles.bodyMedium,
           decoration: InputDecoration(
-            hintText: 'Any additional comments',
+            hintText: localizations.anyAdditionalComments,
             hintStyle: AppTextStyles.bodySmall,
             filled: true,
             fillColor: theme.gray50,

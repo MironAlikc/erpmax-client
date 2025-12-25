@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/billing/data/datasources/billing_remote_datasource.dart';
+import 'package:erpmax_client/features/billing/domain/entities/checkout_response_entity.dart';
+import 'package:erpmax_client/features/billing/domain/entities/invoice_entity.dart';
+import 'package:erpmax_client/features/billing/domain/entities/plan_entity.dart';
+import 'package:erpmax_client/features/billing/domain/entities/subscription_entity.dart';
+import 'package:erpmax_client/features/billing/domain/repositories/billing_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../../domain/entities/plan_entity.dart';
-import '../../domain/entities/subscription_entity.dart';
-import '../../domain/entities/checkout_response_entity.dart';
-import '../../domain/entities/invoice_entity.dart';
-import '../../domain/repositories/billing_repository.dart';
-import '../datasources/billing_remote_datasource.dart';
 
 @LazySingleton(as: BillingRepository)
 class BillingRepositoryImpl implements BillingRepository {
@@ -94,6 +94,33 @@ class BillingRepositoryImpl implements BillingRepository {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+
+  // ! For future work with localisation:
+  //   Failure _handleDioException(DioException e) {
+  //   if (e.response != null) {
+  //     final statusCode = e.response!.statusCode;
+  //     final message = e.response!.data?['message'];
+
+  //     switch (statusCode) {
+  //       case 400: return ValidationFailure(message: message ?? 'errInvalidRequest');
+  //       case 401: return AuthenticationFailure(message: message ?? 'errUnauthorized');
+  //       case 403: return AuthorizationFailure(message: message ?? 'errForbidden');
+  //       case 404: return NotFoundFailure(message: message ?? 'errNotFound');
+  //       case 500: return ServerFailure(message: message ?? 'errServerError');
+  //       default: return ServerFailure(message: message ?? 'errUnknown');
+  //     }
+  //   }
+
+  //   if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+  //     return NetworkFailure(message: 'errTimeout');
+  //   }
+
+  //   if (e.type == DioExceptionType.connectionError) {
+  //     return NetworkFailure(message: 'errNoInternet');
+  //   }
+
+  //   return ServerFailure(message: 'errUnknown');
+  // }
 
   Failure _handleDioException(DioException e) {
     if (e.response != null) {

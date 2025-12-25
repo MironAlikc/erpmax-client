@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/billing/domain/repositories/billing_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../repositories/billing_repository.dart';
 
 @injectable
 class CancelSubscriptionUseCase {

@@ -1,7 +1,7 @@
-import '../../domain/entities/summary_entity.dart';
-import '../../domain/entities/subscription_entity.dart';
-import '../../domain/repositories/dashboard_repository.dart';
-import '../datasources/dashboard_local_datasource.dart';
+import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
+import 'package:erpmax_client/features/dashboard/domain/entities/subscription_entity.dart';
+import 'package:erpmax_client/features/dashboard/domain/entities/summary_entity.dart';
+import 'package:erpmax_client/features/dashboard/domain/repositories/dashboard_repository.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
   final DashboardLocalDataSource localDataSource;
