@@ -1,3 +1,7 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
 
@@ -33,36 +37,41 @@ class VisitorLogsContent extends StatelessWidget {
   }
 
   Widget _buildAdaptiveStatsGrid(BuildContext context, bool isMobile) {
+    final theme = context.theme.appColor;
+
     if (!isMobile) {
       return Row(
         children: [
           Expanded(
             child: _buildStatCard(
+              theme,
               "Total Visitors",
               "1,245",
               "+12% from last week",
-              const Color(0xFFEEF2FF),
-              const Color(0xFF4F46E5),
+              theme.indigoBg,
+              theme.indigoText,
             ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: _buildStatCard(
+              theme,
               "Active Now",
               "42",
               "Real-time users",
-              const Color(0xFFF0FDF4),
-              const Color(0xFF16A34A),
+              theme.successLight,
+              theme.success,
             ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: _buildStatCard(
+              theme,
               "Blocked IPs",
               "15",
               "Threats prevented",
-              const Color(0xFFFFF1F2),
-              const Color(0xFFE11D48),
+              theme.errorLight,
+              theme.error,
             ),
           ),
         ],
@@ -72,33 +81,37 @@ class VisitorLogsContent extends StatelessWidget {
     return Column(
       children: [
         _buildStatCard(
+          theme,
           "Total Visitors",
           "1,245",
           "+12%",
-          const Color(0xFFEEF2FF),
-          const Color(0xFF4F46E5),
+          theme.indigoBg,
+          theme.indigoText,
         ),
         const SizedBox(height: 16),
         _buildStatCard(
+          theme,
           "Active Now",
           "42",
           "Real-time",
-          const Color(0xFFF0FDF4),
-          const Color(0xFF16A34A),
+          theme.successLight,
+          theme.success,
         ),
         const SizedBox(height: 16),
         _buildStatCard(
+          theme,
           "Blocked IPs",
           "15",
           "Threats",
-          const Color(0xFFFFF1F2),
-          const Color(0xFFE11D48),
+          theme.errorLight,
+          theme.error,
         ),
       ],
     );
   }
 
   Widget _buildStatCard(
+    AppColorExtension colors,
     String title,
     String value,
     String sub,
@@ -116,136 +129,61 @@ class VisitorLogsContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // const SizedBox(height: 8),
-
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: AppAppStatCard(
-          //         title: "Total Visitors",
-          //         value: "1,245",
-          //         subtitle: "+12% from last week",
-          //         color: theme.primary,
-          //       ),
-          //     ),
-          //     SizedBox(width: 20),
-          //     Expanded(
-          //       child: AppAppStatCard(
-          //         title: "Active Now",
-          //         value: "42",
-          //         subtitle: "Real-time users",
-          //         color: theme.success,
-          //       ),
-          //     ),
-          //     SizedBox(width: 20),
-          //     Expanded(
-          //       child: AppAppStatCard(
-          //         title: "Blocked IPs",
-          //         value: "15",
-          //         subtitle: "Threats prevented",
-          //         color: theme.error,
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(height: 32),
-          // _buildVisitorTable(theme),
-          // const SizedBox(height: 40),
-          Text(
-            title,
-            style: TextStyle(
-              color: text,
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-            ),
-          ),
+          Text(title, style: AppTextStyles.bodySmallBold.copyWith(color: text)),
           Text(
             value,
-            style: const TextStyle(
+            style: AppTextStyles.h1.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E293B),
+              color: colors.textPrimary,
             ),
           ),
           Text(
             sub,
-            style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: colors.textSecondary,
+              fontSize: 12,
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Widget _buildVisitorTable(AppColorExtension theme) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       color: theme.white,
-  //       borderRadius: BorderRadius.circular(16),
-  //       border: Border.all(color: theme.inactiveBg),
   Widget _buildVisitorTable(BuildContext context, bool isMobile) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     final List<ErpMaxColumn> columns = [
-      ErpMaxColumn(title: "IP Address", weight: 0.25, isSortable: true),
-      ErpMaxColumn(title: "Country", weight: 0.2),
-      ErpMaxColumn(title: "Visits", weight: 0.1, textAlign: TextAlign.center),
-      ErpMaxColumn(title: "Last Visit", weight: 0.2),
-      ErpMaxColumn(title: "Status", weight: 0.15),
-      ErpMaxColumn(title: "Actions", weight: 0.1, textAlign: TextAlign.right),
+      ErpMaxColumn(
+        title: localizations.ipAddress,
+        weight: 0.25,
+        isSortable: true,
+      ),
+      ErpMaxColumn(title: localizations.country, weight: 0.2),
+      ErpMaxColumn(
+        title: localizations.visits,
+        weight: 0.1,
+        textAlign: TextAlign.center,
+      ),
+      ErpMaxColumn(title: localizations.lastVisit, weight: 0.2),
+      ErpMaxColumn(title: localizations.status, weight: 0.15),
+      ErpMaxColumn(
+        title: localizations.actions,
+        weight: 0.1,
+        textAlign: TextAlign.right,
+      ),
     ];
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.borderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Padding(
-          //   padding: EdgeInsets.all(24),
-          //   child: Text(
-          //     "Visitor Logs",
-          //     style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
-          //   ),
-          // ),
-          // ErpMaxDataTable<VisitorRecord>(
-          //   items: _mockVisitors,
-          //   columns: [
-          //     ErpMaxColumn(title: "IP Address", weight: 0.25),
-          //     ErpMaxColumn(title: "Country", weight: 0.2),
-          //     ErpMaxColumn(title: "Visits", weight: 0.1),
-          //     ErpMaxColumn(title: "Last Visit", weight: 0.2),
-          //     ErpMaxColumn(title: "Status", weight: 0.15),
-          //     ErpMaxColumn(
-          //       title: "Actions",
-          //       weight: 0.1,
-          //       textAlign: TextAlign.right,
-          //     ),
-          //   ],
-          //   rowBuilder: (item) => [
-          //     Text(
-          //       item.ipAddress,
-          //       style: const TextStyle(fontWeight: FontWeight.w600),
-          //     ),
-          //     Row(
-          //       children: [
-          //         Icon(Icons.public, size: 16, color: theme.textDisabled),
-          //         const SizedBox(width: 8),
-          //         Text(item.country),
-          //       ],
-          //     ),
-          //     Text(item.visits.toString()),
-          //     Text(
-          //       item.lastVisit,
-          //       style: AppTextStyles.bodySmall.copyWith(
-          //         color: theme.textSecondary,
-          //       ),
-          //     ),
-          //     item.isActive
-          //         ? AppStatusChip.success("Active")
-          //         : AppStatusChip.warning("Blocked"),
-          //     Icon(Icons.more_horiz, color: theme.textDisabled),
-          //   ],
           ErpMaxTable(
             columns: columns,
             minWidth: 900,
@@ -256,30 +194,37 @@ class VisitorLogsContent extends StatelessWidget {
                 cells: [
                   Text(
                     item.ipAddress,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1E293B),
+                    style: AppTextStyles.bodyMediumBold.copyWith(
+                      color: theme.textPrimary,
                     ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.public,
-                        size: 16,
-                        color: Color(0xFF94A3B8),
-                      ),
+                      Icon(Icons.public, size: 16, color: theme.gray400),
                       const SizedBox(width: 8),
-                      Text(item.country),
+                      Text(
+                        item.country,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: theme.textPrimary,
+                        ),
+                      ),
                     ],
                   ),
-                  Text(item.visits.toString()),
+                  Text(
+                    item.visits.toString(),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: theme.textPrimary,
+                    ),
+                  ),
                   Text(
                     item.lastVisit,
-                    style: const TextStyle(color: Color(0xFF64748B)),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: theme.textSecondary,
+                    ),
                   ),
-                  _buildStatusChip(item.isActive),
-                  const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
+                  _buildStatusChip(theme, item.isActive),
+                  Icon(Icons.more_horiz, color: theme.gray400),
                 ],
               );
             }).toList(),
@@ -289,17 +234,17 @@ class VisitorLogsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(bool isActive) {
+  Widget _buildStatusChip(AppColorExtension colors, bool isActive) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),
+        color: isActive ? colors.successLight : colors.errorLight,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         isActive ? "Active" : "Blocked",
-        style: TextStyle(
-          color: isActive ? const Color(0xFF166534) : const Color(0xFF991B1B),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: isActive ? colors.successText : colors.errorText,
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),

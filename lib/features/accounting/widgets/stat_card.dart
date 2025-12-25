@@ -133,10 +133,9 @@ class _TrendBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             "${isPositive ? '+' : '-'}$trend",
-            style: TextStyle(
+            style: AppTextStyles.tableHeader.copyWith(
               color: trendColor,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],

@@ -117,14 +117,7 @@ class AppStatCard extends StatelessWidget {
               color: color,
             ),
           const SizedBox(width: 4),
-          Text(
-            trend,
-            style: TextStyle(
-              color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(trend, style: AppTextStyles.tableHeader.copyWith(color: color)),
         ],
       ),
     );

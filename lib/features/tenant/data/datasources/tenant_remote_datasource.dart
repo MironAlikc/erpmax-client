@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/features/auth/data/models/tenant_model.dart';
+import 'package:erpmax_client/features/tenant/data/models/tenant_user_model.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../../auth/data/models/tenant_model.dart';
-import '../models/tenant_user_model.dart';
 
 part 'tenant_remote_datasource.g.dart';
 
@@ -20,9 +20,7 @@ abstract class TenantRemoteDataSource {
   Future<HttpResponse<TenantModel>> getCurrentTenant();
 
   @GET('/tenants/{id}')
-  Future<HttpResponse<TenantModel>> getTenantById(
-    @Path('id') String id,
-  );
+  Future<HttpResponse<TenantModel>> getTenantById(@Path('id') String id);
 
   @PATCH('/tenants/{id}')
   Future<HttpResponse<TenantModel>> updateTenant(

@@ -1,5 +1,5 @@
+import 'package:erpmax_client/features/accounting/domain/entities/stat_entity.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/stat_entity.dart';
 
 class StatModel extends StatEntity {
   final IconData icon;

@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class ErpMaxTabItem {
@@ -52,10 +53,8 @@ class ErpMaxTabFilter extends StatelessWidget {
                 },
                 selectedColor: theme.primaryDark,
                 backgroundColor: Colors.transparent,
-                labelStyle: TextStyle(
+                labelStyle: AppTextStyles.bodySmallBold.copyWith(
                   color: isSelected ? theme.white : theme.textSecondary,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

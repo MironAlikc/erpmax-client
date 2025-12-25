@@ -124,9 +124,8 @@ class _TabChipBarState extends State<TabChipBar> {
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "Search by name, code, or serial...",
-                  hintStyle: const TextStyle(
-                    color: Color(0xFF94A3B8),
-                    fontSize: 13,
+                  hintStyle: AppTextStyles.bodySmall.copyWith(
+                    color: theme.textDisabled,
                   ),
                   prefixIcon: const Icon(
                     Icons.search,
@@ -138,11 +137,11 @@ class _TabChipBarState extends State<TabChipBar> {
                   contentPadding: EdgeInsets.zero,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    borderSide: BorderSide(color: theme.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Color(0xFF0F172A)),
+                    borderSide: BorderSide(color: theme.black),
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class PageTabs extends StatefulWidget {
@@ -51,10 +52,15 @@ class _PageTabsState extends State<PageTabs> {
                 ),
                 child: Text(
                   entry.value,
-                  style: TextStyle(
-                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                    color: isActive ? theme.primary : theme.textSecondary,
-                  ),
+                  style:
+                      (isActive
+                              ? AppTextStyles.sidebarActive
+                              : AppTextStyles.sidebarInactive)
+                          .copyWith(
+                            color: isActive
+                                ? theme.primary
+                                : theme.textSecondary,
+                          ),
                 ),
               ),
             );

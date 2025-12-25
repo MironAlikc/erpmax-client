@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -15,6 +16,8 @@ class CheckEmailForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -40,7 +43,7 @@ class CheckEmailForm extends StatelessWidget {
               height: 1.5,
             ),
             children: [
-              const TextSpan(text: 'Please click the link sent to your email '),
+              TextSpan(text: localizations.clickLinkSent),
               TextSpan(
                 text: email,
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -48,7 +51,7 @@ class CheckEmailForm extends StatelessWidget {
                   color: context.theme.appColor.textPrimary,
                 ),
               ),
-              const TextSpan(text: ' to verify your account. Thank you'),
+              TextSpan(text: localizations.toVerifyAccount),
             ],
           ),
         ),
@@ -56,7 +59,7 @@ class CheckEmailForm extends StatelessWidget {
 
         AppButton(
           onPressed: () => context.go(RouteNames.login),
-          text: 'Back to Home',
+          text: localizations.backToHome,
           isExpanded: true,
         ),
         const SizedBox(height: AppDesign.elementGap),
@@ -67,12 +70,14 @@ class CheckEmailForm extends StatelessWidget {
   }
 
   Widget _buildResendRow(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Didn't receive an email? ",
+          localizations.didNotReceiveEmail,
           style: AppTextStyles.bodySmall.copyWith(
             color: context.theme.appColor.gray500,
           ),
@@ -80,7 +85,7 @@ class CheckEmailForm extends StatelessWidget {
         GestureDetector(
           onTap: onResend,
           child: Text(
-            'Resend',
+            localizations.resend,
             style: AppTextStyles.linkStyle.copyWith(
               fontWeight: FontWeight.w600,
             ),

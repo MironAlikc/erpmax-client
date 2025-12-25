@@ -20,10 +20,7 @@ class AccountsWatchlist extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Accounts Watchlist",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          Text("Accounts Watchlist", style: AppTextStyles.h3),
           const SizedBox(height: 20),
           _item(context, "Cash on Hand", "1110 - Current Assets", "\$12,450"),
           _divider(theme),
@@ -51,16 +48,14 @@ class AccountsWatchlist extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.bodyMediumBold.copyWith(
                 color: theme.textPrimary,
               ),
             ),
             Text(
               sub,
-              style: AppTextStyles.bodySmall.copyWith(
+              style: AppTextStyles.tableHeader.copyWith(
                 color: theme.textDisabled,
-                fontSize: 12,
               ),
             ),
           ],

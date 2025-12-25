@@ -145,8 +145,10 @@ class ErpMaxRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 64,
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Color(0xFFF8FAFC))),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: context.theme.appColor.border),
+          ),
         ),
         child: Row(
           children: List.generate(cells.length, (index) {

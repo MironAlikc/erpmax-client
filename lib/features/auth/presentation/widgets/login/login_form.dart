@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -46,6 +47,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -58,18 +61,24 @@ class _LoginFormState extends State<LoginForm> {
           const SocialAuthButtons(),
           const SizedBox(height: AppDesign.elementGap),
 
-          const DividerWithText(text: 'OR'),
+          DividerWithText(text: localizations.or),
           const SizedBox(height: AppDesign.elementGap),
 
           AppTextField(
             controller: _emailController,
-            label: 'Email',
+            label: localizations.email,
             hintText: 'example@company.com',
             keyboardType: TextInputType.emailAddress,
             enabled: !_isLoading,
             validator: (value) {
-              if (value == null || value.isEmpty) return 'Please enter email';
-              if (!value.contains('@')) return 'Enter a valid email';
+              if (value == null || value.isEmpty) {
+                return localizations.errorEnterEmail;
+              }
+
+              if (!value.contains('@')) {
+                return localizations.errorInvalidEmail;
+              }
+
               return null;
             },
           ),
@@ -92,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: AppDesign.sectionGap),
 
           AppButton(
-            text: 'Sign In',
+            text: localizations.signIn,
             isExpanded: true,
             isLoading: _isLoading,
             onPressed: _isLoading ? null : _handleSignIn,
@@ -108,6 +117,8 @@ class _FormHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Column(
       children: [
         Text(
@@ -123,12 +134,12 @@ class _FormHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Don\'t have an account?', style: AppTextStyles.bodySmall),
+            Text(localizations.dontHaveAccount, style: AppTextStyles.bodySmall),
             const SizedBox(width: 4),
             GestureDetector(
               onTap: () => context.push(RouteNames.signup),
               child: Text(
-                'Sign up',
+                localizations.signUp,
                 style: AppTextStyles.linkStyle.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -188,8 +199,9 @@ class _PasswordField extends StatelessWidget {
           hintText: '••••••••',
           obscureText: isObscured,
           enabled: enabled,
-          validator: (value) =>
-              (value != null && value.length >= 6) ? null : 'Min 6 characters',
+          validator: (value) => (value != null && value.length >= 6)
+              ? null
+              : AppLocalizations.of(context).errorMinLength,
           suffixIcon: IconButton(
             icon: Icon(
               isObscured
@@ -239,7 +251,7 @@ class _RememberMeRow extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Remember me',
+              AppLocalizations.of(context).rememberMe,
               style: AppTextStyles.bodySmall.copyWith(
                 color: theme.gray600,
                 fontWeight: FontWeight.w500,

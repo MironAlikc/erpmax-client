@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
-import '../../../auth/domain/entities/tenant_entity.dart';
-import '../entities/tenant_user_entity.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/auth/domain/entities/tenant_entity.dart';
+import 'package:erpmax_client/features/tenant/domain/entities/tenant_user_entity.dart';
 
 abstract class TenantRepository {
   Future<Either<Failure, List<TenantEntity>>> getTenants({
@@ -37,8 +37,5 @@ abstract class TenantRepository {
     required String role,
   });
 
-  Future<Either<Failure, void>> removeUser(
-    String tenantId,
-    String userId,
-  );
+  Future<Either<Failure, void>> removeUser(String tenantId, String userId);
 }

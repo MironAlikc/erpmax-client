@@ -1,4 +1,4 @@
-import '../../domain/entities/subscription_data_entity.dart';
+import 'package:erpmax_client/features/subscription/domain/entities/subscription_data_entity.dart';
 
 class SubscriptionDataModel extends SubscriptionDataEntity {
   const SubscriptionDataModel({

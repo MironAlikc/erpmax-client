@@ -1,9 +1,10 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class AppSearchField extends StatefulWidget {
-  final String hintText;
+  final String? hintText;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onClear;
   final TextEditingController? controller;
@@ -11,7 +12,7 @@ class AppSearchField extends StatefulWidget {
 
   const AppSearchField({
     super.key,
-    this.hintText = "Search by name, code, or serial...",
+    this.hintText,
     this.onChanged,
     this.onClear,
     this.controller,
@@ -48,6 +49,9 @@ class _AppSearchFieldState extends State<AppSearchField> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
+    final searchHint = widget.hintText ?? localizations.searchHint;
 
     return Container(
       width:
@@ -70,7 +74,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             isDense: true,
-            hintText: widget.hintText,
+            hintText: searchHint,
             hintStyle: AppTextStyles.bodySmall.copyWith(
               color: theme.textDisabled,
             ),

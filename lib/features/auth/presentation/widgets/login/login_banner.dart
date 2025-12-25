@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -28,28 +29,32 @@ class _LoginBannerState extends State<LoginBanner> {
   int _currentPage = 0;
   Timer? _timer;
 
-  final List<LoginSlideData> _slides = const [
-    LoginSlideData(
-      image: 'assets/images/slide-1.png',
-      title: 'Fast Scanning',
-      sub: 'Use mobile devices for instant tracking and efficiency.',
-    ),
-    LoginSlideData(
-      image: 'assets/images/slide-2.png',
-      title: 'Inventory Control',
-      sub: 'Monitor movements in real time across all warehouses.',
-    ),
-    LoginSlideData(
-      image: 'assets/images/slide-3.png',
-      title: 'Unified Data',
-      sub: 'Everything organized in one place for better decisions.',
-    ),
-    LoginSlideData(
-      image: 'assets/images/slide-4.png',
-      title: 'Secure Access',
-      sub: 'Multi-factor authentication to keep your data safe.',
-    ),
-  ];
+  List<LoginSlideData> _slides(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
+    return [
+      LoginSlideData(
+        image: 'assets/images/slide-1.png',
+        title: localizations.slide1Title,
+        sub: localizations.slide1Sub,
+      ),
+      LoginSlideData(
+        image: 'assets/images/slide-2.png',
+        title: localizations.slide2Title,
+        sub: localizations.slide2Sub,
+      ),
+      LoginSlideData(
+        image: 'assets/images/slide-3.png',
+        title: localizations.slide3Title,
+        sub: localizations.slide3Sub,
+      ),
+      LoginSlideData(
+        image: 'assets/images/slide-4.png',
+        title: localizations.slide4Title,
+        sub: localizations.slide4Sub,
+      ),
+    ];
+  }
 
   @override
   void initState() {
@@ -60,9 +65,11 @@ class _LoginBannerState extends State<LoginBanner> {
 
   void _startTimer() {
     _timer?.cancel();
+
     _timer = Timer.periodic(const Duration(seconds: 8), (_) {
       if (_controller.hasClients && mounted) {
-        _currentPage = (_currentPage + 1) % _slides.length;
+        final slidesCount = _slides(context).length;
+        _currentPage = (_currentPage + 1) % slidesCount;
         _controller.animateToPage(
           _currentPage,
           duration: const Duration(milliseconds: 1200),
@@ -81,15 +88,17 @@ class _LoginBannerState extends State<LoginBanner> {
 
   @override
   Widget build(BuildContext context) {
+    final slides = _slides(context);
+
     return Container(
       color: context.theme.appColor.white,
       child: Stack(
         children: [
           PageView.builder(
             controller: _controller,
-            itemCount: _slides.length,
+            itemCount: slides.length,
             onPageChanged: (index) => setState(() => _currentPage = index),
-            itemBuilder: (context, index) => _SlideItem(data: _slides[index]),
+            itemBuilder: (context, index) => _SlideItem(data: slides[index]),
           ),
           const Positioned(top: 50, left: 50, child: _BannerLogo()),
           Positioned(
@@ -97,7 +106,7 @@ class _LoginBannerState extends State<LoginBanner> {
             left: 0,
             right: 0,
             child: _SlideIndicators(
-              count: _slides.length,
+              count: slides.length,
               currentIndex: _currentPage,
             ),
           ),

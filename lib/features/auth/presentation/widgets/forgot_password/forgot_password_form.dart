@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -13,12 +14,14 @@ class ForgotPasswordForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Forgot Password?',
+          localizations.forgotPassword,
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
@@ -28,7 +31,7 @@ class ForgotPasswordForm extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Enter your email to reset password',
+          localizations.enterEmailToReset,
           style: AppTextStyles.bodySmall.copyWith(color: theme.textSecondary),
           textAlign: TextAlign.center,
         ),
@@ -44,7 +47,7 @@ class ForgotPasswordForm extends StatelessWidget {
 
         AppButton(
           onPressed: () => context.push(RouteNames.checkEmail),
-          text: 'Continue',
+          text: localizations.continueBtn,
           isExpanded: true,
         ),
 
@@ -52,7 +55,7 @@ class ForgotPasswordForm extends StatelessWidget {
         TextButton(
           onPressed: () => context.pop(),
           child: Text(
-            'Back to Sign In',
+            localizations.backToSignIn,
             style: AppTextStyles.bodySmall.copyWith(
               color: theme.gray600,
               fontWeight: FontWeight.w600,

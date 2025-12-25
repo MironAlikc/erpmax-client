@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/api/api_client.dart';
+import 'package:erpmax_client/core/auth/secure_storage.dart';
+import 'package:erpmax_client/core/config/api_config.dart';
+import 'package:erpmax_client/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:erpmax_client/features/tenant/data/datasources/tenant_remote_datasource.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import '../auth/secure_storage.dart';
-import '../api/api_client.dart';
-import '../config/api_config.dart';
-import '../../features/auth/data/datasources/auth_remote_datasource.dart';
-import '../../features/tenant/data/datasources/tenant_remote_datasource.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'injection.config.dart';
 
 final getIt = GetIt.instance;
@@ -16,10 +18,13 @@ final getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: true,
 )
-void configureDependencies() => getIt.init();
+Future<void> configureDependencies() async => await getIt.init();
 
 @module
 abstract class RegisterModule {
+  @preResolve
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
   @lazySingleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 

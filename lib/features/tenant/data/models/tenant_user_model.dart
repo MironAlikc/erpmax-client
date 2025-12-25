@@ -1,5 +1,5 @@
+import 'package:erpmax_client/features/tenant/domain/entities/tenant_user_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/tenant_user_entity.dart';
 
 part 'tenant_user_model.freezed.dart';
 part 'tenant_user_model.g.dart';
@@ -21,11 +21,11 @@ abstract class TenantUserModel with _$TenantUserModel {
       _$TenantUserModelFromJson(json);
 
   TenantUserEntity toEntity() => TenantUserEntity(
-        userId: userId,
-        email: email,
-        fullName: fullName,
-        role: role,
-        isDefault: isDefault,
-        joinedAt: joinedAt,
-      );
+    userId: userId,
+    email: email,
+    fullName: fullName,
+    role: role,
+    isDefault: isDefault,
+    joinedAt: joinedAt,
+  );
 }

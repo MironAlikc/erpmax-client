@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -9,6 +10,7 @@ class RecentTransactionsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -45,7 +47,7 @@ class RecentTransactionsTable extends StatelessWidget {
               4: FlexColumnWidth(0.8),
             },
             children: [
-              _header(theme),
+              _header(theme, localizations),
               _row(
                 context,
                 "JV-2024-001",
@@ -98,30 +100,30 @@ class RecentTransactionsTable extends StatelessWidget {
     );
   }
 
-  TableRow _header(AppColorExtension theme) => TableRow(
+  TableRow _header(AppColorExtension theme, AppLocalizations l10n) => TableRow(
     decoration: BoxDecoration(
       border: Border(bottom: BorderSide(color: theme.borderLight)),
     ),
     children: [
       Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
-        child: Text("Reference", style: headStl(theme)),
+        child: Text(l10n.reference, style: headStl(theme)),
       ),
       Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
-        child: Text("Date", style: headStl(theme)),
+        child: Text(l10n.date, style: headStl(theme)),
       ),
       Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
-        child: Text("Description", style: headStl(theme)),
+        child: Text(l10n.description, style: headStl(theme)),
       ),
       Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
-        child: Text("Amount", style: headStl(theme)),
+        child: Text(l10n.amount, style: headStl(theme)),
       ),
       Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
-        child: Text("Status", style: headStl(theme)),
+        child: Text(l10n.status, style: headStl(theme)),
       ),
     ],
   );

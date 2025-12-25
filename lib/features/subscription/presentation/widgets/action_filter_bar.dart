@@ -73,7 +73,10 @@ class ActionAndFilterBar extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: () {},
       icon: Icon(icon, size: 18, color: theme.gray500),
-      label: Text(text, style: TextStyle(color: theme.textSecondary)),
+      label: Text(
+        text,
+        style: AppTextStyles.bodyMedium.copyWith(color: theme.textSecondary),
+      ),
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: theme.borderMedium),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
