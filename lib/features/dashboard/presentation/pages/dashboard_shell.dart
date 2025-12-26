@@ -4,7 +4,7 @@ import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/mobile/mobile_drawer.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/navigation/app_sidebar.dart';
-import 'package:erpmax_client/features/saas_admin/presentation/widgets/navigation/top_nav_bar.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/navigation/top_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

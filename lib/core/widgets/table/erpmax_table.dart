@@ -63,13 +63,12 @@ class ErpMaxTable extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     final theme = context.theme.appColor;
-
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: theme.white,
+        // color: theme.white,
         border: Border(
-          bottom: BorderSide(color: theme.borderLight, width: 1.5),
+          bottom: BorderSide(color: context.theme.appColor.border),
         ),
       ),
       child: Row(

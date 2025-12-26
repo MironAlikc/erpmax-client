@@ -91,4 +91,7 @@ abstract final class AppTextStyles {
     fontSize: 14,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle bodyLargeBold = bodyLarge.copyWith(
+    fontWeight: FontWeight.w700,
+  );
 }

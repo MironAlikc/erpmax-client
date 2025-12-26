@@ -25,44 +25,67 @@ class ErpMaxTabFilter extends StatelessWidget {
     final theme = context.theme.appColor;
 
     return Container(
-      padding: const EdgeInsets.all(6),
+      width: double.infinity, // Контейнер на всю ширину
+      height: 46, // Высота как на скриншоте
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: theme.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.textDisabled.withValues(alpha: 0.1)),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFEAECF0)), // Цвет рамки с фото
       ),
       child: SingleChildScrollView(
+        // Добавляем на случай узких экранов
         scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment:
+              MainAxisAlignment.start, // Табы прижаты к левому краю
           children: items.map((item) {
             final bool isSelected = selectedItem == item.name;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: ChoiceChip(
-                label: Text(item.name),
-                avatar: Icon(
-                  item.icon,
-                  size: 16,
-                  color: isSelected ? theme.white : theme.textSecondary,
+            return GestureDetector(
+              onTap: () => onSelected(item.name),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.only(
+                  right: 4,
+                ), // Небольшой отступ между табами
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ), // Внутренний отступ таба
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? const Color(0xFF101828) // Темный Navy Blue с фото
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
                 ),
-                selected: isSelected,
-                onSelected: (bool selected) {
-                  if (selected) onSelected(item.name);
-                },
-                selectedColor: theme.primaryDark,
-                backgroundColor: Colors.transparent,
-                labelStyle: AppTextStyles.bodySmallBold.copyWith(
-                  color: isSelected ? theme.white : theme.textSecondary,
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      item.icon,
+                      size: 20, // Размер иконки как на фото
+                      color: isSelected
+                          ? Colors.white
+                          : const Color(0xFF667085),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      item.name,
+                      style: AppTextStyles.bodySmallBold.copyWith(
+                        color: isSelected
+                            ? Colors.white
+                            : const Color(
+                                0xFF344054,
+                              ), // Цвет текста неактивного таба
+                        fontSize: 14, // Размер шрифта для четкости
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                side: BorderSide.none,
-                showCheckmark: false,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                visualDensity: VisualDensity.compact,
               ),
             );
           }).toList(),
