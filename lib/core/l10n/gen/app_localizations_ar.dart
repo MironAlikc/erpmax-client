@@ -885,4 +885,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unitGb => 'جيجابايت';
+
+  @override
+  String get accDashboard => 'لوحة\nالتحكم';
+
+  @override
+  String get accLedger => 'دفتر\nالأستاذ';
+
+  @override
+  String get accJournal => 'قيود\nاليومية';
+
+  @override
+  String get accChart => 'دليل\nالحسابات';
+
+  @override
+  String get accFunds => 'الصناديق\nوالبنوك';
+
+  @override
+  String get accParties => 'الأطراف';
+
+  @override
+  String get accAssets => 'الأصول\nالثابتة';
 }

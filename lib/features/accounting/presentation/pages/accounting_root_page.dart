@@ -18,27 +18,36 @@ class AccountingRootPage extends StatefulWidget {
 class _AccountingRootPageState extends State<AccountingRootPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late final List<ModuleTabItem> _moduleTabs;
+  List<ModuleTabItem>? _moduleTabs;
 
   @override
   void initState() {
     super.initState();
 
-    _moduleTabs = AccountingTabsConfig.getTabs(
-      (name) => _PlaceholderView(name: name),
-    );
-
-    _tabController = TabController(length: _moduleTabs.length, vsync: this);
+    _tabController = TabController(length: 7, vsync: this);
     _tabController.addListener(_handleTabChange);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<TabNavigationService>().updateTabs(
-          _moduleTabs,
-          _tabController,
-          branchIndex: 1,
-        );
-      }
-    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_moduleTabs == null) {
+      _moduleTabs = AccountingTabsConfig.getTabs(
+        context,
+        (name) => _PlaceholderView(name: name),
+      );
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<TabNavigationService>().updateTabs(
+            _moduleTabs!,
+            _tabController,
+            branchIndex: 1,
+          );
+        }
+      });
+    }
   }
 
   void _handleTabChange() {
@@ -57,10 +66,15 @@ class _AccountingRootPageState extends State<AccountingRootPage>
 
   @override
   Widget build(BuildContext context) {
+    final tabs = _moduleTabs;
+    if (tabs == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 600;
-        final currentTab = _moduleTabs[_tabController.index];
+        final currentTab = tabs[_tabController.index];
 
         return Scaffold(
           backgroundColor: context.theme.appColor.gray50,
@@ -83,7 +97,7 @@ class _AccountingRootPageState extends State<AccountingRootPage>
                   physics: isMobile
                       ? const BouncingScrollPhysics()
                       : const NeverScrollableScrollPhysics(),
-                  children: _moduleTabs
+                  children: tabs
                       .map((t) => KeepAlivePage(child: t.content))
                       .toList(),
                 ),

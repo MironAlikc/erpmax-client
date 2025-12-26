@@ -884,4 +884,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unitGb => 'GB';
+
+  @override
+  String get accDashboard => 'Accounting\nDashboard';
+
+  @override
+  String get accLedger => 'General\nLedger';
+
+  @override
+  String get accJournal => 'Journal\nEntries';
+
+  @override
+  String get accChart => 'Chart of\nAccounts';
+
+  @override
+  String get accFunds => 'Funds &\nBanks';
+
+  @override
+  String get accParties => 'Parties';
+
+  @override
+  String get accAssets => 'Fixed\nAssets';
 }

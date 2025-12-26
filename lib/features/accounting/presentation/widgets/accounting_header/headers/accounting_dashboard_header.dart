@@ -27,14 +27,14 @@ class AccountingDashboardHeader extends AccountingBaseHeader {
                     fontSize: 26,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  currentTab.description ?? '',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: theme.textSecondary,
-                    fontSize: 14,
-                  ),
-                ),
+                // const SizedBox(height: 4),
+                // Text(
+                //   currentTab.description ?? '',
+                //   style: AppTextStyles.bodySmall.copyWith(
+                //     color: theme.textSecondary,
+                //     fontSize: 14,
+                //   ),
+                // ),
               ],
             ),
           ),

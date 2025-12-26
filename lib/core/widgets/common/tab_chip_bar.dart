@@ -58,65 +58,72 @@ class _TabChipBarState extends State<TabChipBar> {
       child: Row(
         children: [
           Expanded(
-            child: SingleChildScrollView(
+            child: RawScrollbar(
               controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: List.generate(widget.tabs.length, (index) {
-                  final isSelected = widget.controller.index == index;
-                  final tab = widget.tabs[index];
+              thumbColor: theme.activeGreen.withValues(alpha: 0.3),
+              radius: const Radius.circular(8),
+              thickness: 4,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: List.generate(widget.tabs.length, (index) {
+                    final isSelected = widget.controller.index == index;
+                    final tab = widget.tabs[index];
 
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      showCheckmark: false,
-                      avatar: Icon(
-                        tab.icon,
-                        size: 18,
-                        color: isSelected
-                            ? theme.activeGreen
-                            : theme.textDisabled,
-                      ),
-                      label: Text(tab.name),
-                      labelStyle: AppTextStyles.bodySmall.copyWith(
-                        fontSize: 13,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: isSelected
-                            ? theme.textPrimary
-                            : theme.textSecondary,
-                      ),
-                      selected: isSelected,
-                      onSelected: (selected) {
-                        if (selected) {
-                          widget.controller.animateTo(index);
-                          widget.onTabSelected?.call(index);
-                        }
-                      },
-                      backgroundColor: Colors.transparent,
-                      selectedColor: theme.successBg,
-                      elevation: 0,
-                      pressElevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        showCheckmark: false,
+                        avatar: Icon(
+                          tab.icon,
+                          size: 18,
                           color: isSelected
-                              ? theme.activeGreen.withValues(alpha: 0.5)
-                              : theme.borderLight,
+                              ? theme.activeGreen
+                              : theme.textDisabled,
+                        ),
+                        label: Text(tab.name),
+                        labelStyle: AppTextStyles.bodySmall.copyWith(
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                          color: isSelected
+                              ? theme.textPrimary
+                              : theme.textSecondary,
+                        ),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            widget.controller.animateTo(index);
+                            widget.onTabSelected?.call(index);
+                          }
+                        },
+                        backgroundColor: Colors.transparent,
+                        selectedColor: theme.successBg,
+                        elevation: 0,
+                        pressElevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: BorderSide(
+                            color: isSelected
+                                ? theme.activeGreen.withValues(alpha: 0.5)
+                                : theme.borderLight,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
           ),
 
           const SizedBox(width: 16),
 
-          // Правая часть: Поиск (остается на месте)
           if (!widget.isMobile)
             SizedBox(
               width: 300,

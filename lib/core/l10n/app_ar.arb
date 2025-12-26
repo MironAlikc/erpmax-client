@@ -280,5 +280,12 @@
     "nextScheduled": "النسخ القادم",
     "dailyAtMidnight": "يومياً عند منتصف الليل",
     "hoursAgo": "{count, plural, =1{قبل ساعة} =2{قبل ساعتين} few{قبل {count} ساعات} many{قبل {count} ساعة} other{قبل {count} ساعة}}",
-    "unitGb": "جيجابايت"
+    "unitGb": "جيجابايت",
+    "accDashboard": "لوحة\nالتحكم",
+    "accLedger": "دفتر\nالأستاذ",
+    "accJournal": "قيود\nاليومية",
+    "accChart": "دليل\nالحسابات",
+    "accFunds": "الصناديق\nوالبنوك",
+    "accParties": "الأطراف",
+    "accAssets": "الأصول\nالثابتة"
 }

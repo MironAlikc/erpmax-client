@@ -1767,6 +1767,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'GB'**
   String get unitGb;
+
+  /// No description provided for @accDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting\nDashboard'**
+  String get accDashboard;
+
+  /// No description provided for @accLedger.
+  ///
+  /// In en, this message translates to:
+  /// **'General\nLedger'**
+  String get accLedger;
+
+  /// No description provided for @accJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal\nEntries'**
+  String get accJournal;
+
+  /// No description provided for @accChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of\nAccounts'**
+  String get accChart;
+
+  /// No description provided for @accFunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Funds &\nBanks'**
+  String get accFunds;
+
+  /// No description provided for @accParties.
+  ///
+  /// In en, this message translates to:
+  /// **'Parties'**
+  String get accParties;
+
+  /// No description provided for @accAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed\nAssets'**
+  String get accAssets;
 }
 
 class _AppLocalizationsDelegate

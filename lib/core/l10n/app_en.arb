@@ -280,5 +280,12 @@
     "nextScheduled": "Next Scheduled",
     "dailyAtMidnight": "Daily at midnight",
     "hoursAgo": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
-    "unitGb": "GB"
+    "unitGb": "GB",
+    "accDashboard": "Accounting\nDashboard",
+    "accLedger": "General\nLedger",
+    "accJournal": "Journal\nEntries",
+    "accChart": "Chart of\nAccounts",
+    "accFunds": "Funds &\nBanks",
+    "accParties": "Parties",
+    "accAssets": "Fixed\nAssets"
 }

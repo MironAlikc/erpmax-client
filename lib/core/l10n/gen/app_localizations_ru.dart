@@ -890,4 +890,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get unitGb => 'ГБ';
+
+  @override
+  String get accDashboard => 'Панель\nуправления';
+
+  @override
+  String get accLedger => 'Главная\nкнига';
+
+  @override
+  String get accJournal => 'Журнальные\nзаписи';
+
+  @override
+  String get accChart => 'План\nсчетов';
+
+  @override
+  String get accFunds => 'Фонды и\nбанки';
+
+  @override
+  String get accParties => 'Контрагенты';
+
+  @override
+  String get accAssets => 'Основные\nсредства';
 }
