@@ -1,7 +1,8 @@
+import 'package:erpmax_client/features/auth/domain/entities/user_with_tenants.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'user_model.dart';
 import 'user_tenant_model.dart';
-import '../../domain/entities/user_with_tenants.dart';
 
 part 'user_with_tenants_model.freezed.dart';
 part 'user_with_tenants_model.g.dart';

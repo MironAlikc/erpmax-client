@@ -32,7 +32,6 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
   Future<void> _onResetPressed() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
-      // Имитация вызова API
       await Future.delayed(const Duration(seconds: 2));
       if (mounted) {
         setState(() => _isLoading = false);

@@ -119,6 +119,8 @@ class SidebarMenu extends StatelessWidget {
   }
 
   Widget _buildHelpSection(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(16),
@@ -130,7 +132,7 @@ class SidebarMenu extends StatelessWidget {
         children: [
           const Icon(Icons.help_center_outlined, color: Colors.blue),
           const SizedBox(height: 8),
-          Text("Support Center", style: AppTextStyles.bodySmallBold),
+          Text(localizations.supportCenter, style: AppTextStyles.bodySmallBold),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {},
@@ -140,7 +142,10 @@ class SidebarMenu extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: Text("Get Help", style: AppTextStyles.tableHeader),
+            child: Text(
+              localizations.getHelp,
+              style: AppTextStyles.tableHeader,
+            ),
           ),
         ],
       ),

@@ -1,5 +1,5 @@
+import 'package:erpmax_client/features/billing/domain/entities/invoice_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/invoice_entity.dart';
 
 part 'invoice_model.freezed.dart';
 part 'invoice_model.g.dart';

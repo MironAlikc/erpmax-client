@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get country => 'الدولة';
 
   @override
-  String get visits => 'Зиярат';
+  String get visits => 'الزيارات';
 
   @override
   String get lastVisit => 'آخر زيارة';
@@ -128,7 +128,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get slide4Title => 'وصول آمن';
 
   @override
-  String get slide4Sub => 'مصادقة متعددة العوامل للحفاظ на سلامة بياناتك.';
+  String get slide4Sub => 'مصادقة متعددة العوامل للحفاظ على سلامة بياناتك.';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -220,7 +220,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterPassword => 'أدخل كلمة السر';
 
   @override
-  String get errInvalidRequest => 'طلب غير صالحة';
+  String get errInvalidRequest => 'طلب غير صالح';
 
   @override
   String get errUnauthorized => 'غير مصرح به';
@@ -387,7 +387,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payBook => 'دفتر المدفوعات';
 
   @override
-  String get generalLedger => 'دفتر الأستاذ العام';
+  String get generalLedger => 'دفتر الاستاذ العام';
 
   @override
   String get activityLog => 'سجل الأنشطة';
@@ -691,17 +691,198 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statMRR => 'العائد الشهري المتكرر';
 
   @override
-  String get reportSubscriptions => 'Subscriptions Report';
+  String get reportSubscriptions => 'تقرير الاشتراكات';
 
   @override
-  String get reportRevenue => 'Revenue Report';
+  String get reportRevenue => 'تقرير الإيرادات';
 
   @override
-  String get reportCustomers => 'Customers Report';
+  String get reportCustomers => 'تقرير العملاء';
 
   @override
-  String get reportUsage => 'Usage Report';
+  String get reportUsage => 'تقرير الاستخدام';
 
   @override
-  String get reportPerformance => 'Performance Report';
+  String get reportPerformance => 'تقرير الأداء';
+
+  @override
+  String get totalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get subscriptionStatus => 'حالة الاشتراك';
+
+  @override
+  String get currentPlan => 'الخطة الحالية';
+
+  @override
+  String get planStarter => 'الباقة الأساسية';
+
+  @override
+  String get perMonth => ' / شهرياً';
+
+  @override
+  String get upgradePlan => 'ترقية الخطة';
+
+  @override
+  String get getMoreFeatures => 'الحصول على مزايا أكثر';
+
+  @override
+  String get downgradePlan => 'تخفيض الخطة';
+
+  @override
+  String get reduceCosts => 'تقليل التكاليف';
+
+  @override
+  String get renewalDate => 'تاريخ التجديد';
+
+  @override
+  String daysOverdue(Object count) {
+    return 'متأخر منذ $count يوم';
+  }
+
+  @override
+  String get mrr => 'العائد الشهري';
+
+  @override
+  String get billingCycle => 'دورة الفوترة';
+
+  @override
+  String get monthly => 'شهرياً';
+
+  @override
+  String get yearly => 'سنوياً';
+
+  @override
+  String amountSAR(Object amount) {
+    return '$amount ر.س';
+  }
+
+  @override
+  String get accountsWatchlist => 'قائمة مراقبة الحسابات';
+
+  @override
+  String get accountCashOnHand => 'النقدية في الصندوق';
+
+  @override
+  String get accountBankAlBilad => 'بنك البلاد';
+
+  @override
+  String get accountReceivable => 'الحسابات المدينة';
+
+  @override
+  String get categoryCurrentAssets => 'الأصول المتداولة';
+
+  @override
+  String get categoryBankAccounts => 'الحسابات البنكية';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get newInvoice => 'فاتورة جديدة';
+
+  @override
+  String get recordExpense => 'تسجيل مصروف';
+
+  @override
+  String get transfer => 'تحويل';
+
+  @override
+  String get importStatement => 'استيراد كشف حساب';
+
+  @override
+  String get recentTransactions => 'أحدث المعاملات';
+
+  @override
+  String get recentTransactionsSubtitle => 'آخر الأنشطة المالية وقيود اليومية.';
+
+  @override
+  String get totalExpenses => 'إجمالي المصروفات';
+
+  @override
+  String get netProfit => 'صافي الربح';
+
+  @override
+  String get cashFlow => 'التدفق النقدي';
+
+  @override
+  String get verifyEmailClickLink =>
+      'يرجى الضغط على الرابط المرسل إلى بريدك الإلكتروني ';
+
+  @override
+  String get verifyEmailFinish => ' لتأكيد حسابك. شكراً لك';
+
+  @override
+  String get didntReceiveEmail => 'لم يصلك البريد الإلكتروني؟';
+
+  @override
+  String get verifyEmailSimple =>
+      'يرجى الضغط على الرابط المرسل إلى بريدك الإلكتروني';
+
+  @override
+  String get activeUsers => 'المستخدمون النشطون';
+
+  @override
+  String get churnRate => 'معدل الانصراف';
+
+  @override
+  String get avgSession => 'متوسط الجلسة';
+
+  @override
+  String get supportCenter => 'مركز الدعم';
+
+  @override
+  String get getHelp => 'الحصول على المساعدة';
+
+  @override
+  String get moduleInventory => 'المخزون';
+
+  @override
+  String get moduleHrPayroll => 'الموارد البشرية والرواتب';
+
+  @override
+  String get moduleCrm => 'إدارة علاقات العملاء';
+
+  @override
+  String get pkgProfessional => 'الباقة الاحترافية';
+
+  @override
+  String get pkgEnterprise => 'باقة المؤسسات';
+
+  @override
+  String get createBackup => 'إنشاء نسخة احتياطية';
+
+  @override
+  String get automatedDailyBackup => 'نسخ احتياطي يومي تلقائي';
+
+  @override
+  String get backupSize => 'حجم النسخة الاحتياطية';
+
+  @override
+  String totalStorageUsed(Object size) {
+    return 'إجمالي المساحة المستخدمة: $size';
+  }
+
+  @override
+  String get nextScheduled => 'النسخ القادم';
+
+  @override
+  String get dailyAtMidnight => 'يومياً عند منتصف الليل';
+
+  @override
+  String hoursAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'قبل $count ساعة',
+      many: 'قبل $count ساعة',
+      few: 'قبل $count ساعات',
+      two: 'قبل ساعتين',
+      one: 'قبل ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unitGb => 'جيجابايت';
 }

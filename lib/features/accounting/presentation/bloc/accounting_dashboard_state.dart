@@ -1,7 +1,7 @@
-import '../../domain/entities/account_entity.dart';
-import '../../domain/entities/quick_action_entity.dart';
-import '../../domain/entities/stat_entity.dart';
-import '../../domain/entities/transaction_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/account_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/quick_action_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/stat_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/transaction_entity.dart';
 
 abstract class AccountingDashboardState {
   const AccountingDashboardState();

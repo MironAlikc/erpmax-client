@@ -1,7 +1,8 @@
-import 'package:erpmax_client/features/saas_control/data/models/report_models.dart';
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/tables_cards/app_card.dart';
+import 'package:erpmax_client/features/saas_control/data/models/report_models.dart';
+import 'package:flutter/material.dart';
 
 class ReportStatCard extends StatelessWidget {
   final ReportStat stat;
@@ -11,10 +12,9 @@ class ReportStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color trendColor = stat.isUp
-        ? const Color(0xFF12B76A)
-        : const Color(0xFFF04438);
-    final Color trendBg = trendColor.withOpacity(0.05);
+    final theme = context.theme.appColor;
+    final Color trendColor = stat.isUp ? theme.success : theme.error;
+    final Color trendBg = trendColor.withValues(alpha: 0.05);
 
     return SizedBox(
       width: width,
@@ -28,14 +28,10 @@ class ReportStatCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF9FAFB),
+                    color: theme.gray50,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(
-                    stat.icon,
-                    color: const Color(0xFF101828),
-                    size: 24,
-                  ),
+                  child: Icon(stat.icon, color: theme.gray900, size: 24),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -68,9 +64,7 @@ class ReportStatCard extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               stat.title,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: const Color(0xFF667085),
-              ),
+              style: AppTextStyles.bodyMedium.copyWith(color: theme.gray500),
             ),
             const SizedBox(height: 8),
             Text(
@@ -78,7 +72,7 @@ class ReportStatCard extends StatelessWidget {
               style: AppTextStyles.h1.copyWith(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF101828),
+                color: theme.gray900,
               ),
             ),
           ],

@@ -1,13 +1,15 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/utils/card_color_helper.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/stat_card.dart';
 import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/subscriptions_bar_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
-import '../widgets/components/section_header.dart';
-import '../widgets/components/chart_wrapper.dart';
+
 import '../widgets/charts/revenue_line_chart.dart';
+import '../widgets/components/chart_wrapper.dart';
+import '../widgets/components/section_header.dart';
 
 class DashboardContent extends StatelessWidget {
   final double screenWidth;
@@ -16,14 +18,13 @@ class DashboardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
-    // 1. Адаптивная логика
     final bool isMobile = screenWidth < AppDesign.mobileBreakpoint;
     final bool isTablet =
         screenWidth < AppDesign.desktopBreakpoint && !isMobile;
     final bool stackCharts = screenWidth < 1100;
 
-    // 2. Получение данных
     final summaryData = DashboardLocalDataSourceImpl(
       colors: theme,
     ).getSummaryData();
@@ -36,14 +37,13 @@ class DashboardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(title: "Overview"),
+          SectionHeader(title: localizations.overview),
           const SizedBox(height: 20),
 
-          // Сетка карточек
           _buildSummaryGrid(summaryData, isMobile, isTablet, theme),
 
           const SizedBox(height: 32),
-          const SectionHeader(title: "Analytics"),
+          SectionHeader(title: localizations.analytics),
           const SizedBox(height: 20),
 
           // Графики
@@ -52,16 +52,16 @@ class DashboardContent extends StatelessWidget {
             children: [
               Expanded(
                 flex: stackCharts ? 0 : 1,
-                child: const ChartWrapper(
-                  title: "Total Revenue",
+                child: ChartWrapper(
+                  title: localizations.totalRevenue,
                   chart: RevenueLineChart(),
                 ),
               ),
               _buildSpacing(stackCharts),
               Expanded(
                 flex: stackCharts ? 0 : 1,
-                child: const ChartWrapper(
-                  title: "Active Subscriptions",
+                child: ChartWrapper(
+                  title: localizations.activeSubscriptions,
                   chart: SubscriptionsBarChart(),
                 ),
               ),

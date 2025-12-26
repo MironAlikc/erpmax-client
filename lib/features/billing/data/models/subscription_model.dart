@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/subscription_entity.dart';
 
 part 'subscription_model.freezed.dart';

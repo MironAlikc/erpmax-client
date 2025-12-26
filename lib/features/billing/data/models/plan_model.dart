@@ -1,5 +1,5 @@
+import 'package:erpmax_client/features/billing/domain/entities/plan_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/plan_entity.dart';
 
 part 'plan_model.freezed.dart';
 part 'plan_model.g.dart';

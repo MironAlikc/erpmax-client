@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class QuickActionsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -19,7 +21,7 @@ class QuickActionsPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Quick Actions",
+            localizations.quickActions,
             style: AppTextStyles.h2.copyWith(color: theme.white, fontSize: 20),
           ),
           const SizedBox(height: 24),
@@ -31,15 +33,23 @@ class QuickActionsPanel extends StatelessWidget {
             childAspectRatio: 1.3,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              _item(context, Icons.description_outlined, "New Invoice"),
+              _item(
+                context,
+                Icons.description_outlined,
+                localizations.newInvoice,
+              ),
               _item(
                 context,
                 Icons.account_balance_wallet_outlined,
-                "Record Expense",
+                localizations.recordExpense,
               ),
-              _item(context, Icons.swap_horiz, "Transfer"),
-              _item(context, Icons.file_download_outlined, "Import Statement"),
-              _item(context, Icons.menu_book, "General Ledger"),
+              _item(context, Icons.swap_horiz, localizations.transfer),
+              _item(
+                context,
+                Icons.file_download_outlined,
+                localizations.importStatement,
+              ),
+              _item(context, Icons.menu_book, localizations.generalLedger),
             ],
           ),
           const SizedBox(height: 12),

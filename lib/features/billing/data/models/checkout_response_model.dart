@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/checkout_response_entity.dart';
 
 part 'checkout_response_model.freezed.dart';

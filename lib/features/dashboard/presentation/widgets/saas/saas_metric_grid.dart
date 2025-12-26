@@ -1,4 +1,6 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 import 'kpi_card.dart';
 
 class SaasMetricGrid extends StatelessWidget {
@@ -6,30 +8,32 @@ class SaasMetricGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     final List<Map<String, dynamic>> metrics = [
       {
-        'title': 'Total Revenue',
+        'title': localizations.totalRevenue,
         'value': '\$128,430',
         'percent': '12.5%',
         'pos': true,
         'icon': Icons.payments,
       },
       {
-        'title': 'Active Users',
+        'title': localizations.activeUsers,
         'value': '14,210',
         'percent': '8.2%',
         'pos': true,
         'icon': Icons.people,
       },
       {
-        'title': 'Churn Rate',
+        'title': localizations.churnRate,
         'value': '2.4%',
         'percent': '0.5%',
         'pos': false,
         'icon': Icons.trending_down,
       },
       {
-        'title': 'Avg. Session',
+        'title': localizations.avgSession,
         'value': '12m 40s',
         'percent': '3.1%',
         'pos': true,

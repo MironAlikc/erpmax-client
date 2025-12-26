@@ -1,9 +1,11 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum BackupStatus { success, warning }
 
@@ -81,7 +83,7 @@ class _BackupContentState extends State<BackupContent> {
       child: ElevatedButton.icon(
         onPressed: () {},
         icon: const Icon(Icons.add, size: 20),
-        label: const Text("Create Backup"),
+        label: Text(AppLocalizations.of(context).createBackup),
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.gray900,
           foregroundColor: theme.white,
@@ -95,29 +97,35 @@ class _BackupContentState extends State<BackupContent> {
 
   Widget _buildMetricGrid() {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final numberFormat = NumberFormat.decimalPattern(locale);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 900;
+
         final List<Widget> cards = [
           _buildColorStatCard(
-            title: "Last Backup",
-            value: "2 hours ago",
-            subTitle: "Automated Daily Backup",
+            title: localizations.lastBackup,
+            value: localizations.hoursAgo(2),
+            subTitle: localizations.automatedDailyBackup,
             bgColor: theme.indigoBg,
             textColor: theme.indigoText,
           ),
           _buildColorStatCard(
-            title: "Backup Size",
-            value: "1.2 GB",
-            subTitle: "Total storage used: 45 GB",
+            title: localizations.backupSize,
+            value: "${numberFormat.format(1.2)} ${localizations.unitGb}",
+            subTitle: localizations.totalStorageUsed(
+              "45 ${localizations.unitGb}",
+            ),
             bgColor: theme.successBg,
             textColor: theme.activeGreen,
           ),
           _buildColorStatCard(
-            title: "Next Scheduled",
+            title: localizations.nextScheduled,
             value: "22:00:00",
-            subTitle: "Daily at midnight",
+            subTitle: localizations.dailyAtMidnight,
             bgColor: theme.violetBg,
             textColor: theme.violetText,
           ),

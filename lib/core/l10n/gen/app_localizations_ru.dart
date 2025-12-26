@@ -91,7 +91,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get toVerifyAccount => ', чтобы подтвердить свой аккаунт. Спасибо';
 
   @override
-  String get backToHome => 'Вернуться на главную';
+  String get backToHome => 'На главную';
 
   @override
   String get didNotReceiveEmail => 'Не получили письмо? ';
@@ -696,17 +696,198 @@ class AppLocalizationsRu extends AppLocalizations {
   String get statMRR => 'MRR (Выручка)';
 
   @override
-  String get reportSubscriptions => 'تقرير الاشتراكات';
+  String get reportSubscriptions => 'Отчет по подпискам';
 
   @override
-  String get reportRevenue => 'تقرير الإيرادات';
+  String get reportRevenue => 'Отчет по выручке';
 
   @override
-  String get reportCustomers => 'تقرير العملاء';
+  String get reportCustomers => 'Отчет по клиентам';
 
   @override
-  String get reportUsage => 'تقرير الاستخدام';
+  String get reportUsage => 'Отчет по использованию';
 
   @override
-  String get reportPerformance => 'تقرير الأداء';
+  String get reportPerformance => 'Отчет по производительности';
+
+  @override
+  String get totalRevenue => 'Общая выручка';
+
+  @override
+  String get subscriptionStatus => 'Статус подписки';
+
+  @override
+  String get currentPlan => 'Текущий тариф';
+
+  @override
+  String get planStarter => 'Стартовый';
+
+  @override
+  String get perMonth => ' / мес.';
+
+  @override
+  String get upgradePlan => 'Повысить тариф';
+
+  @override
+  String get getMoreFeatures => 'Больше возможностей';
+
+  @override
+  String get downgradePlan => 'Понизить тариф';
+
+  @override
+  String get reduceCosts => 'Снизить расходы';
+
+  @override
+  String get renewalDate => 'Дата продления';
+
+  @override
+  String daysOverdue(Object count) {
+    return 'Просрочено на $count дн.';
+  }
+
+  @override
+  String get mrr => 'MRR (Выручка)';
+
+  @override
+  String get billingCycle => 'Платежный цикл';
+
+  @override
+  String get monthly => 'Ежемесячно';
+
+  @override
+  String get yearly => 'Ежегодно';
+
+  @override
+  String amountSAR(Object amount) {
+    return '$amount SAR';
+  }
+
+  @override
+  String get accountsWatchlist => 'Избранные счета';
+
+  @override
+  String get accountCashOnHand => 'Наличные в кассе';
+
+  @override
+  String get accountBankAlBilad => 'Банк Аль-Билад';
+
+  @override
+  String get accountReceivable => 'Дебиторская задолженность';
+
+  @override
+  String get categoryCurrentAssets => 'Оборотные активы';
+
+  @override
+  String get categoryBankAccounts => 'Банковские счета';
+
+  @override
+  String get quickActions => 'Быстрые действия';
+
+  @override
+  String get newInvoice => 'Новый счет';
+
+  @override
+  String get recordExpense => 'Записать расход';
+
+  @override
+  String get transfer => 'Перевод';
+
+  @override
+  String get importStatement => 'Импорт выписки';
+
+  @override
+  String get recentTransactions => 'Последние операции';
+
+  @override
+  String get recentTransactionsSubtitle =>
+      'Последние финансовые действия и журнальные записи.';
+
+  @override
+  String get totalExpenses => 'Общие расходы';
+
+  @override
+  String get netProfit => 'Чистая прибыль';
+
+  @override
+  String get cashFlow => 'Денежный поток';
+
+  @override
+  String get verifyEmailClickLink =>
+      'Пожалуйста, нажмите на ссылку, отправленную на вашу почту ';
+
+  @override
+  String get verifyEmailFinish => ', чтобы подтвердить ваш аккаунт. Спасибо';
+
+  @override
+  String get didntReceiveEmail => 'Не получили письмо?';
+
+  @override
+  String get verifyEmailSimple =>
+      'Пожалуйста, нажмите на ссылку, отправленную на ваш e-mail';
+
+  @override
+  String get activeUsers => 'Активные пользователи';
+
+  @override
+  String get churnRate => 'Уровень оттока';
+
+  @override
+  String get avgSession => 'Средняя сессия';
+
+  @override
+  String get supportCenter => 'Центр поддержки';
+
+  @override
+  String get getHelp => 'Помощь';
+
+  @override
+  String get moduleInventory => 'Складской учет';
+
+  @override
+  String get moduleHrPayroll => 'Кадры и зарплата';
+
+  @override
+  String get moduleCrm => 'CRM';
+
+  @override
+  String get pkgProfessional => 'Профессиональный';
+
+  @override
+  String get pkgEnterprise => 'Корпоративный';
+
+  @override
+  String get createBackup => 'Создать резервную копию';
+
+  @override
+  String get automatedDailyBackup => 'Автоматический ежедневный бэкап';
+
+  @override
+  String get backupSize => 'Размер бэкапа';
+
+  @override
+  String totalStorageUsed(Object size) {
+    return 'Всего использовано: $size';
+  }
+
+  @override
+  String get nextScheduled => 'Следующий по расписанию';
+
+  @override
+  String get dailyAtMidnight => 'Ежедневно в полночь';
+
+  @override
+  String hoursAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count часов назад',
+      many: '$count часов назад',
+      few: '$count часа назад',
+      one: '$count час назад',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unitGb => 'ГБ';
 }

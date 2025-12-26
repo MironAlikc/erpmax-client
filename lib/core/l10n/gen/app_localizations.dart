@@ -100,7 +100,7 @@ abstract class AppLocalizations {
     Locale('ru'),
   ];
 
-  /// The title of the application
+  /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
   /// **'ERP Max'**
@@ -1443,6 +1443,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Performance Report'**
   String get reportPerformance;
+
+  /// No description provided for @totalRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Revenue'**
+  String get totalRevenue;
+
+  /// No description provided for @subscriptionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Status'**
+  String get subscriptionStatus;
+
+  /// No description provided for @currentPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Plan'**
+  String get currentPlan;
+
+  /// No description provided for @planStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter'**
+  String get planStarter;
+
+  /// No description provided for @perMonth.
+  ///
+  /// In en, this message translates to:
+  /// **' / Month'**
+  String get perMonth;
+
+  /// No description provided for @upgradePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Plan'**
+  String get upgradePlan;
+
+  /// No description provided for @getMoreFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Get more features'**
+  String get getMoreFeatures;
+
+  /// No description provided for @downgradePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Downgrade Plan'**
+  String get downgradePlan;
+
+  /// No description provided for @reduceCosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce costs'**
+  String get reduceCosts;
+
+  /// No description provided for @renewalDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal Date'**
+  String get renewalDate;
+
+  /// No description provided for @daysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days overdue'**
+  String daysOverdue(Object count);
+
+  /// No description provided for @mrr.
+  ///
+  /// In en, this message translates to:
+  /// **'MRR'**
+  String get mrr;
+
+  /// No description provided for @billingCycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Cycle'**
+  String get billingCycle;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get yearly;
+
+  /// No description provided for @amountSAR.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} SAR'**
+  String amountSAR(Object amount);
+
+  /// No description provided for @accountsWatchlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Watchlist'**
+  String get accountsWatchlist;
+
+  /// No description provided for @accountCashOnHand.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Hand'**
+  String get accountCashOnHand;
+
+  /// No description provided for @accountBankAlBilad.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Al-Bilad'**
+  String get accountBankAlBilad;
+
+  /// No description provided for @accountReceivable.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Receivable'**
+  String get accountReceivable;
+
+  /// No description provided for @categoryCurrentAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Assets'**
+  String get categoryCurrentAssets;
+
+  /// No description provided for @categoryBankAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Accounts'**
+  String get categoryBankAccounts;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @newInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'New Invoice'**
+  String get newInvoice;
+
+  /// No description provided for @recordExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Record Expense'**
+  String get recordExpense;
+
+  /// No description provided for @transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get transfer;
+
+  /// No description provided for @importStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Statement'**
+  String get importStatement;
+
+  /// No description provided for @recentTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get recentTransactions;
+
+  /// No description provided for @recentTransactionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest financial activities and journal entries.'**
+  String get recentTransactionsSubtitle;
+
+  /// No description provided for @totalExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expenses'**
+  String get totalExpenses;
+
+  /// No description provided for @netProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Profit'**
+  String get netProfit;
+
+  /// No description provided for @cashFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Flow'**
+  String get cashFlow;
+
+  /// No description provided for @verifyEmailClickLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Please click the link sent to your email '**
+  String get verifyEmailClickLink;
+
+  /// No description provided for @verifyEmailFinish.
+  ///
+  /// In en, this message translates to:
+  /// **' to verify your account. Thank you'**
+  String get verifyEmailFinish;
+
+  /// No description provided for @didntReceiveEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive an email?'**
+  String get didntReceiveEmail;
+
+  /// No description provided for @verifyEmailSimple.
+  ///
+  /// In en, this message translates to:
+  /// **'Please click the link sent to your email'**
+  String get verifyEmailSimple;
+
+  /// No description provided for @activeUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Users'**
+  String get activeUsers;
+
+  /// No description provided for @churnRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Churn Rate'**
+  String get churnRate;
+
+  /// No description provided for @avgSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Session'**
+  String get avgSession;
+
+  /// No description provided for @supportCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Support Center'**
+  String get supportCenter;
+
+  /// No description provided for @getHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Help'**
+  String get getHelp;
+
+  /// No description provided for @moduleInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get moduleInventory;
+
+  /// No description provided for @moduleHrPayroll.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Payroll'**
+  String get moduleHrPayroll;
+
+  /// No description provided for @moduleCrm.
+  ///
+  /// In en, this message translates to:
+  /// **'CRM'**
+  String get moduleCrm;
+
+  /// No description provided for @pkgProfessional.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional'**
+  String get pkgProfessional;
+
+  /// No description provided for @pkgEnterprise.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise'**
+  String get pkgEnterprise;
+
+  /// No description provided for @createBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Backup'**
+  String get createBackup;
+
+  /// No description provided for @automatedDailyBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Automated Daily Backup'**
+  String get automatedDailyBackup;
+
+  /// No description provided for @backupSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Size'**
+  String get backupSize;
+
+  /// No description provided for @totalStorageUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Total storage used: {size}'**
+  String totalStorageUsed(Object size);
+
+  /// No description provided for @nextScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Scheduled'**
+  String get nextScheduled;
+
+  /// No description provided for @dailyAtMidnight.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily at midnight'**
+  String get dailyAtMidnight;
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hour ago} other{{count} hours ago}}'**
+  String hoursAgo(num count);
+
+  /// No description provided for @unitGb.
+  ///
+  /// In en, this message translates to:
+  /// **'GB'**
+  String get unitGb;
 }
 
 class _AppLocalizationsDelegate

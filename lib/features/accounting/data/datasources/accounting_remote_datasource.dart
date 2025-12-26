@@ -1,8 +1,8 @@
-import '../../domain/entities/transaction_entity.dart';
-import '../models/account_model.dart';
-import '../models/quick_action_model.dart';
-import '../models/stat_model.dart';
-import '../models/transaction_model.dart';
+import 'package:erpmax_client/features/accounting/data/models/account_model.dart';
+import 'package:erpmax_client/features/accounting/data/models/quick_action_model.dart';
+import 'package:erpmax_client/features/accounting/data/models/stat_model.dart';
+import 'package:erpmax_client/features/accounting/data/models/transaction_model.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/transaction_entity.dart';
 
 abstract class AccountingRemoteDataSource {
   Future<List<StatModel>> getDashboardStats();

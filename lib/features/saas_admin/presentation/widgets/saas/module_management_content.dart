@@ -26,39 +26,49 @@ class ModuleModel {
 class ModuleManagementContent extends StatelessWidget {
   const ModuleManagementContent({super.key});
 
-  static const List<ModuleModel> _modules = [
-    ModuleModel(
-      name: "Accounting",
-      packages: ["Starter", "Professional", "Enterprise"],
-      version: "v 2.1.0",
-      isActive: true,
-    ),
-    ModuleModel(
-      name: "Inventory",
-      packages: ["Professional", "Enterprise"],
-      version: "v 1.5.2",
-      isActive: true,
-    ),
-    ModuleModel(
-      name: "Sales",
-      packages: ["Starter", "Professional", "Enterprise"],
-      version: "v 2.0.1",
-      isActive: true,
-    ),
-    ModuleModel(
-      name: "HR & Payroll",
-      packages: ["Enterprise"],
-      version: "v 1.0.0",
-      isActive: false,
-      price: 150,
-    ),
-    ModuleModel(
-      name: "CRM",
-      packages: ["Professional", "Enterprise"],
-      version: "v 1.2.0",
-      isActive: true,
-    ),
-  ];
+  static List<ModuleModel> getModules(AppLocalizations localizations) {
+    return [
+      ModuleModel(
+        name: localizations.menuAccounting,
+        packages: [
+          localizations.planStarter,
+          localizations.pkgProfessional,
+          localizations.pkgEnterprise,
+        ],
+        version: "v 2.1.0",
+        isActive: true,
+      ),
+      ModuleModel(
+        name: localizations.menuInventory,
+        packages: [localizations.pkgProfessional, localizations.pkgEnterprise],
+        version: "v 1.5.2",
+        isActive: true,
+      ),
+      ModuleModel(
+        name: localizations.menuSales,
+        packages: [
+          localizations.planStarter,
+          localizations.pkgProfessional,
+          localizations.pkgEnterprise,
+        ],
+        version: "v 2.0.1",
+        isActive: true,
+      ),
+      ModuleModel(
+        name: localizations.moduleHrPayroll,
+        packages: [localizations.pkgEnterprise],
+        version: "v 1.0.0",
+        isActive: false,
+        price: 150,
+      ),
+      ModuleModel(
+        name: localizations.moduleCrm,
+        packages: [localizations.pkgProfessional, localizations.pkgEnterprise],
+        version: "v 1.2.0",
+        isActive: true,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +102,7 @@ class ModuleManagementContent extends StatelessWidget {
   Widget _buildTableContainer(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
+    final modules = getModules(localizations);
 
     return Container(
       decoration: BoxDecoration(
@@ -119,7 +130,7 @@ class ModuleManagementContent extends StatelessWidget {
             textAlign: TextAlign.right,
           ),
         ],
-        items: _modules,
+        items: modules,
         rowBuilder: (item) => [
           Text(
             item.name,

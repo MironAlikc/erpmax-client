@@ -1,20 +1,26 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/components/subscriber_badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../components/subscriber_badges.dart';
 
 class SubscriptionStatusView extends StatelessWidget {
   const SubscriptionStatusView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE5E7EB)),
+            border: Border.all(color: theme.borderLight),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,32 +30,30 @@ class SubscriptionStatusView extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFECFDF5),
+                      color: theme.successLight,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.cube_box,
-                      color: Color(0xFF10B981),
+                      color: theme.success,
                       size: 18,
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Text(
-                    "Subscription Status",
-                    style: TextStyle(
-                      fontSize: 16,
+                  Text(
+                    localizations.subscriptionStatus,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF111827),
+                      color: theme.textPrimary,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-              const Text(
-                "Current Plan",
-                style: TextStyle(
-                  color: Color(0xFF6B7280),
-                  fontSize: 12,
+              Text(
+                localizations.currentPlan,
+                style: AppTextStyles.tableHeader.copyWith(
+                  color: theme.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -57,28 +61,26 @@ class SubscriptionStatusView extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const PlanBadge(text: "Starter"),
+                  PlanBadge(text: localizations.planStarter),
                   const SizedBox(width: 12),
-                  const Text(
+                  Text(
                     "500",
-                    style: TextStyle(
+                    style: AppTextStyles.base.copyWith(
                       fontSize: 28,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF111827),
+                      color: theme.textPrimary,
                     ),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
+                  Text(
                     "SAR",
-                    style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
-                  ),
-                  const Text(
-                    " / Month",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF111827),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: theme.textSecondary,
                     ),
+                  ),
+                  Text(
+                    localizations.perMonth,
+                    style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
                   ),
                   const Spacer(),
                   const ActiveBadge(),
@@ -88,30 +90,37 @@ class SubscriptionStatusView extends StatelessWidget {
               Row(
                 children: [
                   _smallInfoBox(
+                    context,
                     CupertinoIcons.calendar,
-                    "Renewal Date",
-                    "NaN days overdue",
-                    valueColor: const Color(0xFF10B981),
+                    localizations.renewalDate,
+                    localizations.daysOverdue(3),
+                    valueColor: theme.success,
                   ),
                   const SizedBox(width: 16),
                   _smallInfoBox(
+                    context,
                     CupertinoIcons.money_dollar,
-                    "MRR",
-                    "5,000 SAR",
+                    localizations.mrr,
+                    localizations.amountSAR(5.000),
                   ),
                   const SizedBox(width: 16),
                   _smallInfoBox(
+                    context,
                     CupertinoIcons.calendar_badge_minus,
-                    "Billing Cycle",
-                    "Monthly",
+                    localizations.billingCycle,
+                    localizations.monthly,
                   ),
                 ],
               ),
               const SizedBox(height: 32),
-              const ProgressBarSection(label: "Users", current: 5, total: 100),
+              ProgressBarSection(
+                label: localizations.columnUsers,
+                current: 5,
+                total: 100,
+              ),
               const SizedBox(height: 24),
-              const ProgressBarSection(
-                label: "Storage",
+              ProgressBarSection(
+                label: localizations.columnStorage,
                 current: 100,
                 total: 100,
                 unit: "GB",
@@ -124,19 +133,21 @@ class SubscriptionStatusView extends StatelessWidget {
           children: [
             Expanded(
               child: _upgradeActionBox(
+                context,
                 icon: CupertinoIcons.arrow_up_circle,
-                title: "Upgrade Plan",
-                subtitle: "Get more features",
-                color: const Color(0xFF10B981),
+                title: localizations.upgradePlan,
+                subtitle: localizations.getMoreFeatures,
+                color: theme.success,
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _upgradeActionBox(
+                context,
                 icon: CupertinoIcons.arrow_down_circle,
-                title: "Downgrade Plan",
-                subtitle: "Reduce costs",
-                color: const Color(0xFFF59E0B),
+                title: localizations.downgradePlan,
+                subtitle: localizations.reduceCosts,
+                color: theme.warning,
               ),
             ),
           ],
@@ -146,16 +157,19 @@ class SubscriptionStatusView extends StatelessWidget {
   }
 
   Widget _smallInfoBox(
+    BuildContext context,
     IconData icon,
     String label,
     String value, {
     Color? valueColor,
   }) {
+    final theme = context.theme.appColor;
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         decoration: BoxDecoration(
-          color: const Color(0xFFF9FAFB),
+          color: theme.gray50,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -163,13 +177,12 @@ class SubscriptionStatusView extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 14, color: const Color(0xFF9CA3AF)),
+                Icon(icon, size: 14, color: theme.textDisabled),
                 const SizedBox(width: 8),
                 Text(
                   label,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF6B7280),
+                  style: AppTextStyles.tableHeader.copyWith(
+                    color: theme.textSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -178,10 +191,9 @@ class SubscriptionStatusView extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               value,
-              style: TextStyle(
-                fontSize: 15,
+              style: AppTextStyles.base.copyWith(
                 fontWeight: FontWeight.w700,
-                color: valueColor ?? const Color(0xFF111827),
+                color: valueColor ?? theme.textPrimary,
               ),
             ),
           ],
@@ -190,31 +202,34 @@ class SubscriptionStatusView extends StatelessWidget {
     );
   }
 
-  Widget _upgradeActionBox({
+  Widget _upgradeActionBox(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
     required Color color,
   }) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: theme.borderLight),
       ),
       child: Column(
         children: [
           Icon(icon, color: color, size: 28),
           const SizedBox(height: 12),
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-          ),
+          Text(title, style: AppTextStyles.bodyMediumBold),
           const SizedBox(height: 4),
           Text(
             subtitle,
-            style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12),
+            style: AppTextStyles.tableHeader.copyWith(
+              color: theme.textSecondary,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       ),
@@ -238,6 +253,8 @@ class ProgressBarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       children: [
         Row(
@@ -245,18 +262,13 @@ class ProgressBarSection extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF374151),
-              ),
+              style: AppTextStyles.bodySmallBold.copyWith(color: theme.gray700),
             ),
             Text(
               "${current.toInt()}${unit.isNotEmpty ? ' $unit' : ''}/$total${unit.isNotEmpty ? ' $unit' : ''}",
-              style: const TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.bodySmallBold.copyWith(
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF111827),
+                color: theme.textPrimary,
               ),
             ),
           ],
@@ -267,8 +279,8 @@ class ProgressBarSection extends StatelessWidget {
           child: LinearProgressIndicator(
             value: current / total,
             minHeight: 8,
-            backgroundColor: const Color(0xFFF3F4F6),
-            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF111827)),
+            backgroundColor: theme.gray100,
+            valueColor: AlwaysStoppedAnimation<Color>(theme.textPrimary),
           ),
         ),
       ],

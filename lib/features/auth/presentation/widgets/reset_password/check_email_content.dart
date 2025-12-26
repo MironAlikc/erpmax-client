@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -15,6 +16,7 @@ class CheckEmailContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -23,7 +25,7 @@ class CheckEmailContent extends StatelessWidget {
         SvgPicture.asset('assets/svg/reminder.svg', height: 140),
         const SizedBox(height: 32),
         Text(
-          'Check your email',
+          localizations.checkYourEmail,
           style: AppTextStyles.h1.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w800,
@@ -41,7 +43,7 @@ class CheckEmailContent extends StatelessWidget {
               height: 1.5,
             ),
             children: [
-              const TextSpan(text: 'Please click the link sent to your email '),
+              TextSpan(text: localizations.verifyEmailClickLink),
               TextSpan(
                 text: email,
                 style: AppTextStyles.base.copyWith(
@@ -49,13 +51,13 @@ class CheckEmailContent extends StatelessWidget {
                   color: theme.black,
                 ),
               ),
-              const TextSpan(text: ' to verify your account. Thank you'),
+              TextSpan(text: localizations.verifyEmailFinish),
             ],
           ),
         ),
         const SizedBox(height: 32),
         AppButton(
-          text: 'Back to Home',
+          text: localizations.backToHome,
           isExpanded: true,
           onPressed: () => context.go(RouteNames.login),
         ),
@@ -64,13 +66,13 @@ class CheckEmailContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Didn't receive an email? ",
+              localizations.didNotReceiveEmail,
               style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
             ),
             GestureDetector(
               onTap: onResend,
               child: Text(
-                'Resend',
+                localizations.resend,
                 style: AppTextStyles.linkStyle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),

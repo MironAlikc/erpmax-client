@@ -1,7 +1,7 @@
+import 'package:erpmax_client/features/auth/presentation/widgets/auth_base_layout.dart';
+import 'package:erpmax_client/features/auth/presentation/widgets/login/login_banner.dart';
+import 'package:erpmax_client/features/auth/presentation/widgets/reset_password/password_success_content.dart';
 import 'package:flutter/material.dart';
-import '../widgets/auth_base_layout.dart';
-import '../widgets/login/login_banner.dart';
-import '../widgets/reset_password/password_success_content.dart'; // Выносим контент
 
 class ResetPasswordSuccessPage extends StatelessWidget {
   const ResetPasswordSuccessPage({super.key});
