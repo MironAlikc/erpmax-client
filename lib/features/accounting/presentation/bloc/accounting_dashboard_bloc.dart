@@ -1,9 +1,10 @@
+import 'package:erpmax_client/core/usecases/usecase.dart';
+import 'package:erpmax_client/features/accounting/domain/usecases/get_accounts_watchlist_usecase.dart';
+import 'package:erpmax_client/features/accounting/domain/usecases/get_dashboard_stats_usecase.dart';
+import 'package:erpmax_client/features/accounting/domain/usecases/get_quick_actions_usecase.dart';
+import 'package:erpmax_client/features/accounting/domain/usecases/get_recent_transactions_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../../domain/usecases/get_accounts_watchlist_usecase.dart';
-import '../../domain/usecases/get_dashboard_stats_usecase.dart';
-import '../../domain/usecases/get_quick_actions_usecase.dart';
-import '../../domain/usecases/get_recent_transactions_usecase.dart';
+
 import 'accounting_dashboard_event.dart';
 import 'accounting_dashboard_state.dart';
 

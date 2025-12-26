@@ -100,7 +100,7 @@ abstract class AppLocalizations {
     Locale('ru'),
   ];
 
-  /// The title of the application
+  /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
   /// **'ERP Max'**
@@ -1443,6 +1443,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Performance Report'**
   String get reportPerformance;
+
+  /// No description provided for @totalRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Revenue'**
+  String get totalRevenue;
+
+  /// No description provided for @subscriptionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Status'**
+  String get subscriptionStatus;
+
+  /// No description provided for @currentPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Plan'**
+  String get currentPlan;
+
+  /// No description provided for @planStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter'**
+  String get planStarter;
+
+  /// No description provided for @perMonth.
+  ///
+  /// In en, this message translates to:
+  /// **' / Month'**
+  String get perMonth;
+
+  /// No description provided for @upgradePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Plan'**
+  String get upgradePlan;
+
+  /// No description provided for @getMoreFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Get more features'**
+  String get getMoreFeatures;
+
+  /// No description provided for @downgradePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Downgrade Plan'**
+  String get downgradePlan;
+
+  /// No description provided for @reduceCosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce costs'**
+  String get reduceCosts;
+
+  /// No description provided for @renewalDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal Date'**
+  String get renewalDate;
+
+  /// No description provided for @daysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days overdue'**
+  String daysOverdue(Object count);
+
+  /// No description provided for @mrr.
+  ///
+  /// In en, this message translates to:
+  /// **'MRR'**
+  String get mrr;
+
+  /// No description provided for @billingCycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Cycle'**
+  String get billingCycle;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get yearly;
+
+  /// No description provided for @amountSAR.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} SAR'**
+  String amountSAR(Object amount);
+
+  /// No description provided for @accountsWatchlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Watchlist'**
+  String get accountsWatchlist;
+
+  /// No description provided for @accountCashOnHand.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Hand'**
+  String get accountCashOnHand;
+
+  /// No description provided for @accountBankAlBilad.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Al-Bilad'**
+  String get accountBankAlBilad;
+
+  /// No description provided for @accountReceivable.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Receivable'**
+  String get accountReceivable;
+
+  /// No description provided for @categoryCurrentAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Assets'**
+  String get categoryCurrentAssets;
+
+  /// No description provided for @categoryBankAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Accounts'**
+  String get categoryBankAccounts;
 }
 
 class _AppLocalizationsDelegate

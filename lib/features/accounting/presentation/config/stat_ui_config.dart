@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class StatUIConfig {
@@ -17,7 +18,7 @@ class StatUIConfig {
   }
 
   static Color getColorForStat(String title, BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
+    final theme = context.theme.appColor;
 
     switch (title.toLowerCase()) {
       case 'total revenue':
@@ -25,9 +26,9 @@ class StatUIConfig {
       case 'total expenses':
         return theme.error;
       case 'net profit':
-        return Colors.green;
+        return theme.success;
       case 'cash flow':
-        return Colors.blue;
+        return theme.info;
       default:
         return theme.primary;
     }

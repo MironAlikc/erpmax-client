@@ -706,4 +706,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportPerformance => 'Performance Report';
+
+  @override
+  String get totalRevenue => 'Total Revenue';
+
+  @override
+  String get subscriptionStatus => 'Subscription Status';
+
+  @override
+  String get currentPlan => 'Current Plan';
+
+  @override
+  String get planStarter => 'Starter';
+
+  @override
+  String get perMonth => ' / Month';
+
+  @override
+  String get upgradePlan => 'Upgrade Plan';
+
+  @override
+  String get getMoreFeatures => 'Get more features';
+
+  @override
+  String get downgradePlan => 'Downgrade Plan';
+
+  @override
+  String get reduceCosts => 'Reduce costs';
+
+  @override
+  String get renewalDate => 'Renewal Date';
+
+  @override
+  String daysOverdue(Object count) {
+    return '$count days overdue';
+  }
+
+  @override
+  String get mrr => 'MRR';
+
+  @override
+  String get billingCycle => 'Billing Cycle';
+
+  @override
+  String get monthly => 'Monthly';
+
+  @override
+  String get yearly => 'Yearly';
+
+  @override
+  String amountSAR(Object amount) {
+    return '$amount SAR';
+  }
+
+  @override
+  String get accountsWatchlist => 'Accounts Watchlist';
+
+  @override
+  String get accountCashOnHand => 'Cash on Hand';
+
+  @override
+  String get accountBankAlBilad => 'Bank Al-Bilad';
+
+  @override
+  String get accountReceivable => 'Accounts Receivable';
+
+  @override
+  String get categoryCurrentAssets => 'Current Assets';
+
+  @override
+  String get categoryBankAccounts => 'Bank Accounts';
 }

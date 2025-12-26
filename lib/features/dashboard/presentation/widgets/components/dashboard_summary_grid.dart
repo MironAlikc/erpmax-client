@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/utils/card_color_helper.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/stat_card.dart';
 import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
+import 'package:flutter/material.dart';
 
 class DashboardSummaryGrid extends StatelessWidget {
   final double screenWidth;
@@ -14,7 +14,6 @@ class DashboardSummaryGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    // Адаптивная логика колонок
     final bool isMobile = screenWidth < AppDesign.mobileBreakpoint;
     final bool isTablet =
         screenWidth < AppDesign.desktopBreakpoint && !isMobile;

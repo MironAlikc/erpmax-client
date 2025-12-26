@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get country => 'الدولة';
 
   @override
-  String get visits => 'Зиярат';
+  String get visits => 'الزيارات';
 
   @override
   String get lastVisit => 'آخر زيارة';
@@ -128,7 +128,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get slide4Title => 'وصول آمن';
 
   @override
-  String get slide4Sub => 'مصادقة متعددة العوامل للحفاظ на سلامة بياناتك.';
+  String get slide4Sub => 'مصادقة متعددة العوامل للحفاظ على سلامة بياناتك.';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -220,7 +220,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterPassword => 'أدخل كلمة السر';
 
   @override
-  String get errInvalidRequest => 'طلب غير صالحة';
+  String get errInvalidRequest => 'طلب غير صالح';
 
   @override
   String get errUnauthorized => 'غير مصرح به';
@@ -691,17 +691,87 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statMRR => 'العائد الشهري المتكرر';
 
   @override
-  String get reportSubscriptions => 'Subscriptions Report';
+  String get reportSubscriptions => 'تقرير الاشتراكات';
 
   @override
-  String get reportRevenue => 'Revenue Report';
+  String get reportRevenue => 'تقرير الإيرادات';
 
   @override
-  String get reportCustomers => 'Customers Report';
+  String get reportCustomers => 'تقرير العملاء';
 
   @override
-  String get reportUsage => 'Usage Report';
+  String get reportUsage => 'تقرير الاستخدام';
 
   @override
-  String get reportPerformance => 'Performance Report';
+  String get reportPerformance => 'تقرير الأداء';
+
+  @override
+  String get totalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get subscriptionStatus => 'حالة الاشتراك';
+
+  @override
+  String get currentPlan => 'الخطة الحالية';
+
+  @override
+  String get planStarter => 'الباقة الأساسية';
+
+  @override
+  String get perMonth => ' / شهرياً';
+
+  @override
+  String get upgradePlan => 'ترقية الخطة';
+
+  @override
+  String get getMoreFeatures => 'الحصول على مزايا أكثر';
+
+  @override
+  String get downgradePlan => 'تخفيض الخطة';
+
+  @override
+  String get reduceCosts => 'تقليل التكاليف';
+
+  @override
+  String get renewalDate => 'تاريخ التجديد';
+
+  @override
+  String daysOverdue(Object count) {
+    return 'متأخر منذ $count يوم';
+  }
+
+  @override
+  String get mrr => 'العائد الشهري';
+
+  @override
+  String get billingCycle => 'دورة الفوترة';
+
+  @override
+  String get monthly => 'شهرياً';
+
+  @override
+  String get yearly => 'سنوياً';
+
+  @override
+  String amountSAR(Object amount) {
+    return '$amount ر.س';
+  }
+
+  @override
+  String get accountsWatchlist => 'قائمة مراقبة الحسابات';
+
+  @override
+  String get accountCashOnHand => 'النقدية في الصندوق';
+
+  @override
+  String get accountBankAlBilad => 'بنك البلاد';
+
+  @override
+  String get accountReceivable => 'الحسابات المدينة';
+
+  @override
+  String get categoryCurrentAssets => 'الأصول المتداولة';
+
+  @override
+  String get categoryBankAccounts => 'الحسابات البنكية';
 }

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -9,6 +10,7 @@ class AccountsWatchlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -20,15 +22,25 @@ class AccountsWatchlist extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Accounts Watchlist", style: AppTextStyles.h3),
+          Text(localizations.accountsWatchlist, style: AppTextStyles.h3),
           const SizedBox(height: 20),
-          _item(context, "Cash on Hand", "1110 - Current Assets", "\$12,450"),
-          _divider(theme),
-          _item(context, "Bank Al-Bilad", "1120 - Bank Accounts", "\$85,200"),
+          _item(
+            context,
+            localizations.accountCashOnHand,
+            "1110 - Current Assets",
+            "\$12,450",
+          ),
           _divider(theme),
           _item(
             context,
-            "Accounts Receivable",
+            localizations.accountBankAlBilad,
+            "1120 - Bank Accounts",
+            "\$85,200",
+          ),
+          _divider(theme),
+          _item(
+            context,
+            localizations.accountReceivable,
             "1130 - Current Assets",
             "\$45,100",
           ),

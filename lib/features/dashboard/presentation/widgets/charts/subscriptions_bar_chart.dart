@@ -1,7 +1,9 @@
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SubscriptionsBarChart extends StatelessWidget {
   const SubscriptionsBarChart({super.key});
@@ -29,22 +31,20 @@ class SubscriptionsBarChart extends StatelessWidget {
         ),
         titlesData: FlTitlesData(
           show: true,
-          // Скрываем верхние и правые подписи
           rightTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
           topTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
-          // Настройка месяцев снизу
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              getTitlesWidget: (value, meta) => _buildMonthTitles(value, theme),
+              getTitlesWidget: (value, meta) =>
+                  _buildMonthTitles(context, value),
               reservedSize: 30,
             ),
           ),
-          // Настройка шкалы слева
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -75,8 +75,7 @@ class SubscriptionsBarChart extends StatelessWidget {
     );
   }
 
-  // Данные для столбцов
-  List<BarChartGroupData> _getBarGroups(theme) {
+  List<BarChartGroupData> _getBarGroups(AppColorExtension theme) {
     final List<double> values = [85, 125, 160, 195, 235, 265, 290];
 
     return List.generate(values.length, (index) {
@@ -85,13 +84,13 @@ class SubscriptionsBarChart extends StatelessWidget {
         barRods: [
           BarChartRodData(
             toY: values[index],
-            color: theme.textPrimary, // Темный цвет столбцов для контраста
+            color: theme.textPrimary,
             width: 22,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
             backDrawRodData: BackgroundBarChartRodData(
               show: true,
               toY: 300,
-              color: theme.gray100.withOpacity(0.5),
+              color: theme.gray100.withValues(alpha: 0.5),
             ),
           ),
         ],
@@ -99,18 +98,25 @@ class SubscriptionsBarChart extends StatelessWidget {
     });
   }
 
-  // Подписи месяцев
-  Widget _buildMonthTitles(double value, theme) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-    if (value.toInt() < 0 || value.toInt() >= months.length)
+  Widget _buildMonthTitles(BuildContext context, double value) {
+    int monthIndex = value.toInt() + 1;
+
+    if (monthIndex < 1 || monthIndex > 12) {
       return const SizedBox();
+    }
+
+    final String locale = Localizations.localeOf(context).languageCode;
+
+    final String monthName = DateFormat.MMM(
+      locale,
+    ).format(DateTime(2025, monthIndex));
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Text(
-        months[value.toInt()],
+        monthName,
         style: AppTextStyles.bodySmall.copyWith(
-          color: theme.gray400,
+          color: context.theme.appColor.gray400,
           fontWeight: FontWeight.w500,
         ),
       ),

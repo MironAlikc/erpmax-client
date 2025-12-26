@@ -696,17 +696,87 @@ class AppLocalizationsRu extends AppLocalizations {
   String get statMRR => 'MRR (Выручка)';
 
   @override
-  String get reportSubscriptions => 'تقرير الاشتراكات';
+  String get reportSubscriptions => 'Отчет по подпискам';
 
   @override
-  String get reportRevenue => 'تقرير الإيرادات';
+  String get reportRevenue => 'Отчет по выручке';
 
   @override
-  String get reportCustomers => 'تقرير العملاء';
+  String get reportCustomers => 'Отчет по клиентам';
 
   @override
-  String get reportUsage => 'تقرير الاستخدام';
+  String get reportUsage => 'Отчет по использованию';
 
   @override
-  String get reportPerformance => 'تقرير الأداء';
+  String get reportPerformance => 'Отчет по производительности';
+
+  @override
+  String get totalRevenue => 'Общая выручка';
+
+  @override
+  String get subscriptionStatus => 'Статус подписки';
+
+  @override
+  String get currentPlan => 'Текущий тариф';
+
+  @override
+  String get planStarter => 'Стартовый';
+
+  @override
+  String get perMonth => ' / мес.';
+
+  @override
+  String get upgradePlan => 'Повысить тариф';
+
+  @override
+  String get getMoreFeatures => 'Больше возможностей';
+
+  @override
+  String get downgradePlan => 'Понизить тариф';
+
+  @override
+  String get reduceCosts => 'Снизить расходы';
+
+  @override
+  String get renewalDate => 'Дата продления';
+
+  @override
+  String daysOverdue(Object count) {
+    return 'Просрочено на $count дн.';
+  }
+
+  @override
+  String get mrr => 'MRR (Выручка)';
+
+  @override
+  String get billingCycle => 'Платежный цикл';
+
+  @override
+  String get monthly => 'Ежемесячно';
+
+  @override
+  String get yearly => 'Ежегодно';
+
+  @override
+  String amountSAR(Object amount) {
+    return '$amount SAR';
+  }
+
+  @override
+  String get accountsWatchlist => 'Избранные счета';
+
+  @override
+  String get accountCashOnHand => 'Наличные в кассе';
+
+  @override
+  String get accountBankAlBilad => 'Банк Аль-Билад';
+
+  @override
+  String get accountReceivable => 'Дебиторская задолженность';
+
+  @override
+  String get categoryCurrentAssets => 'Оборотные активы';
+
+  @override
+  String get categoryBankAccounts => 'Банковские счета';
 }

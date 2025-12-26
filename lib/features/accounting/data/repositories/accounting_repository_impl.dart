@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
-import '../../domain/entities/account_entity.dart';
-import '../../domain/entities/quick_action_entity.dart';
-import '../../domain/entities/stat_entity.dart';
-import '../../domain/entities/transaction_entity.dart';
-import '../../domain/repositories/accounting_repository.dart';
-import '../datasources/accounting_remote_datasource.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/accounting/data/datasources/accounting_remote_datasource.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/account_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/quick_action_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/stat_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/entities/transaction_entity.dart';
+import 'package:erpmax_client/features/accounting/domain/repositories/accounting_repository.dart';
 
 class AccountingRepositoryImpl implements AccountingRepository {
   final AccountingRemoteDataSource remoteDataSource;
