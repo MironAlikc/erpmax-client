@@ -115,7 +115,7 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
         context.read<TabNavigationService>().updateTabs(
           _moduleTabs,
           _tabController,
-          branchIndex: 11, // Явно указываем ветку
+          branchIndex: 11,
         );
       }
     });

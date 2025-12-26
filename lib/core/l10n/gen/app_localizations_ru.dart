@@ -500,4 +500,213 @@ class AppLocalizationsRu extends AppLocalizations {
   String todayAt(Object time) {
     return 'Сегодня $time';
   }
+
+  @override
+  String get filterAllSub => 'Все подписки';
+
+  @override
+  String get filterClient => 'Клиент';
+
+  @override
+  String get filterAllDate => 'Все даты';
+
+  @override
+  String get filterAllPackages => 'Все пакеты';
+
+  @override
+  String get filterAllStatuses => 'Все статусы';
+
+  @override
+  String get filterMore => 'Доп. фильтры';
+
+  @override
+  String get packagePricing => 'Пакеты и цены';
+
+  @override
+  String get moduleManagement => 'Управление модулями';
+
+  @override
+  String get profiles => 'Профили';
+
+  @override
+  String get resetFilters => 'Сбросить фильтры';
+
+  @override
+  String get newSubscription => 'Новая подписка';
+
+  @override
+  String get searchSubscriptions => 'Поиск подписок...';
+
+  @override
+  String get columnCompanyName => 'Название компании';
+
+  @override
+  String get columnEndDate => 'Дата окончания';
+
+  @override
+  String get columnTags => 'Теги';
+
+  @override
+  String get columnPaymentStatus => 'Статус оплаты';
+
+  @override
+  String get search => 'Поиск...';
+
+  @override
+  String get print => 'Печать';
+
+  @override
+  String get export => 'Экспорт';
+
+  @override
+  String get newModule => 'Новый модуль';
+
+  @override
+  String get createPackage => 'Создать пакет';
+
+  @override
+  String get addSubscriber => 'Добавить подписчика';
+
+  @override
+  String get action => 'Действие';
+
+  @override
+  String get success => 'Успешно';
+
+  @override
+  String get failed => 'Ошибка';
+
+  @override
+  String get device => 'Устройство';
+
+  @override
+  String get accessLogs => 'Журналы доступа';
+
+  @override
+  String get company => 'Компания';
+
+  @override
+  String get moduleDescriptionStandard =>
+      'Стандартный ERP-модуль с полным функционалом.';
+
+  @override
+  String get moduleName => 'Название модуля';
+
+  @override
+  String get assignedPackages => 'Назначенные пакеты';
+
+  @override
+  String get version => 'Версия';
+
+  @override
+  String get active => 'Активен';
+
+  @override
+  String get inactive => 'Неактивен';
+
+  @override
+  String get historyLogs => 'Журналы истории';
+
+  @override
+  String get moduleProfile => 'Профиль модуля';
+
+  @override
+  String get editModule => 'Редактировать модуль';
+
+  @override
+  String versionFormat(Object version) {
+    return 'Версия: $version';
+  }
+
+  @override
+  String basePriceFormat(Object price) {
+    return 'Базовая цена: $price SAR';
+  }
+
+  @override
+  String get updateHistory => 'История обновлений';
+
+  @override
+  String get blocked => 'Заблокирован';
+
+  @override
+  String ipDetails(Object ipAddress) {
+    return 'Данные IP: $ipAddress';
+  }
+
+  @override
+  String visitorStats(Object count, Object country) {
+    return 'Посетитель из $country заходил $count раз.';
+  }
+
+  @override
+  String get close => 'Закрыть';
+
+  @override
+  String get columnTenant => 'Клиент';
+
+  @override
+  String get columnPlan => 'Тариф';
+
+  @override
+  String get columnUsers => 'Пользователи';
+
+  @override
+  String get columnRenewalDate => 'Дата продления';
+
+  @override
+  String get columnStorage => 'Хранилище';
+
+  @override
+  String get searchTenants => 'Поиск клиентов...';
+
+  @override
+  String get statusExpired => 'Истек';
+
+  @override
+  String get statusTrial => 'Пробный';
+
+  @override
+  String get statusSuspended => 'Приостановлен';
+
+  @override
+  String get errorGeneral =>
+      'Что-то пошло не так. Пожалуйста, обновите страницу.';
+
+  @override
+  String paginationShowing(Object current, Object total) {
+    return 'Показано $current из $total клиентов';
+  }
+
+  @override
+  String totalUsersCount(Object count) {
+    return 'Всего пользователей: $count';
+  }
+
+  @override
+  String get clickForDetails => 'Нажмите для подробностей';
+
+  @override
+  String get statTotalTenants => 'Всего клиентов';
+
+  @override
+  String get statTrialAccounts => 'Пробные аккаунты';
+
+  @override
+  String get statMRR => 'MRR (Выручка)';
+
+  @override
+  String get reportSubscriptions => 'تقرير الاشتراكات';
+
+  @override
+  String get reportRevenue => 'تقرير الإيرادات';
+
+  @override
+  String get reportCustomers => 'تقرير العملاء';
+
+  @override
+  String get reportUsage => 'تقرير الاستخدام';
+
+  @override
+  String get reportPerformance => 'تقرير الأداء';
 }

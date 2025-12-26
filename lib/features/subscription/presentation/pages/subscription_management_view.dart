@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -78,29 +79,35 @@ class _SubscriptionManagementViewState
     ),
   ];
 
-  late final List<ErpMaxColumn> _columns;
+  List<ErpMaxColumn> _getColumns(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
 
-  @override
-  void initState() {
-    super.initState();
-    _columns = [
+    return [
       ErpMaxColumn(
-        title: 'Company Name',
+        title: localizations.columnCompanyName,
         weight: 2.5,
         isSortable: true,
         sortKey: 'name',
       ),
-      ErpMaxColumn(title: 'Package', weight: 1.5),
+      ErpMaxColumn(title: localizations.package, weight: 1.5),
       ErpMaxColumn(
-        title: 'End Date',
+        title: localizations.columnEndDate,
         weight: 1.2,
         isSortable: true,
         sortKey: 'date',
       ),
-      ErpMaxColumn(title: 'Tags', weight: 1.0, textAlign: TextAlign.center),
-      ErpMaxColumn(title: 'Amount', weight: 1.0, textAlign: TextAlign.right),
       ErpMaxColumn(
-        title: 'Payment Status',
+        title: localizations.columnTags,
+        weight: 1.0,
+        textAlign: TextAlign.center,
+      ),
+      ErpMaxColumn(
+        title: localizations.amount,
+        weight: 1.0,
+        textAlign: TextAlign.right,
+      ),
+      ErpMaxColumn(
+        title: localizations.columnPaymentStatus,
         weight: 1.2,
         textAlign: TextAlign.center,
       ),
@@ -111,6 +118,7 @@ class _SubscriptionManagementViewState
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final columns = _getColumns(context);
 
     return Scaffold(
       backgroundColor: theme.white,
@@ -127,7 +135,7 @@ class _SubscriptionManagementViewState
               Divider(height: 1, color: theme.gray200),
               Expanded(
                 child: ErpMaxDataTable<SubscriptionData>(
-                  columns: _columns,
+                  columns: columns,
                   items: _data,
                   onRowTap: (item) => debugPrint('Tapped on ${item.company}'),
                   rowBuilder: (item) => [
@@ -167,11 +175,14 @@ class _SubscriptionManagementViewState
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Subscribers', style: AppTextStyles.h2),
+                Text(
+                  AppLocalizations.of(context).subscribers,
+                  style: AppTextStyles.h2,
+                ),
                 const SizedBox(height: 16),
-                const AppSearchField(
+                AppSearchField(
                   width: double.infinity,
-                  hintText: "Search company...",
+                  hintText: AppLocalizations.of(context).searchCompany,
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -185,9 +196,15 @@ class _SubscriptionManagementViewState
             )
           : Row(
               children: [
-                Text('Subscribers', style: AppTextStyles.h2),
+                Text(
+                  AppLocalizations.of(context).subscribers,
+                  style: AppTextStyles.h2,
+                ),
                 const Spacer(),
-                const AppSearchField(width: 300, hintText: "Search company..."),
+                AppSearchField(
+                  width: 300,
+                  hintText: AppLocalizations.of(context).searchCompany,
+                ),
                 const SizedBox(width: 12),
                 _resetButton(),
                 const SizedBox(width: 12),
@@ -198,14 +215,14 @@ class _SubscriptionManagementViewState
   }
 
   Widget _resetButton() => AppButton(
-    text: 'Reset',
+    text: AppLocalizations.of(context).btnReset,
     type: AppButtonType.outline,
     icon: Icons.refresh,
     onPressed: () => debugPrint("Filters reset"),
   );
 
   Widget _newButton() => AppButton(
-    text: 'New Subscription',
+    text: AppLocalizations.of(context).newSubscription,
     type: AppButtonType.primary,
     icon: Icons.add,
     onPressed: () => debugPrint("New clicked"),
@@ -221,19 +238,24 @@ class PageTabs extends StatefulWidget {
 
 class _PageTabsState extends State<PageTabs> {
   int activeIndex = 1;
-  final tabs = [
-    'Dashboard',
-    'Subscription Management',
-    'Package & Pricing',
-    'Module Management',
-    'Backups',
-    'Reports',
-    'Profiles',
-  ];
+
+  List<String> getTabs(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    return [
+      localizations.menuDashboard,
+      localizations.subscriptionManagement,
+      localizations.packagePricing,
+      localizations.moduleManagement,
+      localizations.recentBackups,
+      localizations.reports,
+      localizations.profiles,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final tabs = getTabs(context);
 
     return Container(
       width: double.infinity,
@@ -282,6 +304,7 @@ class QuickFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -295,11 +318,11 @@ class QuickFilterBar extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _filterChip('All SUB', context),
-                  _filterChip('Client', context),
-                  _filterChip('All Date', context),
-                  _filterChip('All Packages', context),
-                  _filterChip('All Statuses', context),
+                  _filterChip(localizations.filterAllSub, context),
+                  _filterChip(localizations.filterClient, context),
+                  _filterChip(localizations.filterAllDate, context),
+                  _filterChip(localizations.filterAllPackages, context),
+                  _filterChip(localizations.filterAllStatuses, context),
                 ],
               ),
             ),
@@ -307,7 +330,7 @@ class QuickFilterBar extends StatelessWidget {
           TextButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.filter_alt_outlined, size: 18),
-            label: const Text("More Filters"),
+            label: Text(localizations.filterMore),
           ),
         ],
       ),

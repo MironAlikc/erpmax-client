@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -63,7 +64,9 @@ class SaaSModuleHeader extends StatelessWidget {
           if (isMobile)
             Padding(
               padding: const EdgeInsets.only(top: 12),
-              child: AppSearchField(hintText: "Search..."),
+              child: AppSearchField(
+                hintText: AppLocalizations.of(context).search,
+              ),
             ),
         ],
       ),
@@ -77,18 +80,20 @@ class _HeaderActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     if (currentTab.actionType == 'report') {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           _ActionButton(
-            label: "Print",
+            label: localizations.print,
             icon: Icons.print_outlined,
             onPressed: () {},
           ),
           const SizedBox(width: 12),
           _ActionButton(
-            label: "Export",
+            label: localizations.export,
             icon: Icons.file_download_outlined,
             isPrimary: true,
             color: context.theme.appColor.success,
@@ -101,7 +106,7 @@ class _HeaderActions extends StatelessWidget {
     if (currentTab.actionType == 'add' ||
         currentTab.actionType == 'dashboard') {
       return _ActionButton(
-        label: _getLabel(currentTab.id),
+        label: _getLabel(context, currentTab.id),
         icon: _getIcon(currentTab.id),
         isPrimary: true,
         onPressed: () {},
@@ -111,11 +116,14 @@ class _HeaderActions extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-  String _getLabel(String id) {
-    if (id.contains('module')) return "New Module";
-    if (id.contains('package')) return "Create Package";
-    if (id.contains('subscriber')) return "Add Subscriber";
-    return "Action";
+  String _getLabel(BuildContext context, String id) {
+    final localizations = AppLocalizations.of(context);
+
+    if (id.contains('module')) return localizations.newModule;
+    if (id.contains('package')) return localizations.createPackage;
+    if (id.contains('subscriber')) return localizations.addSubscriber;
+
+    return localizations.action;
   }
 
   IconData _getIcon(String id) {

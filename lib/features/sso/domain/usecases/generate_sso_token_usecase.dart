@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/sso/domain/entities/sso_token_entity.dart';
+import 'package:erpmax_client/features/sso/domain/repositories/sso_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../entities/sso_token_entity.dart';
-import '../repositories/sso_repository.dart';
 
 @injectable
 class GenerateSSOTokenUseCase {

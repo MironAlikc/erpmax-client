@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class ActionAndFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       color: theme.white,
@@ -15,15 +17,25 @@ class ActionAndFilterBar extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            "Subscription Management",
+            localizations.subscriptionManagement,
             style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
           ),
           const Spacer(),
           _buildSearchField(context),
           const SizedBox(width: 12),
-          _buildActionButton(context, "Reset Filters", Icons.refresh, false),
+          _buildActionButton(
+            context,
+            localizations.resetFilters,
+            Icons.refresh,
+            false,
+          ),
           const SizedBox(width: 12),
-          _buildActionButton(context, "New Subscription", Icons.add, true),
+          _buildActionButton(
+            context,
+            localizations.newSubscription,
+            Icons.add,
+            true,
+          ),
         ],
       ),
     );
@@ -37,7 +49,7 @@ class ActionAndFilterBar extends StatelessWidget {
       height: 40,
       child: TextField(
         decoration: InputDecoration(
-          hintText: "Search subscriptions...",
+          hintText: AppLocalizations.of(context).searchSubscriptions,
           prefixIcon: const Icon(Icons.search, size: 20),
           filled: true,
           fillColor: theme.gray50,

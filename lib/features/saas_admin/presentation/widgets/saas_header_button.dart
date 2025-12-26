@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class SaaSHeaderButton extends StatelessWidget {
@@ -16,15 +18,11 @@ class SaaSHeaderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color backgroundColor = isPrimary
-        ? const Color(0xFF10B981)
-        : Colors.white;
-    final Color contentColor = isPrimary
-        ? Colors.white
-        : const Color(0xFF374151);
-    final Color borderColor = isPrimary
-        ? Colors.transparent
-        : const Color(0xFFE5E7EB);
+    final theme = context.theme.appColor;
+
+    final Color backgroundColor = isPrimary ? theme.success : theme.white;
+    final Color contentColor = isPrimary ? theme.white : theme.gray700;
+    final Color borderColor = isPrimary ? Colors.transparent : theme.gray200;
 
     return Container(
       margin: const EdgeInsets.only(left: 12),
@@ -35,7 +33,7 @@ class SaaSHeaderButton extends StatelessWidget {
         boxShadow: [
           if (isPrimary)
             BoxShadow(
-              color: const Color(0xFF10B981).withOpacity(0.2),
+              color: theme.shadowColor.withValues(alpha: 0.2),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -55,10 +53,8 @@ class SaaSHeaderButton extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   label,
-                  style: TextStyle(
+                  style: AppTextStyles.bodyMediumBold.copyWith(
                     color: contentColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
                   ),
                 ),
               ],

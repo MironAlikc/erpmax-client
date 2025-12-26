@@ -1,3 +1,5 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
@@ -102,14 +104,20 @@ class SubscribersContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     final List<ErpMaxColumn> columns = [
-      ErpMaxColumn(title: "Tenant", weight: 0.22),
-      ErpMaxColumn(title: "Plan", weight: 0.12),
-      ErpMaxColumn(title: "Status", weight: 0.12),
-      ErpMaxColumn(title: "Users", weight: 0.16),
-      ErpMaxColumn(title: "Storage", weight: 0.16),
-      ErpMaxColumn(title: "Renewal Date", weight: 0.15),
-      ErpMaxColumn(title: "Actions", weight: 0.05, textAlign: TextAlign.right),
+      ErpMaxColumn(title: localizations.columnTenant, weight: 0.22),
+      ErpMaxColumn(title: localizations.columnPlan, weight: 0.12),
+      ErpMaxColumn(title: localizations.status, weight: 0.12),
+      ErpMaxColumn(title: localizations.columnUsers, weight: 0.16),
+      ErpMaxColumn(title: localizations.columnStorage, weight: 0.16),
+      ErpMaxColumn(title: localizations.columnRenewalDate, weight: 0.15),
+      ErpMaxColumn(
+        title: localizations.actions,
+        weight: 0.05,
+        textAlign: TextAlign.right,
+      ),
     ];
 
     return SingleChildScrollView(
@@ -117,9 +125,9 @@ class SubscribersContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildTopStatsRow(),
+          _buildTopStatsRow(context),
           const SizedBox(height: 24),
-          _buildSearchField(),
+          _buildSearchField(context),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
@@ -136,28 +144,30 @@ class SubscribersContent extends StatelessWidget {
                     return ErpMaxRow(
                       columns: columns,
                       cells: [
-                        _buildTenantCell(item),
-                        _buildPlanBadge(item.planName),
-                        _buildStatusBadge(item.status),
+                        _buildTenantCell(context, item),
+                        _buildPlanBadge(context, item.planName),
+                        _buildStatusBadge(context, item.status),
                         _buildProgressCell(
+                          context,
                           item.currentUsers,
                           item.maxUsers,
                           Icons.people_outline,
                           "",
                         ),
                         _buildProgressCell(
+                          context,
                           item.currentStorage.toInt(),
                           item.maxStorage.toInt(),
                           Icons.inventory_2_outlined,
                           "GB",
                         ),
-                        _buildDateCell(item.renewalDate),
+                        _buildDateCell(context, item.renewalDate),
                         const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
                       ],
                     );
                   }).toList(),
                 ),
-                _buildPaginationFooter(),
+                _buildPaginationFooter(context),
               ],
             ),
           ),
@@ -168,46 +178,54 @@ class SubscribersContent extends StatelessWidget {
 
   // --- Widgets ---
 
-  Widget _buildTopStatsRow() {
+  Widget _buildTopStatsRow(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
         _statCard(
-          "Total Tenants",
+          context,
+          localizations.statTotalTenants,
           "6",
-          const Color(0xFFEEF2FF),
-          const Color(0xFF4F46E5),
+          theme.indigoBg,
+          theme.indigoText,
           Icons.business,
         ),
         const SizedBox(width: 16),
         _statCard(
-          "Active Subscriptions",
+          context,
+          localizations.activeSubscriptions,
           "3",
-          const Color(0xFFECFDF5),
-          const Color(0xFF10B981),
+          theme.successLight,
+          theme.success,
           Icons.check_circle_outline,
         ),
         const SizedBox(width: 16),
         _statCard(
-          "Trial Accounts",
+          context,
+          localizations.statTrialAccounts,
           "1",
-          const Color(0xFFFFFBEB),
-          const Color(0xFFF59E0B),
+          theme.warningLight,
+          theme.warning,
           Icons.access_time,
         ),
         const SizedBox(width: 16),
         _statCard(
-          "Suspended",
+          context,
+          localizations.statusSuspended,
           "1",
-          const Color(0xFFFEF2F2),
-          const Color(0xFFEF4444),
+          theme.errorLight,
+          theme.error,
           Icons.pause_circle_outline,
         ),
         const SizedBox(width: 16),
         _statCard(
-          "MRR",
+          context,
+          localizations.statMRR,
           "11 500",
-          const Color(0xFFF8FAFC),
-          const Color(0xFF0F172A),
+          theme.bgLight,
+          theme.black,
           Icons.credit_card_outlined,
           suffix: "SAR",
         ),
@@ -216,6 +234,7 @@ class SubscribersContent extends StatelessWidget {
   }
 
   Widget _statCard(
+    BuildContext context,
     String title,
     String value,
     Color bg,
@@ -223,6 +242,8 @@ class SubscribersContent extends StatelessWidget {
     IconData icon, {
     String? suffix,
   }) {
+    final theme = context.theme.appColor;
+
     return Expanded(
       child: Container(
         height: 100,
@@ -230,7 +251,7 @@ class SubscribersContent extends StatelessWidget {
         decoration: BoxDecoration(
           color: bg,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.1)),
+          border: Border.all(color: color.withValues(alpha: 0.1)),
         ),
         child: Row(
           children: [
@@ -240,7 +261,7 @@ class SubscribersContent extends StatelessWidget {
                 color: color,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: Colors.white, size: 24),
+              child: Icon(icon, color: theme.white, size: 24),
             ),
             const SizedBox(width: 16),
             Column(
@@ -261,20 +282,19 @@ class SubscribersContent extends StatelessWidget {
                   children: [
                     Text(
                       value,
-                      style: const TextStyle(
+                      style: AppTextStyles.base.copyWith(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: theme.textPrimary,
                       ),
                     ),
                     if (suffix != null) ...[
                       const SizedBox(width: 4),
                       Text(
                         suffix,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF64748B),
+                        style: AppTextStyles.tableHeader.copyWith(
+                          color: theme.textTertiary,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -288,36 +308,40 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: theme.border),
       ),
-      child: const TextField(
+      child: TextField(
         decoration: InputDecoration(
-          icon: Icon(Icons.search, color: Color(0xFF94A3B8)),
-          hintText: "Search tenants...",
+          icon: Icon(Icons.search, color: theme.textDisabled),
+          hintText: AppLocalizations.of(context).searchTenants,
           border: InputBorder.none,
-          hintStyle: TextStyle(color: Color(0xFF94A3B8)),
+          hintStyle: AppTextStyles.base.copyWith(color: theme.textDisabled),
         ),
       ),
     );
   }
 
-  Widget _buildTenantCell(SubscriberModel item) {
+  Widget _buildTenantCell(BuildContext context, SubscriberModel item) {
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
+            color: theme.bgLight,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: theme.border),
           ),
-          child: const Icon(Icons.business, size: 20, color: Color(0xFF64748B)),
+          child: Icon(Icons.business, size: 20, color: theme.textTertiary),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -327,15 +351,16 @@ class SubscribersContent extends StatelessWidget {
             children: [
               Text(
                 item.companyName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: Color(0xFF1E293B),
+                style: AppTextStyles.bodyMediumBold.copyWith(
+                  color: theme.textPrimary,
                 ),
               ),
               Text(
                 item.email,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
+                style: AppTextStyles.tableHeader.copyWith(
+                  color: theme.textDisabled,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
@@ -344,29 +369,26 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _buildPlanBadge(String plan) {
+  Widget _buildPlanBadge(BuildContext context, String plan) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F3FF),
+        color: theme.violetBg,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFDDD6FE)),
+        border: Border.all(color: theme.violetBg),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.auto_awesome_motion,
-            size: 14,
-            color: Color(0xFF7C3AED),
-          ),
+          Icon(Icons.auto_awesome_motion, size: 14, color: theme.violetText),
           const SizedBox(width: 6),
           Text(
             plan,
-            style: const TextStyle(
-              color: Color(0xFF7C3AED),
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.tableHeader.copyWith(
+              color: theme.violetText,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -374,37 +396,42 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(SubscriberStatus status) {
+  Widget _buildStatusBadge(BuildContext context, SubscriberStatus status) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     Color bg;
     Color text;
     String label;
     IconData icon;
+
     switch (status) {
       case SubscriberStatus.active:
-        bg = const Color(0xFFDCFCE7);
-        text = const Color(0xFF166534);
-        label = "Active";
+        bg = theme.successLight;
+        text = theme.successText;
+        label = localizations.active;
         icon = Icons.check_circle_outline;
         break;
       case SubscriberStatus.expired:
-        bg = const Color(0xFFF1F5F9);
-        text = const Color(0xFF475569);
-        label = "Expired";
+        bg = theme.neutralBg;
+        text = theme.neutralText;
+        label = localizations.statusExpired;
         icon = Icons.cancel_outlined;
         break;
       case SubscriberStatus.trial:
-        bg = const Color(0xFFFEF3C7);
-        text = const Color(0xFF92400E);
-        label = "Trial";
+        bg = theme.warningLight;
+        text = theme.warningText;
+        label = localizations.statusTrial;
         icon = Icons.access_time;
         break;
       case SubscriberStatus.suspended:
-        bg = const Color(0xFFFEE2E2);
-        text = const Color(0xFF991B1B);
-        label = "Suspended";
+        bg = theme.errorLight;
+        text = theme.errorText;
+        label = localizations.statusSuspended;
         icon = Icons.pause_circle_outline;
         break;
     }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -418,10 +445,9 @@ class SubscribersContent extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
+            style: AppTextStyles.tableHeader.copyWith(
               color: text,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -429,9 +455,17 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressCell(int current, int max, IconData icon, String unit) {
+  Widget _buildProgressCell(
+    BuildContext context,
+    int current,
+    int max,
+    IconData icon,
+    String unit,
+  ) {
+    final theme = context.theme.appColor;
     double progress = (current / max).clamp(0.0, 1.0);
     bool isWarning = progress > 0.85;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -440,13 +474,11 @@ class SubscribersContent extends StatelessWidget {
           children: [
             Text(
               "$current/$max $unit",
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1E293B),
+              style: AppTextStyles.bodySmallBold.copyWith(
+                color: theme.textPrimary,
               ),
             ),
-            Icon(icon, size: 16, color: const Color(0xFF94A3B8)),
+            Icon(icon, size: 16, color: theme.textDisabled),
           ],
         ),
         const SizedBox(height: 8),
@@ -455,9 +487,9 @@ class SubscribersContent extends StatelessWidget {
           child: LinearProgressIndicator(
             value: progress,
             minHeight: 8,
-            backgroundColor: const Color(0xFFF1F5F9),
+            backgroundColor: theme.inactiveBg,
             valueColor: AlwaysStoppedAnimation<Color>(
-              isWarning ? Colors.orange : const Color(0xFF0F172A),
+              isWarning ? theme.warning : theme.black,
             ),
           ),
         ),
@@ -465,7 +497,9 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _buildDateCell(String date) {
+  Widget _buildDateCell(BuildContext context, String date) {
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
         const Icon(
@@ -476,34 +510,41 @@ class SubscribersContent extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           date,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF1E293B),
-          ),
+          style: AppTextStyles.labelStyle.copyWith(color: theme.textPrimary),
         ),
       ],
     );
   }
 
-  Widget _buildPaginationFooter() {
+  Widget _buildPaginationFooter(BuildContext context) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Color(0xFFF1F5F9))),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: theme.inactiveBg)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Showing 6 of 6 Tenants",
-            style: TextStyle(color: Color(0xFF64748B), fontSize: 13),
+          Text(
+            localizations.paginationShowing(6, 6),
+            style: AppTextStyles.bodySmall.copyWith(color: theme.textTertiary),
           ),
           Row(
             children: [
-              _footerStat(Icons.people_outline, "203 Total Users"),
+              _footerStat(
+                context,
+                Icons.people_outline,
+                localizations.totalUsersCount(203),
+              ),
               const SizedBox(width: 24),
-              _footerStat(Icons.visibility_outlined, "Click for details"),
+              _footerStat(
+                context,
+                Icons.visibility_outlined,
+                localizations.clickForDetails,
+              ),
             ],
           ),
         ],
@@ -511,14 +552,16 @@ class SubscribersContent extends StatelessWidget {
     );
   }
 
-  Widget _footerStat(IconData icon, String text) {
+  Widget _footerStat(BuildContext context, IconData icon, String text) {
+    final theme = context.theme.appColor;
+
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF94A3B8)),
+        Icon(icon, size: 16, color: theme.textDisabled),
         const SizedBox(width: 8),
         Text(
           text,
-          style: const TextStyle(color: Color(0xFF64748B), fontSize: 13),
+          style: AppTextStyles.bodySmall.copyWith(color: theme.textTertiary),
         ),
       ],
     );

@@ -498,4 +498,212 @@ class AppLocalizationsEn extends AppLocalizations {
   String todayAt(Object time) {
     return 'Today $time';
   }
+
+  @override
+  String get filterAllSub => 'All SUB';
+
+  @override
+  String get filterClient => 'Client';
+
+  @override
+  String get filterAllDate => 'All Date';
+
+  @override
+  String get filterAllPackages => 'All Packages';
+
+  @override
+  String get filterAllStatuses => 'All Statuses';
+
+  @override
+  String get filterMore => 'More Filters';
+
+  @override
+  String get packagePricing => 'Package & Pricing';
+
+  @override
+  String get moduleManagement => 'Module Management';
+
+  @override
+  String get profiles => 'Profiles';
+
+  @override
+  String get resetFilters => 'Reset Filters';
+
+  @override
+  String get newSubscription => 'New Subscription';
+
+  @override
+  String get searchSubscriptions => 'Search subscriptions...';
+
+  @override
+  String get columnCompanyName => 'Company Name';
+
+  @override
+  String get columnEndDate => 'End Date';
+
+  @override
+  String get columnTags => 'Tags';
+
+  @override
+  String get columnPaymentStatus => 'Payment Status';
+
+  @override
+  String get search => 'Search...';
+
+  @override
+  String get print => 'Print';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get newModule => 'New Module';
+
+  @override
+  String get createPackage => 'Create Package';
+
+  @override
+  String get addSubscriber => 'Add Subscriber';
+
+  @override
+  String get action => 'Action';
+
+  @override
+  String get success => 'Success';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
+  String get device => 'Device';
+
+  @override
+  String get accessLogs => 'Access Logs';
+
+  @override
+  String get company => 'Company';
+
+  @override
+  String get moduleDescriptionStandard =>
+      'Standard ERP module with full functionality.';
+
+  @override
+  String get moduleName => 'Module Name';
+
+  @override
+  String get assignedPackages => 'Assigned Packages';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get inactive => 'Inactive';
+
+  @override
+  String get historyLogs => 'History Logs';
+
+  @override
+  String get moduleProfile => 'Module Profile';
+
+  @override
+  String get editModule => 'Edit Module';
+
+  @override
+  String versionFormat(Object version) {
+    return 'Version: $version';
+  }
+
+  @override
+  String basePriceFormat(Object price) {
+    return 'Base Price: $price SAR';
+  }
+
+  @override
+  String get updateHistory => 'Update History';
+
+  @override
+  String get blocked => 'Blocked';
+
+  @override
+  String ipDetails(Object ipAddress) {
+    return 'IP Details: $ipAddress';
+  }
+
+  @override
+  String visitorStats(Object count, Object country) {
+    return 'Visitor from $country has visited $count times.';
+  }
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get columnTenant => 'Tenant';
+
+  @override
+  String get columnPlan => 'Plan';
+
+  @override
+  String get columnUsers => 'Users';
+
+  @override
+  String get columnRenewalDate => 'Renewal Date';
+
+  @override
+  String get columnStorage => 'Storage';
+
+  @override
+  String get searchTenants => 'Search tenants...';
+
+  @override
+  String get statusExpired => 'Expired';
+
+  @override
+  String get statusTrial => 'Trial';
+
+  @override
+  String get statusSuspended => 'Suspended';
+
+  @override
+  String get errorGeneral => 'Something went wrong. Please refresh.';
+
+  @override
+  String paginationShowing(Object current, Object total) {
+    return 'Showing $current of $total Tenants';
+  }
+
+  @override
+  String totalUsersCount(Object count) {
+    return '$count Total Users';
+  }
+
+  @override
+  String get clickForDetails => 'Click for details';
+
+  @override
+  String get statTotalTenants => 'Total Tenants';
+
+  @override
+  String get statTrialAccounts => 'Trial Accounts';
+
+  @override
+  String get statMRR => 'MRR';
+
+  @override
+  String get reportSubscriptions => 'Subscriptions Report';
+
+  @override
+  String get reportRevenue => 'Revenue Report';
+
+  @override
+  String get reportCustomers => 'Customers Report';
+
+  @override
+  String get reportUsage => 'Usage Report';
+
+  @override
+  String get reportPerformance => 'Performance Report';
 }

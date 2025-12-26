@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/features/sso/data/models/sso_token_model.dart';
 import 'package:retrofit/retrofit.dart';
-import '../models/sso_token_model.dart';
 
 part 'sso_remote_datasource.g.dart';
 

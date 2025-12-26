@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_data_table.dart';
@@ -10,7 +11,7 @@ class ModuleModel {
   final String version;
   final bool isActive;
   final double price;
-  final String description;
+  final String? description;
 
   const ModuleModel({
     required this.name,
@@ -18,7 +19,7 @@ class ModuleModel {
     required this.version,
     required this.isActive,
     this.price = 0,
-    this.description = "Standard ERP module with full functionality.",
+    this.description,
   });
 }
 
@@ -62,6 +63,8 @@ class ModuleManagementContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: theme.inactiveBg,
       body: SingleChildScrollView(
@@ -70,7 +73,7 @@ class ModuleManagementContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Module Management",
+              localizations.moduleManagement,
               style: AppTextStyles.h2.copyWith(fontSize: 24),
             ),
             const SizedBox(height: 24),
@@ -88,6 +91,7 @@ class ModuleManagementContent extends StatelessWidget {
 
   Widget _buildTableContainer(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -105,12 +109,12 @@ class ModuleManagementContent extends StatelessWidget {
       child: ErpMaxDataTable<ModuleModel>(
         onRowTap: (item) => _showModuleDetails(context, item),
         columns: [
-          ErpMaxColumn(title: "Module Name", weight: 0.25),
-          ErpMaxColumn(title: "Assigned Packages", weight: 0.35),
-          ErpMaxColumn(title: "Version", weight: 0.15),
-          ErpMaxColumn(title: "Status", weight: 0.15),
+          ErpMaxColumn(title: localizations.moduleName, weight: 0.25),
+          ErpMaxColumn(title: localizations.assignedPackages, weight: 0.35),
+          ErpMaxColumn(title: localizations.version, weight: 0.15),
+          ErpMaxColumn(title: localizations.status, weight: 0.15),
           ErpMaxColumn(
-            title: "Actions",
+            title: localizations.actions,
             weight: 0.1,
             textAlign: TextAlign.right,
           ),
@@ -172,6 +176,7 @@ class StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
     final color = isActive ? theme.activeGreen : theme.textSecondary;
 
     return Container(
@@ -182,7 +187,7 @@ class StatusBadge extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Text(
-        isActive ? "Active" : "Inactive",
+        isActive ? localizations.active : localizations.inactive,
         style: AppTextStyles.bodySmall.copyWith(
           color: color,
           fontSize: 11,
@@ -254,12 +259,16 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
                     const SizedBox(height: 32),
                     _buildModuleInfoCard(),
                     const SizedBox(height: 32),
-                    _buildTabs(),
+                    _buildTabs(context),
                     const Divider(height: 1),
                     const SizedBox(height: 24),
                     _tabIndex == 0
                         ? _buildPackagesGrid()
-                        : const Center(child: Text("History Logs")),
+                        : Center(
+                            child: Text(
+                              AppLocalizations.of(context).historyLogs,
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -282,7 +291,7 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Module Profile",
+            AppLocalizations.of(context).moduleProfile,
             style: AppTextStyles.h2.copyWith(
               color: context.theme.appColor.textPrimary,
             ),
@@ -298,6 +307,7 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
 
   Widget _buildActionButtons() {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -305,14 +315,14 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
         OutlinedButton.icon(
           onPressed: () {},
           icon: const Icon(Icons.edit_outlined, size: 18),
-          label: const Text("Edit Module"),
+          label: Text(localizations.editModule),
           style: OutlinedButton.styleFrom(foregroundColor: theme.textPrimary),
         ),
         const SizedBox(width: 12),
         OutlinedButton.icon(
           onPressed: () {},
           icon: const Icon(Icons.print_outlined, size: 18),
-          label: const Text("Print"),
+          label: Text(localizations.print),
           style: OutlinedButton.styleFrom(foregroundColor: theme.textPrimary),
         ),
       ],
@@ -321,6 +331,7 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
 
   Widget _buildModuleInfoCard() {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -343,14 +354,18 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
             ],
           ),
           const SizedBox(height: 16),
-          _infoRow(Icons.vpn_key_outlined, "Version: ${widget.module.version}"),
+          _infoRow(
+            Icons.vpn_key_outlined,
+            localizations.versionFormat(widget.module.version),
+          ),
           _infoRow(
             Icons.monetization_on_outlined,
-            "Base Price: ${widget.module.price} SAR",
+            localizations.basePriceFormat(widget.module.price),
           ),
           const Divider(height: 32),
           Text(
-            widget.module.description,
+            widget.module.description ??
+                localizations.moduleDescriptionStandard,
             style: AppTextStyles.bodyMedium.copyWith(
               color: theme.textSecondary,
               height: 1.5,
@@ -381,11 +396,13 @@ class _ModuleDetailsSidePanelState extends State<ModuleDetailsSidePanel> {
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildTabs(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Row(
       children: [
-        _tabItem("Assigned Packages", 0),
-        _tabItem("Update History", 1),
+        _tabItem(localizations.assignedPackages, 0),
+        _tabItem(localizations.updateHistory, 1),
       ],
     );
   }

@@ -151,6 +151,7 @@ class TenantRepositoryImpl implements TenantRepository {
     }
   }
 
+  // ! Add localization
   Failure _handleDioException(DioException e) {
     if (e.response != null) {
       final statusCode = e.response!.statusCode;

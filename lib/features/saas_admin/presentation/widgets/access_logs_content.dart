@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/erp_models.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -26,6 +27,7 @@ class AccessLogsContent extends StatelessWidget {
 
   Widget _buildLogsTable(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -38,17 +40,25 @@ class AccessLogsContent extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(24),
-            child: Text("Access Logs", style: AppTextStyles.h2),
+            child: Text(localizations.accessLogs, style: AppTextStyles.h2),
           ),
           ErpMaxDataTable<AccessLogRecord>(
             items: _mockAccessLogs,
             minWidth: 1000,
             columns: [
-              ErpMaxColumn(title: "User", weight: 0.2, isSortable: true),
-              ErpMaxColumn(title: "Company", weight: 0.2),
-              ErpMaxColumn(title: "IP Address", weight: 0.15),
-              ErpMaxColumn(title: "Device", weight: 0.2),
-              ErpMaxColumn(title: "Date", weight: 0.15, isSortable: true),
+              ErpMaxColumn(
+                title: localizations.user,
+                weight: 0.2,
+                isSortable: true,
+              ),
+              ErpMaxColumn(title: localizations.company, weight: 0.2),
+              ErpMaxColumn(title: localizations.ipAddress, weight: 0.15),
+              ErpMaxColumn(title: localizations.device, weight: 0.2),
+              ErpMaxColumn(
+                title: localizations.date,
+                weight: 0.15,
+                isSortable: true,
+              ),
               ErpMaxColumn(
                 title: "Status",
                 weight: 0.1,
@@ -62,8 +72,8 @@ class AccessLogsContent extends StatelessWidget {
               Text(item.device, style: AppTextStyles.bodySmall),
               Text(item.date, style: AppTextStyles.bodySmall),
               item.isSuccess
-                  ? AppStatusChip.success("Success")
-                  : AppStatusChip.danger("Failed"),
+                  ? AppStatusChip.success(localizations.success)
+                  : AppStatusChip.danger(localizations.failed),
             ],
           ),
         ],

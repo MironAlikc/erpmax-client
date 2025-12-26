@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/sso/data/datasources/sso_remote_datasource.dart';
+import 'package:erpmax_client/features/sso/domain/entities/sso_token_entity.dart';
+import 'package:erpmax_client/features/sso/domain/repositories/sso_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../../domain/entities/sso_token_entity.dart';
-import '../../domain/repositories/sso_repository.dart';
-import '../datasources/sso_remote_datasource.dart';
 
 @LazySingleton(as: SSORepository)
 class SSORepositoryImpl implements SSORepository {

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ class QuickFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
@@ -21,11 +24,11 @@ class QuickFilterBar extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  'All SUB',
-                  'Client',
-                  'All Date',
-                  'All Packages',
-                  'All Statuses',
+                  localizations.filterAllSub,
+                  localizations.filterClient,
+                  localizations.filterAllDate,
+                  localizations.filterAllPackages,
+                  localizations.filterAllStatuses,
                 ].map((filter) => _buildFilterChip(context, filter)).toList(),
               ),
             ),
@@ -33,7 +36,7 @@ class QuickFilterBar extends StatelessWidget {
           TextButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.filter_alt_outlined, size: 18),
-            label: const Text("More Filters"),
+            label: Text(localizations.filterMore),
           ),
         ],
       ),
