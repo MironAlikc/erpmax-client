@@ -1,5 +1,5 @@
+import 'package:erpmax_client/features/sso/domain/entities/sso_token_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/sso_token_entity.dart';
 
 part 'sso_token_model.freezed.dart';
 part 'sso_token_model.g.dart';
@@ -17,9 +17,6 @@ abstract class SSOTokenModel with _$SSOTokenModel {
   factory SSOTokenModel.fromJson(Map<String, dynamic> json) =>
       _$SSOTokenModelFromJson(json);
 
-  SSOTokenEntity toEntity() => SSOTokenEntity(
-        ssoUrl: ssoUrl,
-        token: token,
-        expiresAt: expiresAt,
-      );
+  SSOTokenEntity toEntity() =>
+      SSOTokenEntity(ssoUrl: ssoUrl, token: token, expiresAt: expiresAt);
 }

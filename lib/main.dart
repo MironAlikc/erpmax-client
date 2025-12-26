@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                   color: context.theme.appColor.white,
                   child: Center(
                     child: Text(
-                      "Something went wrong. Please refresh.",
+                      AppLocalizations.of(context).errorGeneral,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: context.theme.appColor.error,
                         fontWeight: FontWeight.bold,

@@ -223,7 +223,7 @@ class VisitorLogsContent extends StatelessWidget {
                       color: theme.textSecondary,
                     ),
                   ),
-                  _buildStatusChip(theme, item.isActive),
+                  _buildStatusChip(context, theme, item.isActive),
                   Icon(Icons.more_horiz, color: theme.gray400),
                 ],
               );
@@ -234,7 +234,13 @@ class VisitorLogsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(AppColorExtension colors, bool isActive) {
+  Widget _buildStatusChip(
+    BuildContext context,
+    AppColorExtension colors,
+    bool isActive,
+  ) {
+    final localizations = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -242,7 +248,7 @@ class VisitorLogsContent extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        isActive ? "Active" : "Blocked",
+        isActive ? localizations.active : localizations.blocked,
         style: AppTextStyles.bodySmall.copyWith(
           color: isActive ? colors.successText : colors.errorText,
           fontSize: 11,
@@ -253,17 +259,19 @@ class VisitorLogsContent extends StatelessWidget {
   }
 
   void _showVisitorDetails(BuildContext context, VisitorRecord record) {
+    final localizations = AppLocalizations.of(context);
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("IP Details: ${record.ipAddress}"),
+        title: Text(localizations.ipDetails(record.ipAddress)),
         content: Text(
-          "Visitor from ${record.country} has visited ${record.visits} times.",
+          localizations.visitorStats(record.country, record.visits),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Close"),
+            child: Text(localizations.close),
           ),
         ],
       ),

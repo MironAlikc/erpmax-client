@@ -497,4 +497,211 @@ class AppLocalizationsAr extends AppLocalizations {
   String todayAt(Object time) {
     return 'اليوم $time';
   }
+
+  @override
+  String get filterAllSub => 'كل الاشتراكات';
+
+  @override
+  String get filterClient => 'العميل';
+
+  @override
+  String get filterAllDate => 'كل التواريخ';
+
+  @override
+  String get filterAllPackages => 'كل الباقات';
+
+  @override
+  String get filterAllStatuses => 'كل الحالات';
+
+  @override
+  String get filterMore => 'المزيد من الفلاتر';
+
+  @override
+  String get packagePricing => 'الباقات والأسعار';
+
+  @override
+  String get moduleManagement => 'إدارة الوحدات';
+
+  @override
+  String get profiles => 'الملفات الشخصية';
+
+  @override
+  String get resetFilters => 'إعادة ضبط الفلاتر';
+
+  @override
+  String get newSubscription => 'اشتراك جديد';
+
+  @override
+  String get searchSubscriptions => 'البحث في الاشتراكات...';
+
+  @override
+  String get columnCompanyName => 'اسم الشركة';
+
+  @override
+  String get columnEndDate => 'تاريخ الانتهاء';
+
+  @override
+  String get columnTags => 'الوسوم';
+
+  @override
+  String get columnPaymentStatus => 'حالة الدفع';
+
+  @override
+  String get search => 'بحث...';
+
+  @override
+  String get print => 'طباعة';
+
+  @override
+  String get export => 'تصدير';
+
+  @override
+  String get newModule => 'وحدة جديدة';
+
+  @override
+  String get createPackage => 'إنشاء باقة';
+
+  @override
+  String get addSubscriber => 'إضافة مشترك';
+
+  @override
+  String get action => 'إجراء';
+
+  @override
+  String get success => 'تم بنجاح';
+
+  @override
+  String get failed => 'فشل';
+
+  @override
+  String get device => 'الجهاز';
+
+  @override
+  String get accessLogs => 'سجلات الدخول';
+
+  @override
+  String get company => 'الشركة';
+
+  @override
+  String get moduleDescriptionStandard => 'وحدة ERP القياسية بكامل وظائفها.';
+
+  @override
+  String get moduleName => 'اسم الوحدة';
+
+  @override
+  String get assignedPackages => 'الباقات المخصصة';
+
+  @override
+  String get version => 'الإصدار';
+
+  @override
+  String get active => 'نشط';
+
+  @override
+  String get inactive => 'غير نشط';
+
+  @override
+  String get historyLogs => 'سجلات المحفوظات';
+
+  @override
+  String get moduleProfile => 'ملف الوحدة';
+
+  @override
+  String get editModule => 'تعديل الوحدة';
+
+  @override
+  String versionFormat(Object version) {
+    return 'الإصدار: $version';
+  }
+
+  @override
+  String basePriceFormat(Object price) {
+    return 'السعر الأساسي: $price ر.س';
+  }
+
+  @override
+  String get updateHistory => 'سجل التحديثات';
+
+  @override
+  String get blocked => 'محظور';
+
+  @override
+  String ipDetails(Object ipAddress) {
+    return 'تفاصيل عنوان IP: $ipAddress';
+  }
+
+  @override
+  String visitorStats(Object count, Object country) {
+    return 'قام زائر من $country بالزيارة $count مرات.';
+  }
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get columnTenant => 'المستأجر';
+
+  @override
+  String get columnPlan => 'الخطة';
+
+  @override
+  String get columnUsers => 'المستخدمون';
+
+  @override
+  String get columnRenewalDate => 'تاريخ التجديد';
+
+  @override
+  String get columnStorage => 'المساحة';
+
+  @override
+  String get searchTenants => 'البحث عن المستأجرين...';
+
+  @override
+  String get statusExpired => 'منتهي الصلاحية';
+
+  @override
+  String get statusTrial => 'تجريبي';
+
+  @override
+  String get statusSuspended => 'معلق';
+
+  @override
+  String get errorGeneral => 'حدث خطأ ما. يرجى التحديث.';
+
+  @override
+  String paginationShowing(Object current, Object total) {
+    return 'عرض $current من أصل $total من المستأجرين';
+  }
+
+  @override
+  String totalUsersCount(Object count) {
+    return 'إجمالي المستخدمين: $count';
+  }
+
+  @override
+  String get clickForDetails => 'انقر للتفاصيل';
+
+  @override
+  String get statTotalTenants => 'إجمالي المستأجرين';
+
+  @override
+  String get statTrialAccounts => 'الحسابات التجريبية';
+
+  @override
+  String get statMRR => 'العائد الشهري المتكرر';
+
+  @override
+  String get reportSubscriptions => 'Subscriptions Report';
+
+  @override
+  String get reportRevenue => 'Revenue Report';
+
+  @override
+  String get reportCustomers => 'Customers Report';
+
+  @override
+  String get reportUsage => 'Usage Report';
+
+  @override
+  String get reportPerformance => 'Performance Report';
 }

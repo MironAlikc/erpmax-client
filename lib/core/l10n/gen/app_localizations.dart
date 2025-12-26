@@ -1053,6 +1053,396 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today {time}'**
   String todayAt(Object time);
+
+  /// No description provided for @filterAllSub.
+  ///
+  /// In en, this message translates to:
+  /// **'All SUB'**
+  String get filterAllSub;
+
+  /// No description provided for @filterClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Client'**
+  String get filterClient;
+
+  /// No description provided for @filterAllDate.
+  ///
+  /// In en, this message translates to:
+  /// **'All Date'**
+  String get filterAllDate;
+
+  /// No description provided for @filterAllPackages.
+  ///
+  /// In en, this message translates to:
+  /// **'All Packages'**
+  String get filterAllPackages;
+
+  /// No description provided for @filterAllStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get filterAllStatuses;
+
+  /// No description provided for @filterMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More Filters'**
+  String get filterMore;
+
+  /// No description provided for @packagePricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Package & Pricing'**
+  String get packagePricing;
+
+  /// No description provided for @moduleManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Module Management'**
+  String get moduleManagement;
+
+  /// No description provided for @profiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Profiles'**
+  String get profiles;
+
+  /// No description provided for @resetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Filters'**
+  String get resetFilters;
+
+  /// No description provided for @newSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'New Subscription'**
+  String get newSubscription;
+
+  /// No description provided for @searchSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search subscriptions...'**
+  String get searchSubscriptions;
+
+  /// No description provided for @columnCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get columnCompanyName;
+
+  /// No description provided for @columnEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get columnEndDate;
+
+  /// No description provided for @columnTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get columnTags;
+
+  /// No description provided for @columnPaymentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Status'**
+  String get columnPaymentStatus;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get search;
+
+  /// No description provided for @print.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get print;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @newModule.
+  ///
+  /// In en, this message translates to:
+  /// **'New Module'**
+  String get newModule;
+
+  /// No description provided for @createPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Package'**
+  String get createPackage;
+
+  /// No description provided for @addSubscriber.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Subscriber'**
+  String get addSubscriber;
+
+  /// No description provided for @action.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get action;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @device.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get device;
+
+  /// No description provided for @accessLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Logs'**
+  String get accessLogs;
+
+  /// No description provided for @company.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get company;
+
+  /// No description provided for @moduleDescriptionStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard ERP module with full functionality.'**
+  String get moduleDescriptionStandard;
+
+  /// No description provided for @moduleName.
+  ///
+  /// In en, this message translates to:
+  /// **'Module Name'**
+  String get moduleName;
+
+  /// No description provided for @assignedPackages.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned Packages'**
+  String get assignedPackages;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @inactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactive;
+
+  /// No description provided for @historyLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'History Logs'**
+  String get historyLogs;
+
+  /// No description provided for @moduleProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Module Profile'**
+  String get moduleProfile;
+
+  /// No description provided for @editModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Module'**
+  String get editModule;
+
+  /// No description provided for @versionFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String versionFormat(Object version);
+
+  /// No description provided for @basePriceFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Base Price: {price} SAR'**
+  String basePriceFormat(Object price);
+
+  /// No description provided for @updateHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Update History'**
+  String get updateHistory;
+
+  /// No description provided for @blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get blocked;
+
+  /// No description provided for @ipDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Details: {ipAddress}'**
+  String ipDetails(Object ipAddress);
+
+  /// No description provided for @visitorStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor from {country} has visited {count} times.'**
+  String visitorStats(Object count, Object country);
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @columnTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenant'**
+  String get columnTenant;
+
+  /// No description provided for @columnPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get columnPlan;
+
+  /// No description provided for @columnUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get columnUsers;
+
+  /// No description provided for @columnRenewalDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal Date'**
+  String get columnRenewalDate;
+
+  /// No description provided for @columnStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get columnStorage;
+
+  /// No description provided for @searchTenants.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tenants...'**
+  String get searchTenants;
+
+  /// No description provided for @statusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get statusExpired;
+
+  /// No description provided for @statusTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial'**
+  String get statusTrial;
+
+  /// No description provided for @statusSuspended.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspended'**
+  String get statusSuspended;
+
+  /// No description provided for @errorGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please refresh.'**
+  String get errorGeneral;
+
+  /// No description provided for @paginationShowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {current} of {total} Tenants'**
+  String paginationShowing(Object current, Object total);
+
+  /// No description provided for @totalUsersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Total Users'**
+  String totalUsersCount(Object count);
+
+  /// No description provided for @clickForDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Click for details'**
+  String get clickForDetails;
+
+  /// No description provided for @statTotalTenants.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Tenants'**
+  String get statTotalTenants;
+
+  /// No description provided for @statTrialAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial Accounts'**
+  String get statTrialAccounts;
+
+  /// No description provided for @statMRR.
+  ///
+  /// In en, this message translates to:
+  /// **'MRR'**
+  String get statMRR;
+
+  /// No description provided for @reportSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions Report'**
+  String get reportSubscriptions;
+
+  /// No description provided for @reportRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue Report'**
+  String get reportRevenue;
+
+  /// No description provided for @reportCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers Report'**
+  String get reportCustomers;
+
+  /// No description provided for @reportUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Report'**
+  String get reportUsage;
+
+  /// No description provided for @reportPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance Report'**
+  String get reportPerformance;
 }
 
 class _AppLocalizationsDelegate
