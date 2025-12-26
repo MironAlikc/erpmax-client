@@ -1,7 +1,9 @@
-import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
 
 class TabChipBar extends StatefulWidget {
   final TabController controller;
@@ -23,10 +25,12 @@ class TabChipBar extends StatefulWidget {
 
 class _TabChipBarState extends State<TabChipBar> {
   final ScrollController _scrollController = ScrollController();
+  final List<GlobalKey> _keys = [];
 
   @override
   void initState() {
     super.initState();
+    _keys.addAll(List.generate(widget.tabs.length, (index) => GlobalKey()));
     widget.controller.addListener(_handleTabSelection);
   }
 
@@ -40,7 +44,23 @@ class _TabChipBarState extends State<TabChipBar> {
   void _handleTabSelection() {
     if (!mounted) return;
     if (!widget.controller.indexIsChanging) {
+      _scrollToSelected();
       setState(() {});
+    }
+  }
+
+  void _scrollToSelected() {
+    final index = widget.controller.index;
+    if (index >= _keys.length) return;
+
+    final context = _keys[index].currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        alignment: 0.5,
+      );
     }
   }
 
@@ -49,11 +69,11 @@ class _TabChipBarState extends State<TabChipBar> {
     final theme = context.theme.appColor;
 
     return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: 64,
+      padding: EdgeInsets.symmetric(horizontal: AppDesign.pagePadding),
       decoration: BoxDecoration(
         color: theme.white,
-        border: Border(bottom: BorderSide(color: theme.borderLight, width: 1)),
+        border: Border(bottom: BorderSide(color: theme.gray200, width: 1)),
       ),
       child: Row(
         children: [
@@ -68,15 +88,14 @@ class _TabChipBarState extends State<TabChipBar> {
                   final tab = widget.tabs[index];
 
                   return Padding(
+                    key: _keys[index],
                     padding: const EdgeInsets.only(right: 8),
                     child: ChoiceChip(
                       showCheckmark: false,
                       avatar: Icon(
                         tab.icon,
                         size: 18,
-                        color: isSelected
-                            ? theme.activeGreen
-                            : theme.textDisabled,
+                        color: isSelected ? theme.success : theme.gray400,
                       ),
                       label: Text(tab.name),
                       labelStyle: AppTextStyles.bodySmall.copyWith(
@@ -84,27 +103,30 @@ class _TabChipBarState extends State<TabChipBar> {
                         fontWeight: isSelected
                             ? FontWeight.w600
                             : FontWeight.w500,
-                        color: isSelected
-                            ? theme.textPrimary
-                            : theme.textSecondary,
+                        color: isSelected ? theme.textPrimary : theme.gray500,
                       ),
                       selected: isSelected,
                       onSelected: (selected) {
-                        if (selected) {
+                        if (selected && !widget.controller.indexIsChanging) {
                           widget.controller.animateTo(index);
                           widget.onTabSelected?.call(index);
                         }
                       },
                       backgroundColor: Colors.transparent,
-                      selectedColor: theme.successBg,
+                      selectedColor: theme.success.withValues(alpha: 0.08),
                       elevation: 0,
                       pressElevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(
+                          AppDesign.chipRadius,
+                        ),
                         side: BorderSide(
-                          color: isSelected
-                              ? theme.activeGreen.withValues(alpha: 0.5)
-                              : theme.borderLight,
+                          color: isSelected ? theme.success : theme.gray200,
+                          width: isSelected ? 1.5 : 1,
                         ),
                       ),
                     ),
@@ -113,39 +135,14 @@ class _TabChipBarState extends State<TabChipBar> {
               ),
             ),
           ),
-
-          const SizedBox(width: 16),
-
-          // Правая часть: Поиск (остается на месте)
-          if (!widget.isMobile)
+          if (!widget.isMobile) ...[
+            const SizedBox(width: 24),
             SizedBox(
-              width: 300,
+              width: 280,
               height: 40,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search by name, code, or serial...",
-                  hintStyle: AppTextStyles.bodySmall.copyWith(
-                    color: theme.textDisabled,
-                  ),
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    color: Color(0xFF94A3B8),
-                    size: 18,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.zero,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: theme.border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: theme.black),
-                  ),
-                ),
-              ),
+              child: AppSearchField(hintText: "Search here..."),
             ),
+          ],
         ],
       ),
     );

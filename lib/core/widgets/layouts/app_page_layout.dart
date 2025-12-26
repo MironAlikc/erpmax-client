@@ -1,9 +1,11 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
 
 class AppPageLayout extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final List<Widget>? actions;
   final Widget child;
   final Widget? footer;
@@ -12,6 +14,7 @@ class AppPageLayout extends StatelessWidget {
   const AppPageLayout({
     super.key,
     required this.title,
+    this.subtitle,
     required this.child,
     this.actions,
     this.footer,
@@ -28,7 +31,10 @@ class AppPageLayout extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDesign.pagePadding,
+                vertical: 20,
+              ),
               decoration: BoxDecoration(
                 color: theme.white,
                 border: Border(
@@ -38,30 +44,50 @@ class AppPageLayout extends StatelessWidget {
                 ),
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Text(
-                      title,
-                      style: AppTextStyles.labelStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: theme.textPrimary,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          title,
+                          style: AppTextStyles.h1.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF12203A),
+                          ),
+                        ),
+                        if (subtitle != null) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            subtitle!,
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: theme.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                   if (actions != null) ...[
                     const SizedBox(width: 16),
-                    Wrap(spacing: 12, children: actions!),
+                    Row(children: actions!),
                   ],
                 ],
               ),
             ),
+
             Expanded(
               child: isScrollable
                   ? SingleChildScrollView(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(AppDesign.pagePadding),
                       child: child,
                     )
-                  : Padding(padding: const EdgeInsets.all(24), child: child),
+                  : Padding(
+                      padding: const EdgeInsets.all(AppDesign.pagePadding),
+                      child: child,
+                    ),
             ),
             if (footer != null)
               Container(
