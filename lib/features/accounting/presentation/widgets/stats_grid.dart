@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ class StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final double cardWidth = (constraints.maxWidth - (20 * 3)) / 4;
@@ -16,7 +19,7 @@ class StatsGrid extends StatelessWidget {
           runSpacing: 20,
           children: [
             _StatItem(
-              title: "Total Revenue",
+              title: localizations.totalRevenue,
               value: "\$124,500",
               trend: "+12.5%",
               isUp: true,
@@ -24,7 +27,7 @@ class StatsGrid extends StatelessWidget {
               width: cardWidth,
             ),
             _StatItem(
-              title: "Total Expenses",
+              title: localizations.totalExpenses,
               value: "\$45,200",
               trend: "-2.4%",
               isUp: false,
@@ -32,7 +35,7 @@ class StatsGrid extends StatelessWidget {
               width: cardWidth,
             ),
             _StatItem(
-              title: "Net Profit",
+              title: localizations.netProfit,
               value: "\$79,300",
               trend: "+8.2%",
               isUp: true,
@@ -40,7 +43,7 @@ class StatsGrid extends StatelessWidget {
               width: cardWidth,
             ),
             _StatItem(
-              title: "Cash Flow",
+              title: localizations.cashFlow,
               value: "\$32,000",
               trend: "+5.1%",
               isUp: true,

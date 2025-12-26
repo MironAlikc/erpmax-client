@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/features/auth/data/models/auth_response_model.dart';
+import 'package:erpmax_client/features/auth/data/models/switch_tenant_response_model.dart';
+import 'package:erpmax_client/features/auth/data/models/user_with_tenants_model.dart';
 import 'package:retrofit/retrofit.dart';
-import '../models/auth_response_model.dart';
-import '../models/user_with_tenants_model.dart';
-import '../models/switch_tenant_response_model.dart';
 
 part 'auth_remote_datasource.g.dart';
 

@@ -387,7 +387,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payBook => 'دفتر المدفوعات';
 
   @override
-  String get generalLedger => 'دفتر الأستاذ العام';
+  String get generalLedger => 'دفتر الاستاذ العام';
 
   @override
   String get activityLog => 'سجل الأنشطة';
@@ -774,4 +774,115 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get categoryBankAccounts => 'الحسابات البنكية';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get newInvoice => 'فاتورة جديدة';
+
+  @override
+  String get recordExpense => 'تسجيل مصروف';
+
+  @override
+  String get transfer => 'تحويل';
+
+  @override
+  String get importStatement => 'استيراد كشف حساب';
+
+  @override
+  String get recentTransactions => 'أحدث المعاملات';
+
+  @override
+  String get recentTransactionsSubtitle => 'آخر الأنشطة المالية وقيود اليومية.';
+
+  @override
+  String get totalExpenses => 'إجمالي المصروفات';
+
+  @override
+  String get netProfit => 'صافي الربح';
+
+  @override
+  String get cashFlow => 'التدفق النقدي';
+
+  @override
+  String get verifyEmailClickLink =>
+      'يرجى الضغط على الرابط المرسل إلى بريدك الإلكتروني ';
+
+  @override
+  String get verifyEmailFinish => ' لتأكيد حسابك. شكراً لك';
+
+  @override
+  String get didntReceiveEmail => 'لم يصلك البريد الإلكتروني؟';
+
+  @override
+  String get verifyEmailSimple =>
+      'يرجى الضغط على الرابط المرسل إلى بريدك الإلكتروني';
+
+  @override
+  String get activeUsers => 'المستخدمون النشطون';
+
+  @override
+  String get churnRate => 'معدل الانصراف';
+
+  @override
+  String get avgSession => 'متوسط الجلسة';
+
+  @override
+  String get supportCenter => 'مركز الدعم';
+
+  @override
+  String get getHelp => 'الحصول على المساعدة';
+
+  @override
+  String get moduleInventory => 'المخزون';
+
+  @override
+  String get moduleHrPayroll => 'الموارد البشرية والرواتب';
+
+  @override
+  String get moduleCrm => 'إدارة علاقات العملاء';
+
+  @override
+  String get pkgProfessional => 'الباقة الاحترافية';
+
+  @override
+  String get pkgEnterprise => 'باقة المؤسسات';
+
+  @override
+  String get createBackup => 'إنشاء نسخة احتياطية';
+
+  @override
+  String get automatedDailyBackup => 'نسخ احتياطي يومي تلقائي';
+
+  @override
+  String get backupSize => 'حجم النسخة الاحتياطية';
+
+  @override
+  String totalStorageUsed(Object size) {
+    return 'إجمالي المساحة المستخدمة: $size';
+  }
+
+  @override
+  String get nextScheduled => 'النسخ القادم';
+
+  @override
+  String get dailyAtMidnight => 'يومياً عند منتصف الليل';
+
+  @override
+  String hoursAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'قبل $count ساعة',
+      many: 'قبل $count ساعة',
+      few: 'قبل $count ساعات',
+      two: 'قبل ساعتين',
+      one: 'قبل ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unitGb => 'جيجابايت';
 }

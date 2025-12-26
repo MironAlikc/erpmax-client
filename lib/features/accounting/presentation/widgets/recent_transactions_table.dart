@@ -23,7 +23,7 @@ class RecentTransactionsTable extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Recent Transactions",
+            localizations.recentTransactions,
             style: AppTextStyles.h2.copyWith(
               color: theme.textPrimary,
               fontSize: 20,
@@ -31,7 +31,7 @@ class RecentTransactionsTable extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            "Latest financial activities and journal entries.",
+            localizations.recentTransactionsSubtitle,
             style: AppTextStyles.bodySmall.copyWith(
               color: theme.textSecondary,
               fontSize: 14,
@@ -201,10 +201,8 @@ class RecentTransactionsTable extends StatelessWidget {
             child: Text(
               status,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: AppTextStyles.tableHeader.copyWith(
                 color: isPosted ? theme.success : theme.warning,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -45,24 +46,29 @@ class AccessLogsContent extends StatelessWidget {
 
   Widget _buildLogsTable(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     final List<ErpMaxColumn> columns = [
       ErpMaxColumn(
-        title: "User",
+        title: localizations.user,
         weight: 0.2,
         isSortable: true,
         sortKey: 'user',
       ),
-      ErpMaxColumn(title: "Company Name", weight: 0.2),
-      ErpMaxColumn(title: "IP Address", weight: 0.15),
-      ErpMaxColumn(title: "Device", weight: 0.25),
+      ErpMaxColumn(title: localizations.colCompanyName, weight: 0.2),
+      ErpMaxColumn(title: localizations.ipAddress, weight: 0.15),
+      ErpMaxColumn(title: localizations.device, weight: 0.25),
       ErpMaxColumn(
-        title: "Date",
+        title: localizations.date,
         weight: 0.15,
         isSortable: true,
         sortKey: 'date',
       ),
-      ErpMaxColumn(title: "Status", weight: 0.1, textAlign: TextAlign.center),
+      ErpMaxColumn(
+        title: localizations.status,
+        weight: 0.1,
+        textAlign: TextAlign.center,
+      ),
     ];
 
     return Container(
@@ -100,7 +106,7 @@ class AccessLogsContent extends StatelessWidget {
                     Text(item.ipAddress, style: AppTextStyles.bodyMedium),
                     Text(item.device, style: AppTextStyles.bodySmall),
                     Text(item.date, style: AppTextStyles.bodySmall),
-                    _buildStatusBadge(theme, item.isSuccess),
+                    _buildStatusBadge(localizations, theme, item.isSuccess),
                   ],
                 );
               }).toList(),
@@ -111,7 +117,11 @@ class AccessLogsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(AppColorExtension colors, bool isSuccess) {
+  Widget _buildStatusBadge(
+    AppLocalizations localizations,
+    AppColorExtension colors,
+    bool isSuccess,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
@@ -124,7 +134,7 @@ class AccessLogsContent extends StatelessWidget {
         ),
       ),
       child: Text(
-        isSuccess ? "Success" : "Failed",
+        isSuccess ? localizations.success : localizations.failed,
         style: AppTextStyles.bodySmall.copyWith(
           color: isSuccess ? colors.successText : colors.errorText,
           fontSize: 11,

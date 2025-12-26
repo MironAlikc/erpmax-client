@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/auth/secure_storage.dart';
+import 'package:erpmax_client/core/error/failures.dart';
+import 'package:erpmax_client/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:erpmax_client/features/auth/domain/entities/auth_result.dart';
+import 'package:erpmax_client/features/auth/domain/entities/auth_tokens.dart';
+import 'package:erpmax_client/features/auth/domain/entities/switch_tenant_result.dart';
+import 'package:erpmax_client/features/auth/domain/entities/user_with_tenants.dart';
+import 'package:erpmax_client/features/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/auth/secure_storage.dart';
-import '../../domain/entities/auth_tokens.dart';
-import '../../domain/entities/auth_result.dart';
-import '../../domain/entities/user_with_tenants.dart';
-import '../../domain/entities/switch_tenant_result.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../datasources/auth_remote_datasource.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

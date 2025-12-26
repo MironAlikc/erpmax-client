@@ -50,3 +50,7 @@ app.*.map.json
 
 # Deployment configuration with credentials
 deploy_config.sh
+
+# My scripts for work
+/tools/
+

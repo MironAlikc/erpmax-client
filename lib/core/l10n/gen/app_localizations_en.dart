@@ -776,4 +776,112 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryBankAccounts => 'Bank Accounts';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get newInvoice => 'New Invoice';
+
+  @override
+  String get recordExpense => 'Record Expense';
+
+  @override
+  String get transfer => 'Transfer';
+
+  @override
+  String get importStatement => 'Import Statement';
+
+  @override
+  String get recentTransactions => 'Recent Transactions';
+
+  @override
+  String get recentTransactionsSubtitle =>
+      'Latest financial activities and journal entries.';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get netProfit => 'Net Profit';
+
+  @override
+  String get cashFlow => 'Cash Flow';
+
+  @override
+  String get verifyEmailClickLink =>
+      'Please click the link sent to your email ';
+
+  @override
+  String get verifyEmailFinish => ' to verify your account. Thank you';
+
+  @override
+  String get didntReceiveEmail => 'Didn\'t receive an email?';
+
+  @override
+  String get verifyEmailSimple => 'Please click the link sent to your email';
+
+  @override
+  String get activeUsers => 'Active Users';
+
+  @override
+  String get churnRate => 'Churn Rate';
+
+  @override
+  String get avgSession => 'Avg. Session';
+
+  @override
+  String get supportCenter => 'Support Center';
+
+  @override
+  String get getHelp => 'Get Help';
+
+  @override
+  String get moduleInventory => 'Inventory';
+
+  @override
+  String get moduleHrPayroll => 'HR & Payroll';
+
+  @override
+  String get moduleCrm => 'CRM';
+
+  @override
+  String get pkgProfessional => 'Professional';
+
+  @override
+  String get pkgEnterprise => 'Enterprise';
+
+  @override
+  String get createBackup => 'Create Backup';
+
+  @override
+  String get automatedDailyBackup => 'Automated Daily Backup';
+
+  @override
+  String get backupSize => 'Backup Size';
+
+  @override
+  String totalStorageUsed(Object size) {
+    return 'Total storage used: $size';
+  }
+
+  @override
+  String get nextScheduled => 'Next Scheduled';
+
+  @override
+  String get dailyAtMidnight => 'Daily at midnight';
+
+  @override
+  String hoursAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours ago',
+      one: '1 hour ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unitGb => 'GB';
 }
