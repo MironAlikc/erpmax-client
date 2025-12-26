@@ -64,6 +64,8 @@ import '../../features/sso/data/repositories/sso_repository_impl.dart' as _i359;
 import '../../features/sso/domain/repositories/sso_repository.dart' as _i983;
 import '../../features/sso/domain/usecases/generate_sso_token_usecase.dart'
     as _i319;
+import '../../features/sso/domain/usecases/validate_sso_token_usecase.dart'
+    as _i1042;
 import '../../features/tenant/data/datasources/tenant_remote_datasource.dart'
     as _i402;
 import '../../features/tenant/data/repositories/tenant_repository_impl.dart'
@@ -218,6 +220,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i319.GenerateSSOTokenUseCase>(
       () => _i319.GenerateSSOTokenUseCase(gh<_i983.SSORepository>()),
+    );
+    gh.factory<_i1042.ValidateSSOTokenUseCase>(
+      () => _i1042.ValidateSSOTokenUseCase(gh<_i983.SSORepository>()),
     );
     return this;
   }

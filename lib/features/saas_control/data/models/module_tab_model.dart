@@ -1,4 +1,4 @@
-import 'package:erpmax_client/features/saas_admin/domain/entities/module_tab_entity.dart';
+import 'package:erpmax_client/features/saas_control/domain/entities/module_tab_entity.dart';
 import 'package:flutter/material.dart';
 
 class ModuleTabModel extends ModuleTabEntity {
