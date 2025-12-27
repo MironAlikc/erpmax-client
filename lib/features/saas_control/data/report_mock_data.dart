@@ -1,4 +1,4 @@
-import 'package:erpmax_client/features/saas_control/data/models/report_models.dart';
+import 'package:erpmax_client/features/saas_control/presentation/pages/reports_content.dart';
 
 final List<ReportSubscriber> newSubscribersData = [
   const ReportSubscriber(
