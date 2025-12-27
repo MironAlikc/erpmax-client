@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
-import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
+import 'package:flutter/material.dart';
 
 class TabChipBar extends StatefulWidget {
   final TabController controller;
@@ -78,63 +78,72 @@ class _TabChipBarState extends State<TabChipBar> {
       child: Row(
         children: [
           Expanded(
-            child: SingleChildScrollView(
+            child: RawScrollbar(
               controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: List.generate(widget.tabs.length, (index) {
-                  final isSelected = widget.controller.index == index;
-                  final tab = widget.tabs[index];
+              thumbColor: theme.activeGreen.withValues(alpha: 0.3),
+              radius: const Radius.circular(8),
+              thickness: 4,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: List.generate(widget.tabs.length, (index) {
+                    final isSelected = widget.controller.index == index;
+                    final tab = widget.tabs[index];
 
-                  return Padding(
-                    key: _keys[index],
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      showCheckmark: false,
-                      avatar: Icon(
-                        tab.icon,
-                        size: 18,
-                        color: isSelected ? theme.success : theme.gray400,
-                      ),
-                      label: Text(tab.name),
-                      labelStyle: AppTextStyles.bodySmall.copyWith(
-                        fontSize: 13,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: isSelected ? theme.textPrimary : theme.gray500,
-                      ),
-                      selected: isSelected,
-                      onSelected: (selected) {
-                        if (selected && !widget.controller.indexIsChanging) {
-                          widget.controller.animateTo(index);
-                          widget.onTabSelected?.call(index);
-                        }
-                      },
-                      backgroundColor: Colors.transparent,
-                      selectedColor: theme.success.withValues(alpha: 0.08),
-                      elevation: 0,
-                      pressElevation: 0,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          AppDesign.chipRadius,
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        showCheckmark: false,
+                        avatar: Icon(
+                          tab.icon,
+                          size: 18,
+                          color: isSelected
+                              ? theme.activeGreen
+                              : theme.textDisabled,
                         ),
-                        side: BorderSide(
-                          color: isSelected ? theme.success : theme.gray200,
-                          width: isSelected ? 1.5 : 1,
+                        label: Text(tab.name),
+                        labelStyle: AppTextStyles.bodySmall.copyWith(
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                          color: isSelected
+                              ? theme.textPrimary
+                              : theme.textSecondary,
+                        ),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            widget.controller.animateTo(index);
+                            widget.onTabSelected?.call(index);
+                          }
+                        },
+                        backgroundColor: Colors.transparent,
+                        selectedColor: theme.successBg,
+                        elevation: 0,
+                        pressElevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: BorderSide(
+                            color: isSelected
+                                ? theme.activeGreen.withValues(alpha: 0.5)
+                                : theme.borderLight,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
           ),
+
+          const SizedBox(width: 16),
+
           if (!widget.isMobile) ...[
             const SizedBox(width: 24),
             SizedBox(

@@ -1,38 +1,123 @@
-import 'package:erpmax_client/features/dashboard/presentation/widgets/components/dashboard_summary_grid.dart';
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_header/accounting_header_btn.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounts_watchlist.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/quick_actions_panel.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_this_month/dashboard_this_month.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/recent_transactions_table.dart';
+import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class AccountingDashboardView extends StatelessWidget {
-  const AccountingDashboardView({super.key});
+  final String title;
+
+  const AccountingDashboardView({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    // Получаем ширину экрана один раз для всех дочерних виджетов
-    final double screenWidth = MediaQuery.of(context).size.width;
-
-    // Используем стандартный брейкпоинт из AppDesign
-    final bool isMobile = screenWidth < AppDesign.desktopBreakpoint;
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+    final bool isMobile = MediaQuery.of(context).size.width < 1100;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 1. Используем наш переиспользуемый грид с карточками AppStatCard
-          DashboardSummaryGrid(screenWidth: screenWidth),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
 
+        children: [
+          Wrap(
+            spacing: 20,
+            runSpacing: 16,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.spaceBetween,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 300),
+                child: Text(
+                  title,
+                  style: AppTextStyles.h1.copyWith(
+                    color: theme.textPrimary,
+                    fontSize: 26,
+                  ),
+                  softWrap: true,
+                ),
+              ),
+
+              LayoutBuilder(
+                builder: (context, headerConstraints) {
+                  if (MediaQuery.of(context).size.width < 400) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - 32,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          AccountingHeaderBtn(
+                            label: localizations.accCustomize,
+                            icon: LucideIcons.slidersHorizontal,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.accReceipts,
+                            icon: LucideIcons.arrowDownLeft,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.accPayments,
+                            icon: LucideIcons.arrowUpRight,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.accCashJournal,
+                            icon: LucideIcons.wallet,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.transfer,
+                            icon: LucideIcons.arrowLeftRight,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.accExchange,
+                            icon: LucideIcons.refreshCcw,
+                            isOutline: true,
+                          ),
+                          const SizedBox(width: 12),
+                          AccountingHeaderBtn(
+                            label: localizations.accJournalEntry,
+                            icon: LucideIcons.plus,
+                            color: theme.sidebarActiveIcon,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          DashboardThisMonth(),
+          // const SizedBox(height: 24),
+          // const StatsGrid(),
           const SizedBox(height: 32),
 
-          // 2. Адаптивная раскладка для таблиц и панелей
           if (isMobile)
             Column(
               children: const [
                 RecentTransactionsTable(),
-                SizedBox(height: 24),
-                QuickActionsPanel(),
                 SizedBox(height: 24),
                 AccountsWatchlist(),
               ],
@@ -41,22 +126,10 @@ class AccountingDashboardView extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Основной контент (Таблица транзакций)
                 const Expanded(flex: 2, child: RecentTransactionsTable()),
 
                 const SizedBox(width: 24),
-
-                // Боковая панель (Действия и Вотчлист)
-                const Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      QuickActionsPanel(),
-                      SizedBox(height: 24),
-                      AccountsWatchlist(),
-                    ],
-                  ),
-                ),
+                const Expanded(flex: 1, child: AccountsWatchlist()),
               ],
             ),
         ],

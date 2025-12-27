@@ -890,4 +890,52 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get unitGb => 'ГБ';
+
+  @override
+  String get accDashboard => 'Панель управления';
+
+  @override
+  String get accLedger => 'Главная книга';
+
+  @override
+  String get accJournal => 'Журнальные записи';
+
+  @override
+  String get accChart => 'План счетов';
+
+  @override
+  String get accFunds => 'Фонды и банки';
+
+  @override
+  String get accParties => 'Контрагенты';
+
+  @override
+  String get accAssets => 'Основные средства';
+
+  @override
+  String get accAssetsCenters => 'Активы и центры';
+
+  @override
+  String get accPeriodClosing => 'Закрытие периода';
+
+  @override
+  String get accReports => 'Бух. отчеты';
+
+  @override
+  String get accCustomize => 'Настроить';
+
+  @override
+  String get accReceipts => 'Поступления';
+
+  @override
+  String get accPayments => 'Платежи';
+
+  @override
+  String get accCashJournal => 'Кассовая\nкнига';
+
+  @override
+  String get accExchange => 'Обмен\nвалют';
+
+  @override
+  String get accJournalEntry => 'Журнальная\nзапись';
 }
