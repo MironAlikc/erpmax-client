@@ -6,58 +6,69 @@ class AppTheme {
     useMaterial3: true,
     extensions: [
       AppColorExtension(
-        primary: const Color(0xFF1379F0),
-        primaryDark: const Color(0xFF0C5EC9),
-        primaryLight: const Color(0xFFE6F0FE),
-        success: const Color(0xFF10B981),
-        successLight: const Color(0xFFDCFCE7),
-        error: const Color(0xFFF04438),
-        errorLight: const Color(0xFFFEE4E2),
-        warning: const Color(0xFFF79009),
-        warningLight: const Color(0xFFFEF0C7),
-        info: const Color(0xFF4B5563),
-        white: const Color(0xFFFFFFFF),
-        black: const Color(0xFF0C111D),
-        gray50: const Color(0xFFF9FAFB),
-        gray100: const Color(0xFFF2F4F7),
-        gray200: const Color(0xFFEAECF0),
-        gray300: const Color(0xFFD0D5DD),
-        gray400: const Color(0xFF98A2B3),
-        gray500: const Color(0xFF667085),
+        // Основные цвета из секции Primary и Erp Navy
+        primary: const Color(0xFF0F172A), // Primary Default
+        primaryDark: const Color(0xFF0A2540), // Erp Navy
+        primaryLight: const Color(0xFFF1F5F9), // Accent/Secondary Default
+        // Семантические цвета из секции Erp и Destructive
+        success: const Color(0xFF10B981), // Erp Success
+        successLight: const Color(0xFFD1FAE5), // (Расчетный светлый тон)
+        error: const Color(0xFFEF4444), // Erp Error / Destructive Default
+        errorLight: const Color(0xFFFEE2E2), // (Расчетный светлый тон)
+        warning: const Color(0xFFF59E0B), // Erp Warning
+        warningLight: const Color(0xFFFEF3C7), // (Расчетный светлый тон)
+
+        info: const Color(0xFF0A2540), // Navy
+        white: const Color(0xFFFFFFFF), // Background / Card Default
+        black: const Color(0xFF020817), // Foreground
+        // Градация серого (на основе Border, Muted и Accent)
+        gray50: const Color(0xFFFAF9F6), // Erp Cream
+        gray100: const Color(0xFFF1F5F9), // Accent/Muted Default
+        gray200: const Color(0xFFE2E8F0), // Border / Input
+        gray300: const Color(0xFFCBD5E1), // (Промежуточный)
+        gray400: const Color(0xFF94A3B8), // (Промежуточный)
+        gray500: const Color(0xFF64748B), // Muted Foreground
         gray600: const Color(0xFF475467),
-        gray700: const Color(0xFF344054),
-        gray800: const Color(0xFF1D2939),
-        gray900: const Color(0xFF101828),
-        textPrimary: const Color(0xFF101828), // gray900
-        textSecondary: const Color(0xFF475467), // gray600
-        textTertiary: const Color(0xFF667085), // gray500
-        textDisabled: const Color(0xFF98A2B3), // gray400
-        textWhite: const Color(0xFFFFFFFF), // white
-        borderLight: const Color(0xFFEAECF0), // gray200
-        borderMedium: const Color(0xFFD0D5DD), // gray300
-        shadowColor: const Color(0x0D101828),
-        border: const Color(0xFFE2E8F0),
-        sidebarBackground: const Color(0xFF101828), // gray900
-        sidebarActiveBg: const Color(0xFF1D2939),
-        sidebarActiveText: const Color(0xFFFFFFFF), // white
-        sidebarActiveIcon: const Color(0xFF10B981), // success
-        sidebarInactiveText: const Color(0xFF98A2B3), // gray400
-        bgLight: const Color(0xFFF8FAFC),
-        activeGreen: const Color(0xFF00C58D),
-        inactiveBg: const Color(0xFFF1F5F9),
-        successBg: const Color(0xFFECFDF3),
-        successText: const Color(0xFF027A48),
-        warningBg: const Color(0xFFFFFAEB),
-        warningText: const Color(0xFFB54708),
-        errorBg: const Color(0xFFFEF3F2),
-        errorText: const Color(0xFFB42318),
-        infoBg: const Color(0xFFEFF8FF),
-        infoText: const Color(0xFF175CD3),
-        neutralBg: const Color(0xFFF2F4F7),
-        neutralText: const Color(0xFF344054),
-        bgDisabled: const Color(0xFFF2F4F7), // (gray100)
-        sidebarActiveBgBase: const Color(0xFF12203A),
-        sidebarActiveBgLight: const Color(0xFF1A2D4D),
+        gray700: const Color(0xFF334155),
+        gray800: const Color(0xFF1E293B),
+        gray900: const Color(0xFF0F172A), // Primary Default
+        // Текст
+        textPrimary: const Color(0xFF020817), // Foreground
+        textSecondary: const Color(0xFF64748B), // Muted Foreground
+        textTertiary: const Color(0xFF0F172A), // Accent Foreground
+        textDisabled: const Color(0xFF94A3B8),
+        textWhite: const Color(0xFFF8FAFC), // Primary/Destructive Foreground
+        // Границы и тени
+        borderLight: const Color(0xFFE2E8F0), // Border
+        borderMedium: const Color(0xFFCBD5E1),
+        shadowColor: const Color(0x0D020817),
+        border: const Color(0xFFE2E8F0), // Input / Border
+        // Сайдбар (используем Navy для контраста, как в Tempo ERP)
+        sidebarBackground: const Color(0xFF0A2540), // Erp Navy
+        sidebarActiveBg: const Color(0xFF0F172A),
+        sidebarActiveText: const Color(0xFFFFFFFF),
+        sidebarActiveIcon: const Color(0xFF00D4AA), // Erp Teal
+        sidebarInactiveText: const Color(0xFF64748B),
+
+        // Фоны и статусы
+        bgLight: const Color(0xFFFFFFFF), // Background
+        activeGreen: const Color(0xFF00D4AA), // Erp Teal
+        inactiveBg: const Color(0xFFF1F5F9), // Muted Default
+        successBg: const Color(0xFFD1FAE5),
+        successText: const Color(0xFF065F46),
+        warningBg: const Color(0xFFFEF3C7),
+        warningText: const Color(0xFF92400E),
+        errorBg: const Color(0xFFFEE2E2),
+        errorText: const Color(0xFF991B1B),
+        infoBg: const Color(0xFFE0F2FE),
+        infoText: const Color(0xFF075985),
+        neutralBg: const Color(0xFFF1F5F9),
+        neutralText: const Color(0xFF334155),
+        bgDisabled: const Color(0xFFF1F5F9),
+
+        // Дополнительные акценты
+        sidebarActiveBgBase: const Color(0xFF0F172A),
+        sidebarActiveBgLight: const Color(0xFF1E293B),
         accentIndigo: const Color(0xFF6366F1),
         accentIndigoLight: const Color(0xFFEEF2FF),
         indigoBg: const Color(0xFFEEF2FF),
@@ -73,58 +84,69 @@ class AppTheme {
     useMaterial3: true,
     extensions: [
       AppColorExtension(
-        primary: const Color(0xFF1379F0),
-        primaryDark: const Color(0xFF0C5EC9),
-        primaryLight: const Color(0xFFE6F0FE),
-        success: const Color(0xFF10B981),
-        successLight: const Color(0xFFDCFCE7),
-        error: const Color(0xFFF04438),
-        errorLight: const Color(0xFFFEE4E2),
-        warning: const Color(0xFFF79009),
-        warningLight: const Color(0xFFFEF0C7),
-        info: const Color(0xFF4B5563),
-        white: const Color(0xFFFFFFFF),
-        black: const Color(0xFF0C111D),
-        gray50: const Color(0xFFF9FAFB),
-        gray100: const Color(0xFFF2F4F7),
-        gray200: const Color(0xFFEAECF0),
-        gray300: const Color(0xFFD0D5DD),
-        gray400: const Color(0xFF98A2B3),
-        gray500: const Color(0xFF667085),
+        // Основные цвета из секции Primary и Erp Navy
+        primary: const Color(0xFF0F172A), // Primary Default
+        primaryDark: const Color(0xFF0A2540), // Erp Navy
+        primaryLight: const Color(0xFFF1F5F9), // Accent/Secondary Default
+        // Семантические цвета из секции Erp и Destructive
+        success: const Color(0xFF10B981), // Erp Success
+        successLight: const Color(0xFFD1FAE5), // (Расчетный светлый тон)
+        error: const Color(0xFFEF4444), // Erp Error / Destructive Default
+        errorLight: const Color(0xFFFEE2E2), // (Расчетный светлый тон)
+        warning: const Color(0xFFF59E0B), // Erp Warning
+        warningLight: const Color(0xFFFEF3C7), // (Расчетный светлый тон)
+
+        info: const Color(0xFF0A2540), // Navy
+        white: const Color(0xFFFFFFFF), // Background / Card Default
+        black: const Color(0xFF020817), // Foreground
+        // Градация серого (на основе Border, Muted и Accent)
+        gray50: const Color(0xFFFAF9F6), // Erp Cream
+        gray100: const Color(0xFFF1F5F9), // Accent/Muted Default
+        gray200: const Color(0xFFE2E8F0), // Border / Input
+        gray300: const Color(0xFFCBD5E1), // (Промежуточный)
+        gray400: const Color(0xFF94A3B8), // (Промежуточный)
+        gray500: const Color(0xFF64748B), // Muted Foreground
         gray600: const Color(0xFF475467),
-        gray700: const Color(0xFF344054),
-        gray800: const Color(0xFF1D2939),
-        gray900: const Color(0xFF101828),
-        textPrimary: const Color(0xFF101828), // gray900
-        textSecondary: const Color(0xFF475467), // gray600
-        textTertiary: const Color(0xFF667085), // gray500
-        textDisabled: const Color(0xFF98A2B3), // gray400
-        textWhite: const Color(0xFFFFFFFF), // white
-        borderLight: const Color(0xFFEAECF0), // gray200
-        borderMedium: const Color(0xFFD0D5DD), // gray300
-        shadowColor: const Color(0x0D101828),
-        border: const Color(0xFFE2E8F0),
-        sidebarBackground: const Color(0xFF101828), // gray900
-        sidebarActiveBg: const Color(0xFF1D2939),
-        sidebarActiveText: const Color(0xFFFFFFFF), // white
-        sidebarActiveIcon: const Color(0xFF10B981), // success
-        sidebarInactiveText: const Color(0xFF98A2B3), // gray400
-        bgLight: const Color(0xFFF8FAFC),
-        activeGreen: const Color(0xFF00C58D),
-        inactiveBg: const Color(0xFFF1F5F9),
-        successBg: const Color(0xFFECFDF3),
-        successText: const Color(0xFF027A48),
-        warningBg: const Color(0xFFFFFAEB),
-        warningText: const Color(0xFFB54708),
-        errorBg: const Color(0xFFFEF3F2),
-        errorText: const Color(0xFFB42318),
-        infoBg: const Color(0xFFEFF8FF),
-        infoText: const Color(0xFF175CD3),
-        neutralBg: const Color(0xFFF2F4F7),
-        neutralText: const Color(0xFF344054),
-        bgDisabled: const Color(0xFFF2F4F7), // (gray100)
-        sidebarActiveBgBase: const Color(0xFF0A121E),
-        sidebarActiveBgLight: const Color(0xFF14223A),
+        gray700: const Color(0xFF334155),
+        gray800: const Color(0xFF1E293B),
+        gray900: const Color(0xFF0F172A), // Primary Default
+        // Текст
+        textPrimary: const Color(0xFF020817), // Foreground
+        textSecondary: const Color(0xFF64748B), // Muted Foreground
+        textTertiary: const Color(0xFF0F172A), // Accent Foreground
+        textDisabled: const Color(0xFF94A3B8),
+        textWhite: const Color(0xFFF8FAFC), // Primary/Destructive Foreground
+        // Границы и тени
+        borderLight: const Color(0xFFE2E8F0), // Border
+        borderMedium: const Color(0xFFCBD5E1),
+        shadowColor: const Color(0x0D020817),
+        border: const Color(0xFFE2E8F0), // Input / Border
+        // Сайдбар (используем Navy для контраста, как в Tempo ERP)
+        sidebarBackground: const Color(0xFF0A2540), // Erp Navy
+        sidebarActiveBg: const Color(0xFF0F172A),
+        sidebarActiveText: const Color(0xFFFFFFFF),
+        sidebarActiveIcon: const Color(0xFF00D4AA), // Erp Teal
+        sidebarInactiveText: const Color(0xFF64748B),
+
+        // Фоны и статусы
+        bgLight: const Color(0xFFFFFFFF), // Background
+        activeGreen: const Color(0xFF00D4AA), // Erp Teal
+        inactiveBg: const Color(0xFFF1F5F9), // Muted Default
+        successBg: const Color(0xFFD1FAE5),
+        successText: const Color(0xFF065F46),
+        warningBg: const Color(0xFFFEF3C7),
+        warningText: const Color(0xFF92400E),
+        errorBg: const Color(0xFFFEE2E2),
+        errorText: const Color(0xFF991B1B),
+        infoBg: const Color(0xFFE0F2FE),
+        infoText: const Color(0xFF075985),
+        neutralBg: const Color(0xFFF1F5F9),
+        neutralText: const Color(0xFF334155),
+        bgDisabled: const Color(0xFFF1F5F9),
+
+        // Дополнительные акценты
+        sidebarActiveBgBase: const Color(0xFF0F172A),
+        sidebarActiveBgLight: const Color(0xFF1E293B),
         accentIndigo: const Color(0xFF6366F1),
         accentIndigoLight: const Color(0xFFEEF2FF),
         indigoBg: const Color(0xFFEEF2FF),

@@ -1771,31 +1771,31 @@ abstract class AppLocalizations {
   /// No description provided for @accDashboard.
   ///
   /// In en, this message translates to:
-  /// **'Accounting\nDashboard'**
+  /// **'Accounting Dashboard'**
   String get accDashboard;
 
   /// No description provided for @accLedger.
   ///
   /// In en, this message translates to:
-  /// **'General\nLedger'**
+  /// **'General Ledger'**
   String get accLedger;
 
   /// No description provided for @accJournal.
   ///
   /// In en, this message translates to:
-  /// **'Journal\nEntries'**
+  /// **'Journal Entries'**
   String get accJournal;
 
   /// No description provided for @accChart.
   ///
   /// In en, this message translates to:
-  /// **'Chart of\nAccounts'**
+  /// **'Chart of Accounts'**
   String get accChart;
 
   /// No description provided for @accFunds.
   ///
   /// In en, this message translates to:
-  /// **'Funds &\nBanks'**
+  /// **'Funds & Banks'**
   String get accFunds;
 
   /// No description provided for @accParties.
@@ -1809,6 +1809,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed\nAssets'**
   String get accAssets;
+
+  /// No description provided for @accAssetsCenters.
+  ///
+  /// In en, this message translates to:
+  /// **'Assets & Centers'**
+  String get accAssetsCenters;
+
+  /// No description provided for @accPeriodClosing.
+  ///
+  /// In en, this message translates to:
+  /// **'Period Closing'**
+  String get accPeriodClosing;
+
+  /// No description provided for @accReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting Reports'**
+  String get accReports;
+
+  /// No description provided for @accCustomize.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize'**
+  String get accCustomize;
+
+  /// No description provided for @accReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipts'**
+  String get accReceipts;
+
+  /// No description provided for @accPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get accPayments;
+
+  /// No description provided for @accCashJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash\nJournal'**
+  String get accCashJournal;
+
+  /// No description provided for @accExchange.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange'**
+  String get accExchange;
+
+  /// No description provided for @accJournalEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal\nEntry'**
+  String get accJournalEntry;
 }
 
 class _AppLocalizationsDelegate

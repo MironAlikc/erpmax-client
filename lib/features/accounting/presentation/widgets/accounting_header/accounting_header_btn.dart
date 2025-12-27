@@ -23,19 +23,32 @@ class AccountingHeaderBtn extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: () {},
       icon: Icon(icon, size: 16),
-      label: Text(label, style: AppTextStyles.bodySmallBold),
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: isOutline ? theme.white : (color ?? theme.black),
-        foregroundColor: isOutline ? theme.textPrimary : theme.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: isOutline
-              ? BorderSide(color: theme.borderLight)
-              : BorderSide.none,
-        ),
+      label: Text(
+        label,
+        style: AppTextStyles.bodySmallBold,
+        maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.visible,
       ),
+      style:
+          ElevatedButton.styleFrom(
+            elevation: 0,
+            // Запрещаем кнопке навязывать минимальный размер, пусть она тянется по тексту
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            backgroundColor: isOutline ? theme.white : (color ?? theme.black),
+            foregroundColor: isOutline ? theme.textPrimary : theme.white,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: isOutline
+                  ? BorderSide(color: theme.borderLight)
+                  : BorderSide.none,
+            ),
+          ).copyWith(
+            // Это ГАРАНТИРУЕТ, что кнопка не будет сжимать текст
+            fixedSize: const WidgetStatePropertyAll(null),
+          ),
     );
   }
 }

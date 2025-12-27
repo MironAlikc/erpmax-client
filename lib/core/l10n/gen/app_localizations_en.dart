@@ -886,23 +886,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitGb => 'GB';
 
   @override
-  String get accDashboard => 'Accounting\nDashboard';
+  String get accDashboard => 'Accounting Dashboard';
 
   @override
-  String get accLedger => 'General\nLedger';
+  String get accLedger => 'General Ledger';
 
   @override
-  String get accJournal => 'Journal\nEntries';
+  String get accJournal => 'Journal Entries';
 
   @override
-  String get accChart => 'Chart of\nAccounts';
+  String get accChart => 'Chart of Accounts';
 
   @override
-  String get accFunds => 'Funds &\nBanks';
+  String get accFunds => 'Funds & Banks';
 
   @override
   String get accParties => 'Parties';
 
   @override
   String get accAssets => 'Fixed\nAssets';
+
+  @override
+  String get accAssetsCenters => 'Assets & Centers';
+
+  @override
+  String get accPeriodClosing => 'Period Closing';
+
+  @override
+  String get accReports => 'Accounting Reports';
+
+  @override
+  String get accCustomize => 'Customize';
+
+  @override
+  String get accReceipts => 'Receipts';
+
+  @override
+  String get accPayments => 'Payments';
+
+  @override
+  String get accCashJournal => 'Cash\nJournal';
+
+  @override
+  String get accExchange => 'Exchange';
+
+  @override
+  String get accJournalEntry => 'Journal\nEntry';
 }

@@ -887,23 +887,50 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitGb => 'جيجابايت';
 
   @override
-  String get accDashboard => 'لوحة\nالتحكم';
+  String get accDashboard => 'لوحة التحكم';
 
   @override
-  String get accLedger => 'دفتر\nالأستاذ';
+  String get accLedger => 'دفتر الأستاذ';
 
   @override
-  String get accJournal => 'قيود\nاليومية';
+  String get accJournal => 'قيود اليومية';
 
   @override
-  String get accChart => 'دليل\nالحسابات';
+  String get accChart => 'دليل الحسابات';
 
   @override
-  String get accFunds => 'الصناديق\nوالبنوك';
+  String get accFunds => 'الصناديق والبنوك';
 
   @override
   String get accParties => 'الأطراف';
 
   @override
-  String get accAssets => 'الأصول\nالثابتة';
+  String get accAssets => 'الأصول الثابتة';
+
+  @override
+  String get accAssetsCenters => 'الأصول والمراكز';
+
+  @override
+  String get accPeriodClosing => 'إغلاق الفترة';
+
+  @override
+  String get accReports => 'تقارير\nالمحاسبة';
+
+  @override
+  String get accCustomize => 'تخصيص';
+
+  @override
+  String get accReceipts => 'الإيصالات';
+
+  @override
+  String get accPayments => 'المدفوعات';
+
+  @override
+  String get accCashJournal => 'دفتر\nالصندوق';
+
+  @override
+  String get accExchange => 'صرف\nالعملات';
+
+  @override
+  String get accJournalEntry => 'قيد\nيومي';
 }
