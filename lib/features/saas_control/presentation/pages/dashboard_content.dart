@@ -1,15 +1,13 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/utils/card_color_helper.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/stat_card.dart';
-import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/subscriptions_bar_chart.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/charts/revenue_line_chart.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/components/chart_wrapper.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/charts/revenue_line_chart.dart';
-import '../widgets/components/chart_wrapper.dart';
-import '../widgets/components/section_header.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+import '../../../../core/widgets/common/app_stat_card.dart';
+import '../../../dashboard/data/datasources/dashboard_local_datasource.dart';
 
 class DashboardContent extends StatelessWidget {
   final double screenWidth;
@@ -18,87 +16,112 @@ class DashboardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    final localizations = AppLocalizations.of(context);
-
-    final bool isMobile = screenWidth < AppDesign.mobileBreakpoint;
-    final bool isTablet =
-        screenWidth < AppDesign.desktopBreakpoint && !isMobile;
-    final bool stackCharts = screenWidth < 1100;
+    final l10n = AppLocalizations.of(context);
+    final bool isStacked = screenWidth < 1200;
 
     final summaryData = DashboardLocalDataSourceImpl(
       colors: theme,
     ).getSummaryData();
 
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppDesign.pagePadding,
-        vertical: 24,
-      ),
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionHeader(title: localizations.overview),
-          const SizedBox(height: 20),
-
-          _buildSummaryGrid(summaryData, isMobile, isTablet, theme),
-
-          const SizedBox(height: 32),
-          SectionHeader(title: localizations.analytics),
-          const SizedBox(height: 20),
-
-          // Графики
-          Flex(
-            direction: stackCharts ? Axis.vertical : Axis.horizontal,
-            children: [
-              Expanded(
-                flex: stackCharts ? 0 : 1,
-                child: ChartWrapper(
-                  title: localizations.totalRevenue,
-                  chart: RevenueLineChart(),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: summaryData.length,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 400,
+              mainAxisExtent: 170,
+              crossAxisSpacing: 24,
+              mainAxisSpacing: 24,
+            ),
+            itemBuilder: (context, index) {
+              final item = summaryData[index];
+              return AppBaseStatCard(
+                title: item.title,
+                value: _formatCurrency(item.value, item.currency),
+                icon: _getLucideIcon(item.title),
+                trailing: StatTrendBadge(
+                  trend:
+                      "${item.changePercentage > 0 ? '+' : ''}${item.changePercentage}%",
+                  isPositive: item.changePercentage == 0
+                      ? null
+                      : item.changePercentage > 0,
                 ),
-              ),
-              _buildSpacing(stackCharts),
-              Expanded(
-                flex: stackCharts ? 0 : 1,
-                child: ChartWrapper(
-                  title: localizations.activeSubscriptions,
-                  chart: SubscriptionsBarChart(),
-                ),
-              ),
-            ],
+              );
+            },
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 32),
+          DashboardChartsSection(isStacked: isStacked, l10n: l10n),
+          const SizedBox(height: 32),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryGrid(data, isMobile, isTablet, theme) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: data.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: isMobile ? 1 : (isTablet ? 2 : 4),
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        childAspectRatio: isMobile ? 2.2 : 1.6,
-      ),
-      itemBuilder: (context, index) {
-        final item = data[index];
-        return StatCard(
-          title: item.title,
-          value: "${item.currency}${item.value.toStringAsFixed(0)}",
-          trend:
-              "${item.changePercentage > 0 ? '+' : ''}${item.changePercentage}%",
-          isPositive: item.changePercentage > 0,
-          icon: item.icon,
-          color: CardColorHelper.getCardColor(theme, index),
-        );
-      },
-    );
+  IconData _getLucideIcon(String title) {
+    final t = title.toLowerCase().trim();
+    if (t.contains('revenue') || t.contains('mrr') || t.contains('expenses')) {
+      return LucideIcons.dollarSign;
+    }
+    if (t.contains('churn')) return LucideIcons.trendingDown;
+    if (t.contains('customer') || t.contains('retention')) {
+      return LucideIcons.users;
+    }
+    if (t.contains('performance') || t.contains('system')) {
+      return LucideIcons.activity;
+    }
+    return LucideIcons.barChart3;
   }
 
-  Widget _buildSpacing(bool isVertical) =>
-      isVertical ? const SizedBox(height: 24) : const SizedBox(width: 24);
+  String _formatCurrency(double value, String? currency) {
+    final String formattedValue = value
+        .toStringAsFixed(0)
+        .replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (Match m) => '${m[1]},',
+        );
+    return currency != null ? "$currency $formattedValue" : formattedValue;
+  }
+}
+
+class DashboardChartsSection extends StatelessWidget {
+  final bool isStacked;
+  final dynamic l10n;
+
+  const DashboardChartsSection({
+    super.key,
+    required this.isStacked,
+    required this.l10n,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final charts = [
+      ChartWrapper(title: l10n.totalRevenue, chart: const RevenueLineChart()),
+      ChartWrapper(
+        title: l10n.activeSubscriptions,
+        chart: const SubscriptionsBarChart(),
+      ),
+    ];
+
+    if (isStacked) {
+      return Column(
+        children: [charts[0], const SizedBox(height: 24), charts[1]],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: charts[0]),
+        const SizedBox(width: 24),
+        Expanded(child: charts[1]),
+      ],
+    );
+  }
 }

@@ -6,7 +6,6 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounts_watchlist.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_this_month/dashboard_this_month.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/recent_transactions_table.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/stats_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -22,7 +21,7 @@ class AccountingDashboardView extends StatelessWidget {
     final bool isMobile = MediaQuery.of(context).size.width < 1100;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(AppDesign.pagePadding),
+      padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
 
@@ -111,9 +110,10 @@ class AccountingDashboardView extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           DashboardThisMonth(),
-          const SizedBox(height: 24),
-          const StatsGrid(),
+          // const SizedBox(height: 24),
+          // const StatsGrid(),
           const SizedBox(height: 32),
+
           if (isMobile)
             Column(
               children: const [
@@ -127,6 +127,7 @@ class AccountingDashboardView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(flex: 2, child: RecentTransactionsTable()),
+
                 const SizedBox(width: 24),
                 const Expanded(flex: 1, child: AccountsWatchlist()),
               ],

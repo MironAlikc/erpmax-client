@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/subscriptions_bar_chart.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/charts/revenue_line_chart.dart';
 import 'package:erpmax_client/features/saas_control/presentation/widgets/components/chart_wrapper.dart';
 import 'package:flutter/material.dart';
 
