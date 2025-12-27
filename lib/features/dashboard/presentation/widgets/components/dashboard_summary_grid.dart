@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/widgets/common/app_stat_card.dart';
+import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/dashboard/data/datasources/dashboard_local_datasource.dart';

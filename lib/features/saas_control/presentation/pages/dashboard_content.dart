@@ -6,7 +6,7 @@ import 'package:erpmax_client/features/saas_control/presentation/widgets/charts/
 import 'package:erpmax_client/features/saas_control/presentation/widgets/components/chart_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../../../core/widgets/common/app_stat_card.dart';
+import '../../../../core/widgets/common/app_base_stat_card.dart';
 import '../../../dashboard/data/datasources/dashboard_local_datasource.dart';
 
 class DashboardContent extends StatelessWidget {

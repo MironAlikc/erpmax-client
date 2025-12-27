@@ -1,3 +1,4 @@
+import 'package:erpmax_client/features/saas_control/domain/entities/subscriber_entity.dart';
 import 'package:flutter/material.dart';
 
 class ReportStat {
@@ -32,4 +33,59 @@ class ReportSubscriber {
     required this.endDate,
     required this.price,
   });
+}
+
+class SubscriberModel extends SubscriberEntity {
+  const SubscriberModel({
+    required super.company,
+    required super.plan,
+    required super.status,
+    required super.startDate,
+    required super.endDate,
+    required super.price,
+  });
+
+  factory SubscriberModel.fromJson(Map<String, dynamic> json) =>
+      SubscriberModel(
+        company: json['company_name'] ?? '',
+        plan: json['plan'] ?? '',
+        status: json['status'] ?? '',
+        startDate: json['start_date'] ?? '',
+        endDate: json['end_date'] ?? '',
+        price: json['price'] ?? '',
+      );
+}
+
+class UsageModuleModel extends UsageModuleEntity {
+  const UsageModuleModel({
+    required super.moduleName,
+    required super.activeSubscriptions,
+    required super.usersCount,
+    required super.storageLimit,
+  });
+
+  factory UsageModuleModel.fromJson(Map<String, dynamic> json) =>
+      UsageModuleModel(
+        moduleName: json['module_name'] ?? '',
+        activeSubscriptions: json['active_subs'] ?? 0,
+        usersCount: json['users_count'] ?? 0,
+        storageLimit: json['storage_limit'] ?? '',
+      );
+}
+
+class PerformanceModel extends PerformanceEntity {
+  const PerformanceModel({
+    required super.date,
+    required super.uptime,
+    required super.responseTime,
+    required super.errorRate,
+  });
+
+  factory PerformanceModel.fromJson(Map<String, dynamic> json) =>
+      PerformanceModel(
+        date: json['date'] ?? '',
+        uptime: json['uptime'] ?? '',
+        responseTime: json['response_time'] ?? '',
+        errorRate: json['error_rate'] ?? '',
+      );
 }

@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/widgets/tables_cards/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -22,48 +23,50 @@ class AppBaseStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    return Container(
-      height: 160,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: theme.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.gray200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    return AppCard(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               StatIconBox(icon: icon, color: iconColor),
-              if (trailing != null) trailing!,
+              if (trailing != null)
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: trailing!,
+                  ),
+                ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: 8),
           Text(
             title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
               color: theme.gray500,
             ),
           ),
-          const SizedBox(height: 6),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
-              letterSpacing: -0.5,
+          const SizedBox(height: 2),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: theme.textPrimary,
+                  letterSpacing: -0.5,
+                ),
+              ),
             ),
           ),
         ],
@@ -87,7 +90,7 @@ class StatIconBox extends StatelessWidget {
         color: theme.gray50,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(icon, color: color ?? const Color(0xFF1E293B), size: 22),
+      child: Icon(icon, color: color ?? theme.textPrimary, size: 22),
     );
   }
 }
@@ -101,7 +104,7 @@ class StatTrendBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color contentColor = isPositive == null
-        ? const Color(0xFF64748B) // Slate 500
+        ? const Color(0xFF64748B)
         : (isPositive! ? const Color(0xFF10B981) : const Color(0xFFEF4444));
 
     final Color bgColor = isPositive == null
