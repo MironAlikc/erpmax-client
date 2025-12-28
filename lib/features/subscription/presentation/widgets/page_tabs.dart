@@ -58,8 +58,8 @@ class _PageTabsState extends State<PageTabs> {
                   entry.value,
                   style:
                       (isActive
-                              ? AppTextStyles.sidebarActive
-                              : AppTextStyles.sidebarInactive)
+                              ? AppTextStyles.sidebarItemActive
+                              : AppTextStyles.sidebarItem)
                           .copyWith(
                             color: isActive
                                 ? theme.primary

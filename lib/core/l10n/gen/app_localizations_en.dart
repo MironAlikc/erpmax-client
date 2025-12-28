@@ -925,11 +925,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accPayments => 'Payments';
 
   @override
-  String get accCashJournal => 'Cash\nJournal';
+  String get accCashJournal => 'Cash Journal';
 
   @override
   String get accExchange => 'Exchange';
 
   @override
-  String get accJournalEntry => 'Journal\nEntry';
+  String get accJournalEntry => 'Journal Entry';
+
+  @override
+  String get accCurrentRatio => 'Current Ratio';
+
+  @override
+  String get accNetMargin => 'Net Margin';
+
+  @override
+  String get accAvgCollection => 'Avg. Collection';
+
+  @override
+  String get accAvgPayment => 'Avg. Payment';
+
+  @override
+  String get accOverdueReceivables => 'Overdue\nReceivables';
+
+  @override
+  String get accPendingItems => 'Pending\nItems';
+
+  @override
+  String get accJournalsPendingReview => 'Journals pending\nreview';
+
+  @override
+  String get accBankReconciliationsPending => 'Bank reconciliations\npending';
+
+  @override
+  String get accInvoicesAwaitingApproval => 'Invoices awaiting\napproval';
+
+  @override
+  String get accExpenseBreakdown => 'Expense Breakdown';
+
+  @override
+  String get accSalaries => 'Salaries';
+
+  @override
+  String get accRent => 'Rent';
+
+  @override
+  String get accUtilities => 'Utilities';
+
+  @override
+  String get accMarketing => 'Marketing';
+
+  @override
+  String get accOthers => 'Others';
+
+  @override
+  String get accVatSummary => 'VAT Summary';
+
+  @override
+  String get accVatCollectedLabel => 'Collected:';
+
+  @override
+  String get accVatPaidLabel => 'Paid:';
+
+  @override
+  String get accVatNetLabel => 'Net:';
+
+  @override
+  String accVatDueLabel(Object date) {
+    return 'Due: $date';
+  }
 }

@@ -280,7 +280,7 @@ class _MenuItemState extends State<_MenuItem> {
                       Expanded(
                         child: Text(
                           widget.title,
-                          style: AppTextStyles.labelStyle.copyWith(
+                          style: AppTextStyles.label.copyWith(
                             color: isSelected ? theme.white : theme.textPrimary,
                             fontWeight: isSelected
                                 ? FontWeight.w700

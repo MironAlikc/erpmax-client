@@ -72,7 +72,7 @@ class KpiCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: AppTextStyles.labelStyle),
+              Text(title, style: AppTextStyles.label),
               const SizedBox(height: 8),
               Text(value, style: AppTextStyles.h2),
             ],

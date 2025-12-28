@@ -138,7 +138,7 @@ class _QuickActionButton extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 label,
-                style: AppTextStyles.labelStyle.copyWith(
+                style: AppTextStyles.label.copyWith(
                   fontSize: 11,
                   color: theme.gray500,
                 ),

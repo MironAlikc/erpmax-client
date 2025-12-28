@@ -107,7 +107,7 @@ class PackagesContent extends StatelessWidget {
                     children: [
                       Text(
                         item.planName,
-                        style: AppTextStyles.labelStyle.copyWith(
+                        style: AppTextStyles.label.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),

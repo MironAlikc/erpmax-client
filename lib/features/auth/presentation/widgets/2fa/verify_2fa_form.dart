@@ -121,7 +121,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
             onPressed: () {},
             child: Text(
               localizations.resend,
-              style: AppTextStyles.linkStyle.copyWith(
+              style: AppTextStyles.link.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),

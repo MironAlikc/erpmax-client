@@ -931,11 +931,73 @@ class AppLocalizationsRu extends AppLocalizations {
   String get accPayments => 'Платежи';
 
   @override
-  String get accCashJournal => 'Кассовая\nкнига';
+  String get accCashJournal => 'Кассовая книга';
 
   @override
   String get accExchange => 'Обмен\nвалют';
 
   @override
-  String get accJournalEntry => 'Журнальная\nзапись';
+  String get accJournalEntry => 'Журнальная запись';
+
+  @override
+  String get accCurrentRatio => 'Текущая ликвидность';
+
+  @override
+  String get accNetMargin => 'Чистая маржа';
+
+  @override
+  String get accAvgCollection => 'Срок сбора деб. задолж.';
+
+  @override
+  String get accAvgPayment => 'Срок оплаты кред. задолж.';
+
+  @override
+  String get accOverdueReceivables => 'Просроченная\nдебиторка';
+
+  @override
+  String get accPendingItems => 'Ожидающие\nпозиции';
+
+  @override
+  String get accJournalsPendingReview => 'Журналы на\nпроверке';
+
+  @override
+  String get accBankReconciliationsPending => 'Сверки банков на\nожидании';
+
+  @override
+  String get accInvoicesAwaitingApproval => 'Счета на\nутверждении';
+
+  @override
+  String get accExpenseBreakdown => 'Анализ расходов';
+
+  @override
+  String get accSalaries => 'Зарплаты';
+
+  @override
+  String get accRent => 'Аренда';
+
+  @override
+  String get accUtilities => 'Коммунальные услуги';
+
+  @override
+  String get accMarketing => 'Маркетинг';
+
+  @override
+  String get accOthers => 'Прочее';
+
+  @override
+  String get accVatSummary => 'Отчет по НДС';
+
+  @override
+  String get accVatCollectedLabel => 'Собрано:';
+
+  @override
+  String get accVatPaidLabel => 'Уплачено:';
+
+  @override
+  String get accVatNetLabel => 'Итого:';
+
+  @override
+  String accVatDueLabel(Object date) {
+    return 'Срок: $date';
+  }
 }

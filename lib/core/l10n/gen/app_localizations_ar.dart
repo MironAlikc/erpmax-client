@@ -926,11 +926,73 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accPayments => 'المدفوعات';
 
   @override
-  String get accCashJournal => 'دفتر\nالصندوق';
+  String get accCashJournal => 'دفتر الصندوق';
 
   @override
   String get accExchange => 'صرف\nالعملات';
 
   @override
-  String get accJournalEntry => 'قيد\nيومي';
+  String get accJournalEntry => 'قيد يومي';
+
+  @override
+  String get accCurrentRatio => 'نسبة التداول';
+
+  @override
+  String get accNetMargin => 'هامش الربح الصافي';
+
+  @override
+  String get accAvgCollection => 'متوسط فترة التحصيل';
+
+  @override
+  String get accAvgPayment => 'متوسط فترة السداد';
+
+  @override
+  String get accOverdueReceivables => 'ذمم مدينة\nمتأخرة';
+
+  @override
+  String get accPendingItems => 'عناصر قيد\nالانتظار';
+
+  @override
+  String get accJournalsPendingReview => 'قيود بانتظار\nالمراجعة';
+
+  @override
+  String get accBankReconciliationsPending => 'تسويات بنكية\nمعلقة';
+
+  @override
+  String get accInvoicesAwaitingApproval => 'فواتير بانتظار\nالموافقة';
+
+  @override
+  String get accExpenseBreakdown => 'توزيع المصروفات';
+
+  @override
+  String get accSalaries => 'الرواتب';
+
+  @override
+  String get accRent => 'الإيجار';
+
+  @override
+  String get accUtilities => 'المرافق';
+
+  @override
+  String get accMarketing => 'التسويق';
+
+  @override
+  String get accOthers => 'أخرى';
+
+  @override
+  String get accVatSummary => 'ملخص ضريبة القيمة المضافة';
+
+  @override
+  String get accVatCollectedLabel => 'المحصلة:';
+
+  @override
+  String get accVatPaidLabel => 'المدفوعة:';
+
+  @override
+  String get accVatNetLabel => 'الصافي:';
+
+  @override
+  String accVatDueLabel(Object date) {
+    return 'الاستحقاق: $date';
+  }
 }

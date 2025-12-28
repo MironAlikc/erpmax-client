@@ -284,7 +284,7 @@ class _PageTabsState extends State<PageTabs> {
                 ),
                 child: Text(
                   tabs[index],
-                  style: AppTextStyles.labelStyle.copyWith(
+                  style: AppTextStyles.label.copyWith(
                     fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
                     color: isActive ? theme.primary : theme.gray500,
                   ),
@@ -352,7 +352,7 @@ class QuickFilterBar extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.labelStyle.copyWith(
+            style: AppTextStyles.label.copyWith(
               fontSize: 13,
               color: theme.gray700,
             ),

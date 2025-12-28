@@ -140,9 +140,7 @@ class _FormHeader extends StatelessWidget {
               onTap: () => context.push(RouteNames.signup),
               child: Text(
                 localizations.signUp,
-                style: AppTextStyles.linkStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
           ],
@@ -188,7 +186,7 @@ class _PasswordField extends StatelessWidget {
                   : null,
               child: Text(
                 'Forgot?',
-                style: AppTextStyles.linkStyle.copyWith(fontSize: 13),
+                style: AppTextStyles.link.copyWith(fontSize: 13),
               ),
             ),
           ],
