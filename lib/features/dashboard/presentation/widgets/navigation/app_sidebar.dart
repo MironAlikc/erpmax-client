@@ -41,15 +41,12 @@ class AppSidebar extends StatelessWidget {
       child: Column(
         children: [
           _buildLogo(context),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: theme.textDisabled.withValues(alpha: 0.05),
-          ),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 12),
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: 16),
               itemCount: menuItems.length,
+              physics: const BouncingScrollPhysics(),
+              separatorBuilder: (context, index) => const SizedBox(height: 4),
               itemBuilder: (context, index) {
                 final item = menuItems[index];
                 final l10n = AppLocalizations.of(context);
@@ -61,9 +58,7 @@ class AppSidebar extends StatelessWidget {
                   selectedIndex: selectedIndex,
                   isExpanded: isExpanded,
                   onTap: (targetIndex) {
-                    if (onSelect != null) {
-                      onSelect!(targetIndex);
-                    }
+                    if (onSelect != null) onSelect!(targetIndex);
                   },
                 );
               },
@@ -78,38 +73,84 @@ class AppSidebar extends StatelessWidget {
   Widget _buildLogo(BuildContext context) {
     final theme = context.theme.appColor;
 
-    return Container(
-      width: double.infinity,
-      height: AppDesign.headerHeight,
-      padding: EdgeInsets.symmetric(horizontal: isExpanded ? 16 : 0),
-      child: isExpanded
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.blur_on, color: theme.success, size: 28),
-                    const SizedBox(width: 10),
-                    Text(
-                      'ERP Max',
-                      style: AppTextStyles.h2.copyWith(
-                        fontSize: 16,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                  ],
+    if (!isExpanded) {
+      return Container(
+        height: 100,
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: theme.sidebarActiveBgBase,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                'ERP',
+                style: AppTextStyles.h2.copyWith(
+                  color: theme.success,
+                  fontSize: 14,
                 ),
-                _buildToggleButton(context),
-              ],
-            )
-          : Stack(
-              alignment: Alignment.center,
-              children: [
-                Icon(Icons.blur_on, color: theme.success, size: 28),
-                Positioned(bottom: 4, child: _buildToggleButton(context)),
-              ],
+              ),
             ),
+            const SizedBox(height: 4),
+            _buildToggleButton(context),
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2D3D52),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'ERP ',
+                style: AppTextStyles.h2.copyWith(
+                  color: theme.success,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                'MAX',
+                style: AppTextStyles.h2.copyWith(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Quality you can trust',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 8),
+          _buildToggleButton(context),
+        ],
+      ),
     );
   }
 
