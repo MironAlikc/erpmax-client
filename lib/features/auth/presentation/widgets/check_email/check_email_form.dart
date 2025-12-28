@@ -86,9 +86,7 @@ class CheckEmailForm extends StatelessWidget {
           onTap: onResend,
           child: Text(
             localizations.resend,
-            style: AppTextStyles.linkStyle.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
           ),
         ),
       ],

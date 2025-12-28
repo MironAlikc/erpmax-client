@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class ThisMonthCard extends StatelessWidget {
@@ -31,30 +32,34 @@ class ThisMonthCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon, color: theme.sidebarActiveIcon),
+          Icon(icon, size: 16, color: theme.textSecondary),
           SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(title),
+              Text(
+                title,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: theme.textSecondary,
+                  fontSize: 11,
+                ),
+              ),
+              SizedBox(height: 2),
               Text.rich(
                 TextSpan(
                   children: [
                     TextSpan(
                       text: '$amount ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      style: AppTextStyles.bodyLargeBold.copyWith(
                         color: theme.textPrimary,
                       ),
                     ),
                     TextSpan(
                       text: '$percentage%',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: theme.sidebarActiveIcon,
+                        fontSize: 10,
                       ),
                     ),
                   ],

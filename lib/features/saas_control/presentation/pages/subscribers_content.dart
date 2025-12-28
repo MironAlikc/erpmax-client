@@ -270,7 +270,7 @@ class SubscribersContent extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.labelStyle.copyWith(
+                  style: AppTextStyles.label.copyWith(
                     fontSize: 13,
                     color: color.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
@@ -510,7 +510,7 @@ class SubscribersContent extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           date,
-          style: AppTextStyles.labelStyle.copyWith(color: theme.textPrimary),
+          style: AppTextStyles.label.copyWith(color: theme.textPrimary),
         ),
       ],
     );

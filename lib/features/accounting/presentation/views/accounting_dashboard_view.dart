@@ -1,13 +1,13 @@
-import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_header/accounting_header_btn.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_header/accounting_header.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/contra_indicators/contra_indications.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/this_month/dashboard_this_month.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounts_watchlist.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_this_month/dashboard_this_month.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_row/dashboard_row.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_row/pending_items_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/dashboard_tab/dashboard_tab.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/recent_transactions_table.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 class AccountingDashboardView extends StatelessWidget {
   final String title;
@@ -16,103 +16,43 @@ class AccountingDashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-    final localizations = AppLocalizations.of(context);
-    final bool isMobile = MediaQuery.of(context).size.width < 1100;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // === ContraIndicatorsMetrics ===
+    const double cardMinWidth = 220;
+    const double spacing = 16;
+    const double horizontalPadding = AppDesign.pagePadding * 2;
+
+    final double requiredWidthForFour =
+        (cardMinWidth * 4) + (spacing * 3) + horizontalPadding;
+
+    final int columns = screenWidth >= requiredWidthForFour ? 4 : 2;
+
+    final bool isMobile = screenWidth < 1100;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-
         children: [
-          Wrap(
-            spacing: 20,
-            runSpacing: 16,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            alignment: WrapAlignment.spaceBetween,
+          AccountingHeader(title: title),
+          const SizedBox(height: 16),
+          DashboardThisMonth(),
+          const SizedBox(height: 16),
+          ContraIndicatorsMetrics(columns: columns),
+          const SizedBox(height: 16),
+          DashboardTab(),
+          const SizedBox(height: 16),
+          DashboardRow(),
+          const SizedBox(height: 16),
+          Row(
             children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: Text(
-                  title,
-                  style: AppTextStyles.h1.copyWith(
-                    color: theme.textPrimary,
-                    fontSize: 26,
-                  ),
-                  softWrap: true,
-                ),
-              ),
-
-              LayoutBuilder(
-                builder: (context, headerConstraints) {
-                  if (MediaQuery.of(context).size.width < 400) {
-                    return const SizedBox.shrink();
-                  }
-
-                  return ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width - 32,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          AccountingHeaderBtn(
-                            label: localizations.accCustomize,
-                            icon: LucideIcons.slidersHorizontal,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.accReceipts,
-                            icon: LucideIcons.arrowDownLeft,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.accPayments,
-                            icon: LucideIcons.arrowUpRight,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.accCashJournal,
-                            icon: LucideIcons.wallet,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.transfer,
-                            icon: LucideIcons.arrowLeftRight,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.accExchange,
-                            icon: LucideIcons.refreshCcw,
-                            isOutline: true,
-                          ),
-                          const SizedBox(width: 12),
-                          AccountingHeaderBtn(
-                            label: localizations.accJournalEntry,
-                            icon: LucideIcons.plus,
-                            color: theme.sidebarActiveIcon,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+              Expanded(child: PendingItemsWidget()),
+              SizedBox(width: 16),
+              Expanded(child: SizedBox.shrink()),
             ],
           ),
-          const SizedBox(height: 24),
-          DashboardThisMonth(),
-          // const SizedBox(height: 24),
-          // const StatsGrid(),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
 
           if (isMobile)
             Column(
@@ -127,7 +67,6 @@ class AccountingDashboardView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(flex: 2, child: RecentTransactionsTable()),
-
                 const SizedBox(width: 24),
                 const Expanded(flex: 1, child: AccountsWatchlist()),
               ],

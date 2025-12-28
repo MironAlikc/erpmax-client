@@ -90,10 +90,8 @@ class _PermissionsContentState extends State<PermissionsContent> {
             Text(
               label,
               style: isSelected
-                  ? AppTextStyles.sidebarActive.copyWith(color: theme.white)
-                  : AppTextStyles.sidebarInactive.copyWith(
-                      color: theme.gray500,
-                    ),
+                  ? AppTextStyles.sidebarItemActive.copyWith(color: theme.white)
+                  : AppTextStyles.sidebarItem.copyWith(color: theme.gray500),
             ),
           ],
         ),
@@ -133,7 +131,7 @@ class _PermissionsContentState extends State<PermissionsContent> {
         ElevatedButton.icon(
           onPressed: () {},
           icon: const Icon(Icons.add, size: 18),
-          label: Text("Add Role", style: AppTextStyles.buttonText),
+          label: Text("Add Role", style: AppTextStyles.button),
           style: ElevatedButton.styleFrom(
             backgroundColor: theme.gray900,
             foregroundColor: theme.white,

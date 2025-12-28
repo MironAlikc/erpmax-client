@@ -73,9 +73,7 @@ class CheckEmailContent extends StatelessWidget {
               onTap: onResend,
               child: Text(
                 localizations.resend,
-                style: AppTextStyles.linkStyle.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.link.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
           ],

@@ -165,9 +165,7 @@ class _SignupHeader extends StatelessWidget {
               onTap: () => context.push(RouteNames.login),
               child: Text(
                 localizations.signIn,
-                style: AppTextStyles.linkStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
           ],

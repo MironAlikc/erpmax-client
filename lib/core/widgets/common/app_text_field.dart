@@ -60,7 +60,7 @@ class _AppTextFieldState extends State<AppTextField> {
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: AppTextStyles.labelStyle.copyWith(
+            style: AppTextStyles.label.copyWith(
               color: widget.enabled ? theme.textPrimary : theme.textDisabled,
               fontWeight: FontWeight.w600,
             ),

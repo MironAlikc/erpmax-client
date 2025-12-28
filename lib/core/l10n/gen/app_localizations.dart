@@ -1849,7 +1849,7 @@ abstract class AppLocalizations {
   /// No description provided for @accCashJournal.
   ///
   /// In en, this message translates to:
-  /// **'Cash\nJournal'**
+  /// **'Cash Journal'**
   String get accCashJournal;
 
   /// No description provided for @accExchange.
@@ -1861,8 +1861,128 @@ abstract class AppLocalizations {
   /// No description provided for @accJournalEntry.
   ///
   /// In en, this message translates to:
-  /// **'Journal\nEntry'**
+  /// **'Journal Entry'**
   String get accJournalEntry;
+
+  /// No description provided for @accCurrentRatio.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Ratio'**
+  String get accCurrentRatio;
+
+  /// No description provided for @accNetMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Margin'**
+  String get accNetMargin;
+
+  /// No description provided for @accAvgCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Collection'**
+  String get accAvgCollection;
+
+  /// No description provided for @accAvgPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Payment'**
+  String get accAvgPayment;
+
+  /// No description provided for @accOverdueReceivables.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue\nReceivables'**
+  String get accOverdueReceivables;
+
+  /// No description provided for @accPendingItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending\nItems'**
+  String get accPendingItems;
+
+  /// No description provided for @accJournalsPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Journals pending\nreview'**
+  String get accJournalsPendingReview;
+
+  /// No description provided for @accBankReconciliationsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reconciliations\npending'**
+  String get accBankReconciliationsPending;
+
+  /// No description provided for @accInvoicesAwaitingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices awaiting\napproval'**
+  String get accInvoicesAwaitingApproval;
+
+  /// No description provided for @accExpenseBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Breakdown'**
+  String get accExpenseBreakdown;
+
+  /// No description provided for @accSalaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Salaries'**
+  String get accSalaries;
+
+  /// No description provided for @accRent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get accRent;
+
+  /// No description provided for @accUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get accUtilities;
+
+  /// No description provided for @accMarketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get accMarketing;
+
+  /// No description provided for @accOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get accOthers;
+
+  /// No description provided for @accVatSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Summary'**
+  String get accVatSummary;
+
+  /// No description provided for @accVatCollectedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected:'**
+  String get accVatCollectedLabel;
+
+  /// No description provided for @accVatPaidLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid:'**
+  String get accVatPaidLabel;
+
+  /// No description provided for @accVatNetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Net:'**
+  String get accVatNetLabel;
+
+  /// No description provided for @accVatDueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Due: {date}'**
+  String accVatDueLabel(Object date);
 }
 
 class _AppLocalizationsDelegate
