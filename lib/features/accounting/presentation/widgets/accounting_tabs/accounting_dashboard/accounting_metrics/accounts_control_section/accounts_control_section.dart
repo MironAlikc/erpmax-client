@@ -1,5 +1,5 @@
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/accounts_control_section/overdue_receivable_card.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/accounts_control_section/vat_summary_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_control_section/overdue_receivable_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_control_section/vat_summary_card.dart';
 import 'package:flutter/material.dart';
 
 class AccountsControlSection extends StatelessWidget {

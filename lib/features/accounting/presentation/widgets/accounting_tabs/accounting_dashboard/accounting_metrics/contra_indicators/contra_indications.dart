@@ -1,7 +1,7 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/contra_indicators/contra_indications_card.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/contra_indicators/contra_indications_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/contra_indicators/contra_indications_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/contra_indicators/contra_indications_data.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

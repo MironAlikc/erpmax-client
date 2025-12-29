@@ -1,7 +1,7 @@
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/contra_indicators/contra_indications_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/contra_indicators/contra_indications_data.dart';
 import 'package:flutter/material.dart';
 
 class MetricCard extends StatelessWidget {

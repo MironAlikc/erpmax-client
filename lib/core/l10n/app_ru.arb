@@ -320,5 +320,6 @@
     "accVatCollectedLabel": "Собрано:",
     "accVatPaidLabel": "Уплачено:",
     "accVatNetLabel": "Итого:",
-    "accVatDueLabel": "Срок: {date}"
+    "accVatDueLabel": "Срок: {date}",
+    "accPleaseSelectAccount": "Пожалуйста, выберите счет из списка выше"
 }

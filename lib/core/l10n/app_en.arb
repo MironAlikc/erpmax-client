@@ -320,5 +320,6 @@
     "accVatCollectedLabel": "Collected:",
     "accVatPaidLabel": "Paid:",
     "accVatNetLabel": "Net:",
-    "accVatDueLabel": "Due: {date}"
+    "accVatDueLabel": "Due: {date}",
+    "accPleaseSelectAccount": "Please select an account from the list above"
 }

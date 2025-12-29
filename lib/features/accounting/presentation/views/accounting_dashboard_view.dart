@@ -1,12 +1,12 @@
 import 'package:erpmax_client/core/theme/app_design.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_header/accounting_header.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/accounts_control_section/accounts_control_section.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/accounts_watchilst/accounts_watchlist.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/contra_indicators/contra_indications.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/financial_summary_section/financial_summary_section.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/pending_items/pending_items_card.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/recent_transactions/recent_transactions_table.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_metrics/this_month/dashboard_this_month.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_header/accounting_header.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_control_section/accounts_control_section.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_watchilst/accounts_watchlist.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/contra_indicators/contra_indications.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/financial_summary_section/financial_summary_section.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/pending_items/pending_items_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/recent_transactions/recent_transactions_table.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/this_month/dashboard_this_month.dart';
 import 'package:flutter/material.dart';
 
 class AccountingDashboardView extends StatelessWidget {

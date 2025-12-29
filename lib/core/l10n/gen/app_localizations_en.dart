@@ -994,4 +994,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'Due: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount =>
+      'Please select an account from the list above';
 }

@@ -1,7 +1,7 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_header/accounting_header_btn.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
