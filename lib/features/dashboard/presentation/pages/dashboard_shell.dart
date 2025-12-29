@@ -98,13 +98,13 @@ class _DashboardShellState extends State<DashboardShell> {
     );
   }
 
-  String _getModuleTitle(int index) {
-    return switch (index) {
-      0 => 'Dashboard',
-      1 => 'Accounting',
-      11 => 'SaaS Control',
-      14 => 'Settings',
-      _ => 'ERP Module',
-    };
-  }
+  // String _getModuleTitle(int index) {
+  //   return switch (index) {
+  //     0 => 'Dashboard',
+  //     1 => 'Accounting',
+  //     11 => 'SaaS Control',
+  //     14 => 'Settings',
+  //     _ => 'ERP Module',
+  //   };
+  // }
 }

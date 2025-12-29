@@ -320,5 +320,6 @@
     "accVatCollectedLabel": "المحصلة:",
     "accVatPaidLabel": "المدفوعة:",
     "accVatNetLabel": "الصافي:",
-    "accVatDueLabel": "الاستحقاق: {date}"
+    "accVatDueLabel": "الاستحقاق: {date}",
+    "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه"
 }

@@ -1,14 +1,14 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accountin_dashboard/accounting_header/accounting_header_btn.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class AccountingHeader extends StatelessWidget {
+class JournalEntriesHeader extends StatelessWidget {
   final String title;
 
-  const AccountingHeader({super.key, required this.title});
+  const JournalEntriesHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +39,6 @@ class AccountingHeader extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AccountingHeaderBtn(
-                      label: localizations.accCustomize,
-                      icon: LucideIcons.slidersHorizontal,
-                      isOutline: true,
-                      iconColor: theme.textSecondary,
-                    ),
-                    const SizedBox(width: 12),
                     AccountingHeaderBtn(
                       label: localizations.accReceipts,
                       icon: LucideIcons.arrowDownRight,

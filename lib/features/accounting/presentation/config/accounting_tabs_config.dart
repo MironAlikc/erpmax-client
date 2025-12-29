@@ -1,6 +1,8 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/accounting_dashboard_view.dart';
+import 'package:erpmax_client/features/accounting/presentation/views/general_ledger_view.dart';
+import 'package:erpmax_client/features/accounting/presentation/views/journal_entries_view.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AccountingTabsConfig {
@@ -24,14 +26,14 @@ abstract final class AccountingTabsConfig {
         name: localizations.accLedger,
         icon: Icons.menu_book_outlined,
         shellIndex: accountingShellIndex,
-        content: placeholderBuilder("General Ledger"),
+        content: GeneralLedgerView(title: "General Ledger"),
       ),
       ModuleTabItem(
         id: 'acc_journal',
         name: localizations.accJournal,
         icon: Icons.description_outlined,
         shellIndex: accountingShellIndex,
-        content: placeholderBuilder("Journal Entries"),
+        content: JournalEntriesView(title: "Journal Entries"),
       ),
       ModuleTabItem(
         id: 'acc_chart',

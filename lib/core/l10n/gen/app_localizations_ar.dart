@@ -995,4 +995,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'الاستحقاق: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount => 'يرجى اختيار حساب من القائمة أعلاه';
 }

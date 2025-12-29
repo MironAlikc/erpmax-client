@@ -1983,6 +1983,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due: {date}'**
   String accVatDueLabel(Object date);
+
+  /// No description provided for @accPleaseSelectAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an account from the list above'**
+  String get accPleaseSelectAccount;
 }
 
 class _AppLocalizationsDelegate

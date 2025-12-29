@@ -1,8 +1,8 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class DashboardTab extends StatelessWidget {
-  const DashboardTab({super.key});
+class FinancialSummarySection extends StatelessWidget {
+  const FinancialSummarySection({super.key});
 
   @override
   Widget build(BuildContext context) {

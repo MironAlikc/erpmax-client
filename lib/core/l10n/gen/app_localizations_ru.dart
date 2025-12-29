@@ -1000,4 +1000,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'Срок: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount =>
+      'Пожалуйста, выберите счет из списка выше';
 }
