@@ -61,8 +61,9 @@ class MetricCard extends StatelessWidget {
             LinearProgressIndicator(
               value: data.progress,
               backgroundColor: theme.gray200,
-              color: statusColor,
+              color: theme.primary,
               minHeight: 6,
+              borderRadius: BorderRadius.circular(10),
             ),
         ],
       ),
