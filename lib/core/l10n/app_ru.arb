@@ -306,9 +306,9 @@
     "accAvgCollection": "Срок сбора деб. задолж.",
     "accAvgPayment": "Срок оплаты кред. задолж.",
     "accOverdueReceivables": "Просроченная\nдебиторка",
-    "accPendingItems": "Ожидающие\nпозиции",
-    "accJournalsPendingReview": "Журналы на\nпроверке",
-    "accBankReconciliationsPending": "Сверки банков на\nожидании",
+    "accPendingItems": "Ожидающие позиции",
+    "accJournalsPendingReview": "Журналы на проверке",
+    "accBankReconciliationsPending": "Сверки банков на ожидании",
     "accInvoicesAwaitingApproval": "Счета на\nутверждении",
     "accExpenseBreakdown": "Анализ расходов",
     "accSalaries": "Зарплаты",
@@ -321,5 +321,10 @@
     "accVatPaidLabel": "Уплачено:",
     "accVatNetLabel": "Итого:",
     "accVatDueLabel": "Срок: {date}",
-    "accPleaseSelectAccount": "Пожалуйста, выберите счет из списка выше"
+    "accPleaseSelectAccount": "Пожалуйста, выберите счет из списка выше",
+    "viewAll": "Посмотреть всё",
+    "statusPosted": "Проведено",
+    "statusDraft": "Черновик",
+    "accAccountsPayable": "Кредиторская задолженность",
+    "accAddAccount": "Добавить счет"
 }

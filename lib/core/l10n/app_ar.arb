@@ -306,10 +306,10 @@
     "accAvgCollection": "متوسط فترة التحصيل",
     "accAvgPayment": "متوسط فترة السداد",
     "accOverdueReceivables": "ذمم مدينة\nمتأخرة",
-    "accPendingItems": "عناصر قيد\nالانتظار",
-    "accJournalsPendingReview": "قيود بانتظار\nالمراجعة",
-    "accBankReconciliationsPending": "تسويات بنكية\nمعلقة",
-    "accInvoicesAwaitingApproval": "فواتير بانتظار\nالموافقة",
+    "accPendingItems": "عناصر قيد الانتظار",
+    "accJournalsPendingReview": "قيود بانتظار المراجعة",
+    "accBankReconciliationsPending": "تسويات بنكية معلقة",
+    "accInvoicesAwaitingApproval": "فواتير بانتظار الموافقة",
     "accExpenseBreakdown": "توزيع المصروفات",
     "accSalaries": "الرواتب",
     "accRent": "الإيجار",
@@ -321,5 +321,10 @@
     "accVatPaidLabel": "المدفوعة:",
     "accVatNetLabel": "الصافي:",
     "accVatDueLabel": "الاستحقاق: {date}",
-    "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه"
+    "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه",
+    "viewAll": "عرض الكل",
+    "statusPosted": "مُرحّل",
+    "statusDraft": "مسودة",
+    "accAccountsPayable": "ذمم دائنة",
+    "accAddAccount": "إضافة حساب"
 }

@@ -1897,25 +1897,25 @@ abstract class AppLocalizations {
   /// No description provided for @accPendingItems.
   ///
   /// In en, this message translates to:
-  /// **'Pending\nItems'**
+  /// **'Pending Items'**
   String get accPendingItems;
 
   /// No description provided for @accJournalsPendingReview.
   ///
   /// In en, this message translates to:
-  /// **'Journals pending\nreview'**
+  /// **'Journals pending review'**
   String get accJournalsPendingReview;
 
   /// No description provided for @accBankReconciliationsPending.
   ///
   /// In en, this message translates to:
-  /// **'Bank reconciliations\npending'**
+  /// **'Bank reconciliations pending'**
   String get accBankReconciliationsPending;
 
   /// No description provided for @accInvoicesAwaitingApproval.
   ///
   /// In en, this message translates to:
-  /// **'Invoices awaiting\napproval'**
+  /// **'Invoices awaiting approval'**
   String get accInvoicesAwaitingApproval;
 
   /// No description provided for @accExpenseBreakdown.
@@ -1989,6 +1989,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select an account from the list above'**
   String get accPleaseSelectAccount;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// No description provided for @accAccountsPayable.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Payable'**
+  String get accAccountsPayable;
+
+  /// No description provided for @accAddAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Account'**
+  String get accAddAccount;
 }
 
 class _AppLocalizationsDelegate

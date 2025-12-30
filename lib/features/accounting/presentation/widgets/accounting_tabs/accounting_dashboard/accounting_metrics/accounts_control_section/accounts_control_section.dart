@@ -7,14 +7,16 @@ class AccountsControlSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Expanded(flex: 3, child: OverdueReceivablesCard()),
-        SizedBox(width: 16),
-        Expanded(flex: 2, child: VatSummaryCard()),
-        Expanded(flex: 1, child: SizedBox.shrink()),
-      ],
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: const [
+          Expanded(flex: 3, child: OverdueReceivablesCard()),
+          SizedBox(width: 16),
+          Expanded(flex: 2, child: VatSummaryCard()),
+          Expanded(flex: 1, child: SizedBox.shrink()),
+        ],
+      ),
     );
   }
 }

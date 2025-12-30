@@ -1,12 +1,17 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class VatSummaryCard extends StatelessWidget {
   const VatSummaryCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     final String formattedDate = DateFormat.yMd(
@@ -15,46 +20,71 @@ class VatSummaryCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(theme),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _header(
+            theme,
             title: localizations.accVatSummary,
-            icon: Icons.receipt_long,
-            iconColor: Colors.blue,
+            icon: LucideIcons.scrollText,
           ),
-          const SizedBox(height: 16),
-          _row(localizations.accVatCollectedLabel, '+15 200', Colors.green),
-          _row(localizations.accVatPaidLabel, '-8 500', Colors.red),
-          const Divider(),
+          Spacer(),
           _row(
+            theme,
+            localizations.accVatCollectedLabel,
+            '+15 200',
+            theme.successText,
+          ),
+          _row(theme, localizations.accVatPaidLabel, '-8 500', theme.errorText),
+          Divider(color: theme.borderLight),
+          _row(
+            theme,
             localizations.accVatNetLabel,
             '6 700',
-            Colors.black,
-            isBold: true,
+            theme.black,
+            isSum: true,
           ),
           const SizedBox(height: 8),
           Text(
             localizations.accVatDueLabel(formattedDate),
-            style: TextStyle(fontSize: 12, color: Colors.orange),
+            style: AppTextStyles.bodySmall.copyWith(color: theme.warning),
           ),
         ],
       ),
     );
   }
 
-  Widget _row(String label, String value, Color color, {bool isBold = false}) {
+  Widget _row(
+    AppColorExtension colors,
+    String label,
+    String value,
+    Color color, {
+    bool isSum = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Expanded(child: Text(label)),
+          Expanded(
+            child: Text(
+              label,
+              style: isSum
+                  ? AppTextStyles.bodyMediumBold.copyWith(
+                      fontSize: 13,
+                      color: colors.black,
+                    )
+                  : AppTextStyles.bodyMedium.copyWith(
+                      fontSize: 13,
+                      color: colors.textPrimary,
+                    ),
+            ),
+          ),
           Text(
             value,
-            style: TextStyle(
+            style: AppTextStyles.bodySmallBold.copyWith(
               color: color,
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontSize: isSum ? 16 : AppTextStyles.bodySmallBold.fontSize,
             ),
           ),
         ],
@@ -63,32 +93,35 @@ class VatSummaryCard extends StatelessWidget {
   }
 }
 
-BoxDecoration _cardDecoration() {
+BoxDecoration _cardDecoration(AppColorExtension colors) {
   return BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(12),
+    color: colors.white,
+    borderRadius: BorderRadius.circular(8),
     boxShadow: [
-      BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
+      BoxShadow(
+        color: colors.shadowColor.withValues(alpha: 0.05),
+        blurRadius: 10,
+      ),
     ],
   );
 }
 
-Widget _header({
+Widget _header(
+  AppColorExtension colors, {
   required String title,
   required IconData icon,
-  required Color iconColor,
 }) {
   return Row(
     children: [
       Expanded(
         child: Text(
           title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: AppTextStyles.bodyMedium.copyWith(color: colors.textPrimary),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      Icon(icon, color: iconColor, size: 20),
+      Icon(icon, color: colors.indigoText, size: 20),
     ],
   );
 }
