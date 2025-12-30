@@ -2007,6 +2007,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Account'**
   String get accAddAccount;
+
+  /// No description provided for @accAccountingSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting Settings'**
+  String get accAccountingSettings;
+
+  /// No description provided for @commonSearchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, code, or serial...'**
+  String get commonSearchPlaceholder;
 }
 
 class _AppLocalizationsDelegate

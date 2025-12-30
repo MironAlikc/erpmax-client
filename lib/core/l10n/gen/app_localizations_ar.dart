@@ -1007,4 +1007,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accAddAccount => 'إضافة حساب';
+
+  @override
+  String get accAccountingSettings => 'إعدادات المحاسبة';
+
+  @override
+  String get commonSearchPlaceholder =>
+      'بحث بالاسم أو الكود أو الرقم التسلسلي...';
 }

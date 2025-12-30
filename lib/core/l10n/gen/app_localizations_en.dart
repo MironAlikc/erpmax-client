@@ -1007,4 +1007,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accAddAccount => 'Add Account';
+
+  @override
+  String get accAccountingSettings => 'Accounting Settings';
+
+  @override
+  String get commonSearchPlaceholder => 'Search by name, code, or serial...';
 }

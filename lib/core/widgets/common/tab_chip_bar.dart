@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
@@ -79,11 +80,11 @@ class _TabChipBarState extends State<TabChipBar> {
         children: [
           Expanded(
             child: RawScrollbar(
+              padding: EdgeInsets.only(top: 6),
               controller: _scrollController,
-              thumbColor: theme.activeGreen.withValues(alpha: 0.3),
-              radius: const Radius.circular(8),
-              thickness: 4,
               thumbVisibility: true,
+              thickness: 6,
+              radius: const Radius.circular(8),
               child: SingleChildScrollView(
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
@@ -100,11 +101,12 @@ class _TabChipBarState extends State<TabChipBar> {
                         showCheckmark: false,
                         avatar: Icon(
                           tab.icon,
-                          size: 18,
+                          size: 16,
                           color: isSelected
                               ? theme.activeGreen
                               : theme.textDisabled,
                         ),
+                        labelPadding: EdgeInsets.symmetric(vertical: 2),
                         label: Text(tab.name),
                         labelStyle: AppTextStyles.bodySmall.copyWith(
                           fontSize: 13,
@@ -122,16 +124,29 @@ class _TabChipBarState extends State<TabChipBar> {
                             widget.onTabSelected?.call(index);
                           }
                         },
-                        backgroundColor: Colors.transparent,
-                        selectedColor: theme.successBg,
+                        color: WidgetStateProperty.resolveWith<Color?>((
+                          states,
+                        ) {
+                          if (states.contains(WidgetState.pressed)) {
+                            return theme.white;
+                          }
+                          if (states.contains(WidgetState.hovered)) {
+                            return isSelected ? theme.gray50 : theme.gray50;
+                          }
+                          if (states.contains(WidgetState.selected)) {
+                            return theme.gray50;
+                          }
+                          return Colors.white;
+                        }),
                         elevation: 0,
                         pressElevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(
+                            width: 0.5,
                             color: isSelected
-                                ? theme.activeGreen.withValues(alpha: 0.5)
-                                : theme.borderLight,
+                                ? theme.activeGreen.withValues(alpha: 0.3)
+                                : Colors.white,
                           ),
                         ),
                       ),
@@ -149,7 +164,9 @@ class _TabChipBarState extends State<TabChipBar> {
             SizedBox(
               width: 280,
               height: 40,
-              child: AppSearchField(hintText: "Search here..."),
+              child: AppSearchField(
+                hintText: AppLocalizations.of(context).commonSearchPlaceholder,
+              ),
             ),
           ],
         ],
