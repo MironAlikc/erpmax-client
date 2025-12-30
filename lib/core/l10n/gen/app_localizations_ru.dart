@@ -955,13 +955,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get accOverdueReceivables => 'Просроченная\nдебиторка';
 
   @override
-  String get accPendingItems => 'Ожидающие\nпозиции';
+  String get accPendingItems => 'Ожидающие позиции';
 
   @override
-  String get accJournalsPendingReview => 'Журналы на\nпроверке';
+  String get accJournalsPendingReview => 'Журналы на проверке';
 
   @override
-  String get accBankReconciliationsPending => 'Сверки банков на\nожидании';
+  String get accBankReconciliationsPending => 'Сверки банков на ожидании';
 
   @override
   String get accInvoicesAwaitingApproval => 'Счета на\nутверждении';

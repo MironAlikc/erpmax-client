@@ -950,16 +950,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accOverdueReceivables => 'ذمم مدينة\nمتأخرة';
 
   @override
-  String get accPendingItems => 'عناصر قيد\nالانتظار';
+  String get accPendingItems => 'عناصر قيد الانتظار';
 
   @override
-  String get accJournalsPendingReview => 'قيود بانتظار\nالمراجعة';
+  String get accJournalsPendingReview => 'قيود بانتظار المراجعة';
 
   @override
-  String get accBankReconciliationsPending => 'تسويات بنكية\nمعلقة';
+  String get accBankReconciliationsPending => 'تسويات بنكية معلقة';
 
   @override
-  String get accInvoicesAwaitingApproval => 'فواتير بانتظار\nالموافقة';
+  String get accInvoicesAwaitingApproval => 'فواتير بانتظار الموافقة';
 
   @override
   String get accExpenseBreakdown => 'توزيع المصروفات';

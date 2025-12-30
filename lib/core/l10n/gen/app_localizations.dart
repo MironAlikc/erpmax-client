@@ -1897,25 +1897,25 @@ abstract class AppLocalizations {
   /// No description provided for @accPendingItems.
   ///
   /// In en, this message translates to:
-  /// **'Pending\nItems'**
+  /// **'Pending Items'**
   String get accPendingItems;
 
   /// No description provided for @accJournalsPendingReview.
   ///
   /// In en, this message translates to:
-  /// **'Journals pending\nreview'**
+  /// **'Journals pending review'**
   String get accJournalsPendingReview;
 
   /// No description provided for @accBankReconciliationsPending.
   ///
   /// In en, this message translates to:
-  /// **'Bank reconciliations\npending'**
+  /// **'Bank reconciliations pending'**
   String get accBankReconciliationsPending;
 
   /// No description provided for @accInvoicesAwaitingApproval.
   ///
   /// In en, this message translates to:
-  /// **'Invoices awaiting\napproval'**
+  /// **'Invoices awaiting approval'**
   String get accInvoicesAwaitingApproval;
 
   /// No description provided for @accExpenseBreakdown.

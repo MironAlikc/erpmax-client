@@ -949,16 +949,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accOverdueReceivables => 'Overdue\nReceivables';
 
   @override
-  String get accPendingItems => 'Pending\nItems';
+  String get accPendingItems => 'Pending Items';
 
   @override
-  String get accJournalsPendingReview => 'Journals pending\nreview';
+  String get accJournalsPendingReview => 'Journals pending review';
 
   @override
-  String get accBankReconciliationsPending => 'Bank reconciliations\npending';
+  String get accBankReconciliationsPending => 'Bank reconciliations pending';
 
   @override
-  String get accInvoicesAwaitingApproval => 'Invoices awaiting\napproval';
+  String get accInvoicesAwaitingApproval => 'Invoices awaiting approval';
 
   @override
   String get accExpenseBreakdown => 'Expense Breakdown';
