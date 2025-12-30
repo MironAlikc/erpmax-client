@@ -88,6 +88,7 @@ import '../../features/tenant/domain/usecases/update_user_role_usecase.dart'
 import '../api/api_client.dart' as _i277;
 import '../auth/secure_storage.dart' as _i934;
 import '../l10n/locale_cubit.dart' as _i171;
+import '../realtime/realtime_service.dart' as _i854;
 import 'injection.dart' as _i464;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -146,6 +147,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i253.SwitchTenantUseCase>(
       () => _i253.SwitchTenantUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.lazySingleton<_i854.RealtimeService>(
+      () => _i854.RealtimeService(gh<_i558.FlutterSecureStorage>()),
     );
     gh.lazySingleton<_i861.ProvisioningRepository>(
       () => _i317.ProvisioningRepositoryImpl(

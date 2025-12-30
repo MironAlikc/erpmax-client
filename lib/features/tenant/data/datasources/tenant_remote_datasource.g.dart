@@ -47,7 +47,7 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
           .map((dynamic i) => TenantModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -75,7 +75,7 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     try {
       _value = TenantModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -103,7 +103,7 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     try {
       _value = TenantModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -135,7 +135,7 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     try {
       _value = TenantModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -171,7 +171,7 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
           )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);

@@ -45,7 +45,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       _value = AuthResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -76,7 +76,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       _value = AuthResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -107,7 +107,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       _value = AuthResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -156,7 +156,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       _value = UserWithTenantsModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -187,7 +187,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       _value = SwitchTenantResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
