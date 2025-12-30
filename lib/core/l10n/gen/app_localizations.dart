@@ -1995,6 +1995,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View All'**
   String get viewAll;
+
+  /// No description provided for @accAccountsPayable.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts Payable'**
+  String get accAccountsPayable;
+
+  /// No description provided for @accAddAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Account'**
+  String get accAddAccount;
 }
 
 class _AppLocalizationsDelegate

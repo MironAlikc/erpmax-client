@@ -324,5 +324,7 @@
     "accPleaseSelectAccount": "Please select an account from the list above",
     "viewAll": "View All",
     "statusPosted": "Posted",
-    "statusDraft": "Draft"
+    "statusDraft": "Draft",
+    "accAccountsPayable": "Accounts Payable",
+    "accAddAccount": "Add Account"
 }

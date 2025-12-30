@@ -324,5 +324,7 @@
     "accPleaseSelectAccount": "Пожалуйста, выберите счет из списка выше",
     "viewAll": "Посмотреть всё",
     "statusPosted": "Проведено",
-    "statusDraft": "Черновик"
+    "statusDraft": "Черновик",
+    "accAccountsPayable": "Кредиторская задолженность",
+    "accAddAccount": "Добавить счет"
 }

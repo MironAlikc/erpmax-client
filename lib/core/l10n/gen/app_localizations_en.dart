@@ -1001,4 +1001,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewAll => 'View All';
+
+  @override
+  String get accAccountsPayable => 'Accounts Payable';
+
+  @override
+  String get accAddAccount => 'Add Account';
 }

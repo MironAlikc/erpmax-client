@@ -1001,4 +1001,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get viewAll => 'عرض الكل';
+
+  @override
+  String get accAccountsPayable => 'ذمم دائنة';
+
+  @override
+  String get accAddAccount => 'إضافة حساب';
 }

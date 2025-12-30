@@ -324,5 +324,7 @@
     "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه",
     "viewAll": "عرض الكل",
     "statusPosted": "مُرحّل",
-    "statusDraft": "مسودة"
+    "statusDraft": "مسودة",
+    "accAccountsPayable": "ذمم دائنة",
+    "accAddAccount": "إضافة حساب"
 }

@@ -1007,4 +1007,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get viewAll => 'Посмотреть всё';
+
+  @override
+  String get accAccountsPayable => 'Кредиторская задолженность';
+
+  @override
+  String get accAddAccount => 'Добавить счет';
 }
