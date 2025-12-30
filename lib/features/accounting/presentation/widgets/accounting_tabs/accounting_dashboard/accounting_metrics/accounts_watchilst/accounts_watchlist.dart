@@ -14,13 +14,14 @@ class AccountsWatchlist extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.white,
         borderRadius: BorderRadius.circular(8),
-        // border: Border.all(color: theme.borderLight),
+        border: Border.all(color: theme.borderLight),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
-          Padding(
+          Container(
+            color: theme.white,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,69 +101,76 @@ class AccountsWatchlist extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _item(
-    BuildContext context, {
-    required String title,
-    required String code,
-    required String amount,
-    required String type,
-    bool highlight = false,
-  }) {
-    final theme = context.theme.appColor;
+Widget _item(
+  BuildContext context, {
+  required String title,
+  required String code,
+  required String amount,
+  required String type,
+  bool highlight = false,
+}) {
+  final theme = context.theme.appColor;
+  final amountColor = highlight ? theme.warning : theme.textPrimary;
 
-    final amountColor = highlight ? theme.warning : theme.textPrimary;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      child: Row(
-        children: [
-          Icon(LucideIcons.wallet, size: 16, color: theme.textDisabled),
-          const SizedBox(width: 12),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  return Material(
+    color: theme.white,
+    child: InkWell(
+      onTap: () {
+        print('Clicked: $title');
+      },
+      hoverColor: theme.gray50,
+      highlightColor: theme.gray100,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Icon(LucideIcons.wallet, size: 16, color: theme.textDisabled),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: theme.textPrimary,
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    code,
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textDisabled,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  title,
+                  '\$ $amount',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: theme.textPrimary,
-                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    color: amountColor,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  code,
+                  type,
                   style: AppTextStyles.caption.copyWith(
                     color: theme.textDisabled,
                   ),
                 ),
               ],
             ),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '\$ $amount',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: amountColor,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                type,
-                style: AppTextStyles.caption.copyWith(
-                  color: theme.textDisabled,
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
+    ),
+  );
 }

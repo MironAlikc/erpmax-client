@@ -326,5 +326,8 @@
     "statusPosted": "مُرحّل",
     "statusDraft": "مسودة",
     "accAccountsPayable": "ذمم دائنة",
-    "accAddAccount": "إضافة حساب"
+    "accAddAccount": "إضافة حساب",
+    "accAccountingSettings": "إعدادات المحاسبة",
+    "commonSearchHere": "ابحث هنا...",
+    "commonSearchPlaceholder": "بحث بالاسم أو الكود أو الرقم التسلسلي..."
 }

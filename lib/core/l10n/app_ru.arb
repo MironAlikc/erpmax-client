@@ -326,5 +326,7 @@
     "statusPosted": "Проведено",
     "statusDraft": "Черновик",
     "accAccountsPayable": "Кредиторская задолженность",
-    "accAddAccount": "Добавить счет"
+    "accAddAccount": "Добавить счет",
+    "accAccountingSettings": "Настройки бухгалтерии",
+    "commonSearchPlaceholder": "Поиск по имени, коду или серийному номеру..."
 }

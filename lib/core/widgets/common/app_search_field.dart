@@ -2,6 +2,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class AppSearchField extends StatefulWidget {
   final String? hintText;
@@ -59,15 +60,15 @@ class _AppSearchFieldState extends State<AppSearchField> {
           (MediaQuery.sizeOf(context).width > 600 ? 320 : double.infinity),
       height: 44,
       decoration: BoxDecoration(
-        color: theme.bgLight,
+        color: theme.gray50,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: theme.borderLight.withValues(alpha: 0.2)),
+        border: Border.all(color: theme.borderLight.withValues(alpha: 0.9)),
       ),
       child: Center(
         child: TextField(
           controller: _internalController,
           onChanged: widget.onChanged,
-          style: AppTextStyles.bodyMedium.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             color: theme.textPrimary,
             decoration: TextDecoration.none,
           ),
@@ -76,11 +77,11 @@ class _AppSearchFieldState extends State<AppSearchField> {
             isDense: true,
             hintText: searchHint,
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: theme.textDisabled,
+              color: theme.textSecondary,
             ),
             prefixIcon: Icon(
-              Icons.search_rounded,
-              size: 20,
+              LucideIcons.search,
+              size: 18,
               color: theme.textDisabled,
             ),
             suffixIcon: _internalController.text.isNotEmpty

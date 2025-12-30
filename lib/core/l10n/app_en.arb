@@ -326,5 +326,7 @@
     "statusPosted": "Posted",
     "statusDraft": "Draft",
     "accAccountsPayable": "Accounts Payable",
-    "accAddAccount": "Add Account"
+    "accAddAccount": "Add Account",
+    "accAccountingSettings": "Accounting Settings",
+    "commonSearchPlaceholder": "Search by name, code, or serial..."
 }

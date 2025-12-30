@@ -1013,4 +1013,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get accAddAccount => 'Добавить счет';
+
+  @override
+  String get accAccountingSettings => 'Настройки бухгалтерии';
+
+  @override
+  String get commonSearchPlaceholder =>
+      'Поиск по имени, коду или серийному номеру...';
 }
