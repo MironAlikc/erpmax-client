@@ -351,7 +351,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exportReport => 'تصدير التقرير';
 
   @override
-  String get statusPosted => 'تم النشر';
+  String get statusPosted => 'مُرحّل';
 
   @override
   String get statusDraft => 'مسودة';
@@ -950,16 +950,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accOverdueReceivables => 'ذمم مدينة\nمتأخرة';
 
   @override
-  String get accPendingItems => 'عناصر قيد\nالانتظار';
+  String get accPendingItems => 'عناصر قيد الانتظار';
 
   @override
-  String get accJournalsPendingReview => 'قيود بانتظار\nالمراجعة';
+  String get accJournalsPendingReview => 'قيود بانتظار المراجعة';
 
   @override
-  String get accBankReconciliationsPending => 'تسويات بنكية\nمعلقة';
+  String get accBankReconciliationsPending => 'تسويات بنكية معلقة';
 
   @override
-  String get accInvoicesAwaitingApproval => 'فواتير بانتظار\nالموافقة';
+  String get accInvoicesAwaitingApproval => 'فواتير بانتظار الموافقة';
 
   @override
   String get accExpenseBreakdown => 'توزيع المصروفات';
@@ -995,4 +995,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'الاستحقاق: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount => 'يرجى اختيار حساب من القائمة أعلاه';
+
+  @override
+  String get viewAll => 'عرض الكل';
+
+  @override
+  String get accAccountsPayable => 'ذمم دائنة';
+
+  @override
+  String get accAddAccount => 'إضافة حساب';
+
+  @override
+  String get accAccountingSettings => 'إعدادات المحاسبة';
+
+  @override
+  String get commonSearchPlaceholder =>
+      'بحث بالاسم أو الكود أو الرقم التسلسلي...';
 }

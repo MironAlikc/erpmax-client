@@ -949,16 +949,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accOverdueReceivables => 'Overdue\nReceivables';
 
   @override
-  String get accPendingItems => 'Pending\nItems';
+  String get accPendingItems => 'Pending Items';
 
   @override
-  String get accJournalsPendingReview => 'Journals pending\nreview';
+  String get accJournalsPendingReview => 'Journals pending review';
 
   @override
-  String get accBankReconciliationsPending => 'Bank reconciliations\npending';
+  String get accBankReconciliationsPending => 'Bank reconciliations pending';
 
   @override
-  String get accInvoicesAwaitingApproval => 'Invoices awaiting\napproval';
+  String get accInvoicesAwaitingApproval => 'Invoices awaiting approval';
 
   @override
   String get accExpenseBreakdown => 'Expense Breakdown';
@@ -994,4 +994,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'Due: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount =>
+      'Please select an account from the list above';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get accAccountsPayable => 'Accounts Payable';
+
+  @override
+  String get accAddAccount => 'Add Account';
+
+  @override
+  String get accAccountingSettings => 'Accounting Settings';
+
+  @override
+  String get commonSearchPlaceholder => 'Search by name, code, or serial...';
 }

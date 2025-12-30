@@ -1,38 +1,46 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class OverdueReceivablesCard extends StatelessWidget {
   const OverdueReceivablesCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(theme),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _header(
+            theme,
             title: localizations.accOverdueReceivables,
-            icon: Icons.warning_rounded,
-            iconColor: Colors.red,
+            icon: LucideIcons.alertTriangle,
           ),
           const SizedBox(height: 12),
           _item(
+            theme,
             company: 'Al-Amal Trading Co.',
             invoice: 'INV-2024-042',
             amount: '12 500',
             days: '45 days',
           ),
           _item(
+            theme,
             company: 'Al-Noor Est.',
             invoice: 'INV-2024-058',
             amount: '8 200',
             days: '30 days',
           ),
           _item(
+            theme,
             company: 'Modern Construction',
             invoice: 'INV-2024-071',
             amount: '25 000',
@@ -43,7 +51,8 @@ class OverdueReceivablesCard extends StatelessWidget {
     );
   }
 
-  Widget _item({
+  Widget _item(
+    AppColorExtension colors, {
     required String company,
     required String invoice,
     required String amount,
@@ -51,10 +60,14 @@ class OverdueReceivablesCard extends StatelessWidget {
   }) {
     return Container(
       margin: const EdgeInsets.only(top: 8),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.red.shade50,
+        color: colors.error.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: colors.error.withValues(alpha: 0.1),
+          width: 0.6,
+        ),
       ),
       child: Row(
         children: [
@@ -66,10 +79,18 @@ class OverdueReceivablesCard extends StatelessWidget {
                   company,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: AppTextStyles.bodyMediumBold.copyWith(
+                    fontSize: 13,
+                    color: colors.textPrimary,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(invoice, style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 2),
+                Text(
+                  invoice,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -78,14 +99,17 @@ class OverdueReceivablesCard extends StatelessWidget {
             children: [
               Text(
                 amount,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.bodySmallBold.copyWith(
+                  color: colors.errorText,
                 ),
               ),
+              const SizedBox(height: 1),
               Text(
                 days,
-                style: const TextStyle(fontSize: 12, color: Colors.redAccent),
+                style: AppTextStyles.caption.copyWith(
+                  color: colors.errorText,
+                  fontSize: 9,
+                ),
               ),
             ],
           ),
@@ -95,32 +119,35 @@ class OverdueReceivablesCard extends StatelessWidget {
   }
 }
 
-BoxDecoration _cardDecoration() {
+BoxDecoration _cardDecoration(AppColorExtension colors) {
   return BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(12),
+    color: colors.white,
+    borderRadius: BorderRadius.circular(8),
     boxShadow: [
-      BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
+      BoxShadow(
+        color: colors.shadowColor.withValues(alpha: 0.05),
+        blurRadius: 10,
+      ),
     ],
   );
 }
 
-Widget _header({
+Widget _header(
+  AppColorExtension colors, {
   required String title,
   required IconData icon,
-  required Color iconColor,
 }) {
   return Row(
     children: [
       Expanded(
         child: Text(
           title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: AppTextStyles.bodyMedium.copyWith(color: colors.textPrimary),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      Icon(icon, color: iconColor, size: 20),
+      Icon(icon, color: colors.error, size: 18),
     ],
   );
 }

@@ -354,7 +354,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exportReport => 'Экспорт отчета';
 
   @override
-  String get statusPosted => 'Опубликовано';
+  String get statusPosted => 'Проведено';
 
   @override
   String get statusDraft => 'Черновик';
@@ -955,13 +955,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get accOverdueReceivables => 'Просроченная\nдебиторка';
 
   @override
-  String get accPendingItems => 'Ожидающие\nпозиции';
+  String get accPendingItems => 'Ожидающие позиции';
 
   @override
-  String get accJournalsPendingReview => 'Журналы на\nпроверке';
+  String get accJournalsPendingReview => 'Журналы на проверке';
 
   @override
-  String get accBankReconciliationsPending => 'Сверки банков на\nожидании';
+  String get accBankReconciliationsPending => 'Сверки банков на ожидании';
 
   @override
   String get accInvoicesAwaitingApproval => 'Счета на\nутверждении';
@@ -1000,4 +1000,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String accVatDueLabel(Object date) {
     return 'Срок: $date';
   }
+
+  @override
+  String get accPleaseSelectAccount =>
+      'Пожалуйста, выберите счет из списка выше';
+
+  @override
+  String get viewAll => 'Посмотреть всё';
+
+  @override
+  String get accAccountsPayable => 'Кредиторская задолженность';
+
+  @override
+  String get accAddAccount => 'Добавить счет';
+
+  @override
+  String get accAccountingSettings => 'Настройки бухгалтерии';
+
+  @override
+  String get commonSearchPlaceholder =>
+      'Поиск по имени, коду или серийному номеру...';
 }

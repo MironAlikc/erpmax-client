@@ -1,8 +1,11 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
-class DashboardTab extends StatelessWidget {
-  const DashboardTab({super.key});
+class FinancialSummarySection extends StatelessWidget {
+  const FinancialSummarySection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class CashFlowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _CardContainer(
       title: AppLocalizations.of(context).cashFlow,
-      icon: Icons.bar_chart,
+      icon: LucideIcons.barChart,
       child: Column(
         children: const [
           CashFlowRow(month: 'Jan', income: 85000, expense: 62000),
@@ -56,6 +59,8 @@ class CashFlowRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final net = income - expense;
     final total = income + expense;
     final incomePercent = income / total;
@@ -66,13 +71,15 @@ class CashFlowRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(month, style: const TextStyle(fontWeight: FontWeight.w600)),
+            Text(
+              month,
+              style: AppTextStyles.label.copyWith(color: theme.textSecondary),
+            ),
             const Spacer(),
             Text(
               '+${_format(net)}',
-              style: const TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.bodySmallBold.copyWith(
+                color: theme.successText,
               ),
             ),
           ],
@@ -84,11 +91,17 @@ class CashFlowRow extends StatelessWidget {
             children: [
               Expanded(
                 flex: (incomePercent * 100).round(),
-                child: Container(height: 8, color: Colors.green),
+                child: Container(
+                  height: 8,
+                  color: theme.success..withValues(alpha: 0.8),
+                ),
               ),
               Expanded(
                 flex: (expensePercent * 100).round(),
-                child: Container(height: 8, color: Colors.redAccent),
+                child: Container(
+                  height: 8,
+                  color: theme.error.withValues(alpha: 0.8),
+                ),
               ),
             ],
           ),
@@ -96,9 +109,15 @@ class CashFlowRow extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            Text('In: ${_format(income)}', style: _subTextStyle()),
+            Text(
+              'In: ${_format(income)}',
+              style: AppTextStyles.caption.copyWith(color: theme.textTertiary),
+            ),
             const Spacer(),
-            Text('Out: ${_format(expense)}', style: _subTextStyle()),
+            Text(
+              'Out: ${_format(expense)}',
+              style: AppTextStyles.caption.copyWith(color: theme.textTertiary),
+            ),
           ],
         ),
       ],
@@ -113,37 +132,38 @@ class ExpenseBreakdownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     return _CardContainer(
       title: localizations.accExpenseBreakdown,
-      icon: Icons.pie_chart,
+      icon: LucideIcons.pieChart,
       child: Column(
         children: [
           ExpenseRow(
             label: localizations.accSalaries,
             value: 45000,
-            color: Colors.blue,
+            color: theme.infoText,
           ),
           ExpenseRow(
             label: localizations.accRent,
             value: 15000,
-            color: Colors.green,
+            color: theme.success,
           ),
           ExpenseRow(
             label: localizations.accUtilities,
             value: 8000,
-            color: Colors.orange,
+            color: theme.warning,
           ),
           ExpenseRow(
             label: localizations.accMarketing,
             value: 12000,
-            color: Colors.purple,
+            color: theme.violetText,
           ),
           ExpenseRow(
             label: localizations.accOthers,
             value: 20000,
-            color: Colors.grey,
+            color: theme.gray500,
           ),
         ],
       ),
@@ -165,6 +185,7 @@ class ExpenseRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     const maxValue = 50000;
 
     return Padding(
@@ -181,15 +202,20 @@ class ExpenseRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(fontSize: 13)),
+                Text(
+                  label,
+                  style: AppTextStyles.label.copyWith(
+                    color: theme.textSecondary,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: value / maxValue,
                     minHeight: 6,
-                    backgroundColor: Colors.grey.shade300,
-                    valueColor: AlwaysStoppedAnimation(color),
+                    backgroundColor: theme.gray200,
+                    valueColor: AlwaysStoppedAnimation(theme.primary),
                   ),
                 ),
               ],
@@ -198,7 +224,9 @@ class ExpenseRow extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             _format(value),
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: AppTextStyles.bodySmallBold.copyWith(
+              color: theme.textPrimary,
+            ),
           ),
         ],
       ),
@@ -221,12 +249,14 @@ class _CardContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [BoxShadow(blurRadius: 10, color: Color(0x11000000))],
+        color: theme.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [BoxShadow(blurRadius: 10, color: theme.shadowColor)],
       ),
       child: Column(
         children: [
@@ -234,13 +264,12 @@ class _CardContainer extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textPrimary,
                 ),
               ),
               const Spacer(),
-              Icon(icon, size: 18),
+              Icon(icon, size: 18, color: theme.infoText),
             ],
           ),
           const SizedBox(height: 16),
@@ -249,10 +278,6 @@ class _CardContainer extends StatelessWidget {
       ),
     );
   }
-}
-
-TextStyle _subTextStyle() {
-  return TextStyle(fontSize: 11, color: Colors.grey.shade600);
 }
 
 String _format(int value) {
