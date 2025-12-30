@@ -321,5 +321,8 @@
     "accVatPaidLabel": "Paid:",
     "accVatNetLabel": "Net:",
     "accVatDueLabel": "Due: {date}",
-    "accPleaseSelectAccount": "Please select an account from the list above"
+    "accPleaseSelectAccount": "Please select an account from the list above",
+    "viewAll": "View All",
+    "statusPosted": "Posted",
+    "statusDraft": "Draft"
 }

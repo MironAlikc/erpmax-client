@@ -351,7 +351,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exportReport => 'تصدير التقرير';
 
   @override
-  String get statusPosted => 'تم النشر';
+  String get statusPosted => 'مُرحّل';
 
   @override
   String get statusDraft => 'مسودة';
@@ -998,4 +998,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accPleaseSelectAccount => 'يرجى اختيار حساب من القائمة أعلاه';
+
+  @override
+  String get viewAll => 'عرض الكل';
 }

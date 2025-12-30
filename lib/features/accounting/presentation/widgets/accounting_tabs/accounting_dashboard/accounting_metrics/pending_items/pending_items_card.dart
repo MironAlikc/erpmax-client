@@ -62,11 +62,14 @@ class PendingItemsWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: AppTextStyles.bodyMedium.copyWith(
-              fontSize: 13,
-              color: colors.textPrimary,
+          Expanded(
+            child: Text(
+              title,
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontSize: 13,
+                color: colors.textPrimary,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           Container(

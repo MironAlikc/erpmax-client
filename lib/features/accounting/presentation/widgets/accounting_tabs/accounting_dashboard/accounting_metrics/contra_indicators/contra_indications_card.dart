@@ -1,4 +1,3 @@
-import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/contra_indicators/contra_indications_data.dart';
@@ -12,7 +11,7 @@ class MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    final statusColor = _getStatusColor(theme);
+    // final statusColor = _getStatusColor(theme);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -70,14 +69,14 @@ class MetricCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(AppColorExtension theme) {
-    switch (data.status) {
-      case ContraIndicationsStatus.success:
-        return theme.success;
-      case ContraIndicationsStatus.warning:
-        return theme.warning;
-      case ContraIndicationsStatus.healthy:
-        return theme.info;
-    }
-  }
+  // Color _getStatusColor(AppColorExtension theme) {
+  //   switch (data.status) {
+  //     case ContraIndicationsStatus.success:
+  //       return theme.success;
+  //     case ContraIndicationsStatus.warning:
+  //       return theme.warning;
+  //     case ContraIndicationsStatus.healthy:
+  //       return theme.info;
+  //   }
+  // }
 }

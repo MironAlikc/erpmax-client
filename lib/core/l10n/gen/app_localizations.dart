@@ -1989,6 +1989,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select an account from the list above'**
   String get accPleaseSelectAccount;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
 }
 
 class _AppLocalizationsDelegate

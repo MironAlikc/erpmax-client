@@ -321,5 +321,8 @@
     "accVatPaidLabel": "المدفوعة:",
     "accVatNetLabel": "الصافي:",
     "accVatDueLabel": "الاستحقاق: {date}",
-    "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه"
+    "accPleaseSelectAccount": "يرجى اختيار حساب من القائمة أعلاه",
+    "viewAll": "عرض الكل",
+    "statusPosted": "مُرحّل",
+    "statusDraft": "مسودة"
 }

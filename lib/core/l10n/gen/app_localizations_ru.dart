@@ -354,7 +354,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exportReport => 'Экспорт отчета';
 
   @override
-  String get statusPosted => 'Опубликовано';
+  String get statusPosted => 'Проведено';
 
   @override
   String get statusDraft => 'Черновик';
@@ -1004,4 +1004,7 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get accPleaseSelectAccount =>
       'Пожалуйста, выберите счет из списка выше';
+
+  @override
+  String get viewAll => 'Посмотреть всё';
 }

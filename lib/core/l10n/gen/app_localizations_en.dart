@@ -998,4 +998,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get accPleaseSelectAccount =>
       'Please select an account from the list above';
+
+  @override
+  String get viewAll => 'View All';
 }
