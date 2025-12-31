@@ -2019,6 +2019,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search by name, code, or serial...'**
   String get commonSearchPlaceholder;
+
+  /// No description provided for @orgMainCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Company'**
+  String get orgMainCompany;
+
+  /// No description provided for @orgBranchCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch Company'**
+  String get orgBranchCompany;
+
+  /// No description provided for @orgDistributionCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution Company'**
+  String get orgDistributionCompany;
+
+  /// No description provided for @book_type_main.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Book'**
+  String get book_type_main;
+
+  /// No description provided for @book_type_tax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Book'**
+  String get book_type_tax;
+
+  /// No description provided for @book_type_internal.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Book'**
+  String get book_type_internal;
+
+  /// No description provided for @all_cost_centers.
+  ///
+  /// In en, this message translates to:
+  /// **'All Cost Centers'**
+  String get all_cost_centers;
+
+  /// No description provided for @dept_headquarters.
+  ///
+  /// In en, this message translates to:
+  /// **'Headquarters'**
+  String get dept_headquarters;
+
+  /// No description provided for @dept_sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Department'**
+  String get dept_sales;
+
+  /// No description provided for @dept_marketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get dept_marketing;
+
+  /// No description provided for @dept_operations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get dept_operations;
+
+  /// No description provided for @project_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All Projects'**
+  String get project_all;
+
+  /// No description provided for @project_expansion.
+  ///
+  /// In en, this message translates to:
+  /// **'Expansion Project'**
+  String get project_expansion;
+
+  /// No description provided for @project_development.
+  ///
+  /// In en, this message translates to:
+  /// **'Development Project'**
+  String get project_development;
+
+  /// No description provided for @project_modernization.
+  ///
+  /// In en, this message translates to:
+  /// **'Modernization Project'**
+  String get project_modernization;
+
+  /// No description provided for @period_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get period_today;
+
+  /// No description provided for @period_this_week.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get period_this_week;
+
+  /// No description provided for @period_this_month.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get period_this_month;
+
+  /// No description provided for @period_this_quarter.
+  ///
+  /// In en, this message translates to:
+  /// **'This Quarter'**
+  String get period_this_quarter;
+
+  /// No description provided for @period_this_year.
+  ///
+  /// In en, this message translates to:
+  /// **'This Year'**
+  String get period_this_year;
+
+  /// No description provided for @action_export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get action_export;
+
+  /// No description provided for @label_drafts.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts:'**
+  String get label_drafts;
+
+  /// No description provided for @label_posted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted:'**
+  String get label_posted;
+
+  /// No description provided for @label_total_credit.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Credit:'**
+  String get label_total_credit;
+
+  /// No description provided for @label_total_debit.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Debit:'**
+  String get label_total_debit;
+
+  /// No description provided for @label_entries.
+  ///
+  /// In en, this message translates to:
+  /// **'Entries:'**
+  String get label_entries;
+
+  /// No description provided for @search_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search entries...'**
+  String get search_placeholder;
+
+  /// No description provided for @column_debit.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit'**
+  String get column_debit;
+
+  /// No description provided for @column_credit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get column_credit;
+
+  /// No description provided for @column_ref.
+  ///
+  /// In en, this message translates to:
+  /// **'Ref'**
+  String get column_ref;
+
+  /// No description provided for @column_entry_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry #'**
+  String get column_entry_no;
+
+  /// No description provided for @action_filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get action_filter;
+
+  /// No description provided for @label_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Count:'**
+  String get label_count;
+
+  /// Summary of entries statuses including posted, drafts and pending
+  ///
+  /// In en, this message translates to:
+  /// **'{postedCount} posted · {draftCount} {draftCount, plural, one{draft} other{drafts}} · {pendingCount} pending'**
+  String statusSummary(int postedCount, int draftCount, int pendingCount);
 }
 
 class _AppLocalizationsDelegate

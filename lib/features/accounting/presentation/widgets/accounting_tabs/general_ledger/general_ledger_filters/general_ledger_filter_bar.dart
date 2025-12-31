@@ -1,37 +1,107 @@
+import 'package:erpmax_client/core/extensions/dropdown_ext.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class GeneralLedgerFilterBar extends StatelessWidget {
+enum OrganizationType { main, branch, distribution }
+
+enum BookType { main, tax, internal }
+
+enum DeptType { centers, headquarters, sales, marketing, operations }
+
+enum ProjectType { all, expansion, development, modernization }
+
+class GeneralLedgerFilterBar extends StatefulWidget {
   const GeneralLedgerFilterBar({super.key});
+
+  @override
+  State<GeneralLedgerFilterBar> createState() => _GeneralLedgerFilterBarState();
+}
+
+class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
+  OrganizationType selectedOrg = OrganizationType.main;
+  BookType selectedBook = BookType.main;
+  DeptType selectedDept = DeptType.centers;
+  ProjectType selectedProject = ProjectType.all;
+
+  final _inputVoucherController = TextEditingController();
+
+  @override
+  void dispose() {
+    _inputVoucherController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
     return Wrap(
-      spacing: 12, // Расстояние между элементами по горизонтали
-      runSpacing: 12, // Расстояние между строками при переносе
+      spacing: 8,
+      runSpacing: 8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        // --- Группа селекторов ---
-        _buildDropdown(context, LucideIcons.building2, 'Main Company'),
-        _buildDropdown(context, LucideIcons.book, 'Main Book'),
-        _buildDropdown(context, LucideIcons.target, 'All Cost Centers'),
-        _buildDropdown(context, LucideIcons.folder, 'All Projects'),
-        _buildInput(context, 'Voucher No'),
+        AccDropdown(
+          value: selectedOrg,
+          items: OrganizationType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.building2,
+          onChanged: (OrganizationType newValue) {
+            setState(() {
+              selectedOrg = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedBook,
+          items: BookType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.book,
+          onChanged: (BookType newValue) {
+            setState(() {
+              selectedBook = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedDept,
+          items: DeptType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.target,
+          onChanged: (DeptType newValue) {
+            setState(() {
+              selectedDept = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedProject,
+          items: ProjectType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.folder,
+          onChanged: (ProjectType newValue) {
+            setState(() {
+              selectedProject = newValue;
+            });
+          },
+        ),
+        AccInput(
+          hint: 'Voucher No',
+          controller: _inputVoucherController,
+          onChanged: (value) {},
+          height: 10,
+        ),
 
-        // Вертикальный разделитель (скрывается на мобильных, если нужно)
         _buildDivider(theme),
 
-        // --- Группа Даты ---
         _buildDateRange(context),
 
         _buildDivider(theme),
 
-        // --- Группа инструментов ---
         _buildIconButton(
           context,
           LucideIcons.palette,
@@ -44,29 +114,6 @@ class GeneralLedgerFilterBar extends StatelessWidget {
     );
   }
 
-  // Виджет выпадающего списка
-  Widget _buildDropdown(BuildContext context, IconData icon, String label) {
-    final theme = context.theme.appColor;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: theme.textSecondary),
-          const SizedBox(width: 8),
-          Text(label, style: AppTextStyles.bodyMedium),
-          const SizedBox(width: 4),
-          Icon(LucideIcons.chevronDown, size: 14, color: theme.textSecondary),
-        ],
-      ),
-    );
-  }
-
-  // Виджет выбора дат
   Widget _buildDateRange(BuildContext context) {
     final theme = context.theme.appColor;
     return Row(
@@ -104,7 +151,6 @@ class GeneralLedgerFilterBar extends StatelessWidget {
     );
   }
 
-  // Маленькие кнопки инструментов (печать, экспорт)
   Widget _buildIconButton(BuildContext context, IconData icon, {Color? color}) {
     final theme = context.theme.appColor;
     return Container(
@@ -114,22 +160,6 @@ class GeneralLedgerFilterBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, size: 18, color: color ?? theme.textPrimary),
-    );
-  }
-
-  Widget _buildInput(BuildContext context, String hint) {
-    final theme = context.theme.appColor;
-    return Container(
-      width: 120,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        hint,
-        style: AppTextStyles.bodyMedium.copyWith(color: theme.textSecondary),
-      ),
     );
   }
 

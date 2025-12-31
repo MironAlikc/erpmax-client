@@ -1014,4 +1014,115 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get commonSearchPlaceholder =>
       'بحث بالاسم أو الكود أو الرقم التسلسلي...';
+
+  @override
+  String get orgMainCompany => 'الشركة الرئيسية';
+
+  @override
+  String get orgBranchCompany => 'الفرع';
+
+  @override
+  String get orgDistributionCompany => 'شركة توزيع';
+
+  @override
+  String get book_type_main => 'الدفتر الرئيسي';
+
+  @override
+  String get book_type_tax => 'الدفتر الضريبي';
+
+  @override
+  String get book_type_internal => 'الدفتر الداخلي';
+
+  @override
+  String get all_cost_centers => 'كافة مراكز التكلفة';
+
+  @override
+  String get dept_headquarters => 'المقر الرئيسي';
+
+  @override
+  String get dept_sales => 'قسم المبيعات';
+
+  @override
+  String get dept_marketing => 'التسويق';
+
+  @override
+  String get dept_operations => 'العمليات';
+
+  @override
+  String get project_all => 'كافة المشاريع';
+
+  @override
+  String get project_expansion => 'مشروع التوسع';
+
+  @override
+  String get project_development => 'مشروع التطوير';
+
+  @override
+  String get project_modernization => 'مشروع التحديث';
+
+  @override
+  String get period_today => 'اليوم';
+
+  @override
+  String get period_this_week => 'هذا الأسبوع';
+
+  @override
+  String get period_this_month => 'هذا الشهر';
+
+  @override
+  String get period_this_quarter => 'هذا الربع';
+
+  @override
+  String get period_this_year => 'هذه السنة';
+
+  @override
+  String get action_export => 'تصدير';
+
+  @override
+  String get label_drafts => 'المسودات:';
+
+  @override
+  String get label_posted => 'المُرحّل:';
+
+  @override
+  String get label_total_credit => 'إجمالي الدائن:';
+
+  @override
+  String get label_total_debit => 'إجمالي المدين:';
+
+  @override
+  String get label_entries => 'القيود:';
+
+  @override
+  String get search_placeholder => 'بحث في القيود...';
+
+  @override
+  String get column_debit => 'مدين';
+
+  @override
+  String get column_credit => 'دائن';
+
+  @override
+  String get column_ref => 'المرجع';
+
+  @override
+  String get column_entry_no => 'رقم القيد';
+
+  @override
+  String get action_filter => 'تصفية';
+
+  @override
+  String get label_count => 'العدد:';
+
+  @override
+  String statusSummary(int postedCount, int draftCount, int pendingCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      draftCount,
+      locale: localeName,
+      other: 'مسودة',
+      few: 'مسودات',
+      one: 'مسودة',
+    );
+    return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
+  }
 }

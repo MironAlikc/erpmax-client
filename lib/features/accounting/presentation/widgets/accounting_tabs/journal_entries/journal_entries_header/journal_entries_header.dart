@@ -21,13 +21,7 @@ class JournalEntriesHeader extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.h1.copyWith(
-            color: theme.textPrimary,
-            fontSize: 26,
-          ),
-        ),
+        Text(title, style: AppTextStyles.h3.copyWith(color: theme.textPrimary)),
 
         LayoutBuilder(
           builder: (context, constraints) {

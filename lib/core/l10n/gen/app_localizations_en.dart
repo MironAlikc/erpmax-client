@@ -1013,4 +1013,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSearchPlaceholder => 'Search by name, code, or serial...';
+
+  @override
+  String get orgMainCompany => 'Main Company';
+
+  @override
+  String get orgBranchCompany => 'Branch Company';
+
+  @override
+  String get orgDistributionCompany => 'Distribution Company';
+
+  @override
+  String get book_type_main => 'Main Book';
+
+  @override
+  String get book_type_tax => 'Tax Book';
+
+  @override
+  String get book_type_internal => 'Internal Book';
+
+  @override
+  String get all_cost_centers => 'All Cost Centers';
+
+  @override
+  String get dept_headquarters => 'Headquarters';
+
+  @override
+  String get dept_sales => 'Sales Department';
+
+  @override
+  String get dept_marketing => 'Marketing';
+
+  @override
+  String get dept_operations => 'Operations';
+
+  @override
+  String get project_all => 'All Projects';
+
+  @override
+  String get project_expansion => 'Expansion Project';
+
+  @override
+  String get project_development => 'Development Project';
+
+  @override
+  String get project_modernization => 'Modernization Project';
+
+  @override
+  String get period_today => 'Today';
+
+  @override
+  String get period_this_week => 'This Week';
+
+  @override
+  String get period_this_month => 'This Month';
+
+  @override
+  String get period_this_quarter => 'This Quarter';
+
+  @override
+  String get period_this_year => 'This Year';
+
+  @override
+  String get action_export => 'Export';
+
+  @override
+  String get label_drafts => 'Drafts:';
+
+  @override
+  String get label_posted => 'Posted:';
+
+  @override
+  String get label_total_credit => 'Total Credit:';
+
+  @override
+  String get label_total_debit => 'Total Debit:';
+
+  @override
+  String get label_entries => 'Entries:';
+
+  @override
+  String get search_placeholder => 'Search entries...';
+
+  @override
+  String get column_debit => 'Debit';
+
+  @override
+  String get column_credit => 'Credit';
+
+  @override
+  String get column_ref => 'Ref';
+
+  @override
+  String get column_entry_no => 'Entry #';
+
+  @override
+  String get action_filter => 'Filter';
+
+  @override
+  String get label_count => 'Count:';
+
+  @override
+  String statusSummary(int postedCount, int draftCount, int pendingCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      draftCount,
+      locale: localeName,
+      other: 'drafts',
+      one: 'draft',
+    );
+    return '$postedCount posted · $draftCount $_temp0 · $pendingCount pending';
+  }
 }

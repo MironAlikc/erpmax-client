@@ -1,12 +1,22 @@
+import 'package:erpmax_client/core/extensions/dropdown_ext.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/this_month/this_month_card.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class DashboardThisMonth extends StatelessWidget {
+enum TimePeriodType { today, week, month, quarter, year }
+
+class DashboardThisMonth extends StatefulWidget {
   const DashboardThisMonth({super.key});
+
+  @override
+  State<DashboardThisMonth> createState() => _DashboardThisMonthState();
+}
+
+class _DashboardThisMonthState extends State<DashboardThisMonth> {
+  TimePeriodType selectedTimePeriod = TimePeriodType.month;
 
   @override
   Widget build(BuildContext context) {
@@ -73,26 +83,17 @@ class DashboardThisMonth extends StatelessWidget {
           ),
 
           const SizedBox(width: 24),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                child: Icon(
-                  LucideIcons.calendar,
-                  color: theme.textSecondary,
-                  size: 16,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "This Month",
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: theme.textSecondary,
-                  fontSize: 11,
-                ),
-              ),
-            ],
+          AccDropdown(
+            value: selectedTimePeriod,
+            items: TimePeriodType.values,
+            itemLabelBuilder: (val) => val.label(context),
+            leadingIcon: LucideIcons.calendar,
+            onChanged: (TimePeriodType newValue) {
+              setState(() {
+                selectedTimePeriod = newValue;
+              });
+            },
+            isBg: false,
           ),
         ],
       ),

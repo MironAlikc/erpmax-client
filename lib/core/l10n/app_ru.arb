@@ -328,5 +328,52 @@
     "accAccountsPayable": "Кредиторская задолженность",
     "accAddAccount": "Добавить счет",
     "accAccountingSettings": "Настройки бухгалтерии",
-    "commonSearchPlaceholder": "Поиск по имени, коду или серийному номеру..."
+    "commonSearchPlaceholder": "Поиск по имени, коду или серийному номеру...",
+    "orgMainCompany": "Головная компания",
+    "orgBranchCompany": "Филиал",
+    "orgDistributionCompany": "Дистрибьюторская компания",
+    "book_type_main": "Главная книга",
+    "book_type_tax": "Налоговая книга",
+    "book_type_internal": "Внутренняя книга",
+    "all_cost_centers": "Все центры затрат",
+    "dept_headquarters": "Головной офис",
+    "dept_sales": "Отдел продаж",
+    "dept_marketing": "Маркетинг",
+    "dept_operations": "Операционная деятельность",
+    "project_all": "Все проекты",
+    "project_expansion": "Проект расширения",
+    "project_development": "Проект разработки",
+    "project_modernization": "Проект модернизации",
+    "period_today": "Сегодня",
+    "period_this_week": "Эта неделя",
+    "period_this_month": "Этот месяц",
+    "period_this_quarter": "Этот квартал",
+    "period_this_year": "Этот год",
+    "action_export": "Экспорт",
+    "label_drafts": "Черновики:",
+    "label_posted": "Проведено:",
+    "label_total_credit": "Всего кредит:",
+    "label_total_debit": "Всего дебет:",
+    "label_entries": "Записи:",
+    "search_placeholder": "Поиск записей...",
+    "column_debit": "Дебет",
+    "column_credit": "Кредит",
+    "column_ref": "Спр.",
+    "column_entry_no": "№ Записи",
+    "action_filter": "Фильтровать",
+    "label_count": "Количество:",
+    "statusSummary": "{postedCount} مُرحّل · {draftCount} {draftCount, plural, one{مسودة} few{مسودات} other{مسودة}} · {pendingCount} معلق",
+    "@statusSummary": {
+      "placeholders": {
+        "postedCount": {
+          "type": "int"
+        },
+        "draftCount": {
+          "type": "int"
+        },
+        "pendingCount": {
+          "type": "int"
+        }
+      }
+    }
 }
