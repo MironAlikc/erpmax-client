@@ -44,7 +44,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
           .map((dynamic i) => PlanModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -72,7 +72,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     try {
       _value = SubscriptionModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -103,7 +103,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     try {
       _value = CheckoutResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -157,7 +157,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
           .map((dynamic i) => InvoiceModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);

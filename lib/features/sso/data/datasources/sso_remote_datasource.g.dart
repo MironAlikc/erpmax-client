@@ -42,7 +42,7 @@ class _SSORemoteDataSource implements SSORemoteDataSource {
     try {
       _value = SSOTokenModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -72,7 +72,7 @@ class _SSORemoteDataSource implements SSORemoteDataSource {
     try {
       _value = SSOTokenValidationModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);

@@ -50,7 +50,7 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
           )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -78,7 +78,7 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     try {
       _value = ProvisioningJobModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -109,7 +109,7 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     try {
       _value = ProvisioningJobModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
@@ -137,7 +137,7 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     try {
       _value = ProvisioningJobModel.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
