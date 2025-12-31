@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,17 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: theme.white,
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
+        border: BorderDirectional(bottom: BorderSide(color: theme.border)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -32,15 +37,15 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
                       _buildMetricItem(
                         context,
                         icon: LucideIcons.fileText,
-                        label: 'Entries:',
+                        label: localizations.label_entries,
                         value: '10',
-                        valueColor: theme.primary,
+                        valueColor: theme.infoText,
                       ),
                       _buildVerticalDivider(theme),
                       _buildMetricItem(
                         context,
                         icon: LucideIcons.trendingUp,
-                        label: 'Total Debit:',
+                        label: localizations.label_total_debit,
                         value: '104 270',
                         valueColor: theme.successText,
                       ),
@@ -48,7 +53,7 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
                       _buildMetricItem(
                         context,
                         icon: LucideIcons.trendingDown,
-                        label: 'Total Credit:',
+                        label: localizations.label_total_credit,
                         value: '104 270',
                         valueColor: theme.errorText,
                       ),
@@ -56,18 +61,19 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
                       _buildMetricItem(
                         context,
                         icon: LucideIcons.dollarSign,
-                        label: 'Posted:',
+                        label: localizations.label_posted,
                         value: '7',
-                        valueColor: theme.successText,
+                        valueColor: theme.activeGreen,
                       ),
                       _buildVerticalDivider(theme),
                       _buildMetricItem(
                         context,
-                        label: 'Drafts:',
+                        label: localizations.label_drafts,
                         value: '2',
-                        valueColor: theme.warningText,
+                        valueColor: theme.error,
                       ),
                       const SizedBox(width: 8),
+
                       Text(
                         'SAR',
                         style: AppTextStyles.bodySmall.copyWith(
@@ -87,8 +93,8 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
                         color: theme.textPrimary,
                       ),
                       label: Text(
-                        'Export',
-                        style: AppTextStyles.bodyMedium.copyWith(
+                        localizations.action_export,
+                        style: AppTextStyles.bodySmallBold.copyWith(
                           color: theme.textPrimary,
                         ),
                       ),
@@ -111,26 +117,20 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
     required Color valueColor,
   }) {
     final theme = context.theme.appColor;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 20, color: valueColor),
+          Icon(icon, size: 18, color: valueColor),
           const SizedBox(width: 8),
         ],
         Text(
           label,
-          style: AppTextStyles.bodyMedium.copyWith(color: theme.textSecondary),
+          style: AppTextStyles.bodySmall.copyWith(color: theme.textSecondary),
         ),
         const SizedBox(width: 8),
-        Text(
-          value,
-          style: AppTextStyles.h3.copyWith(
-            color: valueColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
+        Text(value, style: AppTextStyles.h4.copyWith(color: valueColor)),
       ],
     );
   }
@@ -140,7 +140,7 @@ class JournalEntriesSummaryMetricsBar extends StatelessWidget {
       height: 24,
       width: 1,
       color: theme.border,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
     );
   }
 }

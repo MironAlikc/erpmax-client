@@ -343,5 +343,38 @@
     "project_all": "All Projects",
     "project_expansion": "Expansion Project",
     "project_development": "Development Project",
-    "project_modernization": "Modernization Project"
+    "project_modernization": "Modernization Project",
+    "period_today": "Today",
+    "period_this_week": "This Week",
+    "period_this_month": "This Month",
+    "period_this_quarter": "This Quarter",
+    "period_this_year": "This Year",
+    "action_export": "Export",
+    "label_drafts": "Drafts:",
+    "label_posted": "Posted:",
+    "label_total_credit": "Total Credit:",
+    "label_total_debit": "Total Debit:",
+    "label_entries": "Entries:",
+    "search_placeholder": "Search entries...",
+    "column_debit": "Debit",
+    "column_credit": "Credit",
+    "column_ref": "Ref",
+    "column_entry_no": "Entry #",
+    "action_filter": "Filter",
+    "label_count": "Count:",
+    "statusSummary": "{postedCount} posted · {draftCount} {draftCount, plural, one{draft} other{drafts}} · {pendingCount} pending",
+    "@statusSummary": {
+      "description": "Summary of entries statuses including posted, drafts and pending",
+      "placeholders": {
+        "postedCount": {
+          "type": "int"
+        },
+        "draftCount": {
+          "type": "int"
+        },
+        "pendingCount": {
+          "type": "int"
+        }
+      }
+    }
 }

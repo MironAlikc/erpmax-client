@@ -96,15 +96,12 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
           height: 10,
         ),
 
-        // Вертикальный разделитель (скрывается на мобильных, если нужно)
         _buildDivider(theme),
 
-        // --- Группа Даты ---
         _buildDateRange(context),
 
         _buildDivider(theme),
 
-        // --- Группа инструментов ---
         _buildIconButton(
           context,
           LucideIcons.palette,
@@ -117,7 +114,6 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
     );
   }
 
-  // Виджет выбора дат
   Widget _buildDateRange(BuildContext context) {
     final theme = context.theme.appColor;
     return Row(
@@ -155,7 +151,6 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
     );
   }
 
-  // Маленькие кнопки инструментов (печать, экспорт)
   Widget _buildIconButton(BuildContext context, IconData icon, {Color? color}) {
     final theme = context.theme.appColor;
     return Container(

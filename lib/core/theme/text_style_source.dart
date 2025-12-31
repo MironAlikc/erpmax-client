@@ -43,7 +43,6 @@ abstract final class AppTextStyles {
     height: 1.4,
   );
 
-  // Основной текст
   static final TextStyle bodyLarge = base.copyWith(fontSize: 16, height: 1.5);
 
   static final TextStyle bodyLargeBold = bodyLarge.copyWith(
@@ -62,7 +61,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  // Специальные стили
   static final TextStyle button = base.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w600,
@@ -104,7 +102,6 @@ abstract final class AppTextStyles {
     height: 1.3,
   );
 
-  // UI элементы
   static final TextStyle tableHeader = base.copyWith(
     fontSize: 13,
     fontWeight: FontWeight.w600,

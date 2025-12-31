@@ -1065,4 +1065,70 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get project_modernization => 'Проект модернизации';
+
+  @override
+  String get period_today => 'Сегодня';
+
+  @override
+  String get period_this_week => 'Эта неделя';
+
+  @override
+  String get period_this_month => 'Этот месяц';
+
+  @override
+  String get period_this_quarter => 'Этот квартал';
+
+  @override
+  String get period_this_year => 'Этот год';
+
+  @override
+  String get action_export => 'Экспорт';
+
+  @override
+  String get label_drafts => 'Черновики:';
+
+  @override
+  String get label_posted => 'Проведено:';
+
+  @override
+  String get label_total_credit => 'Всего кредит:';
+
+  @override
+  String get label_total_debit => 'Всего дебет:';
+
+  @override
+  String get label_entries => 'Записи:';
+
+  @override
+  String get search_placeholder => 'Поиск записей...';
+
+  @override
+  String get column_debit => 'Дебет';
+
+  @override
+  String get column_credit => 'Кредит';
+
+  @override
+  String get column_ref => 'Спр.';
+
+  @override
+  String get column_entry_no => '№ Записи';
+
+  @override
+  String get action_filter => 'Фильтровать';
+
+  @override
+  String get label_count => 'Количество:';
+
+  @override
+  String statusSummary(int postedCount, int draftCount, int pendingCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      draftCount,
+      locale: localeName,
+      other: 'مسودة',
+      few: 'مسودات',
+      one: 'مسودة',
+    );
+    return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
+  }
 }

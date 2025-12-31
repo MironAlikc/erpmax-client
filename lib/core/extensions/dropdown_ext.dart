@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/this_month/dashboard_this_month.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/general_ledger/general_ledger_filters/general_ledger_filter_bar.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,6 +46,19 @@ extension ProjectTypeExt on ProjectType {
       ProjectType.expansion: l10n.project_expansion,
       ProjectType.development: l10n.project_development,
       ProjectType.modernization: l10n.project_modernization,
+    }[this]!;
+  }
+}
+
+extension TimePeriodTypeExt on TimePeriodType {
+  String label(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return {
+      TimePeriodType.today: l10n.period_today,
+      TimePeriodType.week: l10n.period_this_week,
+      TimePeriodType.month: l10n.period_this_month,
+      TimePeriodType.quarter: l10n.period_this_quarter,
+      TimePeriodType.year: l10n.period_this_year,
     }[this]!;
   }
 }

@@ -5,10 +5,10 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/common_wi
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class JournalEntriesHeader extends StatelessWidget {
+class ChartOfAccountsHeader extends StatelessWidget {
   final String title;
 
-  const JournalEntriesHeader({super.key, required this.title});
+  const ChartOfAccountsHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,21 @@ class JournalEntriesHeader extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.spaceBetween,
       children: [
-        Text(title, style: AppTextStyles.h3.copyWith(color: theme.textPrimary)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
+            ),
+            Text(
+              'Manage labor costs and production analysis',
+              style: AppTextStyles.bodyLarge.copyWith(
+                color: theme.textSecondary,
+              ),
+            ),
+          ],
+        ),
 
         LayoutBuilder(
           builder: (context, constraints) {

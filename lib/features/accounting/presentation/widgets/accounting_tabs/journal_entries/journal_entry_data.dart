@@ -5,10 +5,11 @@ class JournalEntry {
   final String credit;
   final String ref;
   final String description;
-  final String type; // Например: 'Expense Entry', 'Sales Entry'
+  final String type;
   final String entryNo;
   final String date;
   final Color typeColor;
+  bool isSelected;
 
   JournalEntry({
     required this.debit,
@@ -19,5 +20,6 @@ class JournalEntry {
     required this.entryNo,
     required this.date,
     required this.typeColor,
+    this.isSelected = false,
   });
 }

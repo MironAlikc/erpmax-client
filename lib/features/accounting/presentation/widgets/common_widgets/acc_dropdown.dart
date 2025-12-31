@@ -11,6 +11,7 @@ class AccDropdown<T> extends StatelessWidget {
   final IconData leadingIcon;
   final ValueChanged<T> onChanged;
   final String? tooltipMessage;
+  final bool isBg;
 
   const AccDropdown({
     super.key,
@@ -20,6 +21,7 @@ class AccDropdown<T> extends StatelessWidget {
     required this.leadingIcon,
     required this.onChanged,
     this.tooltipMessage,
+    this.isBg = true,
   });
 
   @override
@@ -48,7 +50,7 @@ class AccDropdown<T> extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              border: Border.all(color: theme.border),
+              border: isBg ? Border.all(color: theme.border) : null,
               borderRadius: BorderRadius.circular(8),
               color: theme.white,
             ),
@@ -62,10 +64,13 @@ class AccDropdown<T> extends StatelessWidget {
                   style: AppTextStyles.label.copyWith(color: theme.textPrimary),
                 ),
                 const SizedBox(width: 4),
-                Icon(
-                  LucideIcons.chevronsUpDown,
-                  size: 12,
-                  color: theme.textSecondary,
+                Visibility(
+                  visible: isBg,
+                  child: Icon(
+                    LucideIcons.chevronsUpDown,
+                    size: 12,
+                    color: theme.textSecondary,
+                  ),
                 ),
               ],
             ),

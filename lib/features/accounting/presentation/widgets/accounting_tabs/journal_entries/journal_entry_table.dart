@@ -1,10 +1,13 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entry_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class JournalEntryTable extends StatelessWidget {
+class JournalEntryTable extends StatefulWidget {
   const JournalEntryTable({super.key});
 
   static const double checkboxWidth = 24;
@@ -14,6 +17,13 @@ class JournalEntryTable extends StatelessWidget {
   static const double typeWidth = 120;
   static const double entryNoWidth = 120;
   static const double dateWidth = 100;
+
+  @override
+  State<JournalEntryTable> createState() => _JournalEntryTableState();
+}
+
+class _JournalEntryTableState extends State<JournalEntryTable> {
+  bool isTestCheckbox = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +39,7 @@ class JournalEntryTable extends StatelessWidget {
         entryNo: 'JV-2024-001',
         date: '2024-03-20',
         typeColor: theme.warningText,
+        isSelected: true,
       ),
       JournalEntry(
         debit: '12 500',
@@ -39,6 +50,7 @@ class JournalEntryTable extends StatelessWidget {
         entryNo: 'JV-2024-002',
         date: '2024-03-19',
         typeColor: theme.successText,
+        isSelected: false,
       ),
       JournalEntry(
         debit: '5 000',
@@ -49,6 +61,7 @@ class JournalEntryTable extends StatelessWidget {
         entryNo: 'JV-2024-001',
         date: '2024-03-20',
         typeColor: theme.warningText,
+        isSelected: true,
       ),
       JournalEntry(
         debit: '12 500',
@@ -59,21 +72,18 @@ class JournalEntryTable extends StatelessWidget {
         entryNo: 'JV-2024-002',
         date: '2024-03-19',
         typeColor: theme.successText,
+        isSelected: false,
       ),
     ];
 
     return Column(
       children: [
-        // 1. Тулбар
         _buildToolbar(context),
         const SizedBox(height: 16),
 
-        // 2. Таблица с адаптивной шириной
         LayoutBuilder(
           builder: (context, constraints) {
-            // Минимальная ширина таблицы
             const double minTableWidth = 1000;
-            // Доступная ширина
             final double availableWidth = constraints.maxWidth;
 
             return Container(
@@ -111,6 +121,7 @@ class JournalEntryTable extends StatelessWidget {
 
   Widget _buildToolbar(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return SizedBox(
       width: double.infinity,
@@ -120,7 +131,6 @@ class JournalEntryTable extends StatelessWidget {
         alignment: WrapAlignment.spaceBetween,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          // 1. Поиск
           Container(
             width: 350,
             height: 40,
@@ -137,7 +147,7 @@ class JournalEntryTable extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Search entries...',
+                      hintText: localizations.search_placeholder,
                       hintStyle: AppTextStyles.bodyMedium.copyWith(
                         color: theme.textSecondary,
                       ),
@@ -150,7 +160,6 @@ class JournalEntryTable extends StatelessWidget {
             ),
           ),
 
-          // 2. Кнопки
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -158,7 +167,11 @@ class JournalEntryTable extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _buildToolBtn(context, LucideIcons.filter, label: 'Filter'),
+                  _buildToolBtn(
+                    context,
+                    LucideIcons.filter,
+                    label: localizations.action_filter,
+                  ),
                   const SizedBox(width: 8),
                   _buildToolBtn(
                     context,
@@ -180,23 +193,51 @@ class JournalEntryTable extends StatelessWidget {
 
   Widget _buildTableHeader(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
-      color: theme.border.withOpacity(0.2),
+      color: theme.error.withValues(alpha: 0.05),
+
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: [
           SizedBox(
-            width: checkboxWidth,
-            child: const Icon(LucideIcons.check, size: 14),
+            width: JournalEntryTable.checkboxWidth,
+            child: Icon(LucideIcons.check, size: 14, color: theme.textPrimary),
           ),
-          _cellTitle('Debit', width: debitWidth, textAlign: TextAlign.center),
-          _cellTitle('Credit', width: creditWidth, textAlign: TextAlign.center),
-          _cellTitle('Ref', width: refWidth),
-          Expanded(child: _cellTitle('Description')),
-          _cellTitle('Type', width: typeWidth),
-          _cellTitle('Entry #', width: entryNoWidth),
-          _cellTitle('Date', width: dateWidth),
+          _cellTitle(
+            theme,
+            localizations.column_debit,
+            width: JournalEntryTable.debitWidth,
+            textAlign: TextAlign.center,
+          ),
+          _cellTitle(
+            theme,
+            localizations.column_credit,
+            width: JournalEntryTable.creditWidth,
+            textAlign: TextAlign.center,
+          ),
+          _cellTitle(
+            theme,
+            localizations.column_ref,
+            width: JournalEntryTable.refWidth,
+          ),
+          Expanded(child: _cellTitle(theme, localizations.description)),
+          _cellTitle(
+            theme,
+            localizations.type,
+            width: JournalEntryTable.typeWidth,
+          ),
+          _cellTitle(
+            theme,
+            localizations.column_entry_no,
+            width: JournalEntryTable.entryNoWidth,
+          ),
+          _cellTitle(
+            theme,
+            localizations.date,
+            width: JournalEntryTable.dateWidth,
+          ),
         ],
       ),
     );
@@ -208,38 +249,39 @@ class JournalEntryTable extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.white,
-        border: Border(top: BorderSide(color: theme.border.withOpacity(0.5))),
+        border: Border(top: BorderSide(color: theme.border)),
       ),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Row(
         children: [
-          SizedBox(
-            width: checkboxWidth,
-            child: Checkbox(
-              value: false,
-              onChanged: (v) {},
-              visualDensity: VisualDensity.compact,
-            ),
+          AccCheckbox(
+            value: entry.isSelected,
+            color: theme.successText.withValues(alpha: 0.8),
+            onChanged: (newValue) {
+              setState(() {
+                entry.isSelected = newValue;
+              });
+            },
           ),
           _cellText(
             entry.debit,
-            width: debitWidth,
+            width: JournalEntryTable.debitWidth,
             color: theme.successText,
             textAlign: TextAlign.center,
-            weight: FontWeight.bold,
+            weight: FontWeight.w600,
           ),
           _cellText(
             entry.credit,
-            width: creditWidth,
+            width: JournalEntryTable.creditWidth,
             color: theme.errorText,
             textAlign: TextAlign.center,
-            weight: FontWeight.bold,
+            weight: FontWeight.w600,
           ),
-          _cellText(entry.ref, width: refWidth),
+          _cellText(entry.ref, width: JournalEntryTable.refWidth),
           Expanded(child: _cellText(entry.description)),
           _buildStatusBadge(entry.type, entry.typeColor),
-          _cellText(entry.entryNo, width: entryNoWidth),
-          _cellText(entry.date, width: dateWidth),
+          _cellText(entry.entryNo, width: JournalEntryTable.entryNoWidth),
+          _cellText(entry.date, width: JournalEntryTable.dateWidth),
         ],
       ),
     );
@@ -247,58 +289,46 @@ class JournalEntryTable extends StatelessWidget {
 
   Widget _buildTableFooter(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     return Container(
-      color: const Color(0xFF0F172A),
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      color: theme.primaryDark,
+      padding: const EdgeInsets.only(top: 12, bottom: 12, left: 14, right: 90),
       child: Row(
         children: [
           SizedBox(
-            width: checkboxWidth,
-            child: const Text(
+            width: JournalEntryTable.checkboxWidth,
+            child: Text(
               '0',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              textAlign: TextAlign.center,
+              style: AppTextStyles.button.copyWith(color: theme.textWhite),
             ),
           ),
 
           SizedBox(
-            width: debitWidth,
+            width: JournalEntryTable.debitWidth,
             child: Text(
               '104 270',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: theme.successText,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: AppTextStyles.button.copyWith(color: theme.successLight),
             ),
           ),
 
           SizedBox(
-            width: creditWidth,
+            width: JournalEntryTable.creditWidth,
             child: Text(
               '104 270',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: theme.errorText,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: AppTextStyles.button.copyWith(color: theme.errorLight),
             ),
           ),
 
-          const SizedBox(width: refWidth),
+          const SizedBox(width: JournalEntryTable.refWidth),
 
           Expanded(
             child: Text(
-              '7 posted · 2 draft · 1 pending',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
-                fontSize: 13,
-              ),
+              localizations.statusSummary(7, 2, 1),
+              style: AppTextStyles.label.copyWith(color: theme.textDisabled),
             ),
           ),
 
@@ -310,39 +340,32 @@ class JournalEntryTable extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: theme.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Row(
                   children: [
-                    const Text(
-                      'Count: ',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    Text(
+                      localizations.label_count,
+                      style: AppTextStyles.label.copyWith(
+                        color: theme.textDisabled,
+                      ),
                     ),
                     Text(
                       '10',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                      style: AppTextStyles.label.copyWith(
+                        color: theme.textWhite,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: theme.successText,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Icon(
-                  LucideIcons.check,
-                  size: 14,
-                  color: Colors.white,
-                ),
+              const SizedBox(width: 46),
+              AccCheckbox(
+                size: 24,
+                value: true,
+                onChanged: (_) {},
+                color: theme.successText,
               ),
             ],
           ),
@@ -351,13 +374,18 @@ class JournalEntryTable extends StatelessWidget {
     );
   }
 
-  Widget _cellTitle(String text, {double? width, TextAlign? textAlign}) {
+  Widget _cellTitle(
+    AppColorExtension colors,
+    String text, {
+    double? width,
+    TextAlign? textAlign,
+  }) {
     return SizedBox(
       width: width,
       child: Text(
         text,
         textAlign: textAlign,
-        style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold),
+        style: AppTextStyles.bodySmallBold.copyWith(color: colors.textPrimary),
       ),
     );
   }
@@ -384,7 +412,7 @@ class JournalEntryTable extends StatelessWidget {
 
   Widget _buildStatusBadge(String text, Color color) {
     return SizedBox(
-      width: typeWidth,
+      width: JournalEntryTable.typeWidth,
       child: UnconstrainedBox(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -395,11 +423,7 @@ class JournalEntryTable extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: TextStyle(
-              color: color,
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.caption.copyWith(color: color),
           ),
         ),
       ),
@@ -424,7 +448,10 @@ class JournalEntryTable extends StatelessWidget {
           Icon(icon, size: 18, color: iconColor ?? theme.textPrimary),
           if (label != null) ...[
             const SizedBox(width: 8),
-            Text(label, style: AppTextStyles.bodySmall),
+            Text(
+              label,
+              style: AppTextStyles.bodySmall.copyWith(color: theme.textPrimary),
+            ),
           ],
         ],
       ),
