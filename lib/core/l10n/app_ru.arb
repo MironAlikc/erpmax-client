@@ -328,5 +328,20 @@
     "accAccountsPayable": "Кредиторская задолженность",
     "accAddAccount": "Добавить счет",
     "accAccountingSettings": "Настройки бухгалтерии",
-    "commonSearchPlaceholder": "Поиск по имени, коду или серийному номеру..."
+    "commonSearchPlaceholder": "Поиск по имени, коду или серийному номеру...",
+    "orgMainCompany": "Головная компания",
+    "orgBranchCompany": "Филиал",
+    "orgDistributionCompany": "Дистрибьюторская компания",
+    "book_type_main": "Главная книга",
+    "book_type_tax": "Налоговая книга",
+    "book_type_internal": "Внутренняя книга",
+    "all_cost_centers": "Все центры затрат",
+    "dept_headquarters": "Головной офис",
+    "dept_sales": "Отдел продаж",
+    "dept_marketing": "Маркетинг",
+    "dept_operations": "Операционная деятельность",
+    "project_all": "Все проекты",
+    "project_expansion": "Проект расширения",
+    "project_development": "Проект разработки",
+    "project_modernization": "Проект модернизации"
 }

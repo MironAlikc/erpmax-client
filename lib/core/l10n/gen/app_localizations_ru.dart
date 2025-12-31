@@ -1020,4 +1020,49 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get commonSearchPlaceholder =>
       'Поиск по имени, коду или серийному номеру...';
+
+  @override
+  String get orgMainCompany => 'Головная компания';
+
+  @override
+  String get orgBranchCompany => 'Филиал';
+
+  @override
+  String get orgDistributionCompany => 'Дистрибьюторская компания';
+
+  @override
+  String get book_type_main => 'Главная книга';
+
+  @override
+  String get book_type_tax => 'Налоговая книга';
+
+  @override
+  String get book_type_internal => 'Внутренняя книга';
+
+  @override
+  String get all_cost_centers => 'Все центры затрат';
+
+  @override
+  String get dept_headquarters => 'Головной офис';
+
+  @override
+  String get dept_sales => 'Отдел продаж';
+
+  @override
+  String get dept_marketing => 'Маркетинг';
+
+  @override
+  String get dept_operations => 'Операционная деятельность';
+
+  @override
+  String get project_all => 'Все проекты';
+
+  @override
+  String get project_expansion => 'Проект расширения';
+
+  @override
+  String get project_development => 'Проект разработки';
+
+  @override
+  String get project_modernization => 'Проект модернизации';
 }

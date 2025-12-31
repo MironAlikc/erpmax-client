@@ -328,5 +328,20 @@
     "accAccountsPayable": "Accounts Payable",
     "accAddAccount": "Add Account",
     "accAccountingSettings": "Accounting Settings",
-    "commonSearchPlaceholder": "Search by name, code, or serial..."
+    "commonSearchPlaceholder": "Search by name, code, or serial...",
+    "orgMainCompany": "Main Company",
+    "orgBranchCompany": "Branch Company",
+    "orgDistributionCompany": "Distribution Company",
+    "book_type_main": "Main Book",
+    "book_type_tax": "Tax Book",
+    "book_type_internal": "Internal Book",
+    "all_cost_centers": "All Cost Centers",
+    "dept_headquarters": "Headquarters",
+    "dept_sales": "Sales Department",
+    "dept_marketing": "Marketing",
+    "dept_operations": "Operations",
+    "project_all": "All Projects",
+    "project_expansion": "Expansion Project",
+    "project_development": "Development Project",
+    "project_modernization": "Modernization Project"
 }

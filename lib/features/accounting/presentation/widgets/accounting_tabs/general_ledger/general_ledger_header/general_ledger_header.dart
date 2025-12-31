@@ -20,19 +20,12 @@ class GeneralLedgerHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(
-              LucideIcons.bookOpen,
-              color: theme.sidebarActiveIcon,
-              size: 24,
-            ),
+            Icon(LucideIcons.book, color: theme.sidebarActiveIcon, size: 22),
             const SizedBox(width: 12),
 
             Text(
               title,
-              style: AppTextStyles.h1.copyWith(
-                color: theme.textPrimary,
-                fontSize: 26,
-              ),
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
           ],
         ),

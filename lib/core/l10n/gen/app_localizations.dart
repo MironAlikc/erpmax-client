@@ -2019,6 +2019,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search by name, code, or serial...'**
   String get commonSearchPlaceholder;
+
+  /// No description provided for @orgMainCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Company'**
+  String get orgMainCompany;
+
+  /// No description provided for @orgBranchCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch Company'**
+  String get orgBranchCompany;
+
+  /// No description provided for @orgDistributionCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution Company'**
+  String get orgDistributionCompany;
+
+  /// No description provided for @book_type_main.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Book'**
+  String get book_type_main;
+
+  /// No description provided for @book_type_tax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Book'**
+  String get book_type_tax;
+
+  /// No description provided for @book_type_internal.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Book'**
+  String get book_type_internal;
+
+  /// No description provided for @all_cost_centers.
+  ///
+  /// In en, this message translates to:
+  /// **'All Cost Centers'**
+  String get all_cost_centers;
+
+  /// No description provided for @dept_headquarters.
+  ///
+  /// In en, this message translates to:
+  /// **'Headquarters'**
+  String get dept_headquarters;
+
+  /// No description provided for @dept_sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Department'**
+  String get dept_sales;
+
+  /// No description provided for @dept_marketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get dept_marketing;
+
+  /// No description provided for @dept_operations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get dept_operations;
+
+  /// No description provided for @project_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All Projects'**
+  String get project_all;
+
+  /// No description provided for @project_expansion.
+  ///
+  /// In en, this message translates to:
+  /// **'Expansion Project'**
+  String get project_expansion;
+
+  /// No description provided for @project_development.
+  ///
+  /// In en, this message translates to:
+  /// **'Development Project'**
+  String get project_development;
+
+  /// No description provided for @project_modernization.
+  ///
+  /// In en, this message translates to:
+  /// **'Modernization Project'**
+  String get project_modernization;
 }
 
 class _AppLocalizationsDelegate

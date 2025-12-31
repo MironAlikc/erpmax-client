@@ -1,10 +1,37 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class GeneralLedgerAdvancedFilters extends StatelessWidget {
+enum CurrencyType { sar, usd, eur, aed }
+
+class GeneralLedgerAdvancedFilters extends StatefulWidget {
   const GeneralLedgerAdvancedFilters({super.key});
+
+  @override
+  State<GeneralLedgerAdvancedFilters> createState() =>
+      _GeneralLedgerAdvancedFiltersState();
+}
+
+class _GeneralLedgerAdvancedFiltersState
+    extends State<GeneralLedgerAdvancedFilters> {
+  CurrencyType selectedCurrency = CurrencyType.sar;
+
+  final List<CurrencyType> currencyItems = CurrencyType.values;
+
+  String currencyItemLabelBuilder(CurrencyType type) {
+    switch (type) {
+      case CurrencyType.sar:
+        return 'SAR';
+      case CurrencyType.usd:
+        return 'USD';
+      case CurrencyType.eur:
+        return 'EUR';
+      case CurrencyType.aed:
+        return 'AED';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +50,18 @@ class GeneralLedgerAdvancedFilters extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             _buildAccountSelector(context),
-            _buildCurrencySelector(context),
+            AccDropdown(
+              value: selectedCurrency,
+              items: currencyItems,
+              itemLabelBuilder: currencyItemLabelBuilder,
+              leadingIcon: LucideIcons.coins,
+              onChanged: (CurrencyType newValue) {
+                setState(() {
+                  selectedCurrency = newValue;
+                });
+              },
+            ),
+            // _buildCurrencySelector(context),
             _buildDivider(theme),
             _buildQuickPeriodLinks(context),
             _buildDivider(theme),
@@ -72,44 +110,33 @@ class GeneralLedgerAdvancedFilters extends StatelessWidget {
   }
 
   // Селектор валюты
-  Widget _buildCurrencySelector(BuildContext context) {
-    final theme = context.theme.appColor;
-    return Container(
-      // Убираем ширину или ставим небольшую, чтобы SAR не растягивался
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min, // КЛЮЧЕВОЙ МОМЕНТ: не дает расширяться
-        children: [
-          Icon(LucideIcons.coins, size: 16, color: theme.textSecondary),
-          const SizedBox(width: 8),
-          Text('SAR', style: AppTextStyles.bodyMedium),
-          const SizedBox(width: 8),
-          Icon(
-            LucideIcons.chevronsUpDown,
-            size: 14,
-            color: theme.textSecondary,
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget _buildActions(BuildContext context) {
-  //   return Row(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       _buildResetButton(context),
-  //       const SizedBox(width: 8),
-  //       _buildSearchButton(context),
-  //     ],
+  // Widget _buildCurrencySelector(BuildContext context) {
+  //   final theme = context.theme.appColor;
+  //   return Container(
+  //     // Убираем ширину или ставим небольшую, чтобы SAR не растягивался
+  //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: theme.border),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min, // КЛЮЧЕВОЙ МОМЕНТ: не дает расширяться
+  //       children: [
+  //         Icon(LucideIcons.coins, size: 16, color: theme.textSecondary),
+  //         const SizedBox(width: 8),
+  //         Text('SAR', style: AppTextStyles.bodyMedium),
+  //         const SizedBox(width: 8),
+  //         Icon(
+  //           LucideIcons.chevronsUpDown,
+  //           size: 14,
+  //           color: theme.textSecondary,
+  //         ),
+  //       ],
+  //     ),
   //   );
   // }
 
-  // Ссылки периодов (Today, Yesterday...)
+  // Widget _buildActions(BuildContext context) {
   Widget _buildQuickPeriodLinks(BuildContext context) {
     final labels = [
       'Today',

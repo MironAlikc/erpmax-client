@@ -1013,4 +1013,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSearchPlaceholder => 'Search by name, code, or serial...';
+
+  @override
+  String get orgMainCompany => 'Main Company';
+
+  @override
+  String get orgBranchCompany => 'Branch Company';
+
+  @override
+  String get orgDistributionCompany => 'Distribution Company';
+
+  @override
+  String get book_type_main => 'Main Book';
+
+  @override
+  String get book_type_tax => 'Tax Book';
+
+  @override
+  String get book_type_internal => 'Internal Book';
+
+  @override
+  String get all_cost_centers => 'All Cost Centers';
+
+  @override
+  String get dept_headquarters => 'Headquarters';
+
+  @override
+  String get dept_sales => 'Sales Department';
+
+  @override
+  String get dept_marketing => 'Marketing';
+
+  @override
+  String get dept_operations => 'Operations';
+
+  @override
+  String get project_all => 'All Projects';
+
+  @override
+  String get project_expansion => 'Expansion Project';
+
+  @override
+  String get project_development => 'Development Project';
+
+  @override
+  String get project_modernization => 'Modernization Project';
 }

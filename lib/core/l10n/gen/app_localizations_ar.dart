@@ -1014,4 +1014,49 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get commonSearchPlaceholder =>
       'بحث بالاسم أو الكود أو الرقم التسلسلي...';
+
+  @override
+  String get orgMainCompany => 'الشركة الرئيسية';
+
+  @override
+  String get orgBranchCompany => 'الفرع';
+
+  @override
+  String get orgDistributionCompany => 'شركة توزيع';
+
+  @override
+  String get book_type_main => 'الدفتر الرئيسي';
+
+  @override
+  String get book_type_tax => 'الدفتر الضريبي';
+
+  @override
+  String get book_type_internal => 'الدفتر الداخلي';
+
+  @override
+  String get all_cost_centers => 'كافة مراكز التكلفة';
+
+  @override
+  String get dept_headquarters => 'المقر الرئيسي';
+
+  @override
+  String get dept_sales => 'قسم المبيعات';
+
+  @override
+  String get dept_marketing => 'التسويق';
+
+  @override
+  String get dept_operations => 'العمليات';
+
+  @override
+  String get project_all => 'كافة المشاريع';
+
+  @override
+  String get project_expansion => 'مشروع التوسع';
+
+  @override
+  String get project_development => 'مشروع التطوير';
+
+  @override
+  String get project_modernization => 'مشروع التحديث';
 }

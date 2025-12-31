@@ -1,26 +1,85 @@
+import 'package:erpmax_client/core/extensions/dropdown_ext.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class GeneralLedgerFilterBar extends StatelessWidget {
+enum OrganizationType { main, branch, distribution }
+
+enum BookType { main, tax, internal }
+
+enum DeptType { centers, headquarters, sales, marketing, operations }
+
+enum ProjectType { all, expansion, development, modernization }
+
+class GeneralLedgerFilterBar extends StatefulWidget {
   const GeneralLedgerFilterBar({super.key});
+
+  @override
+  State<GeneralLedgerFilterBar> createState() => _GeneralLedgerFilterBarState();
+}
+
+class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
+  OrganizationType selectedOrg = OrganizationType.main;
+  BookType selectedBook = BookType.main;
+  DeptType selectedDept = DeptType.centers;
+  ProjectType selectedProject = ProjectType.all;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
     return Wrap(
-      spacing: 12, // Расстояние между элементами по горизонтали
-      runSpacing: 12, // Расстояние между строками при переносе
+      spacing: 8,
+      runSpacing: 8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        // --- Группа селекторов ---
-        _buildDropdown(context, LucideIcons.building2, 'Main Company'),
-        _buildDropdown(context, LucideIcons.book, 'Main Book'),
-        _buildDropdown(context, LucideIcons.target, 'All Cost Centers'),
-        _buildDropdown(context, LucideIcons.folder, 'All Projects'),
+        AccDropdown(
+          value: selectedOrg,
+          items: OrganizationType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.building2,
+          onChanged: (OrganizationType newValue) {
+            setState(() {
+              selectedOrg = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedBook,
+          items: BookType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.book,
+          onChanged: (BookType newValue) {
+            setState(() {
+              selectedBook = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedDept,
+          items: DeptType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.target,
+          onChanged: (DeptType newValue) {
+            setState(() {
+              selectedDept = newValue;
+            });
+          },
+        ),
+        AccDropdown(
+          value: selectedProject,
+          items: ProjectType.values,
+          itemLabelBuilder: (val) => val.label(context),
+          leadingIcon: LucideIcons.folder,
+          onChanged: (ProjectType newValue) {
+            setState(() {
+              selectedProject = newValue;
+            });
+          },
+        ),
         _buildInput(context, 'Voucher No'),
 
         // Вертикальный разделитель (скрывается на мобильных, если нужно)
@@ -41,28 +100,6 @@ class GeneralLedgerFilterBar extends StatelessWidget {
         _buildIconButton(context, LucideIcons.fileText),
         _buildIconButton(context, LucideIcons.printer),
       ],
-    );
-  }
-
-  // Виджет выпадающего списка
-  Widget _buildDropdown(BuildContext context, IconData icon, String label) {
-    final theme = context.theme.appColor;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: theme.textSecondary),
-          const SizedBox(width: 8),
-          Text(label, style: AppTextStyles.bodyMedium),
-          const SizedBox(width: 4),
-          Icon(LucideIcons.chevronDown, size: 14, color: theme.textSecondary),
-        ],
-      ),
     );
   }
 

@@ -328,6 +328,20 @@
     "accAccountsPayable": "ذمم دائنة",
     "accAddAccount": "إضافة حساب",
     "accAccountingSettings": "إعدادات المحاسبة",
-    "commonSearchHere": "ابحث هنا...",
-    "commonSearchPlaceholder": "بحث بالاسم أو الكود أو الرقم التسلسلي..."
+    "commonSearchPlaceholder": "بحث بالاسم أو الكود أو الرقم التسلسلي...",
+    "orgMainCompany": "الشركة الرئيسية",
+    "orgBranchCompany": "الفرع",
+    "orgDistributionCompany": "شركة توزيع",
+    "book_type_main": "الدفتر الرئيسي",
+    "book_type_tax": "الدفتر الضريبي",
+    "book_type_internal": "الدفتر الداخلي",
+    "all_cost_centers": "كافة مراكز التكلفة",
+    "dept_headquarters": "المقر الرئيسي",
+    "dept_sales": "قسم المبيعات",
+    "dept_marketing": "التسويق",
+    "dept_operations": "العمليات",
+    "project_all": "كافة المشاريع",
+    "project_expansion": "مشروع التوسع",
+    "project_development": "مشروع التطوير",
+    "project_modernization": "مشروع التحديث"
 }
