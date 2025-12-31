@@ -3,6 +3,7 @@ import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -26,6 +27,14 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
   BookType selectedBook = BookType.main;
   DeptType selectedDept = DeptType.centers;
   ProjectType selectedProject = ProjectType.all;
+
+  final _inputVoucherController = TextEditingController();
+
+  @override
+  void dispose() {
+    _inputVoucherController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +89,12 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
             });
           },
         ),
-        _buildInput(context, 'Voucher No'),
+        AccInput(
+          hint: 'Voucher No',
+          controller: _inputVoucherController,
+          onChanged: (value) {},
+          height: 10,
+        ),
 
         // Вертикальный разделитель (скрывается на мобильных, если нужно)
         _buildDivider(theme),
@@ -151,22 +165,6 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, size: 18, color: color ?? theme.textPrimary),
-    );
-  }
-
-  Widget _buildInput(BuildContext context, String hint) {
-    final theme = context.theme.appColor;
-    return Container(
-      width: 120,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        hint,
-        style: AppTextStyles.bodyMedium.copyWith(color: theme.textSecondary),
-      ),
     );
   }
 
