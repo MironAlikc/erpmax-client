@@ -89,6 +89,7 @@ import '../api/api_client.dart' as _i277;
 import '../auth/secure_storage.dart' as _i934;
 import '../l10n/locale_cubit.dart' as _i171;
 import '../realtime/realtime_service.dart' as _i854;
+import '../theme/theme_cubit.dart' as _i611;
 import 'injection.dart' as _i464;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -126,6 +127,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i171.LocaleCubit>(
       () => _i171.LocaleCubit(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i611.ThemeCubit>(
+      () => _i611.ThemeCubit(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
