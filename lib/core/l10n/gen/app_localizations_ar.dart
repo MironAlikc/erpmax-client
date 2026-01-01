@@ -1140,4 +1140,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get greeting_night => 'تصبح على خير';
+
+  @override
+  String get theme_title => 'المظهر';
+
+  @override
+  String get theme_light => 'فاتح';
+
+  @override
+  String get theme_dark => 'داكن';
+
+  @override
+  String get theme_system => 'تلقائي';
+
+  @override
+  String get layout_topbar => 'الشريط العلوي';
+
+  @override
+  String get action_sign_out => 'تسجيل الخروج';
+
+  @override
+  String get setting_nav_style => 'نمط التنقل';
 }

@@ -242,73 +242,74 @@ class _UserAccountMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, currentMode) {
         return PopupMenuButton<UserMenuItem>(
-          offset: const Offset(0, 12),
-          elevation: 8,
+          offset: const Offset(0, 44),
+          elevation: 4,
           color: theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           constraints: const BoxConstraints(minWidth: 260),
           onSelected: (item) => _handleSelection(context, item),
           itemBuilder: (_) => [
             _userHeader(theme),
-            const PopupMenuDivider(),
+            _divider(theme),
 
-            _sectionLabel('Theme'),
+            _sectionLabel(theme, localizations.theme_title),
             _radioItem(
               theme,
-              label: 'Light',
-              icon: Icons.light_mode_outlined,
+              label: localizations.theme_light,
+              icon: LucideIcons.sun,
               value: UserMenuItem.themeLight,
               selected: currentMode == ThemeMode.light,
             ),
             _radioItem(
               theme,
-              label: 'Dark',
-              icon: Icons.dark_mode_outlined,
+              label: localizations.theme_dark,
+              icon: LucideIcons.moon,
               value: UserMenuItem.themeDark,
               selected: currentMode == ThemeMode.dark,
             ),
             _radioItem(
               theme,
-              label: 'System',
-              icon: Icons.settings_suggest_outlined,
+              label: localizations.theme_system,
+              icon: LucideIcons.laptop,
               value: UserMenuItem.themeSystem,
               selected: currentMode == ThemeMode.system,
             ),
 
-            const PopupMenuDivider(),
+            _divider(theme),
 
-            _sectionLabel('Navigation Style'),
+            _sectionLabel(theme, localizations.setting_nav_style),
             _radioItem(
               theme,
-              label: 'Sidebar',
-              icon: Icons.view_sidebar_outlined,
+              label: localizations.sidebar,
+              icon: LucideIcons.panelLeft,
               value: UserMenuItem.navigationSidebar,
             ),
             _radioItem(
               theme,
-              label: 'Topbar',
-              icon: Icons.view_day_outlined,
+              label: localizations.layout_topbar,
+              icon: LucideIcons.panelTop,
               value: UserMenuItem.navigationTopbar,
             ),
 
-            const PopupMenuDivider(),
+            _divider(theme),
 
             PopupMenuItem(
               value: UserMenuItem.signOut,
+              padding: EdgeInsets.only(top: 6, left: 12, right: 12),
+              height: 32,
               child: Row(
                 children: [
-                  Icon(Icons.logout, color: theme.error, size: 20),
+                  Icon(LucideIcons.logOut, color: theme.errorText, size: 18),
                   const SizedBox(width: 12),
                   Text(
-                    'Sign out',
+                    localizations.action_sign_out,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.error,
+                      color: theme.errorText,
                     ),
                   ),
                 ],
@@ -321,6 +322,18 @@ class _UserAccountMenu extends StatelessWidget {
     );
   }
 
+  PopupMenuItem<UserMenuItem> _divider(AppColorExtension colors) {
+    return PopupMenuItem<UserMenuItem>(
+      enabled: false,
+      height: 1,
+      padding: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Divider(color: colors.borderLight, height: 1, thickness: 1),
+      ),
+    );
+  }
+
   PopupMenuItem<UserMenuItem> _radioItem(
     AppColorExtension theme, {
     required String label,
@@ -330,29 +343,37 @@ class _UserAccountMenu extends StatelessWidget {
   }) {
     return PopupMenuItem(
       value: value,
+      height: 32,
       child: Row(
         children: [
-          Icon(icon, size: 20, color: theme.gray600),
+          Icon(icon, size: 18, color: theme.textPrimary),
           const SizedBox(width: 12),
-          Expanded(child: Text(label, style: AppTextStyles.bodyMedium)),
-          if (selected) Icon(Icons.check, size: 18, color: theme.primary),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontSize: 13,
+                color: theme.textPrimary,
+              ),
+            ),
+          ),
+          if (selected)
+            Icon(LucideIcons.check, size: 18, color: theme.textPrimary),
         ],
       ),
     );
   }
 
-  PopupMenuItem<UserMenuItem> _sectionLabel(String text) {
+  PopupMenuItem<UserMenuItem> _sectionLabel(
+    AppColorExtension colors,
+    String text,
+  ) {
     return PopupMenuItem(
       enabled: false,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 4, bottom: 4),
-        child: Text(
-          text,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: Colors.grey,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+      height: 36,
+      child: Text(
+        text,
+        style: AppTextStyles.bodySmall.copyWith(color: colors.textSecondary),
       ),
     );
   }
@@ -360,24 +381,10 @@ class _UserAccountMenu extends StatelessWidget {
   PopupMenuItem<UserMenuItem> _userHeader(AppColorExtension theme) {
     return PopupMenuItem(
       enabled: false,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=42'),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('omelchenkoaleks', style: AppTextStyles.bodyMediumBold),
-              Text(
-                'omelchenkoaleks@gmail.com',
-                style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
-              ),
-            ],
-          ),
-        ],
+      height: 32,
+      child: Text(
+        'User',
+        style: AppTextStyles.bodyMediumBold.copyWith(color: theme.textPrimary),
       ),
     );
   }
@@ -415,6 +422,9 @@ class _LanguageToggleButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        hoverColor: theme.gray50,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
         borderRadius: BorderRadius.circular(6),
         onTap: () {
           context.read<LocaleCubit>().toggleLanguage();
@@ -442,12 +452,37 @@ class _UserAccountButton extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('omelchenkoaleks', style: AppTextStyles.bodyMediumBold),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'omelchenkoaleks',
+              style: AppTextStyles.bodySmallBold.copyWith(
+                color: theme.textPrimary,
+              ),
+            ),
+            Text(
+              'user',
+              style: AppTextStyles.caption.copyWith(color: theme.textSecondary),
+            ),
+          ],
+        ),
         const SizedBox(width: 12),
-        CircleAvatar(
-          radius: 18,
-          backgroundColor: theme.gray100,
-          child: Text('OM', style: AppTextStyles.bodyMediumBold),
+        Container(
+          padding: const EdgeInsets.all(1.5),
+          decoration: BoxDecoration(
+            color: theme.gray400,
+            shape: BoxShape.circle,
+          ),
+          child: CircleAvatar(
+            radius: 18,
+            backgroundColor: theme.sidebarBackground,
+            child: Text(
+              'OM',
+              style: AppTextStyles.bodyMediumBold.copyWith(color: Colors.white),
+            ),
+          ),
         ),
       ],
     );
@@ -464,17 +499,17 @@ class _NotificationBadge extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Icon(Icons.notifications_none_rounded, color: theme.gray500, size: 24),
+        Icon(LucideIcons.bell, color: theme.gray600, size: 22),
         Positioned(
-          right: 0,
-          top: 0,
+          right: 2,
+          top: 1,
           child: Container(
             width: 8,
             height: 8,
             decoration: BoxDecoration(
               color: theme.success,
               shape: BoxShape.circle,
-              border: Border.all(color: theme.white, width: 1.5),
+              border: Border.all(color: theme.white, width: 1),
             ),
           ),
         ),

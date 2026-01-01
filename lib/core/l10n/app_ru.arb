@@ -380,5 +380,12 @@
   "greeting_morning": "Доброе утро",
   "greeting_afternoon": "Добрый день",
   "greeting_evening": "Добрый вечер",
-  "greeting_night": "Доброй ночи"
+  "greeting_night": "Доброй ночи",
+  "theme_title": "Тема",
+  "theme_light": "Светлая",
+  "theme_dark": "Темная",
+  "theme_system": "Системная",
+  "layout_topbar": "Верхняя панель",
+  "action_sign_out": "Выйти",
+  "setting_nav_style": "Стиль навигации"
 }

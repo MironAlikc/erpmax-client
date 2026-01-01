@@ -1146,4 +1146,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get greeting_night => 'Доброй ночи';
+
+  @override
+  String get theme_title => 'Тема';
+
+  @override
+  String get theme_light => 'Светлая';
+
+  @override
+  String get theme_dark => 'Темная';
+
+  @override
+  String get theme_system => 'Системная';
+
+  @override
+  String get layout_topbar => 'Верхняя панель';
+
+  @override
+  String get action_sign_out => 'Выйти';
+
+  @override
+  String get setting_nav_style => 'Стиль навигации';
 }

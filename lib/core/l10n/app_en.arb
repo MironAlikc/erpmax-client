@@ -381,5 +381,12 @@
   "greeting_morning": "Good Morning",
   "greeting_afternoon": "Good Afternoon",
   "greeting_evening": "Good Evening",
-  "greeting_night": "Good Night"
+  "greeting_night": "Good Night",
+  "theme_title": "Theme",
+  "theme_light": "Light",
+  "theme_dark": "Dark",
+  "theme_system": "System",
+  "layout_topbar": "Topbar",
+  "action_sign_out": "Sign out",
+  "setting_nav_style": "Navigation Style"
 }

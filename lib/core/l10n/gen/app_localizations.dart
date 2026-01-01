@@ -2253,6 +2253,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Good Night'**
   String get greeting_night;
+
+  /// No description provided for @theme_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme_title;
+
+  /// No description provided for @theme_light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get theme_light;
+
+  /// No description provided for @theme_dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get theme_dark;
+
+  /// No description provided for @theme_system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get theme_system;
+
+  /// No description provided for @layout_topbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Topbar'**
+  String get layout_topbar;
+
+  /// No description provided for @action_sign_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get action_sign_out;
+
+  /// No description provided for @setting_nav_style.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation Style'**
+  String get setting_nav_style;
 }
 
 class _AppLocalizationsDelegate

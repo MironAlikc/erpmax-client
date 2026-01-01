@@ -374,5 +374,12 @@
   "greeting_morning": "صباح الخير",
   "greeting_afternoon": "طاب يومك",
   "greeting_evening": "مساء الخير",
-  "greeting_night": "تصبح على خير"
+  "greeting_night": "تصبح على خير",
+  "theme_title": "المظهر",
+  "theme_light": "فاتح",
+  "theme_dark": "داكن",
+  "theme_system": "تلقائي",
+  "layout_topbar": "الشريط العلوي",
+  "action_sign_out": "تسجيل الخروج",
+  "setting_nav_style": "نمط التنقل"
 }
