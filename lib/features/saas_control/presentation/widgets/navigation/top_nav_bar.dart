@@ -39,7 +39,10 @@ class TopNavigationBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 24),
       decoration: BoxDecoration(
         color: theme.white,
-        border: Border(bottom: BorderSide(color: theme.gray100, width: 1)),
+        border: Border(
+          top: BorderSide(color: theme.success, width: 4),
+          bottom: BorderSide(color: theme.border, width: 1),
+        ),
         boxShadow: [
           BoxShadow(
             color: theme.shadowColor,
@@ -146,44 +149,119 @@ class TopNavigationBar extends StatelessWidget {
   }
 }
 
-class _QuickActionButton extends StatelessWidget {
+class _QuickActionButton extends StatefulWidget {
   final IconData icon;
   final String label;
 
   const _QuickActionButton({required this.icon, required this.label});
 
   @override
+  State<_QuickActionButton> createState() => _QuickActionButtonState();
+}
+
+class _QuickActionButtonState extends State<_QuickActionButton> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-        child: Container(
-          width: 90,
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: theme.textPrimary, size: 22),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: AppTextStyles.label.copyWith(
-                  fontSize: 11,
-                  color: theme.gray500,
-                ),
-                overflow: TextOverflow.ellipsis,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {},
+            hoverColor: theme.gray50,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
+            child: SizedBox(
+              width: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOut,
+                    transform: Matrix4.translationValues(
+                      0,
+                      _isHovered ? -2 : 0,
+                      0,
+                    ),
+                    child: AnimatedScale(
+                      duration: const Duration(milliseconds: 200),
+                      scale: _isHovered ? 1.2 : 1.0,
+                      child: Icon(
+                        widget.icon,
+                        color: _isHovered
+                            ? theme.textPrimary
+                            : theme.textTertiary,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    widget.label,
+                    style: AppTextStyles.label.copyWith(
+                      fontSize: 11,
+                      color: _isHovered ? theme.textPrimary : theme.gray600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+// class _QuickActionButton extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
+
+//   const _QuickActionButton({required this.icon, required this.label});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final theme = context.theme.appColor;
+
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: 8),
+//       child: Material(
+//         color: Colors.transparent,
+//         child: InkWell(
+//           onTap: () {},
+//           borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
+//           child: SizedBox(
+//             width: 80,
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Icon(icon, color: theme.textTertiary, size: 20),
+//                 const SizedBox(height: 4),
+//                 Text(
+//                   label,
+//                   style: AppTextStyles.label.copyWith(
+//                     fontSize: 11,
+//                     color: theme.gray600,
+//                   ),
+//                   overflow: TextOverflow.ellipsis,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class _UserAccountMenu extends StatelessWidget {
   final bool isMobile;

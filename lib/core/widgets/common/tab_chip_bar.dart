@@ -72,10 +72,7 @@ class _TabChipBarState extends State<TabChipBar> {
     return Container(
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: AppDesign.pagePadding),
-      decoration: BoxDecoration(
-        color: theme.white,
-        border: Border(bottom: BorderSide(color: theme.gray200, width: 1)),
-      ),
+      decoration: BoxDecoration(color: theme.white),
       child: Row(
         children: [
           Expanded(
@@ -97,56 +94,59 @@ class _TabChipBarState extends State<TabChipBar> {
 
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
-                      child: ChoiceChip(
-                        showCheckmark: false,
-                        avatar: Icon(
-                          tab.icon,
-                          size: 16,
-                          color: isSelected
-                              ? theme.activeGreen
-                              : theme.textDisabled,
-                        ),
-                        labelPadding: EdgeInsets.symmetric(vertical: 2),
-                        label: Text(tab.name),
-                        labelStyle: AppTextStyles.bodySmall.copyWith(
-                          fontSize: 13,
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                          color: isSelected
-                              ? theme.textPrimary
-                              : theme.textSecondary,
-                        ),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
                             widget.controller.animateTo(index);
                             widget.onTabSelected?.call(index);
-                          }
-                        },
-                        color: WidgetStateProperty.resolveWith<Color?>((
-                          states,
-                        ) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return theme.white;
-                          }
-                          if (states.contains(WidgetState.hovered)) {
-                            return isSelected ? theme.gray50 : theme.gray50;
-                          }
-                          if (states.contains(WidgetState.selected)) {
-                            return theme.gray50;
-                          }
-                          return Colors.white;
-                        }),
-                        elevation: 0,
-                        pressElevation: 0,
-                        shape: RoundedRectangleBorder(
+                          },
                           borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(
-                            width: 0.5,
-                            color: isSelected
-                                ? theme.activeGreen.withValues(alpha: 0.3)
-                                : Colors.white,
+                          hoverColor: theme.gray50,
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? theme.gray50
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: isSelected
+                                    ? theme.activeGreen.withValues(alpha: 0.3)
+                                    : Colors.transparent,
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  tab.icon,
+                                  size: 16,
+                                  color: isSelected
+                                      ? theme.activeGreen
+                                      : theme.textDisabled,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  tab.name,
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    fontSize: 13,
+                                    fontWeight: isSelected
+                                        ? FontWeight.w600
+                                        : FontWeight.w500,
+                                    color: isSelected
+                                        ? theme.textPrimary
+                                        : theme.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
