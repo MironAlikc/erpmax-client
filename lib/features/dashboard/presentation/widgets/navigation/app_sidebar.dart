@@ -324,7 +324,7 @@ class _MenuItemState extends State<_MenuItem> {
                           widget.title,
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isSelected
-                                ? theme.textPrimary
+                                ? Colors.white
                                 : theme.textSecondary,
                             fontWeight: isSelected
                                 ? FontWeight.w600
