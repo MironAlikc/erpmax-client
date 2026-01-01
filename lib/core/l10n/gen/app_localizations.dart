@@ -2223,6 +2223,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{postedCount} posted · {draftCount} {draftCount, plural, one{draft} other{drafts}} · {pendingCount} pending'**
   String statusSummary(int postedCount, int draftCount, int pendingCount);
+
+  /// No description provided for @label_materials.
+  ///
+  /// In en, this message translates to:
+  /// **'Materials'**
+  String get label_materials;
+
+  /// No description provided for @greeting_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning'**
+  String get greeting_morning;
+
+  /// No description provided for @greeting_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon'**
+  String get greeting_afternoon;
+
+  /// No description provided for @greeting_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening'**
+  String get greeting_evening;
+
+  /// No description provided for @greeting_night.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Night'**
+  String get greeting_night;
 }
 
 class _AppLocalizationsDelegate

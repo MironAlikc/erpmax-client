@@ -1123,4 +1123,19 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$postedCount posted · $draftCount $_temp0 · $pendingCount pending';
   }
+
+  @override
+  String get label_materials => 'Materials';
+
+  @override
+  String get greeting_morning => 'Good Morning';
+
+  @override
+  String get greeting_afternoon => 'Good Afternoon';
+
+  @override
+  String get greeting_evening => 'Good Evening';
+
+  @override
+  String get greeting_night => 'Good Night';
 }

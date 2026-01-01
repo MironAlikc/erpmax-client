@@ -5,8 +5,10 @@ import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
+import 'package:erpmax_client/core/widgets/common/greeting_time_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 enum UserMenuItem {
   themeLight,
@@ -73,24 +75,32 @@ class TopNavigationBar extends StatelessWidget {
                       child: Row(
                         children: [
                           _QuickActionButton(
-                            icon: Icons.groups_outlined,
+                            icon: LucideIcons.users,
                             label: localizations.customers,
                           ),
                           _QuickActionButton(
-                            icon: Icons.shopping_cart_outlined,
+                            icon: LucideIcons.shoppingCart,
                             label: localizations.sales,
                           ),
                           _QuickActionButton(
-                            icon: Icons.local_mall_outlined,
+                            icon: LucideIcons.shoppingBag,
                             label: localizations.purchases,
                           ),
                           _QuickActionButton(
-                            icon: Icons.account_balance_wallet_outlined,
+                            icon: LucideIcons.wallet,
                             label: localizations.funds,
                           ),
                           _QuickActionButton(
-                            icon: Icons.description_outlined,
-                            label: localizations.journal,
+                            icon: LucideIcons.fileText,
+                            label: localizations.accJournal,
+                          ),
+                          _QuickActionButton(
+                            icon: LucideIcons.book,
+                            label: localizations.accLedger,
+                          ),
+                          _QuickActionButton(
+                            icon: LucideIcons.package,
+                            label: localizations.label_materials,
                           ),
                         ],
                       ),
@@ -101,7 +111,7 @@ class TopNavigationBar extends StatelessWidget {
                 const Spacer(),
 
               if (showGreeting) ...[
-                const _GreetingTimeSection(),
+                GreetingTimeSection(),
                 const SizedBox(width: 20),
               ],
 
@@ -171,7 +181,7 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
       onExit: (_) => setState(() => _isHovered = false),
       cursor: SystemMouseCursors.click,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.only(bottom: 4, left: 6, right: 6),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -180,8 +190,8 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-            child: SizedBox(
-              width: 80,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -205,6 +215,7 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 2),
                   Text(
                     widget.label,
                     style: AppTextStyles.label.copyWith(
@@ -222,46 +233,6 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
     );
   }
 }
-// class _QuickActionButton extends StatelessWidget {
-//   final IconData icon;
-//   final String label;
-
-//   const _QuickActionButton({required this.icon, required this.label});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = context.theme.appColor;
-
-//     return Padding(
-//       padding: const EdgeInsets.only(bottom: 8),
-//       child: Material(
-//         color: Colors.transparent,
-//         child: InkWell(
-//           onTap: () {},
-//           borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-//           child: SizedBox(
-//             width: 80,
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Icon(icon, color: theme.textTertiary, size: 20),
-//                 const SizedBox(height: 4),
-//                 Text(
-//                   label,
-//                   style: AppTextStyles.label.copyWith(
-//                     fontSize: 11,
-//                     color: theme.gray600,
-//                   ),
-//                   overflow: TextOverflow.ellipsis,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class _UserAccountMenu extends StatelessWidget {
   final bool isMobile;
@@ -431,36 +402,6 @@ class _UserAccountMenu extends StatelessWidget {
       case UserMenuItem.signOut:
         break;
     }
-  }
-}
-
-class _GreetingTimeSection extends StatelessWidget {
-  const _GreetingTimeSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          'Good Morning',
-          style: AppTextStyles.bodySmall.copyWith(
-            color: theme.gray400,
-            fontSize: 11,
-          ),
-        ),
-        Text(
-          '07:22 AM',
-          style: AppTextStyles.base.copyWith(
-            color: theme.textPrimary,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ],
-    );
   }
 }
 

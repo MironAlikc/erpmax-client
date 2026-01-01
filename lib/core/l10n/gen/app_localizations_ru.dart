@@ -1131,4 +1131,19 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
   }
+
+  @override
+  String get label_materials => 'Материалы';
+
+  @override
+  String get greeting_morning => 'Доброе утро';
+
+  @override
+  String get greeting_afternoon => 'Добрый день';
+
+  @override
+  String get greeting_evening => 'Добрый вечер';
+
+  @override
+  String get greeting_night => 'Доброй ночи';
 }

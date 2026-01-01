@@ -1125,4 +1125,19 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
   }
+
+  @override
+  String get label_materials => 'المواد';
+
+  @override
+  String get greeting_morning => 'صباح الخير';
+
+  @override
+  String get greeting_afternoon => 'طاب يومك';
+
+  @override
+  String get greeting_evening => 'مساء الخير';
+
+  @override
+  String get greeting_night => 'تصبح على خير';
 }
