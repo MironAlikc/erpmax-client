@@ -5,6 +5,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color primary;
   final Color primaryDark;
   final Color primaryLight;
+  final Color primaryFooter;
   final Color success;
   final Color successLight;
   final Color error;
@@ -65,6 +66,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.primary,
     required this.primaryDark,
     required this.primaryLight,
+    required this.primaryFooter,
     required this.success,
     required this.successLight,
     required this.error,
@@ -127,6 +129,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     Color? primary,
     Color? primaryDark,
     Color? primaryLight,
+    Color? primaryFooter,
     Color? success,
     Color? successLight,
     Color? error,
@@ -187,6 +190,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       primary: primary ?? this.primary,
       primaryDark: primaryDark ?? this.primaryDark,
       primaryLight: primaryLight ?? this.primaryLight,
+      primaryFooter: primaryFooter ?? this.primaryFooter,
       success: success ?? this.success,
       successLight: successLight ?? this.successLight,
       error: error ?? this.error,
@@ -252,6 +256,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       primary: Color.lerp(primary, other.primary, t)!,
       primaryDark: Color.lerp(primaryDark, other.primaryDark, t)!,
       primaryLight: Color.lerp(primaryLight, other.primaryLight, t)!,
+      primaryFooter: Color.lerp(primaryFooter, other.primaryFooter, t)!,
       success: Color.lerp(success, other.success, t)!,
       successLight: Color.lerp(successLight, other.successLight, t)!,
       error: Color.lerp(error, other.error, t)!,

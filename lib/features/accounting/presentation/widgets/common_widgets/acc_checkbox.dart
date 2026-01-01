@@ -37,7 +37,12 @@ class AccCheckbox extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(2),
         child: value
-            ? Icon(LucideIcons.check, size: size - 6, color: theme.white)
+            ? Icon(
+                LucideIcons.check,
+                size: size - 4,
+                color: theme.white,
+                fontWeight: FontWeight.w600,
+              )
             : const SizedBox.shrink(),
       ),
     );
