@@ -1123,4 +1123,40 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$postedCount posted · $draftCount $_temp0 · $pendingCount pending';
   }
+
+  @override
+  String get label_materials => 'Materials';
+
+  @override
+  String get greeting_morning => 'Good Morning';
+
+  @override
+  String get greeting_afternoon => 'Good Afternoon';
+
+  @override
+  String get greeting_evening => 'Good Evening';
+
+  @override
+  String get greeting_night => 'Good Night';
+
+  @override
+  String get theme_title => 'Theme';
+
+  @override
+  String get theme_light => 'Light';
+
+  @override
+  String get theme_dark => 'Dark';
+
+  @override
+  String get theme_system => 'System';
+
+  @override
+  String get layout_topbar => 'Topbar';
+
+  @override
+  String get action_sign_out => 'Sign out';
+
+  @override
+  String get setting_nav_style => 'Navigation Style';
 }

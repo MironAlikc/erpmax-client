@@ -1131,4 +1131,40 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
   }
+
+  @override
+  String get label_materials => 'Материалы';
+
+  @override
+  String get greeting_morning => 'Доброе утро';
+
+  @override
+  String get greeting_afternoon => 'Добрый день';
+
+  @override
+  String get greeting_evening => 'Добрый вечер';
+
+  @override
+  String get greeting_night => 'Доброй ночи';
+
+  @override
+  String get theme_title => 'Тема';
+
+  @override
+  String get theme_light => 'Светлая';
+
+  @override
+  String get theme_dark => 'Темная';
+
+  @override
+  String get theme_system => 'Системная';
+
+  @override
+  String get layout_topbar => 'Верхняя панель';
+
+  @override
+  String get action_sign_out => 'Выйти';
+
+  @override
+  String get setting_nav_style => 'Стиль навигации';
 }

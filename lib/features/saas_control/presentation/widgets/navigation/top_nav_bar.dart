@@ -5,8 +5,10 @@ import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
+import 'package:erpmax_client/core/widgets/common/greeting_time_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 enum UserMenuItem {
   themeLight,
@@ -73,24 +75,32 @@ class TopNavigationBar extends StatelessWidget {
                       child: Row(
                         children: [
                           _QuickActionButton(
-                            icon: Icons.groups_outlined,
+                            icon: LucideIcons.users,
                             label: localizations.customers,
                           ),
                           _QuickActionButton(
-                            icon: Icons.shopping_cart_outlined,
+                            icon: LucideIcons.shoppingCart,
                             label: localizations.sales,
                           ),
                           _QuickActionButton(
-                            icon: Icons.local_mall_outlined,
+                            icon: LucideIcons.shoppingBag,
                             label: localizations.purchases,
                           ),
                           _QuickActionButton(
-                            icon: Icons.account_balance_wallet_outlined,
+                            icon: LucideIcons.wallet,
                             label: localizations.funds,
                           ),
                           _QuickActionButton(
-                            icon: Icons.description_outlined,
-                            label: localizations.journal,
+                            icon: LucideIcons.fileText,
+                            label: localizations.accJournal,
+                          ),
+                          _QuickActionButton(
+                            icon: LucideIcons.book,
+                            label: localizations.accLedger,
+                          ),
+                          _QuickActionButton(
+                            icon: LucideIcons.package,
+                            label: localizations.label_materials,
                           ),
                         ],
                       ),
@@ -101,7 +111,7 @@ class TopNavigationBar extends StatelessWidget {
                 const Spacer(),
 
               if (showGreeting) ...[
-                const _GreetingTimeSection(),
+                GreetingTimeSection(),
                 const SizedBox(width: 20),
               ],
 
@@ -171,7 +181,7 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
       onExit: (_) => setState(() => _isHovered = false),
       cursor: SystemMouseCursors.click,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.only(bottom: 4, left: 6, right: 6),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -180,8 +190,8 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-            child: SizedBox(
-              width: 80,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -205,6 +215,7 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 2),
                   Text(
                     widget.label,
                     style: AppTextStyles.label.copyWith(
@@ -222,46 +233,6 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
     );
   }
 }
-// class _QuickActionButton extends StatelessWidget {
-//   final IconData icon;
-//   final String label;
-
-//   const _QuickActionButton({required this.icon, required this.label});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = context.theme.appColor;
-
-//     return Padding(
-//       padding: const EdgeInsets.only(bottom: 8),
-//       child: Material(
-//         color: Colors.transparent,
-//         child: InkWell(
-//           onTap: () {},
-//           borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
-//           child: SizedBox(
-//             width: 80,
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Icon(icon, color: theme.textTertiary, size: 20),
-//                 const SizedBox(height: 4),
-//                 Text(
-//                   label,
-//                   style: AppTextStyles.label.copyWith(
-//                     fontSize: 11,
-//                     color: theme.gray600,
-//                   ),
-//                   overflow: TextOverflow.ellipsis,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class _UserAccountMenu extends StatelessWidget {
   final bool isMobile;
@@ -271,73 +242,74 @@ class _UserAccountMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, currentMode) {
         return PopupMenuButton<UserMenuItem>(
-          offset: const Offset(0, 12),
-          elevation: 8,
+          offset: const Offset(0, 44),
+          elevation: 4,
           color: theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           constraints: const BoxConstraints(minWidth: 260),
           onSelected: (item) => _handleSelection(context, item),
           itemBuilder: (_) => [
             _userHeader(theme),
-            const PopupMenuDivider(),
+            _divider(theme),
 
-            _sectionLabel('Theme'),
+            _sectionLabel(theme, localizations.theme_title),
             _radioItem(
               theme,
-              label: 'Light',
-              icon: Icons.light_mode_outlined,
+              label: localizations.theme_light,
+              icon: LucideIcons.sun,
               value: UserMenuItem.themeLight,
               selected: currentMode == ThemeMode.light,
             ),
             _radioItem(
               theme,
-              label: 'Dark',
-              icon: Icons.dark_mode_outlined,
+              label: localizations.theme_dark,
+              icon: LucideIcons.moon,
               value: UserMenuItem.themeDark,
               selected: currentMode == ThemeMode.dark,
             ),
             _radioItem(
               theme,
-              label: 'System',
-              icon: Icons.settings_suggest_outlined,
+              label: localizations.theme_system,
+              icon: LucideIcons.laptop,
               value: UserMenuItem.themeSystem,
               selected: currentMode == ThemeMode.system,
             ),
 
-            const PopupMenuDivider(),
+            _divider(theme),
 
-            _sectionLabel('Navigation Style'),
+            _sectionLabel(theme, localizations.setting_nav_style),
             _radioItem(
               theme,
-              label: 'Sidebar',
-              icon: Icons.view_sidebar_outlined,
+              label: localizations.sidebar,
+              icon: LucideIcons.panelLeft,
               value: UserMenuItem.navigationSidebar,
             ),
             _radioItem(
               theme,
-              label: 'Topbar',
-              icon: Icons.view_day_outlined,
+              label: localizations.layout_topbar,
+              icon: LucideIcons.panelTop,
               value: UserMenuItem.navigationTopbar,
             ),
 
-            const PopupMenuDivider(),
+            _divider(theme),
 
             PopupMenuItem(
               value: UserMenuItem.signOut,
+              padding: EdgeInsets.only(top: 6, left: 12, right: 12),
+              height: 32,
               child: Row(
                 children: [
-                  Icon(Icons.logout, color: theme.error, size: 20),
+                  Icon(LucideIcons.logOut, color: theme.errorText, size: 18),
                   const SizedBox(width: 12),
                   Text(
-                    'Sign out',
+                    localizations.action_sign_out,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.error,
+                      color: theme.errorText,
                     ),
                   ),
                 ],
@@ -350,6 +322,18 @@ class _UserAccountMenu extends StatelessWidget {
     );
   }
 
+  PopupMenuItem<UserMenuItem> _divider(AppColorExtension colors) {
+    return PopupMenuItem<UserMenuItem>(
+      enabled: false,
+      height: 1,
+      padding: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Divider(color: colors.borderLight, height: 1, thickness: 1),
+      ),
+    );
+  }
+
   PopupMenuItem<UserMenuItem> _radioItem(
     AppColorExtension theme, {
     required String label,
@@ -359,29 +343,37 @@ class _UserAccountMenu extends StatelessWidget {
   }) {
     return PopupMenuItem(
       value: value,
+      height: 32,
       child: Row(
         children: [
-          Icon(icon, size: 20, color: theme.gray600),
+          Icon(icon, size: 18, color: theme.textPrimary),
           const SizedBox(width: 12),
-          Expanded(child: Text(label, style: AppTextStyles.bodyMedium)),
-          if (selected) Icon(Icons.check, size: 18, color: theme.primary),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontSize: 13,
+                color: theme.textPrimary,
+              ),
+            ),
+          ),
+          if (selected)
+            Icon(LucideIcons.check, size: 18, color: theme.textPrimary),
         ],
       ),
     );
   }
 
-  PopupMenuItem<UserMenuItem> _sectionLabel(String text) {
+  PopupMenuItem<UserMenuItem> _sectionLabel(
+    AppColorExtension colors,
+    String text,
+  ) {
     return PopupMenuItem(
       enabled: false,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 4, bottom: 4),
-        child: Text(
-          text,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: Colors.grey,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+      height: 36,
+      child: Text(
+        text,
+        style: AppTextStyles.bodySmall.copyWith(color: colors.textSecondary),
       ),
     );
   }
@@ -389,24 +381,10 @@ class _UserAccountMenu extends StatelessWidget {
   PopupMenuItem<UserMenuItem> _userHeader(AppColorExtension theme) {
     return PopupMenuItem(
       enabled: false,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=42'),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('omelchenkoaleks', style: AppTextStyles.bodyMediumBold),
-              Text(
-                'omelchenkoaleks@gmail.com',
-                style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
-              ),
-            ],
-          ),
-        ],
+      height: 32,
+      child: Text(
+        'User',
+        style: AppTextStyles.bodyMediumBold.copyWith(color: theme.textPrimary),
       ),
     );
   }
@@ -434,36 +412,6 @@ class _UserAccountMenu extends StatelessWidget {
   }
 }
 
-class _GreetingTimeSection extends StatelessWidget {
-  const _GreetingTimeSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          'Good Morning',
-          style: AppTextStyles.bodySmall.copyWith(
-            color: theme.gray400,
-            fontSize: 11,
-          ),
-        ),
-        Text(
-          '07:22 AM',
-          style: AppTextStyles.base.copyWith(
-            color: theme.textPrimary,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _LanguageToggleButton extends StatelessWidget {
   const _LanguageToggleButton();
 
@@ -474,6 +422,9 @@ class _LanguageToggleButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        hoverColor: theme.gray50,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
         borderRadius: BorderRadius.circular(6),
         onTap: () {
           context.read<LocaleCubit>().toggleLanguage();
@@ -501,12 +452,37 @@ class _UserAccountButton extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('omelchenkoaleks', style: AppTextStyles.bodyMediumBold),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'omelchenkoaleks',
+              style: AppTextStyles.bodySmallBold.copyWith(
+                color: theme.textPrimary,
+              ),
+            ),
+            Text(
+              'user',
+              style: AppTextStyles.caption.copyWith(color: theme.textSecondary),
+            ),
+          ],
+        ),
         const SizedBox(width: 12),
-        CircleAvatar(
-          radius: 18,
-          backgroundColor: theme.gray100,
-          child: Text('OM', style: AppTextStyles.bodyMediumBold),
+        Container(
+          padding: const EdgeInsets.all(1.5),
+          decoration: BoxDecoration(
+            color: theme.gray400,
+            shape: BoxShape.circle,
+          ),
+          child: CircleAvatar(
+            radius: 18,
+            backgroundColor: theme.sidebarBackground,
+            child: Text(
+              'OM',
+              style: AppTextStyles.bodyMediumBold.copyWith(color: Colors.white),
+            ),
+          ),
         ),
       ],
     );
@@ -523,17 +499,17 @@ class _NotificationBadge extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Icon(Icons.notifications_none_rounded, color: theme.gray500, size: 24),
+        Icon(LucideIcons.bell, color: theme.gray600, size: 22),
         Positioned(
-          right: 0,
-          top: 0,
+          right: 2,
+          top: 1,
           child: Container(
             width: 8,
             height: 8,
             decoration: BoxDecoration(
               color: theme.success,
               shape: BoxShape.circle,
-              border: Border.all(color: theme.white, width: 1.5),
+              border: Border.all(color: theme.white, width: 1),
             ),
           ),
         ),

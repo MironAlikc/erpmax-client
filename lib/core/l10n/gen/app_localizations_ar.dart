@@ -1125,4 +1125,40 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$postedCount مُرحّل · $draftCount $_temp0 · $pendingCount معلق';
   }
+
+  @override
+  String get label_materials => 'المواد';
+
+  @override
+  String get greeting_morning => 'صباح الخير';
+
+  @override
+  String get greeting_afternoon => 'طاب يومك';
+
+  @override
+  String get greeting_evening => 'مساء الخير';
+
+  @override
+  String get greeting_night => 'تصبح على خير';
+
+  @override
+  String get theme_title => 'المظهر';
+
+  @override
+  String get theme_light => 'فاتح';
+
+  @override
+  String get theme_dark => 'داكن';
+
+  @override
+  String get theme_system => 'تلقائي';
+
+  @override
+  String get layout_topbar => 'الشريط العلوي';
+
+  @override
+  String get action_sign_out => 'تسجيل الخروج';
+
+  @override
+  String get setting_nav_style => 'نمط التنقل';
 }
