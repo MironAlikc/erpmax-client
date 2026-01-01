@@ -80,7 +80,6 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
       children: [
         _buildToolbar(context),
         const SizedBox(height: 16),
-
         LayoutBuilder(
           builder: (context, constraints) {
             const double minTableWidth = 1000;
@@ -105,7 +104,16 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
                     child: Column(
                       children: [
                         _buildTableHeader(context),
-                        ...entries.map((e) => _buildTableRow(context, e)),
+                        ...entries.map(
+                          (e) => _JournalTableRow(
+                            entry: e,
+                            onSelectionChanged: (newValue) {
+                              setState(() {
+                                e.isSelected = newValue;
+                              });
+                            },
+                          ),
+                        ),
                         _buildTableFooter(context),
                       ],
                     ),
@@ -159,7 +167,6 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
               ],
             ),
           ),
-
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -197,7 +204,6 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
 
     return Container(
       color: theme.error.withValues(alpha: 0.05),
-
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: [
@@ -243,56 +249,12 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
     );
   }
 
-  Widget _buildTableRow(BuildContext context, JournalEntry entry) {
-    final theme = context.theme.appColor;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.white,
-        border: Border(top: BorderSide(color: theme.border)),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Row(
-        children: [
-          AccCheckbox(
-            value: entry.isSelected,
-            color: theme.successText.withValues(alpha: 0.8),
-            onChanged: (newValue) {
-              setState(() {
-                entry.isSelected = newValue;
-              });
-            },
-          ),
-          _cellText(
-            entry.debit,
-            width: JournalEntryTable.debitWidth,
-            color: theme.successText,
-            textAlign: TextAlign.center,
-            weight: FontWeight.w600,
-          ),
-          _cellText(
-            entry.credit,
-            width: JournalEntryTable.creditWidth,
-            color: theme.errorText,
-            textAlign: TextAlign.center,
-            weight: FontWeight.w600,
-          ),
-          _cellText(entry.ref, width: JournalEntryTable.refWidth),
-          Expanded(child: _cellText(entry.description)),
-          _buildStatusBadge(entry.type, entry.typeColor),
-          _cellText(entry.entryNo, width: JournalEntryTable.entryNoWidth),
-          _cellText(entry.date, width: JournalEntryTable.dateWidth),
-        ],
-      ),
-    );
-  }
-
   Widget _buildTableFooter(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     return Container(
-      color: theme.primaryDark,
+      color: theme.primaryFooter,
       padding: const EdgeInsets.only(top: 12, bottom: 12, left: 14, right: 90),
       child: Row(
         children: [
@@ -304,36 +266,38 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
               style: AppTextStyles.button.copyWith(color: theme.textWhite),
             ),
           ),
-
           SizedBox(
             width: JournalEntryTable.debitWidth,
             child: Text(
               '104 270',
               textAlign: TextAlign.center,
-              style: AppTextStyles.button.copyWith(color: theme.successLight),
+              style: AppTextStyles.button.copyWith(
+                fontWeight: FontWeight.w900,
+                fontSize: 15,
+                color: theme.success,
+              ),
             ),
           ),
-
           SizedBox(
             width: JournalEntryTable.creditWidth,
             child: Text(
               '104 270',
               textAlign: TextAlign.center,
-              style: AppTextStyles.button.copyWith(color: theme.errorLight),
+              style: AppTextStyles.button.copyWith(
+                fontWeight: FontWeight.w900,
+                fontSize: 15,
+                color: theme.error,
+              ),
             ),
           ),
-
           const SizedBox(width: JournalEntryTable.refWidth),
-
           Expanded(
             child: Text(
               localizations.statusSummary(7, 2, 1),
-              style: AppTextStyles.label.copyWith(color: theme.textDisabled),
+              style: AppTextStyles.label.copyWith(color: theme.textSecondary),
             ),
           ),
-
           const SizedBox(width: 16),
-
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -348,7 +312,7 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
                     Text(
                       localizations.label_count,
                       style: AppTextStyles.label.copyWith(
-                        color: theme.textDisabled,
+                        color: theme.textSecondary,
                       ),
                     ),
                     Text(
@@ -390,6 +354,115 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
     );
   }
 
+  Widget _buildToolBtn(
+    BuildContext context,
+    IconData icon, {
+    String? label,
+    Color? iconColor,
+  }) {
+    final theme = context.theme.appColor;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: theme.border),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: iconColor ?? theme.textPrimary),
+          if (label != null) ...[
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: AppTextStyles.bodySmall.copyWith(color: theme.textPrimary),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _JournalTableRow extends StatefulWidget {
+  final JournalEntry entry;
+  final ValueChanged<bool> onSelectionChanged;
+
+  const _JournalTableRow({
+    required this.entry,
+    required this.onSelectionChanged,
+  });
+
+  @override
+  State<_JournalTableRow> createState() => _JournalTableRowState();
+}
+
+class _JournalTableRowState extends State<_JournalTableRow> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        decoration: BoxDecoration(
+          color: _isHovered ? theme.gray50 : theme.white,
+          border: Border(top: BorderSide(color: theme.border)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          children: [
+            AccCheckbox(
+              value: widget.entry.isSelected,
+              color: theme.successText.withValues(alpha: 0.8),
+              onChanged: (newValue) => widget.onSelectionChanged(newValue),
+            ),
+            _cellText(
+              widget.entry.debit,
+              width: JournalEntryTable.debitWidth,
+              color: theme.successText,
+              textAlign: TextAlign.center,
+              weight: FontWeight.w600,
+            ),
+            _cellText(
+              widget.entry.credit,
+              width: JournalEntryTable.creditWidth,
+              color: theme.errorText,
+              textAlign: TextAlign.center,
+              weight: FontWeight.w600,
+            ),
+            _cellText(
+              widget.entry.ref,
+              width: JournalEntryTable.refWidth,
+              color: theme.textSecondary,
+            ),
+            Expanded(
+              child: _cellText(
+                widget.entry.description,
+                color: theme.textPrimary,
+              ),
+            ),
+            _buildStatusBadge(widget.entry.type, widget.entry.typeColor),
+            _cellText(
+              widget.entry.entryNo,
+              width: JournalEntryTable.entryNoWidth,
+              color: theme.textTertiary,
+            ),
+            _cellText(
+              widget.entry.date,
+              width: JournalEntryTable.dateWidth,
+              color: theme.textTertiary,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _cellText(
     String text, {
     double? width,
@@ -426,34 +499,6 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
             style: AppTextStyles.caption.copyWith(color: color),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildToolBtn(
-    BuildContext context,
-    IconData icon, {
-    String? label,
-    Color? iconColor,
-  }) {
-    final theme = context.theme.appColor;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.border),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: iconColor ?? theme.textPrimary),
-          if (label != null) ...[
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: AppTextStyles.bodySmall.copyWith(color: theme.textPrimary),
-            ),
-          ],
-        ],
       ),
     );
   }

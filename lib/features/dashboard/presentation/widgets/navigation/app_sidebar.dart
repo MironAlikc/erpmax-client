@@ -3,6 +3,7 @@ import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class AppSidebar extends StatelessWidget {
   final bool isExpanded;
@@ -314,19 +315,21 @@ class _MenuItemState extends State<_MenuItem> {
                     Icon(
                       widget.icon,
                       color: isSelected ? theme.success : theme.textSecondary,
-                      size: 24,
+                      size: 20,
                     ),
                     if (widget.isExpanded) ...[
                       const SizedBox(width: 14),
                       Expanded(
                         child: Text(
                           widget.title,
-                          style: AppTextStyles.label.copyWith(
-                            color: isSelected ? theme.white : theme.textPrimary,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: isSelected
+                                ? Colors.white
+                                : theme.textSecondary,
                             fontWeight: isSelected
-                                ? FontWeight.w700
+                                ? FontWeight.w600
                                 : FontWeight.w500,
-                            letterSpacing: 0.2,
+                            letterSpacing: 1.2,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -370,20 +373,20 @@ class _MenuData {
 
 List<_MenuData> _menuData(BuildContext context) {
   return [
-    _MenuData(0, (l) => l.menuDashboard, Icons.grid_view_rounded),
-    _MenuData(1, (l) => l.menuAccounting, Icons.calculate_outlined),
-    _MenuData(2, (l) => l.menuInventory, Icons.layers_outlined),
-    _MenuData(3, (l) => l.menuSales, Icons.shopping_cart_outlined),
-    _MenuData(4, (l) => l.menuCustomerManagement, Icons.people_outline_rounded),
-    _MenuData(5, (l) => l.menuRealEstate, Icons.domain_rounded),
-    _MenuData(6, (l) => l.menuPOS, Icons.crop_free_rounded),
-    _MenuData(7, (l) => l.menuExchange, Icons.swap_horiz_rounded),
-    _MenuData(8, (l) => l.menuPurchases, Icons.shopping_bag_outlined),
-    _MenuData(9, (l) => l.menuManufacturing, Icons.analytics_outlined),
-    _MenuData(10, (l) => l.menuHR, Icons.manage_accounts_outlined),
-    _MenuData(11, (l) => l.menuSaaS, Icons.workspace_premium_outlined),
-    _MenuData(12, (l) => l.menuAI, Icons.psychology_outlined),
-    _MenuData(13, (l) => l.menuAuthPages, Icons.lock_outline_rounded),
-    _MenuData(14, (l) => l.menuSettings, Icons.settings_outlined),
+    _MenuData(0, (l) => l.menuDashboard, LucideIcons.layoutGrid),
+    _MenuData(1, (l) => l.menuAccounting, LucideIcons.calculator),
+    _MenuData(2, (l) => l.menuInventory, LucideIcons.package),
+    _MenuData(3, (l) => l.menuSales, LucideIcons.shoppingCart),
+    _MenuData(4, (l) => l.menuCustomerManagement, LucideIcons.users),
+    _MenuData(5, (l) => l.menuRealEstate, LucideIcons.building2),
+    _MenuData(6, (l) => l.menuPOS, LucideIcons.scan),
+    _MenuData(7, (l) => l.menuExchange, LucideIcons.arrowLeftRight),
+    _MenuData(8, (l) => l.menuPurchases, LucideIcons.shoppingBag),
+    _MenuData(9, (l) => l.menuManufacturing, LucideIcons.factory),
+    _MenuData(10, (l) => l.menuHR, LucideIcons.userCog),
+    _MenuData(11, (l) => l.menuSaaS, LucideIcons.crown),
+    _MenuData(12, (l) => l.menuAI, LucideIcons.brain),
+    _MenuData(13, (l) => l.menuAuthPages, LucideIcons.lock),
+    _MenuData(14, (l) => l.menuSettings, LucideIcons.settings),
   ];
 }
