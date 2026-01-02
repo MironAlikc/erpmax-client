@@ -1174,4 +1174,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get action_add_group => 'Add Group';
+
+  @override
+  String get column_account_code => 'Account Code';
+
+  @override
+  String get column_account_name => 'Account Name';
+
+  @override
+  String get column_account_type => 'Account Type';
+
+  @override
+  String get column_balance => 'Balance';
 }

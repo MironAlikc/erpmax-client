@@ -393,5 +393,9 @@
   "view_table": "Table View",
   "action_expand": "Expand",
   "action_collapse": "Collapse",
-  "action_add_group": "Add Group"
+  "action_add_group": "Add Group",
+  "column_account_code": "Account Code",
+  "column_account_name": "Account Name",
+  "column_account_type": "Account Type",
+  "column_balance": "Balance"
 }

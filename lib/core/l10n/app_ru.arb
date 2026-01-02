@@ -392,5 +392,9 @@
   "view_table": "Табличный вид",
   "action_expand": "Раскрыть",
   "action_collapse": "Свернуть",
-  "action_add_group": "Добавить группу"
+  "action_add_group": "Добавить группу",
+  "column_account_code": "Код счета",
+  "column_account_name": "Название счета",
+  "column_account_type": "Тип счета",
+  "column_balance": "Баланс"
 }

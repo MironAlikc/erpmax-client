@@ -386,5 +386,9 @@
   "view_table": "عرض الجدول",
   "action_expand": "توسيع",
   "action_collapse": "طي",
-  "action_add_group": "إضافة مجموعة"
+  "action_add_group": "إضافة مجموعة",
+  "column_account_code": "رمز الحساب",
+  "column_account_name": "اسم الحساب",
+  "column_account_type": "نوع الحساب",
+  "column_balance": "الرصيد"
 }

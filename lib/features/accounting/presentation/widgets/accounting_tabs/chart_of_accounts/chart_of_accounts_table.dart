@@ -302,6 +302,7 @@ class ChartOfAccountsControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     return Wrap(
@@ -348,7 +349,7 @@ class ChartOfAccountsControls extends StatelessWidget {
                 child: Container(
                   height: 24,
                   width: 1,
-                  color: Colors.grey.shade300,
+                  color: theme.borderMedium,
                 ),
               ),
             ],
@@ -539,7 +540,15 @@ class SidebarNavigationTree extends StatelessWidget {
 
   List<Widget> _buildTreeItems(AppColorExtension colors, AccountNode account) {
     List<Widget> items = [];
-    items.add(_buildTreeItem(colors, account));
+    items.add(
+      _TreeItem(
+        account: account,
+        selectedAccount: selectedAccount,
+        expandedNodes: expandedNodes,
+        onAccountSelected: onAccountSelected,
+        onToggleExpand: onToggleExpand,
+      ),
+    );
 
     if (account.isGroup && expandedNodes.contains(account.code)) {
       for (var child in account.children) {
@@ -549,86 +558,124 @@ class SidebarNavigationTree extends StatelessWidget {
 
     return items;
   }
+}
 
-  Widget _buildTreeItem(AppColorExtension colors, AccountNode account) {
-    final isSelected = selectedAccount?.code == account.code;
-    final isExpanded = expandedNodes.contains(account.code);
+class _TreeItem extends StatefulWidget {
+  final AccountNode account;
+  final AccountNode? selectedAccount;
+  final Set<String> expandedNodes;
+  final Function(AccountNode) onAccountSelected;
+  final Function(String) onToggleExpand;
+
+  const _TreeItem({
+    required this.account,
+    required this.selectedAccount,
+    required this.expandedNodes,
+    required this.onAccountSelected,
+    required this.onToggleExpand,
+  });
+
+  @override
+  State<_TreeItem> createState() => _TreeItemState();
+}
+
+class _TreeItemState extends State<_TreeItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.theme.appColor;
+    final isSelected = widget.selectedAccount?.code == widget.account.code;
+    final isExpanded = widget.expandedNodes.contains(widget.account.code);
 
     return Padding(
       padding: EdgeInsets.only(
-        left: 8.0 + (account.level * 16),
+        left: 8.0 + (widget.account.level * 16),
         right: 8,
         bottom: 4,
       ),
-      child: GestureDetector(
-        onTap: () => onAccountSelected(account),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          decoration: BoxDecoration(
-            color: isSelected ? colors.gray50 : Colors.transparent,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GestureDetector(
-                onTap: account.isGroup
-                    ? () => onToggleExpand(account.code)
-                    : null,
-                child: Icon(
-                  account.isGroup
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: GestureDetector(
+          onTap: () => widget.onAccountSelected(widget.account),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? colors.gray50
+                  : (_isHovered
+                        ? colors.gray50.withValues(alpha: 0.5)
+                        : Colors.transparent),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: widget.account.isGroup
+                      ? () => widget.onToggleExpand(widget.account.code)
+                      : null,
+                  child: Icon(
+                    widget.account.isGroup
+                        ? (isExpanded
+                              ? LucideIcons.chevronDown
+                              : LucideIcons.chevronRight)
+                        : LucideIcons.chevronRight,
+                    size: 14,
+                    color: widget.account.isGroup
+                        ? (isSelected
+                              ? colors.textTertiary
+                              : colors.textSecondary)
+                        : Colors.transparent,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  widget.account.isGroup
                       ? (isExpanded
-                            ? LucideIcons.chevronDown
-                            : LucideIcons.chevronRight)
-                      : LucideIcons.chevronRight,
-                  size: 14,
-                  color: account.isGroup
-                      ? (isSelected
-                            ? colors.textTertiary
-                            : colors.textSecondary)
-                      : Colors.transparent,
+                            ? LucideIcons.folderOpen
+                            : LucideIcons.folder)
+                      : LucideIcons.folder,
+                  size: 18,
+                  color: isSelected ? colors.success : colors.gray400,
                 ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                account.isGroup
-                    ? (isExpanded ? LucideIcons.folderOpen : LucideIcons.folder)
-                    : LucideIcons.folder,
-                size: 18,
-                color: isSelected ? colors.success : colors.gray400,
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                decoration: BoxDecoration(
-                  color: colors.gray300.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  account.code,
-                  style: AppTextStyles.overline.copyWith(
-                    color: colors.textTertiary,
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 2,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colors.gray300.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    widget.account.code,
+                    style: AppTextStyles.overline.copyWith(
+                      color: colors.textTertiary,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  account.name,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: AppTextStyles.tableHeader.copyWith(
-                    letterSpacing: 0.4,
-                    color: isSelected
-                        ? colors.textPrimary
-                        : colors.textSecondary,
-                    fontWeight: isSelected
-                        ? FontWeight.w600
-                        : FontWeight.normal,
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    widget.account.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: AppTextStyles.tableHeader.copyWith(
+                      letterSpacing: 0.4,
+                      color: isSelected
+                          ? colors.textPrimary
+                          : colors.textSecondary,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -717,83 +764,98 @@ class CategoryDetailsPanel extends StatelessWidget {
   }
 }
 
-class _AccountRow extends StatelessWidget {
+class _AccountRow extends StatefulWidget {
   final AccountNode account;
   final bool isCompact;
 
   const _AccountRow({required this.account, this.isCompact = false});
 
   @override
+  State<_AccountRow> createState() => _AccountRowState();
+}
+
+class _AccountRowState extends State<_AccountRow> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              account.code,
-              style: AppTextStyles.sidebarItem.copyWith(
-                color: theme.textSecondary,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                SizedBox(width: account.level * 20.0),
-                Icon(
-                  account.isGroup ? LucideIcons.folderOpen : LucideIcons.file,
-                  size: 18,
-                  color: theme.gray400,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        color: _isHovered ? theme.gray50 : Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.account.code,
+                style: AppTextStyles.sidebarItem.copyWith(
+                  color: theme.textSecondary,
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    account.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.tableHeader.copyWith(
-                      letterSpacing: 0.4,
-                      color: theme.textPrimary,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Row(
+                children: [
+                  SizedBox(width: widget.account.level * 20.0),
+                  Icon(
+                    widget.account.isGroup
+                        ? LucideIcons.folderOpen
+                        : LucideIcons.file,
+                    size: 18,
+                    color: theme.gray400,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      widget.account.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.tableHeader.copyWith(
+                        letterSpacing: 0.4,
+                        color: theme.textPrimary,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              account.type,
-              style: AppTextStyles.sidebarItem.copyWith(
-                color: theme.textSecondary,
+                ],
               ),
-              overflow: TextOverflow.ellipsis,
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              account.balance.toStringAsFixed(2),
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.sidebarItem.copyWith(
+            Expanded(
+              flex: 2,
+              child: Text(
+                widget.account.type,
+                style: AppTextStyles.sidebarItem.copyWith(
+                  color: theme.textSecondary,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                widget.account.balance.toStringAsFixed(2),
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.sidebarItem.copyWith(
+                  color: theme.textTertiary,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 60,
+              child: Icon(
+                LucideIcons.moreHorizontal,
+                size: 20,
                 color: theme.textTertiary,
               ),
             ),
-          ),
-          SizedBox(
-            width: 60,
-            child: Icon(
-              LucideIcons.moreHorizontal,
-              size: 20,
-              color: theme.textTertiary,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -806,13 +868,14 @@ class _TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
 
     return Container(
       decoration: BoxDecoration(
         color: theme.gray50,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(8),
           topRight: Radius.circular(8),
         ),
@@ -820,14 +883,26 @@ class _TableHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
       child: Row(
         children: [
-          Expanded(flex: 1, child: Text("Account Code", style: style)),
-          Expanded(flex: 4, child: Text("Account Name", style: style)),
-          Expanded(flex: 2, child: Text("Account Type", style: style)),
-          Expanded(flex: 2, child: Text("Balance", style: style)),
+          Expanded(
+            flex: 1,
+            child: Text(localizations.column_account_code, style: style),
+          ),
+          Expanded(
+            flex: 4,
+            child: Text(localizations.column_account_name, style: style),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(localizations.column_account_type, style: style),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(localizations.column_balance, style: style),
+          ),
           SizedBox(
             width: 60,
             child: Text(
-              "Actions",
+              localizations.actions,
               style: style,
               overflow: TextOverflow.ellipsis,
             ),

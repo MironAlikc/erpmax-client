@@ -1176,4 +1176,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get action_add_group => 'إضافة مجموعة';
+
+  @override
+  String get column_account_code => 'رمز الحساب';
+
+  @override
+  String get column_account_name => 'اسم الحساب';
+
+  @override
+  String get column_account_type => 'نوع الحساب';
+
+  @override
+  String get column_balance => 'الرصيد';
 }
