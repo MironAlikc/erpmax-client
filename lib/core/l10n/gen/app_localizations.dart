@@ -2295,6 +2295,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Navigation Style'**
   String get setting_nav_style;
+
+  /// No description provided for @view_tree.
+  ///
+  /// In en, this message translates to:
+  /// **'Tree View'**
+  String get view_tree;
+
+  /// No description provided for @view_table.
+  ///
+  /// In en, this message translates to:
+  /// **'Table View'**
+  String get view_table;
+
+  /// No description provided for @action_expand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand'**
+  String get action_expand;
+
+  /// No description provided for @action_collapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse'**
+  String get action_collapse;
+
+  /// No description provided for @action_add_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Group'**
+  String get action_add_group;
 }
 
 class _AppLocalizationsDelegate

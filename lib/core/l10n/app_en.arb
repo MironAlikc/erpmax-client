@@ -388,5 +388,10 @@
   "theme_system": "System",
   "layout_topbar": "Topbar",
   "action_sign_out": "Sign out",
-  "setting_nav_style": "Navigation Style"
+  "setting_nav_style": "Navigation Style",
+  "view_tree": "Tree View",
+  "view_table": "Table View",
+  "action_expand": "Expand",
+  "action_collapse": "Collapse",
+  "action_add_group": "Add Group"
 }

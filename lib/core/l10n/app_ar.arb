@@ -381,5 +381,10 @@
   "theme_system": "تلقائي",
   "layout_topbar": "الشريط العلوي",
   "action_sign_out": "تسجيل الخروج",
-  "setting_nav_style": "نمط التنقل"
+  "setting_nav_style": "نمط التنقل",
+  "view_tree": "عرض شجري",
+  "view_table": "عرض الجدول",
+  "action_expand": "توسيع",
+  "action_collapse": "طي",
+  "action_add_group": "إضافة مجموعة"
 }

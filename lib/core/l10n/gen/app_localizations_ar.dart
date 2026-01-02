@@ -1161,4 +1161,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get setting_nav_style => 'نمط التنقل';
+
+  @override
+  String get view_tree => 'عرض شجري';
+
+  @override
+  String get view_table => 'عرض الجدول';
+
+  @override
+  String get action_expand => 'توسيع';
+
+  @override
+  String get action_collapse => 'طي';
+
+  @override
+  String get action_add_group => 'إضافة مجموعة';
 }

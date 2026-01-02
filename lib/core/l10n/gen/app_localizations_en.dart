@@ -1159,4 +1159,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setting_nav_style => 'Navigation Style';
+
+  @override
+  String get view_tree => 'Tree View';
+
+  @override
+  String get view_table => 'Table View';
+
+  @override
+  String get action_expand => 'Expand';
+
+  @override
+  String get action_collapse => 'Collapse';
+
+  @override
+  String get action_add_group => 'Add Group';
 }

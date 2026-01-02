@@ -387,5 +387,10 @@
   "theme_system": "Системная",
   "layout_topbar": "Верхняя панель",
   "action_sign_out": "Выйти",
-  "setting_nav_style": "Стиль навигации"
+  "setting_nav_style": "Стиль навигации",
+  "view_tree": "Древовидный вид",
+  "view_table": "Табличный вид",
+  "action_expand": "Раскрыть",
+  "action_collapse": "Свернуть",
+  "action_add_group": "Добавить группу"
 }

@@ -1,14 +1,249 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/custom_segmented_control.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
+// =============================================================================================== Data
+
+class AccountNode {
+  final String code;
+  final String name;
+  final String type;
+  final double balance;
+  final bool isGroup;
+  final int level;
+  final List<AccountNode> children;
+
+  AccountNode({
+    required this.code,
+    required this.name,
+    required this.type,
+    required this.balance,
+    required this.isGroup,
+    required this.level,
+    this.children = const [],
+  });
+
+  factory AccountNode.fromJson(Map<String, dynamic> json) {
+    return AccountNode(
+      code: json['code'] as String,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      balance: (json['balance'] as num).toDouble(),
+      isGroup: json['isGroup'] as bool,
+      level: json['level'] as int,
+      children:
+          (json['children'] as List<dynamic>?)
+              ?.map((e) => AccountNode.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+      'name': name,
+      'type': type,
+      'balance': balance,
+      'isGroup': isGroup,
+      'level': level,
+      'children': children.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  List<AccountNode> getAllAccounts() {
+    List<AccountNode> result = [this];
+    for (var child in children) {
+      result.addAll(child.getAllAccounts());
+    }
+    return result;
+  }
+}
+
+Map<String, dynamic> getMockChartOfAccountsData() {
+  return {
+    'accounts': [
+      {
+        'code': '1',
+        'name': 'Application of Funds (Assets)',
+        'type': 'Asset',
+        'balance': 125000.00,
+        'isGroup': true,
+        'level': 0,
+        'children': [
+          {
+            'code': '1100',
+            'name': 'Current Assets',
+            'type': 'Asset',
+            'balance': 75000.00,
+            'isGroup': true,
+            'level': 1,
+            'children': [
+              {
+                'code': '1110',
+                'name': 'Cash and Bank',
+                'type': 'Asset',
+                'balance': 45000.00,
+                'isGroup': false,
+                'level': 2,
+                'children': [],
+              },
+              {
+                'code': '1120',
+                'name': 'Accounts Receivable',
+                'type': 'Asset',
+                'balance': 30000.00,
+                'isGroup': false,
+                'level': 2,
+                'children': [],
+              },
+            ],
+          },
+          {
+            'code': '1500',
+            'name': 'Fixed Assets',
+            'type': 'Asset',
+            'balance': 50000.00,
+            'isGroup': true,
+            'level': 1,
+            'children': [
+              {
+                'code': '1510',
+                'name': 'Property, Plant & Equipment',
+                'type': 'Asset',
+                'balance': 50000.00,
+                'isGroup': false,
+                'level': 2,
+                'children': [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        'code': '2',
+        'name': 'Source of Funds (Liabilities)',
+        'type': 'Liability',
+        'balance': 45000.00,
+        'isGroup': true,
+        'level': 0,
+        'children': [
+          {
+            'code': '2100',
+            'name': 'Current Liabilities',
+            'type': 'Liability',
+            'balance': 45000.00,
+            'isGroup': true,
+            'level': 1,
+            'children': [
+              {
+                'code': '2110',
+                'name': 'Accounts Payable',
+                'type': 'Liability',
+                'balance': 45000.00,
+                'isGroup': false,
+                'level': 2,
+                'children': [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        'code': '3',
+        'name': 'Equity',
+        'type': 'Equity',
+        'balance': 80000.00,
+        'isGroup': true,
+        'level': 0,
+        'children': [
+          {
+            'code': '3100',
+            'name': 'Share Capital',
+            'type': 'Equity',
+            'balance': 50000.00,
+            'isGroup': false,
+            'level': 1,
+            'children': [],
+          },
+          {
+            'code': '3200',
+            'name': 'Retained Earnings',
+            'type': 'Equity',
+            'balance': 30000.00,
+            'isGroup': false,
+            'level': 1,
+            'children': [],
+          },
+        ],
+      },
+    ],
+  };
+}
+
+// =============================================================================================== Widgets
+
+enum ViewMode { tree, table }
 
 class ChartOfAccountsBody extends StatefulWidget {
-  const ChartOfAccountsBody({super.key});
+  final List<AccountNode> accounts;
+
+  const ChartOfAccountsBody({super.key, required this.accounts});
 
   @override
   State<ChartOfAccountsBody> createState() => _ChartOfAccountsBodyState();
 }
 
 class _ChartOfAccountsBodyState extends State<ChartOfAccountsBody> {
-  bool isTreeView = true;
+  ViewMode viewMode = ViewMode.tree;
+  AccountNode? selectedAccount;
+  Set<String> expandedNodes = {};
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.accounts.isNotEmpty) {
+      selectedAccount = widget.accounts.first;
+      expandedNodes = widget.accounts
+          .where((account) => account.isGroup)
+          .map((account) => account.code)
+          .toSet();
+    }
+  }
+
+  void _expandAll() {
+    setState(() {
+      expandedNodes = _getAllGroupCodes(widget.accounts);
+    });
+  }
+
+  void _collapseAll() {
+    setState(() {
+      expandedNodes = {};
+    });
+  }
+
+  Set<String> _getAllGroupCodes(List<AccountNode> accounts) {
+    Set<String> codes = {};
+    for (var account in accounts) {
+      if (account.isGroup) {
+        codes.add(account.code);
+        codes.addAll(_getAllGroupCodes(account.children));
+      }
+    }
+    return codes;
+  }
+
+  void _toggleNode(String code) {
+    setState(() {
+      if (expandedNodes.contains(code)) {
+        expandedNodes.remove(code);
+      } else {
+        expandedNodes.add(code);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +252,27 @@ class _ChartOfAccountsBodyState extends State<ChartOfAccountsBody> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ChartOfAccountsControls(
-          isTreeView: isTreeView,
-          onViewChanged: (val) => setState(() => isTreeView = val),
+          currentMode: viewMode,
+          onViewChanged: (newMode) => setState(() => viewMode = newMode),
+          onExpandAll: _expandAll,
+          onCollapseAll: _collapseAll,
         ),
         const SizedBox(height: 20),
-
         SizedBox(
           height: 600,
-          child: isTreeView
-              ? const ChartTreeViewLayout()
-              : SingleChildScrollView(child: const ChartOfAccountsTable()),
+          child: viewMode == ViewMode.tree
+              ? ChartTreeViewLayout(
+                  accounts: widget.accounts,
+                  selectedAccount: selectedAccount,
+                  expandedNodes: expandedNodes,
+                  onAccountSelected: (account) {
+                    setState(() => selectedAccount = account);
+                  },
+                  onToggleExpand: _toggleNode,
+                )
+              : SingleChildScrollView(
+                  child: ChartOfAccountsTable(accounts: widget.accounts),
+                ),
         ),
       ],
     );
@@ -34,17 +280,23 @@ class _ChartOfAccountsBodyState extends State<ChartOfAccountsBody> {
 }
 
 class ChartOfAccountsControls extends StatelessWidget {
-  final bool isTreeView;
-  final Function(bool) onViewChanged;
+  final ViewMode currentMode;
+  final ValueChanged<ViewMode> onViewChanged;
+  final VoidCallback onExpandAll;
+  final VoidCallback onCollapseAll;
 
   const ChartOfAccountsControls({
     super.key,
-    required this.isTreeView,
+    required this.currentMode,
     required this.onViewChanged,
+    required this.onExpandAll,
+    required this.onCollapseAll,
   });
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Wrap(
       spacing: 12,
       runSpacing: 16,
@@ -56,18 +308,33 @@ class ChartOfAccountsControls extends StatelessWidget {
           runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _CustomToggle(isTreeView: isTreeView, onChanged: onViewChanged),
-            if (isTreeView) ...[
+            CustomSegmentedControl<ViewMode>(
+              selectedValue: currentMode,
+              items: [
+                SegmentItem(
+                  value: ViewMode.tree,
+                  label: localizations.view_tree,
+                  icon: LucideIcons.gitBranch,
+                ),
+                SegmentItem(
+                  value: ViewMode.table,
+                  label: localizations.view_table,
+                  icon: LucideIcons.table,
+                ),
+              ],
+              onValueChanged: onViewChanged,
+            ),
+            if (currentMode == ViewMode.tree) ...[
               const SizedBox(width: 8),
               _SmallActionButton(
                 icon: Icons.unfold_more,
-                label: "Expand",
-                onTap: () {},
+                label: localizations.action_expand,
+                onTap: onExpandAll,
               ),
               _SmallActionButton(
                 icon: Icons.unfold_less,
-                label: "Collapse",
-                onTap: () {},
+                label: localizations.action_collapse,
+                onTap: onCollapseAll,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -80,12 +347,12 @@ class ChartOfAccountsControls extends StatelessWidget {
             ],
             _ActionButton(
               icon: Icons.print_outlined,
-              label: "Print",
+              label: localizations.print,
               onTap: () {},
             ),
             _ActionButton(
               icon: Icons.create_new_folder_outlined,
-              label: "Add Group",
+              label: localizations.action_add_group,
               onTap: () {},
             ),
             _AddAccountButton(onTap: () {}),
@@ -98,12 +365,30 @@ class ChartOfAccountsControls extends StatelessWidget {
 }
 
 class ChartOfAccountsTable extends StatelessWidget {
+  final List<AccountNode> accounts;
   final bool isCompact;
 
-  const ChartOfAccountsTable({super.key, this.isCompact = false});
+  const ChartOfAccountsTable({
+    super.key,
+    required this.accounts,
+    this.isCompact = false,
+  });
+
+  List<AccountNode> _getFlattenedAccounts() {
+    List<AccountNode> result = [];
+    for (var account in accounts) {
+      result.addAll(account.getAllAccounts());
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final flatAccounts = _getFlattenedAccounts();
+    final displayAccounts = isCompact && flatAccounts.length > 5
+        ? flatAccounts.take(5).toList()
+        : flatAccounts;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -115,17 +400,9 @@ class ChartOfAccountsTable extends StatelessWidget {
         children: [
           _TableHeader(isCompact: isCompact),
           const Divider(height: 1),
-          for (int i = 0; i < (isCompact ? 5 : 10); i++) ...[
-            _AccountRow(
-              code: "111$i",
-              name: "Cash and Cash Equivalents Item Number $i",
-              type: "Asset",
-              balance: "0.00",
-              level: isCompact ? 0 : 1,
-              isGroup: i % 2 == 0,
-              isCompact: isCompact,
-            ),
-            if (i < (isCompact ? 4 : 9)) const Divider(height: 1),
+          for (int i = 0; i < displayAccounts.length; i++) ...[
+            _AccountRow(account: displayAccounts[i], isCompact: isCompact),
+            if (i < displayAccounts.length - 1) const Divider(height: 1),
           ],
         ],
       ),
@@ -134,7 +411,20 @@ class ChartOfAccountsTable extends StatelessWidget {
 }
 
 class ChartTreeViewLayout extends StatefulWidget {
-  const ChartTreeViewLayout({super.key});
+  final List<AccountNode> accounts;
+  final AccountNode? selectedAccount;
+  final Set<String> expandedNodes;
+  final Function(AccountNode) onAccountSelected;
+  final Function(String) onToggleExpand;
+
+  const ChartTreeViewLayout({
+    super.key,
+    required this.accounts,
+    this.selectedAccount,
+    required this.expandedNodes,
+    required this.onAccountSelected,
+    required this.onToggleExpand,
+  });
 
   @override
   State<ChartTreeViewLayout> createState() => _ChartTreeViewLayoutState();
@@ -142,7 +432,6 @@ class ChartTreeViewLayout extends StatefulWidget {
 
 class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
   double _sidebarWidth = 280;
-
   final double _minWidth = 150;
   final double _maxWidth = 600;
 
@@ -157,14 +446,21 @@ class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: _sidebarWidth, child: const SidebarNavigationTree()),
-
+          SizedBox(
+            width: _sidebarWidth,
+            child: SidebarNavigationTree(
+              accounts: widget.accounts,
+              selectedAccount: widget.selectedAccount,
+              expandedNodes: widget.expandedNodes,
+              onAccountSelected: widget.onAccountSelected,
+              onToggleExpand: widget.onToggleExpand,
+            ),
+          ),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onHorizontalDragUpdate: (details) {
               setState(() {
                 _sidebarWidth += details.delta.dx;
-
                 if (_sidebarWidth < _minWidth) _sidebarWidth = _minWidth;
                 if (_sidebarWidth > _maxWidth) _sidebarWidth = _maxWidth;
               });
@@ -180,8 +476,11 @@ class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
               ),
             ),
           ),
-
-          const Expanded(child: CategoryDetailsPanel()),
+          Expanded(
+            child: CategoryDetailsPanel(
+              account: widget.selectedAccount ?? widget.accounts.first,
+            ),
+          ),
         ],
       ),
     );
@@ -189,84 +488,110 @@ class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
 }
 
 class SidebarNavigationTree extends StatelessWidget {
-  const SidebarNavigationTree({super.key});
+  final List<AccountNode> accounts;
+  final AccountNode? selectedAccount;
+  final Set<String> expandedNodes;
+  final Function(AccountNode) onAccountSelected;
+  final Function(String) onToggleExpand;
+
+  const SidebarNavigationTree({
+    super.key,
+    required this.accounts,
+    this.selectedAccount,
+    required this.expandedNodes,
+    required this.onAccountSelected,
+    required this.onToggleExpand,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      children: [
-        _buildTreeItem(
-          "Application of Funds (Assets)",
-          "1",
-          true,
-          0,
-          isSelected: true,
-        ),
-        _buildTreeItem("Current Assets", "1100", true, 1),
-        _buildTreeItem("Cash and Bank", "1110", false, 2),
-        _buildTreeItem("Accounts Receivable", "1120", false, 2),
-        _buildTreeItem("Fixed Assets", "1500", true, 1),
-        _buildTreeItem("Property, Plant & Equipment", "1510", false, 2),
-        _buildTreeItem("Source of Funds (Liabilities)", "2", true, 0),
-        _buildTreeItem("Current Liabilities", "2100", true, 1),
-        _buildTreeItem("Accounts Payable", "2110", false, 2),
-        _buildTreeItem("Equity", "3", true, 0),
-        _buildTreeItem("Share Capital", "3100", false, 1),
-        _buildTreeItem("Retained Earnings", "3200", false, 1),
-      ],
+      children: accounts.expand((account) => _buildTreeItems(account)).toList(),
     );
   }
 
-  Widget _buildTreeItem(
-    String title,
-    String code,
-    bool isFolder,
-    int level, {
-    bool isSelected = false,
-  }) {
+  List<Widget> _buildTreeItems(AccountNode account) {
+    List<Widget> items = [];
+    items.add(_buildTreeItem(account));
+
+    if (account.isGroup && expandedNodes.contains(account.code)) {
+      for (var child in account.children) {
+        items.addAll(_buildTreeItems(child));
+      }
+    }
+
+    return items;
+  }
+
+  Widget _buildTreeItem(AccountNode account) {
+    final isSelected = selectedAccount?.code == account.code;
+    final isExpanded = expandedNodes.contains(account.code);
+
     return Padding(
-      padding: EdgeInsets.only(left: 8.0 + (level * 16), right: 8, bottom: 4),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFF0F4F8) : Colors.transparent,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.chevron_right,
-              size: 14,
-              color: isSelected ? Colors.black : Colors.grey,
-            ),
-            const SizedBox(width: 4),
-            Icon(
-              isFolder
-                  ? Icons.folder_open_outlined
-                  : Icons.description_outlined,
-              size: 18,
-              color: isSelected ? const Color(0xFF00C48C) : Colors.blueGrey,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              code,
-              style: const TextStyle(fontSize: 10, color: Colors.grey),
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+      padding: EdgeInsets.only(
+        left: 8.0 + (account.level * 16),
+        right: 8,
+        bottom: 4,
+      ),
+      child: GestureDetector(
+        onTap: () => onAccountSelected(account),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFFF0F4F8) : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: account.isGroup
+                    ? () => onToggleExpand(account.code)
+                    : null,
+                child: Icon(
+                  account.isGroup
+                      ? (isExpanded
+                            ? Icons.keyboard_arrow_down
+                            : Icons.chevron_right)
+                      : Icons.chevron_right,
+                  size: 14,
+                  color: account.isGroup
+                      ? (isSelected ? Colors.black : Colors.grey)
+                      : Colors.transparent,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: 4),
+              Icon(
+                account.isGroup
+                    ? (isExpanded
+                          ? Icons.folder_open_outlined
+                          : Icons.folder_outlined)
+                    : Icons.description_outlined,
+                size: 18,
+                color: isSelected ? const Color(0xFF00C48C) : Colors.blueGrey,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                account.code,
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  account.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: isSelected
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -274,27 +599,34 @@ class SidebarNavigationTree extends StatelessWidget {
 }
 
 class CategoryDetailsPanel extends StatelessWidget {
-  const CategoryDetailsPanel({super.key});
+  final AccountNode account;
+
+  const CategoryDetailsPanel({super.key, required this.account});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // HEADER - не скроллится
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.folder_open, color: Color(0xFF00C48C), size: 28),
-                  SizedBox(width: 12),
+                  Icon(
+                    account.isGroup
+                        ? Icons.folder_open
+                        : Icons.description_outlined,
+                    color: const Color(0xFF00C48C),
+                    size: 28,
+                  ),
+                  const SizedBox(width: 12),
                   Flexible(
                     child: Text(
-                      "Application of Funds (Assets)",
-                      style: TextStyle(
+                      account.name,
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF0D2137),
@@ -303,23 +635,21 @@ class CategoryDetailsPanel extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 40),
+              Padding(
+                padding: const EdgeInsets.only(left: 40),
                 child: Text(
-                  "1",
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                  account.code,
+                  style: const TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ),
               const SizedBox(height: 24),
             ],
           ),
         ),
-
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
               double minTableWidth = 800;
-
               double tableWidth = constraints.maxWidth > minTableWidth
                   ? constraints.maxWidth
                   : minTableWidth;
@@ -331,7 +661,12 @@ class CategoryDetailsPanel extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
                     width: tableWidth - 64,
-                    child: const ChartOfAccountsTable(isCompact: true),
+                    child: ChartOfAccountsTable(
+                      accounts: account.children.isNotEmpty
+                          ? account.children
+                          : [account],
+                      isCompact: true,
+                    ),
                   ),
                 ),
               );
@@ -344,19 +679,10 @@ class CategoryDetailsPanel extends StatelessWidget {
 }
 
 class _AccountRow extends StatelessWidget {
-  final String code, name, type, balance;
-  final int level;
-  final bool isGroup, isCompact;
+  final AccountNode account;
+  final bool isCompact;
 
-  const _AccountRow({
-    required this.code,
-    required this.name,
-    required this.type,
-    required this.balance,
-    required this.level,
-    required this.isGroup,
-    this.isCompact = false,
-  });
+  const _AccountRow({required this.account, this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -367,19 +693,18 @@ class _AccountRow extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              code,
+              account.code,
               style: const TextStyle(fontSize: 14),
               overflow: TextOverflow.ellipsis,
             ),
           ),
-
           Expanded(
             flex: 4,
             child: Row(
               children: [
-                SizedBox(width: level * 20.0),
+                SizedBox(width: account.level * 20.0),
                 Icon(
-                  isGroup
+                  account.isGroup
                       ? Icons.folder_open_outlined
                       : Icons.insert_drive_file_outlined,
                   size: 18,
@@ -388,32 +713,34 @@ class _AccountRow extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    name,
+                    account.name,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: isGroup ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight: account.isGroup
+                          ? FontWeight.w600
+                          : FontWeight.normal,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
           Expanded(
             flex: 2,
             child: Text(
-              type,
+              account.type,
               style: const TextStyle(fontSize: 14),
               overflow: TextOverflow.ellipsis,
             ),
           ),
-
           Expanded(
             flex: 2,
-            child: Text(balance, overflow: TextOverflow.ellipsis),
+            child: Text(
+              account.balance.toStringAsFixed(2),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-
           const SizedBox(
             width: 60,
             child: Icon(Icons.more_horiz, size: 20, color: Colors.grey),
@@ -426,7 +753,7 @@ class _AccountRow extends StatelessWidget {
 
 class _TableHeader extends StatelessWidget {
   final bool isCompact;
-  const _TableHeader({super.key, this.isCompact = false});
+  const _TableHeader({this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -441,13 +768,9 @@ class _TableHeader extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(flex: 1, child: Text("Account Code", style: style)),
-
           const Expanded(flex: 4, child: Text("Account Name", style: style)),
-
           const Expanded(flex: 2, child: Text("Account Type", style: style)),
-
           const Expanded(flex: 2, child: Text("Balance", style: style)),
-
           const SizedBox(
             width: 60,
             child: Text(
@@ -552,89 +875,6 @@ class _SearchField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomToggle extends StatelessWidget {
-  final bool isTreeView;
-  final Function(bool) onChanged;
-
-  const _CustomToggle({required this.isTreeView, required this.onChanged});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 240,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          _toggleButton(
-            Icons.account_tree_outlined,
-            "Tree View",
-            isTreeView,
-            () => onChanged(true),
-          ),
-          _toggleButton(
-            Icons.table_chart_outlined,
-            "Table View",
-            !isTreeView,
-            () => onChanged(false),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _toggleButton(
-    IconData icon,
-    String label,
-    bool isActive,
-    VoidCallback onTap,
-  ) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: isActive ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(6),
-            boxShadow: isActive
-                ? [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 4,
-                    ),
-                  ]
-                : [],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 16,
-                color: isActive ? Colors.black : Colors.grey,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: isActive ? Colors.black : Colors.grey,
-                  fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-                ),
-              ),
-            ],
           ),
         ),
       ),

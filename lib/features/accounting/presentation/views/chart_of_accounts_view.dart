@@ -15,6 +15,12 @@ class ChartOfAccountsView extends StatelessWidget {
 
     // final bool isMobile = MediaQuery.of(context).size.width < 1100;
 
+    // ! Simulation of data acquisition
+    final data = getMockChartOfAccountsData();
+    final accounts = (data['accounts'] as List<dynamic>)
+        .map((e) => AccountNode.fromJson(e as Map<String, dynamic>))
+        .toList();
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppDesign.pagePadding),
       child: Column(
@@ -22,7 +28,7 @@ class ChartOfAccountsView extends StatelessWidget {
         children: [
           ChartOfAccountsHeader(title: title),
           const SizedBox(height: 24),
-          const ChartOfAccountsBody(),
+          ChartOfAccountsBody(accounts: accounts),
         ],
       ),
     );
