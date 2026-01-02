@@ -48,7 +48,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get defaultSubtitle => 'Подробные данные генерируются...';
 
   @override
-  String get searchHint => 'Поиск по имени, коду или серийному номеру...';
+  String get searchHint => 'Поиск по имени, коду...';
 
   @override
   String get noDataAvailable => 'Нет данных';

@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get defaultSubtitle => 'Detailed data is being generated...';
 
   @override
-  String get searchHint => 'Search by name, code, or serial...';
+  String get searchHint => 'Search my name, code...';
 
   @override
   String get noDataAvailable => 'No data available';

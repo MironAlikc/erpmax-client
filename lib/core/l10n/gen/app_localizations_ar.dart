@@ -48,7 +48,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get defaultSubtitle => 'يتم إنشاء بيانات مفصلة...';
 
   @override
-  String get searchHint => 'البحث حسب الاسم أو الكود أو الرقم التسلسلي...';
+  String get searchHint => 'البحث بالاسم، الرمز...';
 
   @override
   String get noDataAvailable => 'لا توجد بيانات متاحة';

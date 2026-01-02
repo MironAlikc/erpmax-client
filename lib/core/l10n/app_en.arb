@@ -13,7 +13,7 @@
   "status": "Status",
   "actions": "Actions",
   "defaultSubtitle": "Detailed data is being generated...",
-  "searchHint": "Search by name, code, or serial...",
+  "searchHint": "Search my name, code...",
   "noDataAvailable": "No data available",
   "reference": "Reference",
   "date": "Date",

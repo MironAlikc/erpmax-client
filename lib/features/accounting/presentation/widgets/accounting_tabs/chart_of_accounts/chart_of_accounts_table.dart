@@ -1,5 +1,7 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/custom_segmented_control.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/view_control_action_btn.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -326,13 +328,13 @@ class ChartOfAccountsControls extends StatelessWidget {
             ),
             if (currentMode == ViewMode.tree) ...[
               const SizedBox(width: 8),
-              _SmallActionButton(
-                icon: Icons.unfold_more,
+              ViewControlActionBtn(
+                icon: LucideIcons.chevronsUpDown,
                 label: localizations.action_expand,
                 onTap: onExpandAll,
               ),
-              _SmallActionButton(
-                icon: Icons.unfold_less,
+              ViewControlActionBtn(
+                icon: LucideIcons.chevronsDownUp,
                 label: localizations.action_collapse,
                 onTap: onCollapseAll,
               ),
@@ -358,7 +360,13 @@ class ChartOfAccountsControls extends StatelessWidget {
             _AddAccountButton(onTap: () {}),
           ],
         ),
-        const _SearchField(),
+        AccInput(
+          hint: localizations.searchHint,
+          width: 260,
+          height: 12,
+          isIcon: true,
+          controller: TextEditingController(),
+        ),
       ],
     );
   }
@@ -785,29 +793,6 @@ class _TableHeader extends StatelessWidget {
   }
 }
 
-class _SmallActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _SmallActionButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon, size: 16, color: Colors.grey),
-      label: Text(
-        label,
-        style: const TextStyle(color: Colors.grey, fontSize: 13),
-      ),
-    );
-  }
-}
-
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -850,34 +835,6 @@ class _AddAccountButton extends StatelessWidget {
       ),
       icon: const Icon(Icons.add, size: 18),
       label: const Text("Add Account"),
-    );
-  }
-}
-
-class _SearchField extends StatelessWidget {
-  const _SearchField();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 260,
-      height: 40,
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: "Search by name, code...",
-          hintStyle: const TextStyle(fontSize: 13),
-          prefixIcon: const Icon(Icons.search, size: 18),
-          contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-        ),
-      ),
     );
   }
 }

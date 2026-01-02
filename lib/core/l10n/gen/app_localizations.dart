@@ -181,7 +181,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:
-  /// **'Search by name, code, or serial...'**
+  /// **'Search my name, code...'**
   String get searchHint;
 
   /// No description provided for @noDataAvailable.
