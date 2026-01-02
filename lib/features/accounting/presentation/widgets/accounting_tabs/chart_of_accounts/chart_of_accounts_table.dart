@@ -1,6 +1,7 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/custom_segmented_control.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/view_control_action_btn.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_action_btn.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
@@ -348,18 +349,18 @@ class ChartOfAccountsControls extends StatelessWidget {
                 ),
               ),
             ],
-            _ActionButton(
-              icon: Icons.print_outlined,
+            AccActionBtn(
+              icon: LucideIcons.printer,
               label: localizations.print,
               onTap: () {},
             ),
-            _ActionButton(
-              icon: Icons.create_new_folder_outlined,
+            AccActionBtn(
+              icon: LucideIcons.folderPlus,
               label: localizations.action_add_group,
               onTap: () {},
             ),
             AccountingHeaderBtn(
-              label: 'Add Account',
+              label: localizations.accAddAccount,
               icon: LucideIcons.plus,
               textColor: Colors.white,
               height: 18,
@@ -800,28 +801,28 @@ class _TableHeader extends StatelessWidget {
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _ActionButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+// class _ActionButton extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
+//   final VoidCallback onTap;
+//   const _ActionButton({
+//     required this.icon,
+//     required this.label,
+//     required this.onTap,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.black87,
-        side: BorderSide(color: Colors.grey.shade300),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      icon: Icon(icon, size: 18),
-      label: Text(label),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return OutlinedButton.icon(
+//       onPressed: onTap,
+//       style: OutlinedButton.styleFrom(
+//         foregroundColor: Colors.black87,
+//         side: BorderSide(color: Colors.grey.shade300),
+//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//       ),
+//       icon: Icon(icon, size: 18),
+//       label: Text(label),
+//     );
+//   }
+// }

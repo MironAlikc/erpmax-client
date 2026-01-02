@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/theme/app_design.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_header/chart_of_accounts_header.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_header.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_table.dart';
 import 'package:flutter/material.dart';
 
