@@ -48,7 +48,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get defaultSubtitle => 'Подробные данные генерируются...';
 
   @override
-  String get searchHint => 'Поиск по имени, коду или серийному номеру...';
+  String get searchHint => 'Поиск по имени, коду...';
 
   @override
   String get noDataAvailable => 'Нет данных';
@@ -1167,4 +1167,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get setting_nav_style => 'Стиль навигации';
+
+  @override
+  String get view_tree => 'Древовидный вид';
+
+  @override
+  String get view_table => 'Табличный вид';
+
+  @override
+  String get action_expand => 'Раскрыть';
+
+  @override
+  String get action_collapse => 'Свернуть';
+
+  @override
+  String get action_add_group => 'Добавить группу';
 }

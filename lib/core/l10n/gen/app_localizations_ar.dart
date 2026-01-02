@@ -48,7 +48,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get defaultSubtitle => 'يتم إنشاء بيانات مفصلة...';
 
   @override
-  String get searchHint => 'البحث حسب الاسم أو الكود أو الرقم التسلسلي...';
+  String get searchHint => 'البحث بالاسم، الرمز...';
 
   @override
   String get noDataAvailable => 'لا توجد بيانات متاحة';
@@ -1161,4 +1161,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get setting_nav_style => 'نمط التنقل';
+
+  @override
+  String get view_tree => 'عرض شجري';
+
+  @override
+  String get view_table => 'عرض الجدول';
+
+  @override
+  String get action_expand => 'توسيع';
+
+  @override
+  String get action_collapse => 'طي';
+
+  @override
+  String get action_add_group => 'إضافة مجموعة';
 }

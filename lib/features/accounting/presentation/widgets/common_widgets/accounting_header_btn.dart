@@ -9,15 +9,19 @@ class AccountingHeaderBtn extends StatelessWidget {
   final bool isOutline;
   final Color? iconColor;
   final Color? textColor;
+  final double height;
+  final VoidCallback onTap;
 
   const AccountingHeaderBtn({
     super.key,
     required this.label,
     required this.icon,
+    required this.onTap,
     this.color,
     this.isOutline = false,
     this.iconColor,
     this.textColor,
+    this.height = 16,
   });
 
   @override
@@ -28,13 +32,15 @@ class AccountingHeaderBtn extends StatelessWidget {
         textColor ?? (isOutline ? theme.textPrimary : theme.white);
 
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onTap,
       style:
           ElevatedButton.styleFrom(
             elevation: 0,
             minimumSize: Size.zero,
-            padding: const EdgeInsets.all(16),
-            backgroundColor: isOutline ? theme.white : (color ?? theme.black),
+            padding: EdgeInsets.symmetric(vertical: height, horizontal: 16),
+            backgroundColor: isOutline
+                ? theme.white
+                : (color ?? theme.addButton),
             foregroundColor: contentColor,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             shadowColor: Colors.transparent,
@@ -49,8 +55,8 @@ class AccountingHeaderBtn extends StatelessWidget {
             overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
               if (states.contains(WidgetState.hovered)) {
                 return isOutline
-                    ? theme.textPrimary.withValues(alpha: 0.04)
-                    : theme.white.withValues(alpha: 0.1);
+                    ? theme.gray50
+                    : Colors.white.withValues(alpha: 0.1);
               }
               return null;
             }),
