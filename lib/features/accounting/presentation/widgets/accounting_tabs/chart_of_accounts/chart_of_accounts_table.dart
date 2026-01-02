@@ -1,4 +1,7 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/custom_segmented_control.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/view_control_action_btn.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_action_btn.dart';
@@ -400,6 +403,8 @@ class ChartOfAccountsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     final flatAccounts = _getFlattenedAccounts();
     final displayAccounts = isCompact && flatAccounts.length > 5
         ? flatAccounts.take(5).toList()
@@ -407,18 +412,19 @@ class ChartOfAccountsTable extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: theme.border),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _TableHeader(isCompact: isCompact),
-          const Divider(height: 1),
+          Divider(height: 1, color: theme.border),
           for (int i = 0; i < displayAccounts.length; i++) ...[
             _AccountRow(account: displayAccounts[i], isCompact: isCompact),
-            if (i < displayAccounts.length - 1) const Divider(height: 1),
+            if (i < displayAccounts.length - 1)
+              Divider(height: 1, color: theme.border),
           ],
         ],
       ),
@@ -453,11 +459,13 @@ class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: theme.borderLight),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,9 +494,7 @@ class _ChartTreeViewLayoutState extends State<ChartTreeViewLayout> {
               child: Container(
                 width: 6,
                 color: Colors.transparent,
-                child: Center(
-                  child: Container(width: 1, color: Colors.grey.shade200),
-                ),
+                child: Center(child: Container(width: 1, color: theme.border)),
               ),
             ),
           ),
@@ -521,26 +527,30 @@ class SidebarNavigationTree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      children: accounts.expand((account) => _buildTreeItems(account)).toList(),
+      children: accounts
+          .expand((account) => _buildTreeItems(theme, account))
+          .toList(),
     );
   }
 
-  List<Widget> _buildTreeItems(AccountNode account) {
+  List<Widget> _buildTreeItems(AppColorExtension colors, AccountNode account) {
     List<Widget> items = [];
-    items.add(_buildTreeItem(account));
+    items.add(_buildTreeItem(colors, account));
 
     if (account.isGroup && expandedNodes.contains(account.code)) {
       for (var child in account.children) {
-        items.addAll(_buildTreeItems(child));
+        items.addAll(_buildTreeItems(colors, child));
       }
     }
 
     return items;
   }
 
-  Widget _buildTreeItem(AccountNode account) {
+  Widget _buildTreeItem(AppColorExtension colors, AccountNode account) {
     final isSelected = selectedAccount?.code == account.code;
     final isExpanded = expandedNodes.contains(account.code);
 
@@ -555,7 +565,7 @@ class SidebarNavigationTree extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFF0F4F8) : Colors.transparent,
+            color: isSelected ? colors.gray50 : Colors.transparent,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Row(
@@ -568,29 +578,38 @@ class SidebarNavigationTree extends StatelessWidget {
                 child: Icon(
                   account.isGroup
                       ? (isExpanded
-                            ? Icons.keyboard_arrow_down
-                            : Icons.chevron_right)
-                      : Icons.chevron_right,
+                            ? LucideIcons.chevronDown
+                            : LucideIcons.chevronRight)
+                      : LucideIcons.chevronRight,
                   size: 14,
                   color: account.isGroup
-                      ? (isSelected ? Colors.black : Colors.grey)
+                      ? (isSelected
+                            ? colors.textTertiary
+                            : colors.textSecondary)
                       : Colors.transparent,
                 ),
               ),
               const SizedBox(width: 4),
               Icon(
                 account.isGroup
-                    ? (isExpanded
-                          ? Icons.folder_open_outlined
-                          : Icons.folder_outlined)
-                    : Icons.description_outlined,
+                    ? (isExpanded ? LucideIcons.folderOpen : LucideIcons.folder)
+                    : LucideIcons.folder,
                 size: 18,
-                color: isSelected ? const Color(0xFF00C48C) : Colors.blueGrey,
+                color: isSelected ? colors.success : colors.gray400,
               ),
               const SizedBox(width: 8),
-              Text(
-                account.code,
-                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                decoration: BoxDecoration(
+                  color: colors.gray300.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  account.code,
+                  style: AppTextStyles.overline.copyWith(
+                    color: colors.textTertiary,
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -598,8 +617,11 @@ class SidebarNavigationTree extends StatelessWidget {
                   account.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.tableHeader.copyWith(
+                    letterSpacing: 0.4,
+                    color: isSelected
+                        ? colors.textPrimary
+                        : colors.textSecondary,
                     fontWeight: isSelected
                         ? FontWeight.w600
                         : FontWeight.normal,
@@ -621,6 +643,8 @@ class CategoryDetailsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -633,19 +657,18 @@ class CategoryDetailsPanel extends StatelessWidget {
                 children: [
                   Icon(
                     account.isGroup
-                        ? Icons.folder_open
-                        : Icons.description_outlined,
-                    color: const Color(0xFF00C48C),
+                        ? LucideIcons.folderOpen
+                        : LucideIcons.fileText,
+                    color: theme.success,
                     size: 28,
                   ),
                   const SizedBox(width: 12),
                   Flexible(
                     child: Text(
                       account.name,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF0D2137),
+                      style: AppTextStyles.h4.copyWith(
+                        color: theme.textPrimary,
+                        letterSpacing: 1.2,
                       ),
                     ),
                   ),
@@ -655,7 +678,7 @@ class CategoryDetailsPanel extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 40),
                 child: Text(
                   account.code,
-                  style: const TextStyle(color: Colors.grey, fontSize: 16),
+                  style: AppTextStyles.h5.copyWith(color: theme.textSecondary),
                 ),
               ),
               const SizedBox(height: 24),
@@ -702,6 +725,8 @@ class _AccountRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
@@ -710,7 +735,9 @@ class _AccountRow extends StatelessWidget {
             flex: 1,
             child: Text(
               account.code,
-              style: const TextStyle(fontSize: 14),
+              style: AppTextStyles.sidebarItem.copyWith(
+                color: theme.textSecondary,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -720,22 +747,18 @@ class _AccountRow extends StatelessWidget {
               children: [
                 SizedBox(width: account.level * 20.0),
                 Icon(
-                  account.isGroup
-                      ? Icons.folder_open_outlined
-                      : Icons.insert_drive_file_outlined,
+                  account.isGroup ? LucideIcons.folderOpen : LucideIcons.file,
                   size: 18,
-                  color: Colors.blueGrey,
+                  color: theme.gray400,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     account.name,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: account.isGroup
-                          ? FontWeight.w600
-                          : FontWeight.normal,
+                    style: AppTextStyles.tableHeader.copyWith(
+                      letterSpacing: 0.4,
+                      color: theme.textPrimary,
                     ),
                   ),
                 ),
@@ -746,7 +769,9 @@ class _AccountRow extends StatelessWidget {
             flex: 2,
             child: Text(
               account.type,
-              style: const TextStyle(fontSize: 14),
+              style: AppTextStyles.sidebarItem.copyWith(
+                color: theme.textSecondary,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -755,11 +780,18 @@ class _AccountRow extends StatelessWidget {
             child: Text(
               account.balance.toStringAsFixed(2),
               overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.sidebarItem.copyWith(
+                color: theme.textTertiary,
+              ),
             ),
           ),
-          const SizedBox(
+          SizedBox(
             width: 60,
-            child: Icon(Icons.more_horiz, size: 20, color: Colors.grey),
+            child: Icon(
+              LucideIcons.moreHorizontal,
+              size: 20,
+              color: theme.textTertiary,
+            ),
           ),
         ],
       ),
@@ -773,21 +805,26 @@ class _TableHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.blueGrey,
-      fontSize: 13,
-    );
+    final theme = context.theme.appColor;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+    final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.gray50,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
       child: Row(
         children: [
-          const Expanded(flex: 1, child: Text("Account Code", style: style)),
-          const Expanded(flex: 4, child: Text("Account Name", style: style)),
-          const Expanded(flex: 2, child: Text("Account Type", style: style)),
-          const Expanded(flex: 2, child: Text("Balance", style: style)),
-          const SizedBox(
+          Expanded(flex: 1, child: Text("Account Code", style: style)),
+          Expanded(flex: 4, child: Text("Account Name", style: style)),
+          Expanded(flex: 2, child: Text("Account Type", style: style)),
+          Expanded(flex: 2, child: Text("Balance", style: style)),
+          SizedBox(
             width: 60,
             child: Text(
               "Actions",
@@ -800,29 +837,3 @@ class _TableHeader extends StatelessWidget {
     );
   }
 }
-
-// class _ActionButton extends StatelessWidget {
-//   final IconData icon;
-//   final String label;
-//   final VoidCallback onTap;
-//   const _ActionButton({
-//     required this.icon,
-//     required this.label,
-//     required this.onTap,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return OutlinedButton.icon(
-//       onPressed: onTap,
-//       style: OutlinedButton.styleFrom(
-//         foregroundColor: Colors.black87,
-//         side: BorderSide(color: Colors.grey.shade300),
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//       ),
-//       icon: Icon(icon, size: 18),
-//       label: Text(label),
-//     );
-//   }
-// }
