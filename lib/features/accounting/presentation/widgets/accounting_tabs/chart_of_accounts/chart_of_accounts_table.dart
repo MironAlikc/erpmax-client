@@ -2,6 +2,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/custom_segmented_control.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/widgets/view_control_action_btn.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -357,7 +358,13 @@ class ChartOfAccountsControls extends StatelessWidget {
               label: localizations.action_add_group,
               onTap: () {},
             ),
-            _AddAccountButton(onTap: () {}),
+            AccountingHeaderBtn(
+              label: 'Add Account',
+              icon: LucideIcons.plus,
+              textColor: Colors.white,
+              height: 18,
+              onTap: () {},
+            ),
           ],
         ),
         AccInput(
@@ -819,22 +826,22 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-class _AddAccountButton extends StatelessWidget {
-  final VoidCallback onTap;
-  const _AddAccountButton({required this.onTap});
+// class _AddAccountButton extends StatelessWidget {
+//   final VoidCallback onTap;
+//   const _AddAccountButton({required this.onTap});
 
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0D2137),
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      icon: const Icon(Icons.add, size: 18),
-      label: const Text("Add Account"),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ElevatedButton.icon(
+//       onPressed: onTap,
+//       style: ElevatedButton.styleFrom(
+//         backgroundColor: const Color(0xFF0D2137),
+//         foregroundColor: Colors.white,
+//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//       ),
+//       icon: const Icon(Icons.add, size: 18),
+//       label: const Text("Add Account"),
+//     );
+//   }
+// }

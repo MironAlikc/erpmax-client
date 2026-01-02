@@ -1,5 +1,4 @@
 import 'package:erpmax_client/core/theme/app_design.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_header/chart_of_accounts_header.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_table.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class ChartOfAccountsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
+    // final theme = context.theme.appColor;
 
     // final bool isMobile = MediaQuery.of(context).size.width < 1100;
 

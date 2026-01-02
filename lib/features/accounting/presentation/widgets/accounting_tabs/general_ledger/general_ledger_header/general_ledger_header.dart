@@ -44,6 +44,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   icon: LucideIcons.arrowDownLeft,
                   isOutline: true,
                   iconColor: theme.successText,
+                  onTap: () {},
                 ),
                 const SizedBox(width: 12),
                 AccountingHeaderBtn(
@@ -51,6 +52,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   icon: LucideIcons.arrowUpRight,
                   isOutline: true,
                   iconColor: theme.errorText,
+                  onTap: () {},
                 ),
                 const SizedBox(width: 12),
                 AccountingHeaderBtn(
@@ -58,6 +60,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   icon: LucideIcons.wallet,
                   isOutline: true,
                   iconColor: theme.violetText,
+                  onTap: () {},
                 ),
                 const SizedBox(width: 12),
                 AccountingHeaderBtn(
@@ -65,6 +68,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   icon: LucideIcons.arrowLeftRight,
                   isOutline: true,
                   iconColor: theme.successText,
+                  onTap: () {},
                 ),
                 const SizedBox(width: 12),
                 AccountingHeaderBtn(
@@ -72,6 +76,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   icon: LucideIcons.refreshCcw,
                   isOutline: true,
                   iconColor: theme.warningText,
+                  onTap: () {},
                 ),
                 const SizedBox(width: 12),
                 AccountingHeaderBtn(
@@ -80,6 +85,7 @@ class GeneralLedgerHeader extends StatelessWidget {
                   color: theme.sidebarActiveIcon,
                   iconColor: theme.white,
                   textColor: theme.white,
+                  onTap: () {},
                 ),
               ],
             ),

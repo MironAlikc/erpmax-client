@@ -65,6 +65,7 @@ class AppTheme {
         indigoText: const Color(0xFF4F46E5),
         violetBg: const Color(0xFFF5F3FF),
         violetText: const Color(0xFF7C3AED),
+        addButton: const Color(0xFF020817),
       ),
     ],
   );
@@ -132,6 +133,7 @@ class AppTheme {
         indigoText: const Color(0xFFC7D2FE),
         violetBg: const Color(0xFF4C1D95),
         violetText: const Color(0xFFDDD6FE),
+        addButton: const Color(0xFF0F172A),
       ),
     ],
   );

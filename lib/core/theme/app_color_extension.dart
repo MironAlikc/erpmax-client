@@ -61,6 +61,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color indigoText;
   final Color violetBg;
   final Color violetText;
+  final Color addButton;
 
   const AppColorExtension({
     required this.primary,
@@ -122,6 +123,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.indigoText,
     required this.violetBg,
     required this.violetText,
+    required this.addButton,
   });
 
   @override
@@ -185,6 +187,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     Color? indigoText,
     Color? violetBg,
     Color? violetText,
+    Color? addButton,
   }) {
     return AppColorExtension(
       primary: primary ?? this.primary,
@@ -246,6 +249,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       indigoText: indigoText ?? this.indigoText,
       violetBg: violetBg ?? this.violetBg,
       violetText: violetText ?? this.violetText,
+      addButton: addButton ?? this.addButton,
     );
   }
 
@@ -340,6 +344,7 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       indigoText: Color.lerp(indigoText, other.indigoText, t)!,
       violetBg: Color.lerp(violetBg, other.violetBg, t)!,
       violetText: Color.lerp(violetText, other.violetText, t)!,
+      addButton: Color.lerp(addButton, other.addButton, t)!,
     );
   }
 }

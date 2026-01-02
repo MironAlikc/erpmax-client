@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 
 class ViewControlActionBtn extends StatefulWidget {
@@ -20,7 +21,7 @@ class ViewControlActionBtn extends StatefulWidget {
     this.iconColor,
     this.textColor,
     this.iconSize = 12,
-    this.fontSize = 13,
+    this.fontSize = 11,
     this.borderRadius = 6,
     this.padding,
   });
@@ -39,7 +40,7 @@ class _ViewControlActionBtnState extends State<ViewControlActionBtn> {
     final effectiveTextColor = widget.textColor ?? theme.textPrimary;
     final effectivePadding =
         widget.padding ??
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+        const EdgeInsets.symmetric(horizontal: 12, vertical: 16);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -53,7 +54,7 @@ class _ViewControlActionBtnState extends State<ViewControlActionBtn> {
         ),
         label: Text(
           widget.label,
-          style: TextStyle(
+          style: AppTextStyles.label.copyWith(
             color: effectiveTextColor,
             fontSize: widget.fontSize,
           ),
