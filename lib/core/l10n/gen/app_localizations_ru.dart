@@ -1182,4 +1182,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get action_add_group => 'Добавить группу';
+
+  @override
+  String get column_account_code => 'Код счета';
+
+  @override
+  String get column_account_name => 'Название счета';
+
+  @override
+  String get column_account_type => 'Тип счета';
+
+  @override
+  String get column_balance => 'Баланс';
 }

@@ -2325,6 +2325,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Group'**
   String get action_add_group;
+
+  /// No description provided for @column_account_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Code'**
+  String get column_account_code;
+
+  /// No description provided for @column_account_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Name'**
+  String get column_account_name;
+
+  /// No description provided for @column_account_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Type'**
+  String get column_account_type;
+
+  /// No description provided for @column_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get column_balance;
 }
 
 class _AppLocalizationsDelegate
