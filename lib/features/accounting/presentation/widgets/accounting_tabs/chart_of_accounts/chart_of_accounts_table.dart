@@ -825,23 +825,3 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-
-// class _AddAccountButton extends StatelessWidget {
-//   final VoidCallback onTap;
-//   const _AddAccountButton({required this.onTap});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton.icon(
-//       onPressed: onTap,
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: const Color(0xFF0D2137),
-//         foregroundColor: Colors.white,
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//       ),
-//       icon: const Icon(Icons.add, size: 18),
-//       label: const Text("Add Account"),
-//     );
-//   }
-// }
