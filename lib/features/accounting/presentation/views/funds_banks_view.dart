@@ -32,9 +32,7 @@ class FundsBanksView extends StatelessWidget {
               SummaryCardsRow(filter: selected),
               const SizedBox(height: 24),
               FundsAndBanksWidget(),
-              // const FundsHeader(),
-              // const SizedBox(height: 12),
-              // FundsGrid(filter: selected),
+              const SizedBox(height: 24),
             ],
           ),
         );
