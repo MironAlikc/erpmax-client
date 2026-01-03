@@ -1,0 +1,107 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
+class FundsBanksHeader extends StatelessWidget {
+  final String title;
+
+  const FundsBanksHeader({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
+    return Wrap(
+      spacing: 20,
+      runSpacing: 16,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
+            ),
+            Text(
+              'Manage cash funds and bank accounts.',
+              style: AppTextStyles.bodyLarge.copyWith(
+                color: theme.textSecondary,
+              ),
+            ),
+          ],
+        ),
+
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AccountingHeaderBtn(
+                      label: localizations.accReceipts,
+                      icon: LucideIcons.arrowDownRight,
+                      isOutline: true,
+                      iconColor: theme.successText,
+                      onTap: () {},
+                    ),
+                    const SizedBox(width: 12),
+                    AccountingHeaderBtn(
+                      label: localizations.accPayments,
+                      icon: LucideIcons.arrowUpRight,
+                      isOutline: true,
+                      iconColor: theme.errorText,
+                      onTap: () {},
+                    ),
+                    const SizedBox(width: 12),
+                    AccountingHeaderBtn(
+                      label: localizations.accCashJournal,
+                      icon: LucideIcons.wallet,
+                      isOutline: true,
+                      iconColor: theme.violetText,
+                      onTap: () {},
+                    ),
+                    const SizedBox(width: 12),
+                    AccountingHeaderBtn(
+                      label: localizations.transfer,
+                      icon: LucideIcons.arrowLeftRight,
+                      isOutline: true,
+                      iconColor: theme.successText,
+                      onTap: () {},
+                    ),
+                    const SizedBox(width: 12),
+                    AccountingHeaderBtn(
+                      label: localizations.accExchange,
+                      icon: LucideIcons.refreshCcw,
+                      isOutline: true,
+                      iconColor: theme.warningText,
+                      onTap: () {},
+                    ),
+                    const SizedBox(width: 12),
+                    AccountingHeaderBtn(
+                      label: localizations.accJournalEntry,
+                      icon: LucideIcons.plus,
+                      color: theme.sidebarActiveIcon,
+                      iconColor: theme.white,
+                      textColor: theme.white,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+}

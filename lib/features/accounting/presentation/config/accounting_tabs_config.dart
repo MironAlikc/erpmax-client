@@ -2,6 +2,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/accounting_dashboard_view.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/chart_of_accounts_view.dart';
+import 'package:erpmax_client/features/accounting/presentation/views/funds_banks_view.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/general_ledger_view.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/journal_entries_view.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ abstract final class AccountingTabsConfig {
         name: localizations.accFunds,
         icon: LucideIcons.wallet,
         shellIndex: accountingShellIndex,
-        content: placeholderBuilder(localizations.accFunds),
+        content: FundsBanksView(title: localizations.accFunds),
       ),
       ModuleTabItem(
         id: 'acc_parties',
