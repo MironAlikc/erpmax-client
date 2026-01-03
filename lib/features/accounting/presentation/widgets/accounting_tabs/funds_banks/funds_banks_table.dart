@@ -1,13 +1,15 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_dashboard.dart';
 import 'package:flutter/material.dart';
 
 class FundsBanksTable extends StatelessWidget {
-  final List<FundBankAccount> accounts;
+  final List<FundBankData> accounts;
+  final String? activeFilter; // Добавили это
 
-  const FundsBanksTable({super.key, required this.accounts});
+  const FundsBanksTable({super.key, required this.accounts, this.activeFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class FundsBanksTable extends StatelessWidget {
         children: [
           _FundsTableHeader(),
           Divider(height: 1, color: theme.border),
-          ...accounts.map((account) => FundsRow(account: account)),
+          ...accounts.map(
+            (account) => FundsRow(account: account, activeFilter: activeFilter),
+          ),
           _FundsTableFooter(),
         ],
       ),
@@ -32,9 +36,10 @@ class FundsBanksTable extends StatelessWidget {
 }
 
 class FundsRow extends StatefulWidget {
-  final FundBankAccount account;
+  final FundBankData account;
+  final String? activeFilter; // Принимаем фильтр
 
-  const FundsRow({super.key, required this.account});
+  const FundsRow({super.key, required this.account, this.activeFilter});
 
   @override
   State<FundsRow> createState() => _FundsRowState();
@@ -43,9 +48,34 @@ class FundsRow extends StatefulWidget {
 class _FundsRowState extends State<FundsRow> {
   bool _isHovered = false;
 
+  // Универсальный помощник для получения суммы
+  double getAmountForCurrency(String targetCurrency) {
+    // 1. Проверяем, совпадает ли основная валюта аккаунта с целью
+    if (widget.account.currency == targetCurrency)
+      return widget.account.balance;
+
+    // 2. Ищем в деталях (currencyDetails)
+    final detail = widget.account.currencyDetails.firstWhere(
+      (d) => d.currency == targetCurrency,
+      orElse: () => CurrencyModel(flag: '', amount: -1, currency: ''),
+    );
+    if (detail.amount != -1) return detail.amount;
+
+    // 3. Если нет, конвертируем
+    double rate = exchangeRates[targetCurrency] ?? 1.0;
+    return widget.account.balance * rate;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // final double currentDisplayAmount = _getDisplayAmount();
+    final String currentDisplayCurrency = widget.activeFilter ?? 'SAR';
+
+    final double currentDisplayAmount = getAmountForCurrency(
+      currentDisplayCurrency,
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -56,7 +86,6 @@ class _FundsRowState extends State<FundsRow> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            // Column 1: Bank Name + Icon
             Expanded(
               flex: 3,
               child: Row(
@@ -89,18 +118,20 @@ class _FundsRowState extends State<FundsRow> {
                 ],
               ),
             ),
-            // Column 2: Type Badge
             Expanded(
               flex: 2,
               child: Center(child: _buildTypeBadge(widget.account)),
             ),
-            // Column 3: Balance
-            Expanded(flex: 2, child: _buildBalanceInfo(widget.account)),
-            // Column 4: Currency List
+            Expanded(
+              flex: 2,
+              child: _buildBalanceInfo(
+                widget.account,
+                currentDisplayAmount,
+                currentDisplayCurrency,
+              ),
+            ),
             Expanded(flex: 3, child: _buildCurrencyList(widget.account)),
-            // Column 5: Today's Change
             Expanded(flex: 2, child: _buildChangeIndicator(widget.account)),
-            // Column 6: Last Activity
             Expanded(
               flex: 2,
               child: Text(
@@ -109,7 +140,6 @@ class _FundsRowState extends State<FundsRow> {
                 textAlign: TextAlign.center,
               ),
             ),
-            // Column 7: Actions
             SizedBox(
               width: 90,
               child: Row(
@@ -127,7 +157,28 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildBankIcon(FundBankAccount account) {
+  // Вспомогательная функция для получения суммы в нужной валюте
+  double _getDisplayAmount() {
+    final filter = widget.activeFilter;
+
+    // 1. Если "All", возвращаем основной баланс аккаунта
+    if (filter == null) return widget.account.balance;
+
+    // 2. Ищем, есть ли эта валюта уже в списке деталей
+    final existingDetail = widget.account.currencyDetails.firstWhere(
+      (d) => d.currency == filter,
+      orElse: () => CurrencyModel(flag: '', amount: -1, currency: ''),
+    );
+
+    if (existingDetail.amount != -1) return existingDetail.amount;
+
+    // 3. Если валюты нет, конвертируем основной баланс
+    // Логика: Баланс (в SAR) * Курс выбранной валюты
+    double rate = exchangeRates[filter] ?? 1.0;
+    return widget.account.balance * rate;
+  }
+
+  Widget _buildBankIcon(FundBankData account) {
     final isCash = account.type == 'Cash';
     return Container(
       padding: const EdgeInsets.all(8),
@@ -143,7 +194,7 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildTypeBadge(FundBankAccount account) {
+  Widget _buildTypeBadge(FundBankData account) {
     final isCash = account.type == 'Cash';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -184,19 +235,48 @@ class _FundsRowState extends State<FundsRow> {
         );
   }
 
-  Widget _buildBalanceInfo(FundBankAccount account) {
+  // Widget _buildBalanceInfo(FundBankData account) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         _formatNum(account.balance),
+  //         style: const TextStyle(
+  //           fontSize: 16,
+  //           fontWeight: FontWeight.bold,
+  //           color: Color(0xFF4CAF50),
+  //         ),
+  //       ),
+  //       if (account.isConverted)
+  //         const Text(
+  //           'converted',
+  //           style: TextStyle(fontSize: 10, color: Color(0xFFFF9800)),
+  //         ),
+  //     ],
+  //   );
+  // }
+
+  Widget _buildBalanceInfo(
+    FundBankData account,
+    double amount,
+    String currency,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _formatNum(account.balance),
+          '${_formatNum(amount)} $currency',
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Color(0xFF4CAF50),
           ),
         ),
-        if (account.isConverted)
+        // Если это "виртуальная" конвертация, можно оставить пометку
+        if (widget.activeFilter != null &&
+            !account.currencyDetails.any(
+              (d) => d.currency == widget.activeFilter,
+            ))
           const Text(
             'converted',
             style: TextStyle(fontSize: 10, color: Color(0xFFFF9800)),
@@ -205,27 +285,116 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildCurrencyList(FundBankAccount account) {
+  // Обновленный список валют (теперь он подсвечивает или добавляет валюту)
+  Widget _buildCurrencyList(FundBankData account) {
+    final filter = widget.activeFilter;
+
+    // Если "All", показываем все как было
+    if (filter == null) {
+      return Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: account.currencyDetails
+            .map((detail) => _miniBadge(detail, false))
+            .toList(),
+      );
+    }
+
+    // Если выбран фильтр, мы должны показать:
+    // 1. Либо подсвеченную существующую валюту
+    // 2. Либо "виртуальную" сконвертированную плашку
+
+    bool existsInDetails = account.currencyDetails.any(
+      (d) => d.currency == filter,
+    );
+
     return Wrap(
       spacing: 4,
       runSpacing: 4,
-      children: account.currencyDetails.map((detail) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(4),
+      children: [
+        if (!existsInDetails)
+          // Показываем виртуальную плашку (серую или с пометкой)
+          _miniBadge(
+            CurrencyModel(
+              flag: _getFlagFor(filter),
+              amount: _getDisplayAmount(),
+              currency: filter,
+            ),
+            true, // подсвечиваем
+            isConverted: true,
           ),
-          child: Text(
-            '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}',
-            style: const TextStyle(fontSize: 10),
-          ),
-        );
-      }).toList(),
+
+        ...account.currencyDetails.map((detail) {
+          final isHighlighted = detail.currency == filter;
+          return _miniBadge(detail, isHighlighted);
+        }),
+      ],
     );
   }
 
-  Widget _buildChangeIndicator(FundBankAccount account) {
+  Widget _miniBadge(
+    CurrencyModel detail,
+    bool isHighlighted, {
+    bool isConverted = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: isHighlighted ? const Color(0xFFEFF3F8) : Colors.grey[100],
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          color: isHighlighted
+              ? const Color(0xFF007AFF).withOpacity(0.3)
+              : Colors.transparent,
+        ),
+      ),
+      child: Text(
+        '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}${isConverted ? '*' : ''}',
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
+          color: isHighlighted ? const Color(0xFF007AFF) : Colors.black87,
+        ),
+      ),
+    );
+  }
+
+  String _getFlagFor(String code) {
+    switch (code) {
+      case 'USD':
+        return '🇺🇸';
+      case 'EUR':
+        return '🇪🇺';
+      case 'GBP':
+        return '🇬🇧';
+      case 'SAR':
+        return '🇸🇦';
+      default:
+        return '🏳️';
+    }
+  }
+
+  // Widget _buildCurrencyList(FundBankData account) {
+  //   return Wrap(
+  //     spacing: 4,
+  //     runSpacing: 4,
+  //     children: account.currencyDetails.map((detail) {
+  //       return Container(
+  //         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+  //         decoration: BoxDecoration(
+  //           color: Colors.grey[100],
+  //           borderRadius: BorderRadius.circular(4),
+  //         ),
+  //         child: Text(
+  //           '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}',
+  //           style: const TextStyle(fontSize: 10),
+  //         ),
+  //       );
+  //     }).toList(),
+  //   );
+  // }
+
+  Widget _buildChangeIndicator(FundBankData account) {
     final isPositive = account.todayChange >= 0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
