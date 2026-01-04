@@ -194,7 +194,7 @@ class AppSidebar extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: theme.bgLight,
-        borderRadius: BorderRadius.circular(AppDimens.cardRadius),
+        borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

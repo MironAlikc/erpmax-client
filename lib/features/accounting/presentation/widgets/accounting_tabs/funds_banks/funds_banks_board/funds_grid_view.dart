@@ -1,5 +1,5 @@
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
 import 'package:flutter/material.dart';
 
 class FundGridView extends StatelessWidget {

@@ -28,7 +28,7 @@ class AppPlaceholder extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       decoration: BoxDecoration(
         color: theme.white,
-        borderRadius: BorderRadius.circular(AppDimens.cardRadius),
+        borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
         border: Border.all(color: theme.gray300.withValues(alpha: 0.1)),
       ),
       child: Column(

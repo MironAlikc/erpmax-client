@@ -1,7 +1,12 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_color_extension.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class CurrencyToolbar extends StatelessWidget {
   final String? selected;
@@ -22,33 +27,46 @@ class CurrencyToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 1000;
 
         return Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(AppDimens.padding12),
           decoration: BoxDecoration(
             color: theme.white,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
           ),
-          child: isWide ? _wideLayout() : _narrowLayout(),
+          child: isWide
+              ? _wideLayout(localizations, theme)
+              : _narrowLayout(localizations, theme),
         );
       },
     );
   }
 
-  Widget _wideLayout() {
+  Widget _wideLayout(AppLocalizations localizations, AppColorExtension colors) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: AppDimens.rowWrapSpacing8,
+            runSpacing: AppDimens.rowWrapSpacing8,
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: [_filters(), _fundButton()],
+            children: [
+              _filters(localizations, colors),
+              AccountingHeaderBtn(
+                icon: LucideIcons.plus,
+                label: localizations.label_fund_bank,
+                textColor: Colors.white,
+                color: colors.sidebarActiveBgLight,
+                height: 20,
+                onTap: () {},
+              ),
+            ],
           ),
         ),
         const SizedBox(width: 12),
@@ -64,11 +82,28 @@ class CurrencyToolbar extends StatelessWidget {
     );
   }
 
-  Widget _narrowLayout() {
+  Widget _narrowLayout(
+    AppLocalizations localizations,
+    AppColorExtension colors,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Wrap(spacing: 8, runSpacing: 8, children: [_filters(), _fundButton()]),
+        Wrap(
+          spacing: AppDimens.rowWrapSpacing8,
+          runSpacing: AppDimens.rowWrapSpacing8,
+          children: [
+            _filters(localizations, colors),
+            AccountingHeaderBtn(
+              icon: LucideIcons.plus,
+              label: localizations.label_fund_bank,
+              textColor: Colors.white,
+              color: colors.sidebarActiveBgLight,
+              height: 20,
+              onTap: () {},
+            ),
+          ],
+        ),
         const SizedBox(height: 12),
         _Balances(
           allAccounts: allAccounts,
@@ -79,19 +114,54 @@ class CurrencyToolbar extends StatelessWidget {
     );
   }
 
-  Widget _filters() {
+  Widget _filters(AppLocalizations localizations, AppColorExtension colors) {
     return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+      spacing: AppDimens.rowWrapSpacing8,
+      runSpacing: AppDimens.rowWrapSpacing8,
       children: [
-        _chip('All', null),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: colors.warningLight,
+            borderRadius: BorderRadius.circular(AppDimens.inputRadius8),
+          ),
+          child: Center(
+            child: Icon(
+              LucideIcons.coins,
+              color: colors.warningText,
+              size: AppDimens.iconSize20,
+            ),
+          ),
+        ),
 
-        ...currencies.map((c) => _chip(c.currency, c.currency, c.flag)),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+          decoration: BoxDecoration(
+            color: colors.primaryLight,
+            borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
+          ),
+          child: Wrap(
+            spacing: AppDimens.rowWrapSpacing8,
+            runSpacing: AppDimens.rowWrapSpacing8,
+            children: [
+              _chip(colors, localizations.label_all, null),
+              ...currencies.map(
+                (c) => _chip(colors, c.currency, c.currency, c.flag),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
-  Widget _chip(String label, String? value, [String? flag]) {
+  Widget _chip(
+    AppColorExtension colors,
+    String label,
+    String? value, [
+    String? flag,
+  ]) {
     final active = selected == value;
 
     return GestureDetector(
@@ -99,44 +169,27 @@ class CurrencyToolbar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: active ? const Color(0xFFEFF3F8) : Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          color: active ? colors.white : colors.primaryLight,
+          borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
           border: Border.all(
-            color: active
-                ? const Color(0xFF007AFF).withOpacity(0.2)
-                : const Color(0xFFE3E6EB),
+            color: active ? colors.border : Colors.transparent,
           ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (flag != null) ...[
-              Text(flag, style: const TextStyle(fontSize: 14)),
+              Text(flag, style: AppTextStyles.tableHeader),
               const SizedBox(width: 6),
             ],
             Text(
               label,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: active ? const Color(0xFF007AFF) : Colors.black87,
+              style: AppTextStyles.label.copyWith(
+                color: active ? colors.textPrimary : colors.textSecondary,
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _fundButton() {
-    return ElevatedButton.icon(
-      onPressed: () {},
-      icon: const Icon(Icons.add, size: 18),
-      label: const Text('Fund/Bank'),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0B2C44),
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
   }
@@ -209,41 +262,31 @@ class BalanceCard extends StatefulWidget {
 class _BalanceCardState extends State<BalanceCard> {
   bool _isHovered = false;
 
-  Color _getBorderColor() {
+  Color _getBorderColor(AppColorExtension colors) {
     if (widget.isActive) {
-      return const Color(0xFF007AFF);
+      return colors.primaryLight;
     }
     if (_isHovered) {
-      return const Color(0xFF007AFF).withOpacity(0.5);
+      return colors.gray400;
     }
-    return const Color(0xFFE3E6EB);
+    return colors.gray300;
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: _getBorderColor(),
-            width: widget.isActive || _isHovered ? 1.5 : 1,
-          ),
-          color: widget.isActive ? const Color(0xFFEFF3F8) : Colors.white,
-          boxShadow: _isHovered && !widget.isActive
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: _getBorderColor(theme), width: 1),
+          color: widget.isActive ? theme.primaryFooter : theme.primaryLight,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -252,168 +295,34 @@ class _BalanceCardState extends State<BalanceCard> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(widget.flag, style: const TextStyle(fontSize: 18)),
+                Text(widget.flag, style: AppTextStyles.tableHeader),
                 const SizedBox(width: 8),
                 Text(
                   widget.amount,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: widget.isActive ? 16 : 14,
+                  style: AppTextStyles.sidebarItem.copyWith(
                     color: widget.isActive
-                        ? const Color(0xFF007AFF)
-                        : Colors.black,
+                        ? theme.textWhite
+                        : theme.textPrimary,
                   ),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   widget.currency,
-                  style: TextStyle(
+                  style: AppTextStyles.label.copyWith(
                     color: widget.isActive
-                        ? const Color(0xFF007AFF)
-                        : Colors.black54,
-                    fontSize: 12,
+                        ? theme.textWhite
+                        : theme.textSecondary,
                   ),
                 ),
               ],
             ),
-            if (!widget.isActive) ...[
-              const SizedBox(height: 4),
-              Text(
-                '${widget.amount} ${widget.currency}',
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 11),
-              ),
-            ],
+            const SizedBox(height: 4),
+            Text(
+              '${widget.amount} ${widget.currency}',
+              style: AppTextStyles.caption.copyWith(color: theme.gray500),
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SummaryCardsRow extends StatelessWidget {
-  final String? filter;
-  final List<FundBankData> data;
-
-  const SummaryCardsRow({super.key, required this.filter, required this.data});
-
-  static const double _minCardWidth = 220;
-  static const double _spacing = 12;
-  static const double _cardHeight = 90;
-
-  double calculateTotalInTargetCurrency() {
-    final targetCurrency = filter ?? 'SAR';
-    final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
-
-    double grandTotal = 0;
-
-    for (var account in data) {
-      for (var detail in account.currencyDetails) {
-        double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
-
-        double amountInTarget =
-            (detail.amount / currentCurrencyRate) * targetRate;
-
-        grandTotal += amountInTarget;
-      }
-    }
-    return grandTotal;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        final maxCardsPerRow = ((width + _spacing) / (_minCardWidth + _spacing))
-            .floor();
-        final crossAxisCount = maxCardsPerRow.clamp(1, 4);
-        final totalBalance = calculateTotalInTargetCurrency();
-        final label = filter ?? 'SAR';
-
-        return GridView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            mainAxisSpacing: _spacing,
-            crossAxisSpacing: _spacing,
-            childAspectRatio: _minCardWidth / _cardHeight,
-          ),
-          children: [
-            SummaryCard(
-              title: 'Total Balance ($label)',
-              value: totalBalance.toStringAsFixed(0),
-              color: Colors.blue,
-              height: 90,
-            ),
-            SummaryCard(
-              title: 'Total Receipts',
-              value: '+357 320',
-              color: Colors.green,
-              height: _cardHeight,
-            ),
-            SummaryCard(
-              title: 'Total Payments',
-              value: '-263 261',
-              color: Colors.red,
-              height: _cardHeight,
-            ),
-            SummaryCard(
-              title: 'Total Payments',
-              value: '-263 261',
-              color: Colors.green.shade700,
-              height: _cardHeight,
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class SummaryCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final Color color;
-  final double height;
-
-  const SummaryCard({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.color,
-    required this.height,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.black54),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
       ),
     );
   }

@@ -207,7 +207,7 @@ class ModuleActionButton extends StatelessWidget {
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDimens.chipRadius),
+            borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
           ),
           side: isPrimary ? BorderSide.none : BorderSide(color: theme.gray200),
         ),

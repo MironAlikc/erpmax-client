@@ -1198,4 +1198,24 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get desc_manage_accounts =>
       'Управление наличными средствами и банковскими счетами.';
+
+  @override
+  String get label_fund_bank => 'Касса/Банк';
+
+  @override
+  String get label_all => 'Все';
+
+  @override
+  String totalBalanceWithLabel(Object label) {
+    return 'Общий баланс ($label)';
+  }
+
+  @override
+  String get total_receipts => 'Всего поступлений';
+
+  @override
+  String get total_payments => 'Всего выплат';
+
+  @override
+  String get todays_net_flow => 'Чистый поток за сегодня';
 }
