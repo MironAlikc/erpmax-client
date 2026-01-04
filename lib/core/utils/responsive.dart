@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:flutter/material.dart';
 
 class Responsive extends StatelessWidget {
@@ -14,23 +14,23 @@ class Responsive extends StatelessWidget {
   });
 
   static bool isMobile(BuildContext context) =>
-      MediaQuery.sizeOf(context).width < AppDesign.mobileBreakpoint;
+      MediaQuery.sizeOf(context).width < AppDimens.mobileBreakpoint;
 
   static bool isTablet(BuildContext context) =>
-      MediaQuery.sizeOf(context).width >= AppDesign.mobileBreakpoint &&
-      MediaQuery.sizeOf(context).width < AppDesign.desktopBreakpoint;
+      MediaQuery.sizeOf(context).width >= AppDimens.mobileBreakpoint &&
+      MediaQuery.sizeOf(context).width < AppDimens.desktopBreakpoint;
 
   static bool isDesktop(BuildContext context) =>
-      MediaQuery.sizeOf(context).width >= AppDesign.desktopBreakpoint;
+      MediaQuery.sizeOf(context).width >= AppDimens.desktopBreakpoint;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
 
-    if (width >= AppDesign.desktopBreakpoint) {
+    if (width >= AppDimens.desktopBreakpoint) {
       return desktop;
     }
-    if (width >= AppDesign.mobileBreakpoint && tablet != null) {
+    if (width >= AppDimens.mobileBreakpoint && tablet != null) {
       return tablet!;
     }
     return mobile;

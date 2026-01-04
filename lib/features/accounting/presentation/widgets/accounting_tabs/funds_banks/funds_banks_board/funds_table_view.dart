@@ -1,13 +1,15 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_dashboard.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
 import 'package:flutter/material.dart';
 
-class FundsBanksTable extends StatelessWidget {
-  final List<FundBankAccount> accounts;
+class FundsTableView extends StatelessWidget {
+  final List<FundBankData> accounts;
+  final String? activeFilter;
 
-  const FundsBanksTable({super.key, required this.accounts});
+  const FundsTableView({super.key, required this.accounts, this.activeFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,12 @@ class FundsBanksTable extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _FundsTableHeader(),
+          _FundsTableHeader(activeFilter: activeFilter),
           Divider(height: 1, color: theme.border),
-          ...accounts.map((account) => FundsRow(account: account)),
-          _FundsTableFooter(),
+          ...accounts.map(
+            (account) => FundsRow(account: account, activeFilter: activeFilter),
+          ),
+          _FundsTableFooter(accounts: accounts, activeFilter: activeFilter),
         ],
       ),
     );
@@ -32,9 +36,10 @@ class FundsBanksTable extends StatelessWidget {
 }
 
 class FundsRow extends StatefulWidget {
-  final FundBankAccount account;
+  final FundBankData account;
+  final String? activeFilter;
 
-  const FundsRow({super.key, required this.account});
+  const FundsRow({super.key, required this.account, this.activeFilter});
 
   @override
   State<FundsRow> createState() => _FundsRowState();
@@ -43,9 +48,33 @@ class FundsRow extends StatefulWidget {
 class _FundsRowState extends State<FundsRow> {
   bool _isHovered = false;
 
+  double getAmountForCurrency(String targetCurrency) {
+    final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
+    double totalEquivalent = 0;
+
+    for (var detail in widget.account.currencyDetails) {
+      double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
+
+      totalEquivalent += (detail.amount / currentCurrencyRate) * targetRate;
+    }
+
+    if (totalEquivalent == 0 && widget.account.balance > 0) {
+      double accountBaseRate = exchangeRates[widget.account.currency] ?? 1.0;
+      totalEquivalent = (widget.account.balance / accountBaseRate) * targetRate;
+    }
+
+    return totalEquivalent;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final String currentDisplayCurrency = widget.activeFilter ?? 'SAR';
+
+    final double currentDisplayAmount = getAmountForCurrency(
+      currentDisplayCurrency,
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -56,7 +85,6 @@ class _FundsRowState extends State<FundsRow> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            // Column 1: Bank Name + Icon
             Expanded(
               flex: 3,
               child: Row(
@@ -89,18 +117,20 @@ class _FundsRowState extends State<FundsRow> {
                 ],
               ),
             ),
-            // Column 2: Type Badge
             Expanded(
               flex: 2,
               child: Center(child: _buildTypeBadge(widget.account)),
             ),
-            // Column 3: Balance
-            Expanded(flex: 2, child: _buildBalanceInfo(widget.account)),
-            // Column 4: Currency List
+            Expanded(
+              flex: 2,
+              child: _buildBalanceInfo(
+                widget.account,
+                currentDisplayAmount,
+                currentDisplayCurrency,
+              ),
+            ),
             Expanded(flex: 3, child: _buildCurrencyList(widget.account)),
-            // Column 5: Today's Change
             Expanded(flex: 2, child: _buildChangeIndicator(widget.account)),
-            // Column 6: Last Activity
             Expanded(
               flex: 2,
               child: Text(
@@ -109,7 +139,6 @@ class _FundsRowState extends State<FundsRow> {
                 textAlign: TextAlign.center,
               ),
             ),
-            // Column 7: Actions
             SizedBox(
               width: 90,
               child: Row(
@@ -127,7 +156,23 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildBankIcon(FundBankAccount account) {
+  double _getDisplayAmount() {
+    final filter = widget.activeFilter;
+
+    if (filter == null) return widget.account.balance;
+
+    final existingDetail = widget.account.currencyDetails.firstWhere(
+      (d) => d.currency == filter,
+      orElse: () => CurrencyModel(flag: '', amount: -1, currency: ''),
+    );
+
+    if (existingDetail.amount != -1) return existingDetail.amount;
+
+    double rate = exchangeRates[filter] ?? 1.0;
+    return widget.account.balance * rate;
+  }
+
+  Widget _buildBankIcon(FundBankData account) {
     final isCash = account.type == 'Cash';
     return Container(
       padding: const EdgeInsets.all(8),
@@ -143,7 +188,7 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildTypeBadge(FundBankAccount account) {
+  Widget _buildTypeBadge(FundBankData account) {
     final isCash = account.type == 'Cash';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -175,28 +220,26 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  String _formatNum(double number) {
-    return number
-        .toStringAsFixed(0)
-        .replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]} ',
-        );
-  }
-
-  Widget _buildBalanceInfo(FundBankAccount account) {
+  Widget _buildBalanceInfo(
+    FundBankData account,
+    double amount,
+    String currency,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _formatNum(account.balance),
+          '${formatNum(amount)} $currency',
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Color(0xFF4CAF50),
           ),
         ),
-        if (account.isConverted)
+        if (widget.activeFilter != null &&
+            !account.currencyDetails.any(
+              (d) => d.currency == widget.activeFilter,
+            ))
           const Text(
             'converted',
             style: TextStyle(fontSize: 10, color: Color(0xFFFF9800)),
@@ -205,27 +248,74 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  Widget _buildCurrencyList(FundBankAccount account) {
+  Widget _buildCurrencyList(FundBankData account) {
+    final filter = widget.activeFilter;
+
+    if (filter == null) {
+      return Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: account.currencyDetails
+            .map((detail) => _miniBadge(detail, false))
+            .toList(),
+      );
+    }
+
+    bool existsInDetails = account.currencyDetails.any(
+      (d) => d.currency == filter,
+    );
+
     return Wrap(
       spacing: 4,
       runSpacing: 4,
-      children: account.currencyDetails.map((detail) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(4),
+      children: [
+        if (!existsInDetails)
+          _miniBadge(
+            CurrencyModel(
+              flag: getFlagFor(filter),
+              amount: _getDisplayAmount(),
+              currency: filter,
+            ),
+            true,
+            isConverted: true,
           ),
-          child: Text(
-            '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}',
-            style: const TextStyle(fontSize: 10),
-          ),
-        );
-      }).toList(),
+
+        ...account.currencyDetails.map((detail) {
+          final isHighlighted = detail.currency == filter;
+          return _miniBadge(detail, isHighlighted);
+        }),
+      ],
     );
   }
 
-  Widget _buildChangeIndicator(FundBankAccount account) {
+  Widget _miniBadge(
+    CurrencyModel detail,
+    bool isHighlighted, {
+    bool isConverted = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: isHighlighted ? const Color(0xFFEFF3F8) : Colors.grey[100],
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          color: isHighlighted
+              ? const Color(0xFF007AFF).withOpacity(0.3)
+              : Colors.transparent,
+        ),
+      ),
+      child: Text(
+        '${detail.flag} ${formatNum(detail.amount)} ${detail.currency}${isConverted ? '*' : ''}',
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
+          color: isHighlighted ? const Color(0xFF007AFF) : Colors.black87,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChangeIndicator(FundBankData account) {
     final isPositive = account.todayChange >= 0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -251,12 +341,18 @@ class _FundsRowState extends State<FundsRow> {
 }
 
 class _FundsTableHeader extends StatelessWidget {
+  final String? activeFilter;
+
+  const _FundsTableHeader({this.activeFilter});
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    final String currentCurrency = activeFilter ?? 'SAR';
 
     return Container(
       decoration: BoxDecoration(
@@ -284,7 +380,7 @@ class _FundsTableHeader extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              'Balance(SAR)',
+              'Balance($currentCurrency)',
               style: style,
               textAlign: TextAlign.start,
             ),
@@ -330,12 +426,37 @@ class _FundsTableHeader extends StatelessWidget {
 }
 
 class _FundsTableFooter extends StatelessWidget {
+  final List<FundBankData> accounts;
+  final String? activeFilter;
+
+  const _FundsTableFooter({required this.accounts, this.activeFilter});
+
+  // Метод подсчета общей суммы по всем банкам
+  double _calculateGrandTotal() {
+    final targetCurrency = activeFilter ?? 'SAR';
+    final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
+
+    double grandTotal = 0;
+
+    for (var account in accounts) {
+      for (var detail in account.currencyDetails) {
+        double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
+        // Конвертация: (Сумма / Курс этой валюты) * Курс цели
+        grandTotal += (detail.amount / currentCurrencyRate) * targetRate;
+      }
+    }
+    return grandTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    final totalAmount = _calculateGrandTotal();
+    final displayCurrency = activeFilter ?? 'SAR';
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
@@ -348,10 +469,13 @@ class _FundsTableFooter extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(flex: 3, child: Text('Count: 4', style: style)),
+          Expanded(
+            flex: 3,
+            child: Text('Count: ${accounts.length}', style: style),
+          ),
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(flex: 2, child: Text('', style: style)),
-          Expanded(flex: 3, child: Text('352 720', style: style)),
+          Expanded(flex: 3, child: Text(formatNum(totalAmount), style: style)),
           Expanded(
             flex: 2,
             child: Text('8 500', style: style, textAlign: TextAlign.center),
@@ -359,7 +483,11 @@ class _FundsTableFooter extends StatelessWidget {
           Expanded(flex: 2, child: Text('', style: style)),
           SizedBox(
             width: 90,
-            child: Text('SAR', style: style, textAlign: TextAlign.center),
+            child: Text(
+              displayCurrency,
+              style: style,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),

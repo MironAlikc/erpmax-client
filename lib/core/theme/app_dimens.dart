@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract final class AppDesign {
+abstract final class AppDimens {
   static const double mobileBreakpoint = 600.0;
   static const double tabletBreakpoint = 900.0;
   static const double desktopBreakpoint = 1100.0;
@@ -32,9 +32,9 @@ abstract final class AppDesign {
 }
 
 abstract final class AppBreakpoints {
-  static const double mobile = AppDesign.mobileBreakpoint;
-  static const double tablet = AppDesign.tabletBreakpoint;
-  static const double desktop = AppDesign.desktopBreakpoint;
+  static const double mobile = AppDimens.mobileBreakpoint;
+  static const double tablet = AppDimens.tabletBreakpoint;
+  static const double desktop = AppDimens.desktopBreakpoint;
 
   static bool isMobile(BuildContext context) =>
       MediaQuery.sizeOf(context).width < mobile;

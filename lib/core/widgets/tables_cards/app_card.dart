@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget {
   final Widget child;
@@ -27,7 +27,7 @@ class AppCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor ?? theme.white,
         borderRadius: BorderRadius.circular(
-          borderRadius ?? AppDesign.cardRadius,
+          borderRadius ?? AppDimens.cardRadius,
         ),
         border: hasBorder
             ? Border.all(color: theme.gray200.withOpacity(0.5))

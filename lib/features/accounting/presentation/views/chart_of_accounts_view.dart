@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_header.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/chart_of_accounts/chart_of_accounts_table.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class ChartOfAccountsView extends StatelessWidget {
         .toList();
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDesign.pagePadding),
+      padding: const EdgeInsets.all(AppDimens.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

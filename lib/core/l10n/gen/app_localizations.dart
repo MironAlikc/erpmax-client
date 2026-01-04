@@ -2349,6 +2349,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Balance'**
   String get column_balance;
+
+  /// No description provided for @desc_manage_accounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage cash funds and bank accounts.'**
+  String get desc_manage_accounts;
 }
 
 class _AppLocalizationsDelegate

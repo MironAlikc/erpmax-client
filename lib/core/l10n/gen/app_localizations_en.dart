@@ -1186,4 +1186,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get column_balance => 'Balance';
+
+  @override
+  String get desc_manage_accounts => 'Manage cash funds and bank accounts.';
 }

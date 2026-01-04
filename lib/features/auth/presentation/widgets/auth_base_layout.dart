@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class AuthBaseLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppDesign.desktopBreakpoint;
+    final isDesktop = size.width >= AppDimens.desktopBreakpoint;
 
     return Scaffold(
       backgroundColor: theme.gray50,
@@ -24,9 +24,9 @@ class AuthBaseLayout extends StatelessWidget {
       body: Row(
         children: [
           if (isDesktop)
-            Expanded(flex: AppDesign.authBannerFlex, child: sideBanner),
+            Expanded(flex: AppDimens.authBannerFlex, child: sideBanner),
           Expanded(
-            flex: isDesktop ? AppDesign.authFormFlex : 1,
+            flex: isDesktop ? AppDimens.authFormFlex : 1,
             child: Container(
               color: theme.white,
               height: double.infinity,
@@ -34,18 +34,18 @@ class AuthBaseLayout extends StatelessWidget {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
                     vertical: 40,
-                    horizontal: AppDesign.pagePadding,
+                    horizontal: AppDimens.pagePadding,
                   ),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
-                      maxWidth: AppDesign.maxFormWidth,
+                      maxWidth: AppDimens.maxFormWidth,
                     ),
                     child: Container(
-                      padding: const EdgeInsets.all(AppDesign.formInnerPadding),
+                      padding: const EdgeInsets.all(AppDimens.formInnerPadding),
                       decoration: BoxDecoration(
                         color: theme.white,
                         borderRadius: BorderRadius.circular(
-                          AppDesign.cardRadius,
+                          AppDimens.cardRadius,
                         ),
                         border: Border.all(
                           color: theme.textDisabled.withValues(alpha: 0.1),

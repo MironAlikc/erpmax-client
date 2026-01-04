@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -52,13 +52,13 @@ class _SignupFormState extends State<SignupForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SignupHeader(),
-          const SizedBox(height: AppDesign.sectionGap),
+          const SizedBox(height: AppDimens.sectionGap),
 
           const SocialAuthButtons(),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           DividerWithText(text: localizations.or),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           _FieldLabel(text: localizations.email),
           AppTextField(
@@ -69,7 +69,7 @@ class _SignupFormState extends State<SignupForm> {
                 ? localizations.invalidEmail
                 : null,
           ),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           _FieldLabel(text: localizations.password),
           AppTextField(
@@ -89,7 +89,7 @@ class _SignupFormState extends State<SignupForm> {
                   setState(() => _isPasswordVisible = !_isPasswordVisible),
             ),
           ),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           _FieldLabel(text: localizations.confirmPassword),
           AppTextField(
@@ -115,13 +115,13 @@ class _SignupFormState extends State<SignupForm> {
                   setState(() => _isConfirmVisible = !_isConfirmVisible),
             ),
           ),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           _TermsCheckbox(
             value: _isTermsAccepted,
             onChanged: (v) => setState(() => _isTermsAccepted = v ?? false),
           ),
-          const SizedBox(height: AppDesign.sectionGap),
+          const SizedBox(height: AppDimens.sectionGap),
 
           AppButton(
             text: localizations.signUp,

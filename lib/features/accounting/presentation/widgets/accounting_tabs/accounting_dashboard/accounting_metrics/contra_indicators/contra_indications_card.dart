@@ -11,7 +11,6 @@ class MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    // final statusColor = _getStatusColor(theme);
 
     return Container(
       padding: const EdgeInsets.all(16),

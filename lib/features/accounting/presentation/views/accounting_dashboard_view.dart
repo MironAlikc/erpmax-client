@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_header/accounting_header.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_control_section/accounts_control_section.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/accounting_dashboard/accounting_metrics/accounts_watchilst/accounts_watchlist.dart';
@@ -21,7 +21,7 @@ class AccountingDashboardView extends StatelessWidget {
     // === ContraIndicatorsMetrics ===
     const double cardMinWidth = 220;
     const double spacing = 16;
-    const double horizontalPadding = AppDesign.pagePadding * 2;
+    const double horizontalPadding = AppDimens.pagePadding * 2;
 
     final double requiredWidthForFour =
         (cardMinWidth * 4) + (spacing * 3) + horizontalPadding;
@@ -31,7 +31,7 @@ class AccountingDashboardView extends StatelessWidget {
     final bool isMobile = screenWidth < 1100;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDesign.pagePadding),
+      padding: const EdgeInsets.all(AppDimens.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
