@@ -1,7 +1,7 @@
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
 
 class AppPageLayout extends StatelessWidget {
   final String title;
@@ -32,7 +32,7 @@ class AppPageLayout extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppDesign.pagePadding,
+                horizontal: AppDimens.pagePadding,
                 vertical: 20,
               ),
               decoration: BoxDecoration(
@@ -81,11 +81,11 @@ class AppPageLayout extends StatelessWidget {
             Expanded(
               child: isScrollable
                   ? SingleChildScrollView(
-                      padding: const EdgeInsets.all(AppDesign.pagePadding),
+                      padding: const EdgeInsets.all(AppDimens.pagePadding),
                       child: child,
                     )
                   : Padding(
-                      padding: const EdgeInsets.all(AppDesign.pagePadding),
+                      padding: const EdgeInsets.all(AppDimens.pagePadding),
                       child: child,
                     ),
             ),

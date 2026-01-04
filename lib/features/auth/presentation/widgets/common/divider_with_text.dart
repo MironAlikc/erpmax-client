@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class DividerWithText extends StatelessWidget {
       children: [
         Expanded(child: Divider(color: theme.gray200)),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppDesign.elementGap),
+          padding: const EdgeInsets.symmetric(horizontal: AppDimens.elementGap),
           child: Text(
             text,
             style: AppTextStyles.bodySmall.copyWith(color: theme.gray400),
@@ -42,7 +42,7 @@ class SocialAuthButtons extends StatelessWidget {
             onPressed: () {},
           ),
         ),
-        const SizedBox(width: AppDesign.elementGap),
+        const SizedBox(width: AppDimens.elementGap),
         Expanded(
           child: _SocialAuthButton(
             iconPath: 'assets/svg/apple.svg',
@@ -79,7 +79,7 @@ class _SocialAuthButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14),
         side: BorderSide(color: theme.gray200),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.buttonRadius),
+          borderRadius: BorderRadius.circular(AppDimens.buttonRadius),
         ),
         foregroundColor: theme.primary.withValues(alpha: 0.1),
       ),

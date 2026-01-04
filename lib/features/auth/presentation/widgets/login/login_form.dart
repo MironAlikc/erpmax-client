@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -56,13 +56,13 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _FormHeader(),
-          const SizedBox(height: AppDesign.sectionGap),
+          const SizedBox(height: AppDimens.sectionGap),
 
           const SocialAuthButtons(),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           DividerWithText(text: localizations.or),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           AppTextField(
             controller: _emailController,
@@ -82,7 +82,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
 
           _PasswordField(
             controller: _passwordController,
@@ -98,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                 : (val) => setState(() => _remember = val ?? false),
           ),
 
-          const SizedBox(height: AppDesign.sectionGap),
+          const SizedBox(height: AppDimens.sectionGap),
 
           AppButton(
             text: localizations.signIn,

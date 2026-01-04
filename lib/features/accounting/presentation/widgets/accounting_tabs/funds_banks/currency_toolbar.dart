@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class CurrencyToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 1000;
@@ -27,7 +30,7 @@ class CurrencyToolbar extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.white,
             borderRadius: BorderRadius.circular(14),
           ),
           child: isWide ? _wideLayout() : _narrowLayout(),

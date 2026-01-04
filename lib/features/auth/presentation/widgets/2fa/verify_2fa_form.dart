@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -74,7 +74,7 @@ class _Verify2faFormState extends State<Verify2faForm> {
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,9 +89,9 @@ class _Verify2faFormState extends State<Verify2faForm> {
           }),
         ),
 
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
         _buildResendTimer(),
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
 
         AppButton(
           onPressed: _isLoading ? null : _onVerify,

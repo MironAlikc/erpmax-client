@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/currency_toolbar.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_board/funds_banks_board.dart';
@@ -106,7 +106,7 @@ class _FundsBanksViewState extends State<FundsBanksView> {
         final availableCurrencies = _getUniqueCurrencies(accounts);
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(AppDesign.pagePadding),
+          padding: const EdgeInsets.all(AppDimens.pagePadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

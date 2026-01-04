@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/theme/app_design.dart';
 import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
 import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
@@ -10,6 +8,8 @@ import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:erpmax_client/core/widgets/tables_cards/app_card.dart';
 import 'package:erpmax_client/features/saas_control/presentation/widgets/panels/subscriber_detail_panel.dart';
+import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class StatData {
   final String title;
@@ -179,17 +179,17 @@ class _ReportsContentState extends State<ReportsContent> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(AppDesign.pagePadding),
+      padding: const EdgeInsets.all(AppDimens.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: AppDesign.elementGap),
+          const SizedBox(height: AppDimens.elementGap),
           ErpMaxTabFilter(
             items: _reportTabs,
             selectedItem: _selectedReportType,
             onSelected: (name) => setState(() => _selectedReportType = name),
           ),
-          const SizedBox(height: AppDesign.sectionGap),
+          const SizedBox(height: AppDimens.sectionGap),
           _buildActiveReportContent(),
           const SizedBox(height: 40),
         ],
@@ -244,9 +244,9 @@ class _ReportsContentState extends State<ReportsContent> {
             isPositive: false,
           ),
         ]),
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
         _buildReportTableSection("New Subscribers", _newSubscribers),
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
         _buildReportTableSection("Expiring Soon", _expiringSubscribers),
       ],
     );
@@ -278,7 +278,7 @@ class _ReportsContentState extends State<ReportsContent> {
             isPositive: true,
           ),
         ]),
-        const SizedBox(height: AppDesign.sectionGap),
+        const SizedBox(height: AppDimens.sectionGap),
         _buildRevenueTableContent(),
       ],
     );
