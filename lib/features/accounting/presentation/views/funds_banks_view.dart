@@ -3,6 +3,7 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_board/funds_banks_board.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_header.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_summary_row.dart';
 import 'package:flutter/widgets.dart';
 
 final List<FundBankData> accounts = [
@@ -118,7 +119,8 @@ class _FundsBanksViewState extends State<FundsBanksView> {
                 allAccounts: accounts,
                 onChanged: (v) => _selectedCurrency.value = v,
               ),
-              SummaryCardsRow(filter: filter, data: accounts),
+              SizedBox(height: 16),
+              FundsSummaryRow(filter: filter, data: accounts),
               const SizedBox(height: 24),
               FundsBanksBoard(data: accounts, activeFilter: filter),
             ],

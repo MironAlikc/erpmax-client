@@ -391,5 +391,7 @@
   "column_account_name": "اسم الحساب",
   "column_account_type": "نوع الحساب",
   "column_balance": "الرصيد",
-  "desc_manage_accounts": "إدارة الصناديق النقدية والحسابات البنكية."
+  "desc_manage_accounts": "إدارة الصناديق النقدية والحسابات البنكية.",
+  "label_fund_bank": "الصندوق/البنك",
+  "label_all": "الكل"
 }

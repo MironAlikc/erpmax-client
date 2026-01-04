@@ -1189,4 +1189,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get desc_manage_accounts => 'Manage cash funds and bank accounts.';
+
+  @override
+  String get label_fund_bank => 'Fund/Bank';
+
+  @override
+  String get label_all => 'All';
 }

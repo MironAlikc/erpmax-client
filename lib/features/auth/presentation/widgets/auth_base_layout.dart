@@ -45,7 +45,7 @@ class AuthBaseLayout extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: theme.white,
                         borderRadius: BorderRadius.circular(
-                          AppDimens.cardRadius,
+                          AppDimens.cardRadius12,
                         ),
                         border: Border.all(
                           color: theme.textDisabled.withValues(alpha: 0.1),

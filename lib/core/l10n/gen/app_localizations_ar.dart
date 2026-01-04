@@ -1192,4 +1192,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get desc_manage_accounts =>
       'إدارة الصناديق النقدية والحسابات البنكية.';
+
+  @override
+  String get label_fund_bank => 'الصندوق/البنك';
+
+  @override
+  String get label_all => 'الكل';
 }

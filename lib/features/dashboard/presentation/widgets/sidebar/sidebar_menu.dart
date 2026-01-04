@@ -126,7 +126,7 @@ class SidebarMenu extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: context.theme.appColor.primary.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(AppDimens.cardRadius),
+        borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
       ),
       child: Column(
         children: [

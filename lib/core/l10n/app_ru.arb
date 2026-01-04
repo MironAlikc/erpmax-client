@@ -397,5 +397,7 @@
   "column_account_name": "Название счета",
   "column_account_type": "Тип счета",
   "column_balance": "Баланс",
-  "desc_manage_accounts": "Управление наличными средствами и банковскими счетами."
+  "desc_manage_accounts": "Управление наличными средствами и банковскими счетами.",
+  "label_fund_bank": "Касса/Банк",
+  "label_all": "Все"
 }

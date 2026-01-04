@@ -71,7 +71,6 @@ class _AccountingRootPageState extends State<AccountingRootPage>
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 600;
-        // final currentTab = tabs[_tabController.index];
 
         return Scaffold(
           backgroundColor: context.theme.appColor.gray50,

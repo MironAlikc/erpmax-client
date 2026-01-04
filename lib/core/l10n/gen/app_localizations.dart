@@ -2355,6 +2355,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage cash funds and bank accounts.'**
   String get desc_manage_accounts;
+
+  /// No description provided for @label_fund_bank.
+  ///
+  /// In en, this message translates to:
+  /// **'Fund/Bank'**
+  String get label_fund_bank;
+
+  /// No description provided for @label_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get label_all;
 }
 
 class _AppLocalizationsDelegate
