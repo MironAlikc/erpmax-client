@@ -1195,4 +1195,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get label_all => 'All';
+
+  @override
+  String totalBalanceWithLabel(Object label) {
+    return 'Total Balance ($label)';
+  }
+
+  @override
+  String get total_receipts => 'Total Receipts';
+
+  @override
+  String get total_payments => 'Total Payments';
+
+  @override
+  String get todays_net_flow => 'Today\'s Net Flow';
 }

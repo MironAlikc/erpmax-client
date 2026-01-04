@@ -1,5 +1,10 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/acc_formatters.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/color_icon_btn.dart';
 import 'package:flutter/material.dart';
 
 class FundsSummaryRow extends StatelessWidget {
@@ -10,7 +15,7 @@ class FundsSummaryRow extends StatelessWidget {
 
   static const double _minCardWidth = 220;
   static const double _spacing = 12;
-  static const double _cardHeight = 90;
+  static const double _cardHeight = 50;
 
   double calculateTotalInTargetCurrency() {
     final targetCurrency = filter ?? 'SAR';
@@ -35,6 +40,8 @@ class FundsSummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final localizations = AppLocalizations.of(context);
+
         final width = constraints.maxWidth;
         final maxCardsPerRow = ((width + _spacing) / (_minCardWidth + _spacing))
             .floor();
@@ -53,27 +60,23 @@ class FundsSummaryRow extends StatelessWidget {
           ),
           children: [
             SummaryCard(
-              title: 'Total Balance ($label)',
+              title: localizations.totalBalanceWithLabel(label),
               value: totalBalance.toStringAsFixed(0),
-              color: Colors.blue,
-              height: 90,
-            ),
-            SummaryCard(
-              title: 'Total Receipts',
-              value: '+357 320',
-              color: Colors.green,
               height: _cardHeight,
             ),
             SummaryCard(
-              title: 'Total Payments',
-              value: '-263 261',
-              color: Colors.red,
+              title: localizations.total_receipts,
+              value: '+357320',
               height: _cardHeight,
             ),
             SummaryCard(
-              title: 'Total Payments',
-              value: '-263 261',
-              color: Colors.green.shade700,
+              title: localizations.total_payments,
+              value: '-263261',
+              height: _cardHeight,
+            ),
+            SummaryCard(
+              title: localizations.todays_net_flow,
+              value: '-263261',
               height: _cardHeight,
             ),
           ],
@@ -86,44 +89,72 @@ class FundsSummaryRow extends StatelessWidget {
 class SummaryCard extends StatelessWidget {
   final String title;
   final String value;
-  final Color color;
   final double height;
 
   const SummaryCard({
     super.key,
     required this.title,
     required this.value,
-    required this.color,
     required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+    final Color statusColor = AccFormatters.getChangeColor(context, value);
+    final String displayText = AccFormatters.formatChangeText(value);
+    final IconData statusIcon = AccFormatters.getChangeIcon(value);
+
     return Container(
       height: height,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.white,
         borderRadius: BorderRadius.circular(14),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
         children: [
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
+          ColorIconBtn(
+            radius: 6.0,
+            size: 24.0,
+            iconSize: 14.0,
+            colorIcon: statusColor,
+            color: statusColor.withValues(alpha: 0.08),
+            icon: statusIcon,
           ),
-          const SizedBox(height: 6),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.black54),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    displayText,
+                    style: AppTextStyles.h4.copyWith(
+                      color: statusColor,
+                      height: 1.0,
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                SizedBox(height: 4),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textSecondary,
+                      height: 1.0,
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

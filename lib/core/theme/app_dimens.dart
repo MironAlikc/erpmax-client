@@ -25,7 +25,7 @@ abstract final class AppDimens {
   static const double filterSpacing = 12;
   static const double tableHeaderHeight = 48;
   static const double tableRowHeight = 56;
-  static const double iconSize = 20;
+  static const double iconSize20 = 20;
   static const double avatarSizeSmall = 32;
   static const double avatarSizeMed = 40;
   static const Duration sidebarDuration = Duration(milliseconds: 300);

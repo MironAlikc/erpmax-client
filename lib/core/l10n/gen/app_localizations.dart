@@ -2367,6 +2367,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get label_all;
+
+  /// No description provided for @totalBalanceWithLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Balance ({label})'**
+  String totalBalanceWithLabel(Object label);
+
+  /// No description provided for @total_receipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Receipts'**
+  String get total_receipts;
+
+  /// No description provided for @total_payments.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Payments'**
+  String get total_payments;
+
+  /// No description provided for @todays_net_flow.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Net Flow'**
+  String get todays_net_flow;
 }
 
 class _AppLocalizationsDelegate

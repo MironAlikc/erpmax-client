@@ -1198,4 +1198,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get label_all => 'الكل';
+
+  @override
+  String totalBalanceWithLabel(Object label) {
+    return 'إجمالي الرصيد ($label)';
+  }
+
+  @override
+  String get total_receipts => 'إجمالي المقبوضات';
+
+  @override
+  String get total_payments => 'إجمالي المدفوعات';
+
+  @override
+  String get todays_net_flow => 'صافي تدفق اليوم';
 }

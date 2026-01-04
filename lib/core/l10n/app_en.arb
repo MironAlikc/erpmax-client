@@ -400,5 +400,9 @@
   "column_balance": "Balance",
   "desc_manage_accounts": "Manage cash funds and bank accounts.",
   "label_fund_bank": "Fund/Bank",
-  "label_all": "All"
+  "label_all": "All",
+  "totalBalanceWithLabel": "Total Balance ({label})",
+  "total_receipts": "Total Receipts",
+  "total_payments": "Total Payments",
+  "todays_net_flow": "Today's Net Flow"
 }

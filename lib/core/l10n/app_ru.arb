@@ -399,5 +399,9 @@
   "column_balance": "Баланс",
   "desc_manage_accounts": "Управление наличными средствами и банковскими счетами.",
   "label_fund_bank": "Касса/Банк",
-  "label_all": "Все"
+  "label_all": "Все",
+  "totalBalanceWithLabel": "Общий баланс ({label})",
+  "total_receipts": "Всего поступлений",
+  "total_payments": "Всего выплат",
+  "todays_net_flow": "Чистый поток за сегодня"
 }
