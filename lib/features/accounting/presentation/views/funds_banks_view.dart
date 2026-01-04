@@ -63,7 +63,6 @@ final List<FundBankData> accounts = [
 ];
 
 class FundsBanksView extends StatefulWidget {
-  // Теперь StatefulWidget
   final String title;
   const FundsBanksView({super.key, required this.title});
 
@@ -72,7 +71,6 @@ class FundsBanksView extends StatefulWidget {
 }
 
 class _FundsBanksViewState extends State<FundsBanksView> {
-  // Выносим notifier сюда. Он создается один раз за жизнь виджета.
   late final ValueNotifier<String?> _selectedCurrency;
 
   @override
@@ -83,11 +81,10 @@ class _FundsBanksViewState extends State<FundsBanksView> {
 
   @override
   void dispose() {
-    _selectedCurrency.dispose(); // Не забываем освобождать ресурсы
+    _selectedCurrency.dispose();
     super.dispose();
   }
 
-  // Вспомогательная функция (можно оставить здесь или вынести в утилиты)
   List<CurrencyModel> _getUniqueCurrencies(List<FundBankData> data) {
     final Map<String, CurrencyModel> unique = {};
     for (var account in data) {
@@ -118,12 +115,10 @@ class _FundsBanksViewState extends State<FundsBanksView> {
                 selected: filter,
                 currencies: availableCurrencies,
                 allAccounts: accounts,
-                onChanged: (v) => _selectedCurrency.value =
-                    v, // Обновляем существующий notifier
+                onChanged: (v) => _selectedCurrency.value = v,
               ),
               SummaryCardsRow(filter: filter, data: accounts),
               const SizedBox(height: 24),
-              // Теперь пробрасываем в таблицу
               FundsAndBanksWidget(data: accounts, activeFilter: filter),
             ],
           ),
@@ -132,58 +127,3 @@ class _FundsBanksViewState extends State<FundsBanksView> {
     );
   }
 }
-
-// class FundsBanksView extends StatelessWidget {
-//   final String title;
-//   const FundsBanksView({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final selectedCurrency = ValueNotifier<String?>(null);
-
-//     List<CurrencyModel> getUniqueCurrencies(List<FundBankData> data) {
-//       final Map<String, CurrencyModel> unique = {};
-
-//       for (var account in data) {
-//         for (var details in account.currencyDetails) {
-//           if (!unique.containsKey(details.currency)) {
-//             unique[details.currency] = details;
-//           }
-//         }
-//       }
-//       return unique.values.toList();
-//     }
-
-//     return ValueListenableBuilder<String?>(
-//       valueListenable: selectedCurrency,
-//       builder: (context, filter, _) {
-//         final availableCurrencies = getUniqueCurrencies(accounts);
-
-//         // final filteredData = accounts.where((fund) {
-//         //   if (filter == null) return true;
-//         //   return fund.currencyDetails.any((d) => d.currency == filter);
-//         // }).toList();
-
-//         return SingleChildScrollView(
-//           padding: const EdgeInsets.all(AppDesign.pagePadding),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: [
-//               FundsBanksHeader(title: title),
-//               const SizedBox(height: 24),
-//               CurrencyToolbar(
-//                 selected: filter,
-//                 currencies: availableCurrencies,
-//                 allAccounts: accounts,
-//                 onChanged: (v) => selectedCurrency.value = v,
-//               ),
-//               SummaryCardsRow(filter: filter, data: accounts),
-//               const SizedBox(height: 24),
-//               FundsAndBanksWidget(data: accounts, activeFilter: filter),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class FundsBanksTable extends StatelessWidget {
   final List<FundBankData> accounts;
-  final String? activeFilter; // Добавили это
+  final String? activeFilter;
 
   const FundsBanksTable({super.key, required this.accounts, this.activeFilter});
 
@@ -23,12 +23,12 @@ class FundsBanksTable extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _FundsTableHeader(),
+          _FundsTableHeader(activeFilter: activeFilter),
           Divider(height: 1, color: theme.border),
           ...accounts.map(
             (account) => FundsRow(account: account, activeFilter: activeFilter),
           ),
-          _FundsTableFooter(),
+          _FundsTableFooter(accounts: accounts, activeFilter: activeFilter),
         ],
       ),
     );
@@ -37,7 +37,7 @@ class FundsBanksTable extends StatelessWidget {
 
 class FundsRow extends StatefulWidget {
   final FundBankData account;
-  final String? activeFilter; // Принимаем фильтр
+  final String? activeFilter;
 
   const FundsRow({super.key, required this.account, this.activeFilter});
 
@@ -48,29 +48,32 @@ class FundsRow extends StatefulWidget {
 class _FundsRowState extends State<FundsRow> {
   bool _isHovered = false;
 
-  // Универсальный помощник для получения суммы
   double getAmountForCurrency(String targetCurrency) {
-    // 1. Проверяем, совпадает ли основная валюта аккаунта с целью
-    if (widget.account.currency == targetCurrency)
-      return widget.account.balance;
+    final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
+    double totalEquivalent = 0;
 
-    // 2. Ищем в деталях (currencyDetails)
-    final detail = widget.account.currencyDetails.firstWhere(
-      (d) => d.currency == targetCurrency,
-      orElse: () => CurrencyModel(flag: '', amount: -1, currency: ''),
-    );
-    if (detail.amount != -1) return detail.amount;
+    // Проходим по всем валютам, которые физически есть на этом счету
+    for (var detail in widget.account.currencyDetails) {
+      double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
 
-    // 3. Если нет, конвертируем
-    double rate = exchangeRates[targetCurrency] ?? 1.0;
-    return widget.account.balance * rate;
+      // Конвертируем: (Сумма / Курс этой валюты) -> получаем SAR
+      // Затем (SAR * Курс цели) -> получаем целевую валюту
+      totalEquivalent += (detail.amount / currentCurrencyRate) * targetRate;
+    }
+
+    // Если список деталей пуст, используем основной баланс как запасной вариант
+    if (totalEquivalent == 0 && widget.account.balance > 0) {
+      double accountBaseRate = exchangeRates[widget.account.currency] ?? 1.0;
+      totalEquivalent = (widget.account.balance / accountBaseRate) * targetRate;
+    }
+
+    return totalEquivalent;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // final double currentDisplayAmount = _getDisplayAmount();
     final String currentDisplayCurrency = widget.activeFilter ?? 'SAR';
 
     final double currentDisplayAmount = getAmountForCurrency(
@@ -157,14 +160,11 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  // Вспомогательная функция для получения суммы в нужной валюте
   double _getDisplayAmount() {
     final filter = widget.activeFilter;
 
-    // 1. Если "All", возвращаем основной баланс аккаунта
     if (filter == null) return widget.account.balance;
 
-    // 2. Ищем, есть ли эта валюта уже в списке деталей
     final existingDetail = widget.account.currencyDetails.firstWhere(
       (d) => d.currency == filter,
       orElse: () => CurrencyModel(flag: '', amount: -1, currency: ''),
@@ -172,8 +172,6 @@ class _FundsRowState extends State<FundsRow> {
 
     if (existingDetail.amount != -1) return existingDetail.amount;
 
-    // 3. Если валюты нет, конвертируем основной баланс
-    // Логика: Баланс (в SAR) * Курс выбранной валюты
     double rate = exchangeRates[filter] ?? 1.0;
     return widget.account.balance * rate;
   }
@@ -235,27 +233,6 @@ class _FundsRowState extends State<FundsRow> {
         );
   }
 
-  // Widget _buildBalanceInfo(FundBankData account) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text(
-  //         _formatNum(account.balance),
-  //         style: const TextStyle(
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.bold,
-  //           color: Color(0xFF4CAF50),
-  //         ),
-  //       ),
-  //       if (account.isConverted)
-  //         const Text(
-  //           'converted',
-  //           style: TextStyle(fontSize: 10, color: Color(0xFFFF9800)),
-  //         ),
-  //     ],
-  //   );
-  // }
-
   Widget _buildBalanceInfo(
     FundBankData account,
     double amount,
@@ -272,7 +249,6 @@ class _FundsRowState extends State<FundsRow> {
             color: Color(0xFF4CAF50),
           ),
         ),
-        // Если это "виртуальная" конвертация, можно оставить пометку
         if (widget.activeFilter != null &&
             !account.currencyDetails.any(
               (d) => d.currency == widget.activeFilter,
@@ -285,11 +261,9 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  // Обновленный список валют (теперь он подсвечивает или добавляет валюту)
   Widget _buildCurrencyList(FundBankData account) {
     final filter = widget.activeFilter;
 
-    // Если "All", показываем все как было
     if (filter == null) {
       return Wrap(
         spacing: 4,
@@ -300,10 +274,6 @@ class _FundsRowState extends State<FundsRow> {
       );
     }
 
-    // Если выбран фильтр, мы должны показать:
-    // 1. Либо подсвеченную существующую валюту
-    // 2. Либо "виртуальную" сконвертированную плашку
-
     bool existsInDetails = account.currencyDetails.any(
       (d) => d.currency == filter,
     );
@@ -313,14 +283,13 @@ class _FundsRowState extends State<FundsRow> {
       runSpacing: 4,
       children: [
         if (!existsInDetails)
-          // Показываем виртуальную плашку (серую или с пометкой)
           _miniBadge(
             CurrencyModel(
               flag: _getFlagFor(filter),
               amount: _getDisplayAmount(),
               currency: filter,
             ),
-            true, // подсвечиваем
+            true,
             isConverted: true,
           ),
 
@@ -374,26 +343,6 @@ class _FundsRowState extends State<FundsRow> {
     }
   }
 
-  // Widget _buildCurrencyList(FundBankData account) {
-  //   return Wrap(
-  //     spacing: 4,
-  //     runSpacing: 4,
-  //     children: account.currencyDetails.map((detail) {
-  //       return Container(
-  //         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-  //         decoration: BoxDecoration(
-  //           color: Colors.grey[100],
-  //           borderRadius: BorderRadius.circular(4),
-  //         ),
-  //         child: Text(
-  //           '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}',
-  //           style: const TextStyle(fontSize: 10),
-  //         ),
-  //       );
-  //     }).toList(),
-  //   );
-  // }
-
   Widget _buildChangeIndicator(FundBankData account) {
     final isPositive = account.todayChange >= 0;
     return Row(
@@ -420,12 +369,19 @@ class _FundsRowState extends State<FundsRow> {
 }
 
 class _FundsTableHeader extends StatelessWidget {
+  final String? activeFilter;
+
+  const _FundsTableHeader({this.activeFilter});
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    // Логика отображения: если фильтр All (null), пишем SAR
+    final String currentCurrency = activeFilter ?? 'SAR';
 
     return Container(
       decoration: BoxDecoration(
@@ -453,7 +409,7 @@ class _FundsTableHeader extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              'Balance(SAR)',
+              'Balance($currentCurrency)',
               style: style,
               textAlign: TextAlign.start,
             ),
@@ -499,12 +455,51 @@ class _FundsTableHeader extends StatelessWidget {
 }
 
 class _FundsTableFooter extends StatelessWidget {
+  final List<FundBankData> accounts;
+  final String? activeFilter;
+
+  const _FundsTableFooter({
+    super.key,
+    required this.accounts,
+    this.activeFilter,
+  });
+
+  // Метод подсчета общей суммы по всем банкам
+  double _calculateGrandTotal() {
+    final targetCurrency = activeFilter ?? 'SAR';
+    final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
+
+    double grandTotal = 0;
+
+    for (var account in accounts) {
+      for (var detail in account.currencyDetails) {
+        double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
+        // Конвертация: (Сумма / Курс этой валюты) * Курс цели
+        grandTotal += (detail.amount / currentCurrencyRate) * targetRate;
+      }
+    }
+    return grandTotal;
+  }
+
+  // Вспомогательный метод для форматирования чисел
+  String _formatNum(double number) {
+    return number
+        .toStringAsFixed(0)
+        .replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (Match m) => '${m[1]} ',
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    final totalAmount = _calculateGrandTotal();
+    final displayCurrency = activeFilter ?? 'SAR';
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
@@ -517,10 +512,13 @@ class _FundsTableFooter extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(flex: 3, child: Text('Count: 4', style: style)),
+          Expanded(
+            flex: 3,
+            child: Text('Count: ${accounts.length}', style: style),
+          ),
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(flex: 2, child: Text('', style: style)),
-          Expanded(flex: 3, child: Text('352 720', style: style)),
+          Expanded(flex: 3, child: Text(_formatNum(totalAmount), style: style)),
           Expanded(
             flex: 2,
             child: Text('8 500', style: style, textAlign: TextAlign.center),
@@ -528,7 +526,11 @@ class _FundsTableFooter extends StatelessWidget {
           Expanded(flex: 2, child: Text('', style: style)),
           SizedBox(
             width: 90,
-            child: Text('SAR', style: style, textAlign: TextAlign.center),
+            child: Text(
+              displayCurrency,
+              style: style,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
