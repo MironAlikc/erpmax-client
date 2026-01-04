@@ -29,7 +29,7 @@ class FundsBanksHeader extends StatelessWidget {
               style: AppTextStyles.h3.copyWith(color: theme.textPrimary),
             ),
             Text(
-              'Manage cash funds and bank accounts.',
+              localizations.desc_manage_accounts,
               style: AppTextStyles.bodyLarge.copyWith(
                 color: theme.textSecondary,
               ),

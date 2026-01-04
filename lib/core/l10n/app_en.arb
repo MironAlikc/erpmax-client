@@ -397,5 +397,6 @@
   "column_account_code": "Account Code",
   "column_account_name": "Account Name",
   "column_account_type": "Account Type",
-  "column_balance": "Balance"
+  "column_balance": "Balance",
+  "desc_manage_accounts": "Manage cash funds and bank accounts."
 }

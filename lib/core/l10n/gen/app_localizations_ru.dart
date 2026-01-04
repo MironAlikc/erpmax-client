@@ -1194,4 +1194,8 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get column_balance => 'Баланс';
+
+  @override
+  String get desc_manage_accounts =>
+      'Управление наличными средствами и банковскими счетами.';
 }

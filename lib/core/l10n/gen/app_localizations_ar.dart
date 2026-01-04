@@ -1188,4 +1188,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get column_balance => 'الرصيد';
+
+  @override
+  String get desc_manage_accounts =>
+      'إدارة الصناديق النقدية والحسابات البنكية.';
 }

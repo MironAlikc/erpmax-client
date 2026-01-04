@@ -1,6 +1,7 @@
 import 'package:erpmax_client/core/theme/app_design.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/currency_toolbar.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_dashboard.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_board/funds_banks_board.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_header.dart';
 import 'package:flutter/widgets.dart';
 
@@ -119,7 +120,7 @@ class _FundsBanksViewState extends State<FundsBanksView> {
               ),
               SummaryCardsRow(filter: filter, data: accounts),
               const SizedBox(height: 24),
-              FundsAndBanksWidget(data: accounts, activeFilter: filter),
+              FundsBanksBoard(data: accounts, activeFilter: filter),
             ],
           ),
         );

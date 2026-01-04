@@ -2,14 +2,14 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_dashboard.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools.dart';
 import 'package:flutter/material.dart';
 
-class FundsBanksTable extends StatelessWidget {
+class FundsTableView extends StatelessWidget {
   final List<FundBankData> accounts;
   final String? activeFilter;
 
-  const FundsBanksTable({super.key, required this.accounts, this.activeFilter});
+  const FundsTableView({super.key, required this.accounts, this.activeFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +52,12 @@ class _FundsRowState extends State<FundsRow> {
     final double targetRate = exchangeRates[targetCurrency] ?? 1.0;
     double totalEquivalent = 0;
 
-    // Проходим по всем валютам, которые физически есть на этом счету
     for (var detail in widget.account.currencyDetails) {
       double currentCurrencyRate = exchangeRates[detail.currency] ?? 1.0;
 
-      // Конвертируем: (Сумма / Курс этой валюты) -> получаем SAR
-      // Затем (SAR * Курс цели) -> получаем целевую валюту
       totalEquivalent += (detail.amount / currentCurrencyRate) * targetRate;
     }
 
-    // Если список деталей пуст, используем основной баланс как запасной вариант
     if (totalEquivalent == 0 && widget.account.balance > 0) {
       double accountBaseRate = exchangeRates[widget.account.currency] ?? 1.0;
       totalEquivalent = (widget.account.balance / accountBaseRate) * targetRate;
@@ -224,15 +220,6 @@ class _FundsRowState extends State<FundsRow> {
     );
   }
 
-  String _formatNum(double number) {
-    return number
-        .toStringAsFixed(0)
-        .replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]} ',
-        );
-  }
-
   Widget _buildBalanceInfo(
     FundBankData account,
     double amount,
@@ -242,7 +229,7 @@ class _FundsRowState extends State<FundsRow> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${_formatNum(amount)} $currency',
+          '${formatNum(amount)} $currency',
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -285,7 +272,7 @@ class _FundsRowState extends State<FundsRow> {
         if (!existsInDetails)
           _miniBadge(
             CurrencyModel(
-              flag: _getFlagFor(filter),
+              flag: getFlagFor(filter),
               amount: _getDisplayAmount(),
               currency: filter,
             ),
@@ -318,7 +305,7 @@ class _FundsRowState extends State<FundsRow> {
         ),
       ),
       child: Text(
-        '${detail.flag} ${_formatNum(detail.amount)} ${detail.currency}${isConverted ? '*' : ''}',
+        '${detail.flag} ${formatNum(detail.amount)} ${detail.currency}${isConverted ? '*' : ''}',
         style: TextStyle(
           fontSize: 10,
           fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
@@ -326,21 +313,6 @@ class _FundsRowState extends State<FundsRow> {
         ),
       ),
     );
-  }
-
-  String _getFlagFor(String code) {
-    switch (code) {
-      case 'USD':
-        return '🇺🇸';
-      case 'EUR':
-        return '🇪🇺';
-      case 'GBP':
-        return '🇬🇧';
-      case 'SAR':
-        return '🇸🇦';
-      default:
-        return '🏳️';
-    }
   }
 
   Widget _buildChangeIndicator(FundBankData account) {
@@ -380,7 +352,6 @@ class _FundsTableHeader extends StatelessWidget {
 
     final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
 
-    // Логика отображения: если фильтр All (null), пишем SAR
     final String currentCurrency = activeFilter ?? 'SAR';
 
     return Container(
@@ -458,11 +429,7 @@ class _FundsTableFooter extends StatelessWidget {
   final List<FundBankData> accounts;
   final String? activeFilter;
 
-  const _FundsTableFooter({
-    super.key,
-    required this.accounts,
-    this.activeFilter,
-  });
+  const _FundsTableFooter({required this.accounts, this.activeFilter});
 
   // Метод подсчета общей суммы по всем банкам
   double _calculateGrandTotal() {
@@ -479,16 +446,6 @@ class _FundsTableFooter extends StatelessWidget {
       }
     }
     return grandTotal;
-  }
-
-  // Вспомогательный метод для форматирования чисел
-  String _formatNum(double number) {
-    return number
-        .toStringAsFixed(0)
-        .replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]} ',
-        );
   }
 
   @override
@@ -518,7 +475,7 @@ class _FundsTableFooter extends StatelessWidget {
           ),
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(flex: 2, child: Text('', style: style)),
-          Expanded(flex: 3, child: Text(_formatNum(totalAmount), style: style)),
+          Expanded(flex: 3, child: Text(formatNum(totalAmount), style: style)),
           Expanded(
             flex: 2,
             child: Text('8 500', style: style, textAlign: TextAlign.center),
