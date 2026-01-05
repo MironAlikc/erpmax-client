@@ -392,7 +392,7 @@
   "column_account_type": "نوع الحساب",
   "column_balance": "الرصيد",
   "desc_manage_accounts": "إدارة الصناديق النقدية والحسابات البنكية.",
-  "label_fund_bank": "الصندوق/البنك",
+  "labelFundBank": "الصندوق/البنك",
   "label_all": "الكل",
   "totalBalanceWithLabel": "إجمالي الرصيد ({label})",
   "total_receipts": "إجمالي المقبوضات",
@@ -402,5 +402,14 @@
   "view_grid": "شبكة",
   "view_table": "جدول",
   "labelCashFund": "الصندوق النقدي",
-  "labelConv": "تحويل"
+  "labelConv": "تحويل",
+  "balanceWithCurrency": "الرصيد ({currentCurrency})",
+  "currencyDetails": "تفاصيل العملة",
+  "todaysChange": "تغير اليوم",
+  "lastActivity": "آخر نشاط",
+  "labelConverted": "محوّل",
+  "actionWithdraw": "سحب",
+  "actionDeposit": "إيداع",
+  "actionMore": "المزيد",
+  "accountsCount": "العدد: "
 }

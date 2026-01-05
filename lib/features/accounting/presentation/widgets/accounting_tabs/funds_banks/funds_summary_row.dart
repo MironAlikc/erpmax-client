@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -110,7 +111,7 @@ class SummaryCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: theme.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(Dimens.p12),
       ),
       child: Row(
         children: [

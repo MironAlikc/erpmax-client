@@ -2356,11 +2356,11 @@ abstract class AppLocalizations {
   /// **'Manage cash funds and bank accounts.'**
   String get desc_manage_accounts;
 
-  /// No description provided for @label_fund_bank.
+  /// No description provided for @labelFundBank.
   ///
   /// In en, this message translates to:
   /// **'Fund/Bank'**
-  String get label_fund_bank;
+  String get labelFundBank;
 
   /// No description provided for @label_all.
   ///
@@ -2415,6 +2415,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'conv'**
   String get labelConv;
+
+  /// No description provided for @balanceWithCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance ({currentCurrency})'**
+  String balanceWithCurrency(Object currentCurrency);
+
+  /// No description provided for @currencyDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency Details'**
+  String get currencyDetails;
+
+  /// No description provided for @todaysChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Change'**
+  String get todaysChange;
+
+  /// No description provided for @lastActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Activity'**
+  String get lastActivity;
+
+  /// No description provided for @labelConverted.
+  ///
+  /// In en, this message translates to:
+  /// **'converted'**
+  String get labelConverted;
+
+  /// No description provided for @actionWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get actionWithdraw;
+
+  /// No description provided for @actionDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get actionDeposit;
+
+  /// No description provided for @actionMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get actionMore;
+
+  /// No description provided for @accountsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Count: '**
+  String get accountsCount;
 }
 
 class _AppLocalizationsDelegate

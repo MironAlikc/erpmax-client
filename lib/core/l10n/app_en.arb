@@ -399,7 +399,7 @@
   "column_account_type": "Account Type",
   "column_balance": "Balance",
   "desc_manage_accounts": "Manage cash funds and bank accounts.",
-  "label_fund_bank": "Fund/Bank",
+  "labelFundBank": "Fund/Bank",
   "label_all": "All",
   "totalBalanceWithLabel": "Total Balance ({label})",
   "total_receipts": "Total Receipts",
@@ -409,5 +409,14 @@
   "view_grid": "Grid",
   "view_table": "Table",
   "labelCashFund": "Cash Fund",
-  "labelConv": "conv"
+  "labelConv": "conv",
+  "balanceWithCurrency": "Balance ({currentCurrency})",
+  "currencyDetails": "Currency Details",
+  "todaysChange": "Today's Change",
+  "lastActivity": "Last Activity",
+  "labelConverted": "converted",
+  "actionWithdraw": "Withdraw",
+  "actionDeposit": "Deposit",
+  "actionMore": "More",
+  "accountsCount": "Count: "
 }

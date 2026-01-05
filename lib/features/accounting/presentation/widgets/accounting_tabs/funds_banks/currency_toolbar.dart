@@ -60,7 +60,7 @@ class CurrencyToolbar extends StatelessWidget {
               _filters(localizations, colors),
               AccountingHeaderBtn(
                 icon: LucideIcons.plus,
-                label: localizations.label_fund_bank,
+                label: localizations.labelFundBank,
                 textColor: Colors.white,
                 color: colors.sidebarActiveBgLight,
                 height: 20,
@@ -96,7 +96,7 @@ class CurrencyToolbar extends StatelessWidget {
             _filters(localizations, colors),
             AccountingHeaderBtn(
               icon: LucideIcons.plus,
-              label: localizations.label_fund_bank,
+              label: localizations.labelFundBank,
               textColor: Colors.white,
               color: colors.sidebarActiveBgLight,
               height: 20,

@@ -1194,7 +1194,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'إدارة الصناديق النقدية والحسابات البنكية.';
 
   @override
-  String get label_fund_bank => 'الصندوق/البنك';
+  String get labelFundBank => 'الصندوق/البنك';
 
   @override
   String get label_all => 'الكل';
@@ -1224,4 +1224,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelConv => 'تحويل';
+
+  @override
+  String balanceWithCurrency(Object currentCurrency) {
+    return 'الرصيد ($currentCurrency)';
+  }
+
+  @override
+  String get currencyDetails => 'تفاصيل العملة';
+
+  @override
+  String get todaysChange => 'تغير اليوم';
+
+  @override
+  String get lastActivity => 'آخر نشاط';
+
+  @override
+  String get labelConverted => 'محوّل';
+
+  @override
+  String get actionWithdraw => 'سحب';
+
+  @override
+  String get actionDeposit => 'إيداع';
+
+  @override
+  String get actionMore => 'المزيد';
+
+  @override
+  String get accountsCount => 'العدد: ';
 }

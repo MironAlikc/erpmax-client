@@ -1200,7 +1200,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Управление наличными средствами и банковскими счетами.';
 
   @override
-  String get label_fund_bank => 'Касса/Банк';
+  String get labelFundBank => 'Касса/Банк';
 
   @override
   String get label_all => 'Все';
@@ -1230,4 +1230,33 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get labelConv => 'конв.';
+
+  @override
+  String balanceWithCurrency(Object currentCurrency) {
+    return 'Баланс ($currentCurrency)';
+  }
+
+  @override
+  String get currencyDetails => 'Детали валюты';
+
+  @override
+  String get todaysChange => 'Изменение за сегодня';
+
+  @override
+  String get lastActivity => 'Последняя активность';
+
+  @override
+  String get labelConverted => 'конвертировано';
+
+  @override
+  String get actionWithdraw => 'Снять';
+
+  @override
+  String get actionDeposit => 'Пополнить';
+
+  @override
+  String get actionMore => 'Ещё';
+
+  @override
+  String get accountsCount => 'Количество: ';
 }

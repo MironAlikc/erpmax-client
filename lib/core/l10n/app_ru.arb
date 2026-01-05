@@ -398,7 +398,7 @@
   "column_account_type": "Тип счета",
   "column_balance": "Баланс",
   "desc_manage_accounts": "Управление наличными средствами и банковскими счетами.",
-  "label_fund_bank": "Касса/Банк",
+  "labelFundBank": "Касса/Банк",
   "label_all": "Все",
   "totalBalanceWithLabel": "Общий баланс ({label})",
   "total_receipts": "Всего поступлений",
@@ -408,5 +408,14 @@
   "view_grid": "Сетка",
   "view_table": "Таблица",
   "labelCashFund": "Наличная касса",
-  "labelConv": "конв."
+  "labelConv": "конв.",
+  "balanceWithCurrency": "Баланс ({currentCurrency})",
+  "currencyDetails": "Детали валюты",
+  "todaysChange": "Изменение за сегодня",
+  "lastActivity": "Последняя активность",
+  "labelConverted": "конвертировано",
+  "actionWithdraw": "Снять",
+  "actionDeposit": "Пополнить",
+  "actionMore": "Ещё",
+  "accountsCount": "Количество: "
 }
