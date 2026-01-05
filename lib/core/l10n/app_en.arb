@@ -418,5 +418,9 @@
   "actionWithdraw": "Withdraw",
   "actionDeposit": "Deposit",
   "actionMore": "More",
-  "accountsCount": "Count: "
+  "accountsCount": "Count: ",
+  "totalCustomers": "Total Customers",
+  "totalReceivables": "Total Receivables",
+  "totalSuppliers": "Total Suppliers",
+  "totalPayables": "Total Payables"
 }

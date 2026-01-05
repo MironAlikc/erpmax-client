@@ -1250,4 +1250,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountsCount => 'Count: ';
+
+  @override
+  String get totalCustomers => 'Total Customers';
+
+  @override
+  String get totalReceivables => 'Total Receivables';
+
+  @override
+  String get totalSuppliers => 'Total Suppliers';
+
+  @override
+  String get totalPayables => 'Total Payables';
 }

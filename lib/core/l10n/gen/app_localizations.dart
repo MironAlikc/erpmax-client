@@ -2469,6 +2469,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Count: '**
   String get accountsCount;
+
+  /// No description provided for @totalCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Customers'**
+  String get totalCustomers;
+
+  /// No description provided for @totalReceivables.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Receivables'**
+  String get totalReceivables;
+
+  /// No description provided for @totalSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Suppliers'**
+  String get totalSuppliers;
+
+  /// No description provided for @totalPayables.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Payables'**
+  String get totalPayables;
 }
 
 class _AppLocalizationsDelegate
