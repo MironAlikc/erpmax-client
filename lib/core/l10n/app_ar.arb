@@ -397,5 +397,8 @@
   "totalBalanceWithLabel": "إجمالي الرصيد ({label})",
   "total_receipts": "إجمالي المقبوضات",
   "total_payments": "إجمالي المدفوعات",
-  "todays_net_flow": "صافي تدفق اليوم"
+  "todays_net_flow": "صافي تدفق اليوم",
+  "title_funds_and_banks": "الصناديق والبنوك",
+  "view_grid": "شبكة",
+  "view_table": "جدول"
 }

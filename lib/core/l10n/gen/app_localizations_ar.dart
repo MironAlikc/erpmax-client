@@ -1166,7 +1166,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get view_tree => 'عرض شجري';
 
   @override
-  String get view_table => 'عرض الجدول';
+  String get view_table => 'جدول';
 
   @override
   String get action_expand => 'توسيع';
@@ -1212,4 +1212,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get todays_net_flow => 'صافي تدفق اليوم';
+
+  @override
+  String get title_funds_and_banks => 'الصناديق والبنوك';
+
+  @override
+  String get view_grid => 'شبكة';
 }

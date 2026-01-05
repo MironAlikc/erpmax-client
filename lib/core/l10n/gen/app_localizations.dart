@@ -2305,7 +2305,7 @@ abstract class AppLocalizations {
   /// No description provided for @view_table.
   ///
   /// In en, this message translates to:
-  /// **'Table View'**
+  /// **'Table'**
   String get view_table;
 
   /// No description provided for @action_expand.
@@ -2391,6 +2391,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s Net Flow'**
   String get todays_net_flow;
+
+  /// No description provided for @title_funds_and_banks.
+  ///
+  /// In en, this message translates to:
+  /// **'Funds & Banks'**
+  String get title_funds_and_banks;
+
+  /// No description provided for @view_grid.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid'**
+  String get view_grid;
 }
 
 class _AppLocalizationsDelegate

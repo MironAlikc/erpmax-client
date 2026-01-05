@@ -1172,7 +1172,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get view_tree => 'Древовидный вид';
 
   @override
-  String get view_table => 'Табличный вид';
+  String get view_table => 'Таблица';
 
   @override
   String get action_expand => 'Раскрыть';
@@ -1218,4 +1218,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todays_net_flow => 'Чистый поток за сегодня';
+
+  @override
+  String get title_funds_and_banks => 'Кассы и банки';
+
+  @override
+  String get view_grid => 'Сетка';
 }

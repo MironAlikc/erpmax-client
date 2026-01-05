@@ -404,5 +404,8 @@
   "totalBalanceWithLabel": "Total Balance ({label})",
   "total_receipts": "Total Receipts",
   "total_payments": "Total Payments",
-  "todays_net_flow": "Today's Net Flow"
+  "todays_net_flow": "Today's Net Flow",
+  "title_funds_and_banks": "Funds & Banks",
+  "view_grid": "Grid",
+  "view_table": "Table"
 }

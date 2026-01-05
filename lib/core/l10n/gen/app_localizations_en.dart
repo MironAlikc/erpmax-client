@@ -1164,7 +1164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view_tree => 'Tree View';
 
   @override
-  String get view_table => 'Table View';
+  String get view_table => 'Table';
 
   @override
   String get action_expand => 'Expand';
@@ -1209,4 +1209,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todays_net_flow => 'Today\'s Net Flow';
+
+  @override
+  String get title_funds_and_banks => 'Funds & Banks';
+
+  @override
+  String get view_grid => 'Grid';
 }
