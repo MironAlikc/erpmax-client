@@ -1215,4 +1215,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get view_grid => 'Grid';
+
+  @override
+  String get labelCashFund => 'Cash Fund';
+
+  @override
+  String get labelConv => 'conv';
 }

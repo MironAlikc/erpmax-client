@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Dimens {
   static const p2 = 2.0;
+  static const p3 = 3.0;
   static const p4 = 4.0;
   static const p6 = 6.0;
   static const p8 = 8.0;

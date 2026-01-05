@@ -1224,4 +1224,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get view_grid => 'Сетка';
+
+  @override
+  String get labelCashFund => 'Наличная касса';
+
+  @override
+  String get labelConv => 'конв.';
 }

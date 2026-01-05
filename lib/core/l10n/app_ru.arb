@@ -406,5 +406,7 @@
   "todays_net_flow": "Чистый поток за сегодня",
   "title_funds_and_banks": "Кассы и банки",
   "view_grid": "Сетка",
-  "view_table": "Таблица"
+  "view_table": "Таблица",
+  "labelCashFund": "Наличная касса",
+  "labelConv": "конв."
 }

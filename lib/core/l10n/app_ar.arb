@@ -400,5 +400,7 @@
   "todays_net_flow": "صافي تدفق اليوم",
   "title_funds_and_banks": "الصناديق والبنوك",
   "view_grid": "شبكة",
-  "view_table": "جدول"
+  "view_table": "جدول",
+  "labelCashFund": "الصندوق النقدي",
+  "labelConv": "تحويل"
 }

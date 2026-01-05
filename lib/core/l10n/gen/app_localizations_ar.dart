@@ -1218,4 +1218,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get view_grid => 'شبكة';
+
+  @override
+  String get labelCashFund => 'الصندوق النقدي';
+
+  @override
+  String get labelConv => 'تحويل';
 }

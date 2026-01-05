@@ -2403,6 +2403,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Grid'**
   String get view_grid;
+
+  /// No description provided for @labelCashFund.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Fund'**
+  String get labelCashFund;
+
+  /// No description provided for @labelConv.
+  ///
+  /// In en, this message translates to:
+  /// **'conv'**
+  String get labelConv;
 }
 
 class _AppLocalizationsDelegate
