@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_dimens.dart';
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,7 @@ class AppButton extends StatelessWidget {
               : null,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDimens.buttonRadius),
+            borderRadius: BorderRadius.circular(Dimens.p8),
           ),
         ),
         child: isLoading ? _buildLoadingIndicator(fg) : _buildContent(fg),

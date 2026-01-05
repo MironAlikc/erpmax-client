@@ -1,6 +1,12 @@
+import 'package:erpmax_client/core/constants/breakpoints.dart';
+import 'package:erpmax_client/core/constants/dimens.dart';
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class FundGridView extends StatelessWidget {
   final List<FundBankData> data;
@@ -20,13 +26,13 @@ class FundGridView extends StatelessWidget {
         int crossAxisCount;
         double cardWidth;
 
-        if (width >= 1200) {
+        if (width >= Breakpoint.desktopBreakpoint) {
           crossAxisCount = 4;
           cardWidth = (width - (3 * 16)) / 4;
-        } else if (width >= 900) {
+        } else if (width >= Breakpoint.mobileBreakpoint) {
           crossAxisCount = 3;
           cardWidth = (width - (2 * 16)) / 3;
-        } else if (width >= 600) {
+        } else if (width >= Breakpoint.mobileBreakpoint) {
           crossAxisCount = 2;
           cardWidth = (width - 16) / 2;
         } else {
@@ -34,7 +40,7 @@ class FundGridView extends StatelessWidget {
           cardWidth = width;
         }
 
-        const cardHeight = 280.0;
+        const cardHeight = 220.00;
 
         return GridView.builder(
           shrinkWrap: true,
@@ -42,19 +48,22 @@ class FundGridView extends StatelessWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
             childAspectRatio: cardWidth / cardHeight,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
+            crossAxisSpacing: Dimens.p16,
+            mainAxisSpacing: Dimens.p16,
           ),
           itemCount: data.length,
           itemBuilder: (context, index) {
-            return _buildGridCard(data[index]);
+            return _buildGridCard(context, data[index]);
           },
         );
       },
     );
   }
 
-  Widget _buildGridCard(FundBankData account) {
+  Widget _buildGridCard(BuildContext context, FundBankData account) {
+    final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
+
     final String displayCurrency = activeFilter ?? 'SAR';
     final String displayFlag = getFlagFor(displayCurrency);
     final double targetRate = exchangeRates[displayCurrency] ?? 1.0;
@@ -73,18 +82,10 @@ class FundGridView extends StatelessWidget {
     }
 
     return Container(
-      height: 280,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(Dimens.p16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: theme.white,
+        borderRadius: BorderRadius.circular(Dimens.p12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,89 +94,106 @@ class FundGridView extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(Dimens.p6),
                 decoration: BoxDecoration(
                   color: account.type == 'Cash'
-                      ? const Color(0xFFE8F5E9)
-                      : const Color(0xFFE3F2FD),
+                      ? theme.successText.withValues(alpha: 0.08)
+                      : theme.infoText.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   account.type == 'Cash'
-                      ? Icons.attach_money
-                      : Icons.account_balance,
+                      ? LucideIcons.wallet
+                      : LucideIcons.landmark,
                   color: account.type == 'Cash'
-                      ? const Color(0xFF4CAF50)
-                      : const Color(0xFF2196F3),
-                  size: 20,
+                      ? theme.successText
+                      : theme.infoText,
+                  size: 16,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          gapH8,
           Text(
             account.name,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: AppTextStyles.tableHeader.copyWith(color: theme.textPrimary),
           ),
           if (account.accountNumber != null) ...[
-            const SizedBox(height: 4),
+            gapH4,
             Text(
               account.accountNumber!,
-              style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+              style: AppTextStyles.caption.copyWith(color: theme.textSecondary),
             ),
           ] else ...[
-            const SizedBox(height: 4),
+            gapH4,
             Text(
-              'Cash Fund',
-              style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+              localizations.labelCashFund,
+              style: AppTextStyles.caption.copyWith(color: theme.textSecondary),
             ),
           ],
-          const Spacer(),
+          gapH20,
           Row(
             children: [
-              Text(displayFlag, style: const TextStyle(fontSize: 16)),
+              Text(displayFlag, style: AppTextStyles.label),
               const SizedBox(width: 4),
               Text(
                 displayCurrency,
-                style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                style: AppTextStyles.caption.copyWith(
+                  color: theme.textSecondary,
+                ),
               ),
               const Spacer(),
               if (activeFilter != null &&
-                  !account.currencyDetails.any(
+                  account.currencyDetails.any(
                     (d) => d.currency == activeFilter,
                   ))
-                _buildConvertedBadge(),
+                _buildConvertedBadge(context),
             ],
           ),
-          const SizedBox(height: 8),
+          gapH8,
           Text(
             formatNum(displayAmount),
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            style: AppTextStyles.h4.copyWith(
+              color: theme.textPrimary,
+              height: 1.0,
+            ),
           ),
-          const SizedBox(height: 8),
+          const Spacer(),
           Flexible(
             child: SingleChildScrollView(
               child: Wrap(
-                spacing: 6,
-                runSpacing: 4,
+                spacing: Dimens.p6,
+                runSpacing: Dimens.p4,
                 children: account.currencyDetails.map((detail) {
                   return Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
+                      horizontal: Dimens.p6,
+                      vertical: Dimens.p3,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(4),
+                      color: theme.border,
+                      borderRadius: BorderRadius.circular(Dimens.p4),
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(detail.flag, style: const TextStyle(fontSize: 10)),
-                        const SizedBox(width: 2),
                         Text(
-                          '${detail.amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]} ')} ${detail.currency}',
-                          style: const TextStyle(fontSize: 10),
+                          detail.flag,
+                          style: AppTextStyles.overline.copyWith(
+                            height: 1.0,
+                            fontSize: 10,
+                          ),
+                        ),
+                        gapW2,
+                        Text(
+                          formatNum(detail.amount),
+                          style: AppTextStyles.caption.copyWith(
+                            color: theme.textTertiary,
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
                         ),
                       ],
                     ),
@@ -184,7 +202,7 @@ class FundGridView extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          gapH8,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -192,31 +210,31 @@ class FundGridView extends StatelessWidget {
                 children: [
                   Icon(
                     account.todayChange >= 0
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward,
+                        ? LucideIcons.trendingUp
+                        : LucideIcons.trendingDown,
                     color: account.todayChange >= 0
-                        ? const Color(0xFF4CAF50)
-                        : const Color(0xFFF44336),
+                        ? theme.successText
+                        : theme.errorText,
                     size: 14,
                   ),
-                  const SizedBox(width: 4),
+                  gapW4,
                   Text(
                     account.todayChange > 0
                         ? '+${account.todayChange}'
                         : account.todayChange.toString(),
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.label.copyWith(
                       color: account.todayChange >= 0
-                          ? const Color(0xFF4CAF50)
-                          : const Color(0xFFF44336),
-                      fontWeight: FontWeight.w500,
+                          ? theme.successText
+                          : theme.errorText,
                     ),
                   ),
                 ],
               ),
               Text(
                 account.lastActivity,
-                style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                style: AppTextStyles.caption.copyWith(
+                  color: theme.textSecondary,
+                ),
               ),
             ],
           ),
@@ -225,19 +243,23 @@ class FundGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildConvertedBadge() {
+  Widget _buildConvertedBadge(BuildContext context) {
+    final theme = context.theme.appColor;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimens.p6,
+        vertical: Dimens.p2,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF3E0),
+        color: theme.warningBg,
         borderRadius: BorderRadius.circular(4),
       ),
-      child: const Text(
-        'conv',
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context).labelConv,
+        style: AppTextStyles.overline.copyWith(
           fontSize: 9,
-          color: Color(0xFFFF9800),
-          fontWeight: FontWeight.bold,
+          color: theme.warningText,
         ),
       ),
     );

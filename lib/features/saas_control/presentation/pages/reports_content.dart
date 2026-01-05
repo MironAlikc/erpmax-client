@@ -1,4 +1,4 @@
-import 'package:erpmax_client/core/theme/app_dimens.dart';
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
@@ -179,17 +179,17 @@ class _ReportsContentState extends State<ReportsContent> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(AppDimens.pagePadding),
+      padding: const EdgeInsets.all(Dimens.p24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: AppDimens.elementGap),
+          const SizedBox(height: Dimens.p16),
           ErpMaxTabFilter(
             items: _reportTabs,
             selectedItem: _selectedReportType,
             onSelected: (name) => setState(() => _selectedReportType = name),
           ),
-          const SizedBox(height: AppDimens.sectionGap),
+          const SizedBox(height: Dimens.p32),
           _buildActiveReportContent(),
           const SizedBox(height: 40),
         ],
@@ -244,9 +244,9 @@ class _ReportsContentState extends State<ReportsContent> {
             isPositive: false,
           ),
         ]),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
         _buildReportTableSection("New Subscribers", _newSubscribers),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
         _buildReportTableSection("Expiring Soon", _expiringSubscribers),
       ],
     );
@@ -278,7 +278,7 @@ class _ReportsContentState extends State<ReportsContent> {
             isPositive: true,
           ),
         ]),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
         _buildRevenueTableContent(),
       ],
     );

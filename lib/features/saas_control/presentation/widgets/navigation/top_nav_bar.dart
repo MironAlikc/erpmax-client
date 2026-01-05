@@ -1,7 +1,7 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/l10n/locale_cubit.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
@@ -37,7 +37,7 @@ class TopNavigationBar extends StatelessWidget {
     final localizations = AppLocalizations.of(context);
 
     return Container(
-      height: AppDimens.headerHeight,
+      height: Dimens.p64,
       padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 24),
       decoration: BoxDecoration(
         color: theme.white,
@@ -189,7 +189,7 @@ class _QuickActionButtonState extends State<_QuickActionButton> {
             hoverColor: theme.gray50,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppDimens.buttonRadius),
+            borderRadius: BorderRadius.circular(Dimens.p6),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(

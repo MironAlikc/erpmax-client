@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/general_ledger/general_ledger_filters/general_ledger_advanced_filters.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/general_ledger/general_ledger_filters/general_ledger_filter_bar.dart';
@@ -19,7 +19,7 @@ class GeneralLedgerView extends StatelessWidget {
     // final bool isMobile = MediaQuery.of(context).size.width < 1100;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimens.pagePadding),
+      padding: const EdgeInsets.all(Dimens.p24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

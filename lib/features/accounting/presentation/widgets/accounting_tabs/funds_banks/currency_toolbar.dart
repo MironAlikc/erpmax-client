@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
@@ -34,10 +34,10 @@ class CurrencyToolbar extends StatelessWidget {
         final isWide = constraints.maxWidth >= 1000;
 
         return Container(
-          padding: const EdgeInsets.all(AppDimens.padding12),
+          padding: const EdgeInsets.all(Dimens.p12),
           decoration: BoxDecoration(
             color: theme.white,
-            borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
+            borderRadius: BorderRadius.circular(Dimens.p12),
           ),
           child: isWide
               ? _wideLayout(localizations, theme)
@@ -53,14 +53,14 @@ class CurrencyToolbar extends StatelessWidget {
       children: [
         Expanded(
           child: Wrap(
-            spacing: AppDimens.rowWrapSpacing8,
-            runSpacing: AppDimens.rowWrapSpacing8,
+            spacing: Dimens.p8,
+            runSpacing: Dimens.p8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               _filters(localizations, colors),
               AccountingHeaderBtn(
                 icon: LucideIcons.plus,
-                label: localizations.label_fund_bank,
+                label: localizations.labelFundBank,
                 textColor: Colors.white,
                 color: colors.sidebarActiveBgLight,
                 height: 20,
@@ -90,13 +90,13 @@ class CurrencyToolbar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: AppDimens.rowWrapSpacing8,
-          runSpacing: AppDimens.rowWrapSpacing8,
+          spacing: Dimens.p8,
+          runSpacing: Dimens.p8,
           children: [
             _filters(localizations, colors),
             AccountingHeaderBtn(
               icon: LucideIcons.plus,
-              label: localizations.label_fund_bank,
+              label: localizations.labelFundBank,
               textColor: Colors.white,
               color: colors.sidebarActiveBgLight,
               height: 20,
@@ -116,21 +116,21 @@ class CurrencyToolbar extends StatelessWidget {
 
   Widget _filters(AppLocalizations localizations, AppColorExtension colors) {
     return Wrap(
-      spacing: AppDimens.rowWrapSpacing8,
-      runSpacing: AppDimens.rowWrapSpacing8,
+      spacing: Dimens.p8,
+      runSpacing: Dimens.p8,
       children: [
         Container(
           width: 40,
           height: 40,
           decoration: BoxDecoration(
             color: colors.warningLight,
-            borderRadius: BorderRadius.circular(AppDimens.inputRadius8),
+            borderRadius: BorderRadius.circular(Dimens.p8),
           ),
           child: Center(
             child: Icon(
               LucideIcons.coins,
               color: colors.warningText,
-              size: AppDimens.iconSize20,
+              size: Dimens.p20,
             ),
           ),
         ),
@@ -139,11 +139,11 @@ class CurrencyToolbar extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
           decoration: BoxDecoration(
             color: colors.primaryLight,
-            borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
+            borderRadius: BorderRadius.circular(Dimens.p6),
           ),
           child: Wrap(
-            spacing: AppDimens.rowWrapSpacing8,
-            runSpacing: AppDimens.rowWrapSpacing8,
+            spacing: Dimens.p8,
+            runSpacing: Dimens.p8,
             children: [
               _chip(colors, localizations.label_all, null),
               ...currencies.map(
@@ -170,7 +170,7 @@ class CurrencyToolbar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: active ? colors.white : colors.primaryLight,
-          borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
+          borderRadius: BorderRadius.circular(Dimens.p6),
           border: Border.all(
             color: active ? colors.border : Colors.transparent,
           ),

@@ -1172,7 +1172,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get view_tree => 'Древовидный вид';
 
   @override
-  String get view_table => 'Табличный вид';
+  String get view_table => 'Таблица';
 
   @override
   String get action_expand => 'Раскрыть';
@@ -1200,7 +1200,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Управление наличными средствами и банковскими счетами.';
 
   @override
-  String get label_fund_bank => 'Касса/Банк';
+  String get labelFundBank => 'Касса/Банк';
 
   @override
   String get label_all => 'Все';
@@ -1218,4 +1218,45 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todays_net_flow => 'Чистый поток за сегодня';
+
+  @override
+  String get title_funds_and_banks => 'Кассы и банки';
+
+  @override
+  String get view_grid => 'Сетка';
+
+  @override
+  String get labelCashFund => 'Наличная касса';
+
+  @override
+  String get labelConv => 'конв.';
+
+  @override
+  String balanceWithCurrency(Object currentCurrency) {
+    return 'Баланс ($currentCurrency)';
+  }
+
+  @override
+  String get currencyDetails => 'Детали валюты';
+
+  @override
+  String get todaysChange => 'Изменение за сегодня';
+
+  @override
+  String get lastActivity => 'Последняя активность';
+
+  @override
+  String get labelConverted => 'конвертировано';
+
+  @override
+  String get actionWithdraw => 'Снять';
+
+  @override
+  String get actionDeposit => 'Пополнить';
+
+  @override
+  String get actionMore => 'Ещё';
+
+  @override
+  String get accountsCount => 'Количество: ';
 }

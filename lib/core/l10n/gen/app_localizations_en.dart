@@ -1164,7 +1164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view_tree => 'Tree View';
 
   @override
-  String get view_table => 'Table View';
+  String get view_table => 'Table';
 
   @override
   String get action_expand => 'Expand';
@@ -1191,7 +1191,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get desc_manage_accounts => 'Manage cash funds and bank accounts.';
 
   @override
-  String get label_fund_bank => 'Fund/Bank';
+  String get labelFundBank => 'Fund/Bank';
 
   @override
   String get label_all => 'All';
@@ -1209,4 +1209,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todays_net_flow => 'Today\'s Net Flow';
+
+  @override
+  String get title_funds_and_banks => 'Funds & Banks';
+
+  @override
+  String get view_grid => 'Grid';
+
+  @override
+  String get labelCashFund => 'Cash Fund';
+
+  @override
+  String get labelConv => 'conv';
+
+  @override
+  String balanceWithCurrency(Object currentCurrency) {
+    return 'Balance ($currentCurrency)';
+  }
+
+  @override
+  String get currencyDetails => 'Currency Details';
+
+  @override
+  String get todaysChange => 'Today\'s Change';
+
+  @override
+  String get lastActivity => 'Last Activity';
+
+  @override
+  String get labelConverted => 'converted';
+
+  @override
+  String get actionWithdraw => 'Withdraw';
+
+  @override
+  String get actionDeposit => 'Deposit';
+
+  @override
+  String get actionMore => 'More';
+
+  @override
+  String get accountsCount => 'Count: ';
 }

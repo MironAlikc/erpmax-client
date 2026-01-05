@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
@@ -170,11 +170,11 @@ class _SubscriptionManagementViewState extends State<SubscriptionManagementView>
           filled: true,
           fillColor: theme.gray50,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppDimens.buttonRadius),
+            borderRadius: BorderRadius.circular(Dimens.p6),
             borderSide: BorderSide(color: theme.gray200),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppDimens.buttonRadius),
+            borderRadius: BorderRadius.circular(Dimens.p6),
             borderSide: BorderSide(color: theme.gray200),
           ),
         ),
