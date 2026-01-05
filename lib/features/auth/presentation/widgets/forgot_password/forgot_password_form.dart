@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -35,7 +35,7 @@ class ForgotPasswordForm extends StatelessWidget {
           style: AppTextStyles.bodySmall.copyWith(color: theme.textSecondary),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
 
         _FieldLabel(text: localizations.email),
         const AppTextField(
@@ -43,7 +43,7 @@ class ForgotPasswordForm extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
         ),
 
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
 
         AppButton(
           onPressed: () => context.push(RouteNames.checkEmail),

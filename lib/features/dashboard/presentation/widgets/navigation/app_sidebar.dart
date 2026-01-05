@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +25,9 @@ class AppSidebar extends StatelessWidget {
     final menuItems = _menuData(context);
 
     return AnimatedContainer(
-      duration: AppDimens.sidebarDuration,
-      curve: AppDimens.defaultCurve,
-      width: isExpanded
-          ? AppDimens.sidebarExpandedWidth
-          : AppDimens.sidebarCollapsedWidth,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOutCubic,
+      width: isExpanded ? 260 : 80,
       decoration: BoxDecoration(
         color: theme.white,
         border: Border(
@@ -167,7 +165,7 @@ class AppSidebar extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: AnimatedRotation(
             turns: isExpanded ? 0 : 0.5,
-            duration: AppDimens.fastDuration,
+            duration: Duration(milliseconds: 200),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 14,
@@ -194,7 +192,7 @@ class AppSidebar extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: theme.bgLight,
-        borderRadius: BorderRadius.circular(AppDimens.cardRadius12),
+        borderRadius: BorderRadius.circular(Dimens.p12),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
@@ -23,9 +23,9 @@ class AppModuleHeader extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.fromLTRB(
-        AppDimens.pagePadding,
+        Dimens.p24,
         isMobile ? 16 : 24,
-        AppDimens.pagePadding,
+        Dimens.p24,
         isMobile ? 12 : 16,
       ),
       child: Column(
@@ -207,7 +207,7 @@ class ModuleActionButton extends StatelessWidget {
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDimens.chipRadius6),
+            borderRadius: BorderRadius.circular(Dimens.p6),
           ),
           side: isPrimary ? BorderSide.none : BorderSide(color: theme.gray200),
         ),

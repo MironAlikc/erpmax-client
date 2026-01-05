@@ -1,5 +1,5 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/charts/subscriptions_bar_chart.dart';
 import 'package:erpmax_client/features/saas_control/presentation/widgets/charts/revenue_line_chart.dart';
@@ -26,7 +26,7 @@ class DashboardContent extends StatelessWidget {
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(AppDimens.pagePadding),
+      padding: const EdgeInsets.all(Dimens.p24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

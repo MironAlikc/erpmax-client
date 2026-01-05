@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
@@ -71,7 +71,7 @@ class _TabChipBarState extends State<TabChipBar> {
 
     return Container(
       height: 64,
-      padding: EdgeInsets.symmetric(horizontal: AppDimens.pagePadding),
+      padding: EdgeInsets.symmetric(horizontal: Dimens.p24),
       decoration: BoxDecoration(color: theme.white),
       child: Row(
         children: [

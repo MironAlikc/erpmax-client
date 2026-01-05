@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/app_router.dart';
-import 'package:erpmax_client/core/theme/app_dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_button.dart';
@@ -23,7 +23,7 @@ class CheckEmailForm extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Center(child: SvgPicture.asset('assets/svg/reminder.svg', height: 140)),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
 
         Text(
           localizations.checkYourEmail,
@@ -33,7 +33,7 @@ class CheckEmailForm extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppDimens.elementGap),
+        const SizedBox(height: Dimens.p16),
 
         Text.rich(
           textAlign: TextAlign.center,
@@ -55,14 +55,14 @@ class CheckEmailForm extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppDimens.sectionGap),
+        const SizedBox(height: Dimens.p32),
 
         AppButton(
           onPressed: () => context.go(RouteNames.login),
           text: localizations.backToHome,
           isExpanded: true,
         ),
-        const SizedBox(height: AppDimens.elementGap),
+        const SizedBox(height: Dimens.p16),
 
         _buildResendRow(context),
       ],
