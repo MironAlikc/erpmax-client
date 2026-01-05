@@ -1253,4 +1253,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountsCount => 'العدد: ';
+
+  @override
+  String get totalCustomers => 'إجمالي العملاء';
+
+  @override
+  String get totalReceivables => 'إجمالي الذمم المدينة';
+
+  @override
+  String get totalSuppliers => 'إجمالي الموردين';
+
+  @override
+  String get totalPayables => 'إجمالي الذمم الدائنة';
 }

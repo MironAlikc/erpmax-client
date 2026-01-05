@@ -1259,4 +1259,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get accountsCount => 'Количество: ';
+
+  @override
+  String get totalCustomers => 'Всего клиентов';
+
+  @override
+  String get totalReceivables => 'Дебиторская задолженность';
+
+  @override
+  String get totalSuppliers => 'Всего поставщиков';
+
+  @override
+  String get totalPayables => 'Кредиторская задолженность';
 }

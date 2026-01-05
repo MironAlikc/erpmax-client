@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/constants/dimens.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entries_header/journal_entries_header.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entries_header.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entries_summary_metrics_bar.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entry_table.dart';
 import 'package:flutter/material.dart';

@@ -35,7 +35,13 @@ class MetricCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(data.value, style: AppTextStyles.h1.copyWith(fontSize: 28)),
+          Text(
+            data.value,
+            style: AppTextStyles.h1.copyWith(
+              fontSize: 28,
+              color: theme.textTertiary,
+            ),
+          ),
           const SizedBox(height: 2),
           Text(
             data.target,
@@ -67,15 +73,4 @@ class MetricCard extends StatelessWidget {
       ),
     );
   }
-
-  // Color _getStatusColor(AppColorExtension theme) {
-  //   switch (data.status) {
-  //     case ContraIndicationsStatus.success:
-  //       return theme.success;
-  //     case ContraIndicationsStatus.warning:
-  //       return theme.warning;
-  //     case ContraIndicationsStatus.healthy:
-  //       return theme.info;
-  //   }
-  // }
 }

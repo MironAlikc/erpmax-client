@@ -417,5 +417,9 @@
   "actionWithdraw": "Снять",
   "actionDeposit": "Пополнить",
   "actionMore": "Ещё",
-  "accountsCount": "Количество: "
+  "accountsCount": "Количество: ",
+  "totalCustomers": "Всего клиентов",
+  "totalReceivables": "Дебиторская задолженность",
+  "totalSuppliers": "Всего поставщиков",
+  "totalPayables": "Кредиторская задолженность"
 }

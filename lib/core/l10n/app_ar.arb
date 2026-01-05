@@ -411,5 +411,9 @@
   "actionWithdraw": "سحب",
   "actionDeposit": "إيداع",
   "actionMore": "المزيد",
-  "accountsCount": "العدد: "
+  "accountsCount": "العدد: ",
+  "totalCustomers": "إجمالي العملاء",
+  "totalReceivables": "إجمالي الذمم المدينة",
+  "totalSuppliers": "إجمالي الموردين",
+  "totalPayables": "إجمالي الذمم الدائنة"
 }

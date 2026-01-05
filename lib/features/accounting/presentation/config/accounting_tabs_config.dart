@@ -5,6 +5,7 @@ import 'package:erpmax_client/features/accounting/presentation/views/chart_of_ac
 import 'package:erpmax_client/features/accounting/presentation/views/funds_banks_view.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/general_ledger_view.dart';
 import 'package:erpmax_client/features/accounting/presentation/views/journal_entries_view.dart';
+import 'package:erpmax_client/features/accounting/presentation/views/parties_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -57,7 +58,7 @@ abstract final class AccountingTabsConfig {
         name: localizations.accParties,
         icon: Icons.people_outline,
         shellIndex: accountingShellIndex,
-        content: placeholderBuilder(localizations.accParties),
+        content: PartiesView(title: localizations.accParties),
       ),
       ModuleTabItem(
         id: 'acc_reports',
