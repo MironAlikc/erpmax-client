@@ -1,7 +1,6 @@
-enum PartyType { customers, suppliers }
+enum PartiesType { customers, suppliers }
 
 class MockPartiesDataService {
-  // Данные для карточек остаются прежними
   static PartiesStats getStatistics() => PartiesStats(
     totalCustomers: 156,
     activeCustomers: 142,
@@ -13,7 +12,6 @@ class MockPartiesDataService {
     overduePayables: "45K",
   );
 
-  // Список КЛИЕНТОВ
   static List<Customer> getCustomers() {
     return [
       Customer(
@@ -31,7 +29,6 @@ class MockPartiesDataService {
     ];
   }
 
-  // Список ПОСТАВЩИКОВ
   static List<Supplier> getSuppliers() {
     return [
       Supplier(
@@ -56,11 +53,10 @@ class MockPartiesDataService {
   }
 }
 
-// Модель для верхних карточек статистики
 class PartiesStats {
   final int totalCustomers;
   final int activeCustomers;
-  final String totalReceivables; // Используем String для формата "485K"
+  final String totalReceivables;
   final String overdueReceivables;
   final int totalSuppliers;
   final int activeSuppliers;
@@ -79,7 +75,6 @@ class PartiesStats {
   });
 }
 
-// Базовый класс для всех партнеров
 abstract class Party {
   final String id;
   final String name;
@@ -94,7 +89,6 @@ abstract class Party {
   });
 }
 
-// Модель Клиента (из первого скриншота)
 class Customer extends Party {
   final String group;
   final String phone;
@@ -117,14 +111,13 @@ class Customer extends Party {
   });
 }
 
-// Модель Поставщика (из нового скриншота)
 class Supplier extends Party {
   final String accountNumber;
-  final String type; // Например, "Company"
+  final String type;
   final String phoneNumber;
 
   Supplier({
-    required super.id, // Здесь ID может выступать как Account Number
+    required super.id,
     required super.name,
     required super.balance,
     required super.city,
