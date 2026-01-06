@@ -7,6 +7,7 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/acc_badge.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/parties_mock_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/color_picker_popup.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _CustomersTableViewState extends State<CustomersTableView> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
@@ -51,7 +53,7 @@ class _CustomersTableViewState extends State<CustomersTableView> {
           Row(
             children: [
               Text(
-                'Customers List',
+                localizations.customersList,
                 style: AppTextStyles.h5.copyWith(
                   color: theme.textTertiary,
                   letterSpacing: 1.2,
@@ -59,11 +61,13 @@ class _CustomersTableViewState extends State<CustomersTableView> {
                 ),
               ),
               Spacer(),
+              ColorPickerPopup(),
+              gapW8,
               AccountingHeaderBtn(
-                label: 'Add Customer',
+                label: localizations.actionAddCustomer,
                 icon: LucideIcons.plus,
-                iconColor: theme.textSecondary,
-                textColor: theme.textTertiary,
+                iconColor: theme.textWhite,
+                textColor: theme.textWhite,
                 color: theme.sidebarActiveBg,
                 onTap: () {},
               ),
@@ -154,26 +158,29 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
                     gapW6,
                     AppAvatar(initials: 'CA', radius: 14),
                     gapW8,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.customer.name,
-                          style: AppTextStyles.tableHeader.copyWith(
-                            color: theme.textPrimary,
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.customer.name,
+                            style: AppTextStyles.tableHeader.copyWith(
+                              color: theme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        gapH4,
-                        Text(
-                          widget.customer.id,
-                          style: AppTextStyles.caption.copyWith(
-                            color: theme.textSecondary,
-                            height: 1.0,
+                          gapH4,
+                          Text(
+                            widget.customer.id,
+                            style: AppTextStyles.caption.copyWith(
+                              color: theme.textSecondary,
+                              height: 1.0,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -550,9 +557,14 @@ class _CustomersTableFooter extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  localizations.labelActiveWithColon,
-                  style: AppTextStyles.caption.copyWith(color: theme.textWhite),
+                Flexible(
+                  child: Text(
+                    localizations.labelActiveWithColon,
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textWhite,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 const SizedBox(width: Dimens.p4),
                 AccBadge(

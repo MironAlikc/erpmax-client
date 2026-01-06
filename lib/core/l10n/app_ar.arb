@@ -424,5 +424,9 @@
   "labelActivity": "النشاط",
   "contactInfo": "معلومات الاتصال",
   "labelGroup": "المجموعة",
-  "labelNameId": "الاسم / المعرف"
+  "labelNameId": "الاسم / المعرف",
+  "customersList": "قائمة العملاء",
+  "actionAddCustomer": "إضافة عميل",
+  "suppliersList": "قائمة الموردين",
+  "actionAddSupplier": "إضافة مورد"
 }

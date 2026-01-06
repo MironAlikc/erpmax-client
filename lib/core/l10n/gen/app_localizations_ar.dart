@@ -1292,4 +1292,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelNameId => 'الاسم / المعرف';
+
+  @override
+  String get customersList => 'قائمة العملاء';
+
+  @override
+  String get actionAddCustomer => 'إضافة عميل';
+
+  @override
+  String get suppliersList => 'قائمة الموردين';
+
+  @override
+  String get actionAddSupplier => 'إضافة مورد';
 }

@@ -431,5 +431,9 @@
   "labelActivity": "Activity",
   "contactInfo": "Contact Info",
   "labelGroup": "Group",
-  "labelNameId": "Name / ID"
+  "labelNameId": "Name / ID",
+  "customersList": "Customers List",
+  "actionAddCustomer": "Add Customer",
+  "suppliersList": "Suppliers List",
+  "actionAddSupplier": "Add Supplier"
 }

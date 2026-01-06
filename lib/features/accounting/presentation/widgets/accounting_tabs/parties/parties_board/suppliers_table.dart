@@ -6,6 +6,7 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/acc_badge.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/parties_mock_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/color_picker_popup.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _SuppliersTableViewState extends State<SuppliersTableView> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
@@ -50,7 +52,7 @@ class _SuppliersTableViewState extends State<SuppliersTableView> {
           Row(
             children: [
               Text(
-                'Suppliers List',
+                localizations.suppliersList,
                 style: AppTextStyles.h5.copyWith(
                   color: theme.textTertiary,
                   letterSpacing: 1.2,
@@ -58,11 +60,13 @@ class _SuppliersTableViewState extends State<SuppliersTableView> {
                 ),
               ),
               Spacer(),
+              ColorPickerPopup(),
+              gapW8,
               AccountingHeaderBtn(
-                label: 'Add Supplier',
+                label: localizations.actionAddSupplier,
                 icon: LucideIcons.plus,
-                iconColor: theme.textSecondary,
-                textColor: theme.textTertiary,
+                iconColor: theme.textWhite,
+                textColor: theme.textWhite,
                 color: theme.sidebarActiveBg,
                 onTap: () {},
               ),
