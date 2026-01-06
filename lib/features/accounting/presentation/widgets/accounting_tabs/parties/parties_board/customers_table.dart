@@ -8,6 +8,7 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/parties_mock_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -38,15 +39,38 @@ class _CustomersTableViewState extends State<CustomersTableView> {
     final theme = context.theme.appColor;
 
     return Container(
+      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
       decoration: BoxDecoration(
+        color: theme.white,
         borderRadius: BorderRadius.circular(Dimens.p12),
         border: Border.all(width: 1, color: theme.border),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            children: [
+              Text(
+                'Customers List',
+                style: AppTextStyles.h5.copyWith(
+                  color: theme.textTertiary,
+                  letterSpacing: 1.2,
+                  height: 1.0,
+                ),
+              ),
+              Spacer(),
+              AccountingHeaderBtn(
+                label: 'Add Customer',
+                icon: LucideIcons.plus,
+                iconColor: theme.textSecondary,
+                textColor: theme.textTertiary,
+                color: theme.sidebarActiveBg,
+                onTap: () {},
+              ),
+            ],
+          ),
+          gapH16,
           _FundsTableHeader(),
-          Divider(height: 1, color: theme.border),
           ...widget.customers.map(
             (customer) => CustomersTableRow(
               customer: customer,
@@ -103,6 +127,8 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
                       : theme.white),
             border: BoxBorder.fromSTEB(
               bottom: BorderSide(width: 1, color: theme.border),
+              start: BorderSide(width: 1, color: theme.border),
+              end: BorderSide(width: 1, color: theme.border),
             ),
           ),
           padding: const EdgeInsets.symmetric(
@@ -352,6 +378,7 @@ class _FundsTableHeader extends StatelessWidget {
           topLeft: Radius.circular(Dimens.p12),
           topRight: Radius.circular(Dimens.p12),
         ),
+        border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: Dimens.p12,
@@ -463,6 +490,11 @@ class _CustomersTableFooter extends StatelessWidget {
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(Dimens.p12),
           bottomRight: Radius.circular(Dimens.p12),
+        ),
+        border: BoxBorder.fromSTEB(
+          bottom: BorderSide(width: 1, color: theme.border),
+          start: BorderSide(width: 1, color: theme.border),
+          end: BorderSide(width: 1, color: theme.border),
         ),
       ),
       child: Row(

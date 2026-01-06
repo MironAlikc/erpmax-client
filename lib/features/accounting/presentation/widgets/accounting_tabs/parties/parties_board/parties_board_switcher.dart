@@ -37,7 +37,7 @@ class PartiesBoardSwitcher extends StatelessWidget {
           ),
           _PartiesSwitcherTab(
             isActive: currentType == PartiesType.suppliers,
-            icon: LucideIcons.users,
+            icon: LucideIcons.truck,
             count: '45',
             label: 'Suppliers',
             onTap: () => onChanged(PartiesType.suppliers),
