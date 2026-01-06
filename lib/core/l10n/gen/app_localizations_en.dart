@@ -1289,4 +1289,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelNameId => 'Name / ID';
+
+  @override
+  String get customersList => 'Customers List';
+
+  @override
+  String get actionAddCustomer => 'Add Customer';
+
+  @override
+  String get suppliersList => 'Suppliers List';
+
+  @override
+  String get actionAddSupplier => 'Add Supplier';
 }

@@ -1298,4 +1298,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get labelNameId => 'Имя / ID';
+
+  @override
+  String get customersList => 'Список клиентов';
+
+  @override
+  String get actionAddCustomer => 'Добавить клиента';
+
+  @override
+  String get suppliersList => 'Список поставщиков';
+
+  @override
+  String get actionAddSupplier => 'Добавить поставщика';
 }

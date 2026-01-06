@@ -2547,6 +2547,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name / ID'**
   String get labelNameId;
+
+  /// No description provided for @customersList.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers List'**
+  String get customersList;
+
+  /// No description provided for @actionAddCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Customer'**
+  String get actionAddCustomer;
+
+  /// No description provided for @suppliersList.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers List'**
+  String get suppliersList;
+
+  /// No description provided for @actionAddSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Supplier'**
+  String get actionAddSupplier;
 }
 
 class _AppLocalizationsDelegate

@@ -6,7 +6,9 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/acc_badge.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/parties_mock_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/color_picker_popup.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -35,17 +37,43 @@ class _SuppliersTableViewState extends State<SuppliersTableView> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
+      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
       decoration: BoxDecoration(
+        color: theme.white,
         borderRadius: BorderRadius.circular(Dimens.p12),
         border: Border.all(width: 1, color: theme.border),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            children: [
+              Text(
+                localizations.suppliersList,
+                style: AppTextStyles.h5.copyWith(
+                  color: theme.textTertiary,
+                  letterSpacing: 1.2,
+                  height: 1.0,
+                ),
+              ),
+              Spacer(),
+              ColorPickerPopup(),
+              gapW8,
+              AccountingHeaderBtn(
+                label: localizations.actionAddSupplier,
+                icon: LucideIcons.plus,
+                iconColor: theme.textWhite,
+                textColor: theme.textWhite,
+                color: theme.sidebarActiveBg,
+                onTap: () {},
+              ),
+            ],
+          ),
+          gapH16,
           _SuppliersTableHeader(),
-          Divider(height: 1, color: theme.border),
           ...widget.suppliers.map(
             (supplier) => SuppliersTableRow(
               supplier: supplier,
@@ -102,6 +130,8 @@ class _SuppliersTableRowState extends State<SuppliersTableRow> {
                       : theme.white),
             border: BoxBorder.fromSTEB(
               bottom: BorderSide(width: 1, color: theme.border),
+              start: BorderSide(width: 1, color: theme.border),
+              end: BorderSide(width: 1, color: theme.border),
             ),
           ),
           padding: const EdgeInsets.symmetric(
@@ -241,6 +271,7 @@ class _SuppliersTableHeader extends StatelessWidget {
           topLeft: Radius.circular(Dimens.p12),
           topRight: Radius.circular(Dimens.p12),
         ),
+        border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: Dimens.p12,
@@ -346,6 +377,11 @@ class _SuppliersTableFooter extends StatelessWidget {
           bottomLeft: Radius.circular(Dimens.p12),
           bottomRight: Radius.circular(Dimens.p12),
         ),
+        border: BoxBorder.fromSTEB(
+          bottom: BorderSide(width: 1, color: theme.border),
+          start: BorderSide(width: 1, color: theme.border),
+          end: BorderSide(width: 1, color: theme.border),
+        ),
       ),
       child: Row(
         children: [
@@ -380,7 +416,6 @@ class _SuppliersTableFooter extends StatelessWidget {
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(flex: 2, child: Text('', style: style)),
-
           Expanded(flex: 2, child: Text('', style: style)),
           Expanded(
             flex: 2,

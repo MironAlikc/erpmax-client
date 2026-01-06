@@ -7,7 +7,9 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/acc_badge.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/parties_mock_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/color_picker_popup.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/accounting_header_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -36,17 +38,43 @@ class _CustomersTableViewState extends State<CustomersTableView> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
+    final localizations = AppLocalizations.of(context);
 
     return Container(
+      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
       decoration: BoxDecoration(
+        color: theme.white,
         borderRadius: BorderRadius.circular(Dimens.p12),
         border: Border.all(width: 1, color: theme.border),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            children: [
+              Text(
+                localizations.customersList,
+                style: AppTextStyles.h5.copyWith(
+                  color: theme.textTertiary,
+                  letterSpacing: 1.2,
+                  height: 1.0,
+                ),
+              ),
+              Spacer(),
+              ColorPickerPopup(),
+              gapW8,
+              AccountingHeaderBtn(
+                label: localizations.actionAddCustomer,
+                icon: LucideIcons.plus,
+                iconColor: theme.textWhite,
+                textColor: theme.textWhite,
+                color: theme.sidebarActiveBg,
+                onTap: () {},
+              ),
+            ],
+          ),
+          gapH16,
           _FundsTableHeader(),
-          Divider(height: 1, color: theme.border),
           ...widget.customers.map(
             (customer) => CustomersTableRow(
               customer: customer,
@@ -103,6 +131,8 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
                       : theme.white),
             border: BoxBorder.fromSTEB(
               bottom: BorderSide(width: 1, color: theme.border),
+              start: BorderSide(width: 1, color: theme.border),
+              end: BorderSide(width: 1, color: theme.border),
             ),
           ),
           padding: const EdgeInsets.symmetric(
@@ -128,26 +158,29 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
                     gapW6,
                     AppAvatar(initials: 'CA', radius: 14),
                     gapW8,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.customer.name,
-                          style: AppTextStyles.tableHeader.copyWith(
-                            color: theme.textPrimary,
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.customer.name,
+                            style: AppTextStyles.tableHeader.copyWith(
+                              color: theme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        gapH4,
-                        Text(
-                          widget.customer.id,
-                          style: AppTextStyles.caption.copyWith(
-                            color: theme.textSecondary,
-                            height: 1.0,
+                          gapH4,
+                          Text(
+                            widget.customer.id,
+                            style: AppTextStyles.caption.copyWith(
+                              color: theme.textSecondary,
+                              height: 1.0,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -352,6 +385,7 @@ class _FundsTableHeader extends StatelessWidget {
           topLeft: Radius.circular(Dimens.p12),
           topRight: Radius.circular(Dimens.p12),
         ),
+        border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: Dimens.p12,
@@ -464,6 +498,11 @@ class _CustomersTableFooter extends StatelessWidget {
           bottomLeft: Radius.circular(Dimens.p12),
           bottomRight: Radius.circular(Dimens.p12),
         ),
+        border: BoxBorder.fromSTEB(
+          bottom: BorderSide(width: 1, color: theme.border),
+          start: BorderSide(width: 1, color: theme.border),
+          end: BorderSide(width: 1, color: theme.border),
+        ),
       ),
       child: Row(
         children: [
@@ -518,9 +557,14 @@ class _CustomersTableFooter extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  localizations.labelActiveWithColon,
-                  style: AppTextStyles.caption.copyWith(color: theme.textWhite),
+                Flexible(
+                  child: Text(
+                    localizations.labelActiveWithColon,
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textWhite,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 const SizedBox(width: Dimens.p4),
                 AccBadge(

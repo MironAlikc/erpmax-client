@@ -430,5 +430,9 @@
   "labelActivity": "Активность",
   "contactInfo": "Контактная информация",
   "labelGroup": "Группа",
-  "labelNameId": "Имя / ID"
+  "labelNameId": "Имя / ID",
+  "customersList": "Список клиентов",
+  "actionAddCustomer": "Добавить клиента",
+  "suppliersList": "Список поставщиков",
+  "actionAddSupplier": "Добавить поставщика"
 }
