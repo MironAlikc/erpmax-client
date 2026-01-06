@@ -284,8 +284,6 @@ class _ReportsContentState extends State<ReportsContent> {
     );
   }
 
-  // --- ТАБЛИЦА: Performance Report ---
-
   Widget _buildPerformanceTableSection() {
     final theme = context.theme.appColor;
     final List<ErpMaxColumn> cols = [
@@ -353,8 +351,6 @@ class _ReportsContentState extends State<ReportsContent> {
       ),
     );
   }
-
-  // --- ТАБЛИЦА: Usage Report ---
 
   Widget _buildUsageTableSection() {
     final theme = context.theme.appColor;
@@ -428,8 +424,6 @@ class _ReportsContentState extends State<ReportsContent> {
     );
   }
 
-  // --- ТАБЛИЦА: Customers Report ---
-
   Widget _buildCustomersTableSection() {
     final theme = context.theme.appColor;
     final cols = [
@@ -489,8 +483,6 @@ class _ReportsContentState extends State<ReportsContent> {
       ),
     );
   }
-
-  // --- ВСПОМОГАТЕЛЬНЫЕ КОМПОНЕНТЫ (Stats, Headers, Common Tables) ---
 
   Widget _buildStatsGrid(List<StatData> stats) {
     return LayoutBuilder(

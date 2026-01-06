@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/access_logs_content.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/backup_content.dart';
-import 'package:erpmax_client/features/saas_control/presentation/pages/dashboard_content.dart';
+import 'package:erpmax_client/features/saas_control/presentation/widgets/dashboard/dashboard_content.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/module_management_content.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/packages_content.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/reports_content.dart';
