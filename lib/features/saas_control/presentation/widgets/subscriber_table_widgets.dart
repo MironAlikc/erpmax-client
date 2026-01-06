@@ -18,7 +18,7 @@ class SubscriberStatsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 250,
-        mainAxisExtent: 110, // Увеличенная высота для предотвращения overflow
+        mainAxisExtent: 110,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
       ),
@@ -56,6 +56,7 @@ class SubscriberStatsGrid extends StatelessWidget {
     );
   }
 }
+
 class TenantCell extends StatelessWidget {
   final SubscriberModel item;
   const TenantCell({super.key, required this.item});
@@ -72,7 +73,12 @@ class TenantCell extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.companyName, style: AppTextStyles.bodyMediumBold),
-              Text(item.email, style: AppTextStyles.bodySmall.copyWith(color: theme.textDisabled)),
+              Text(
+                item.email,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: theme.textDisabled,
+                ),
+              ),
             ],
           ),
         ),
@@ -88,9 +94,9 @@ class ProgressCell extends StatelessWidget {
   final IconData icon;
 
   const ProgressCell({
-    super.key, 
-    required this.current, 
-    required this.max, 
+    super.key,
+    required this.current,
+    required this.max,
     required this.unit,
     required this.icon,
   });
@@ -99,7 +105,7 @@ class ProgressCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final double progress = (current / max).clamp(0.0, 1.0);
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
