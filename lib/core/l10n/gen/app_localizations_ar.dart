@@ -1277,4 +1277,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelAccountNumber => 'رقم الحساب';
+
+  @override
+  String get labelActiveWithColon => 'نشط: ';
+
+  @override
+  String get labelActivity => 'النشاط';
+
+  @override
+  String get contactInfo => 'معلومات الاتصال';
+
+  @override
+  String get labelGroup => 'المجموعة';
+
+  @override
+  String get labelNameId => 'الاسم / المعرف';
 }

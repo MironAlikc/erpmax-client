@@ -92,7 +92,7 @@ class _SuppliersTableRowState extends State<SuppliersTableRow> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onDoubleTap: widget.onChanged,
+        onTap: widget.onChanged,
         child: Container(
           decoration: BoxDecoration(
             color: widget.isSelected
@@ -122,13 +122,16 @@ class _SuppliersTableRowState extends State<SuppliersTableRow> {
               ),
               Expanded(
                 flex: 3,
-                child: Text(
-                  widget.supplier.accountNumber,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: theme.textPrimary,
+                child: Padding(
+                  padding: EdgeInsetsGeometry.only(left: 8),
+                  child: Text(
+                    widget.supplier.accountNumber,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: theme.textPrimary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
                 ),
               ),
               Expanded(
@@ -251,10 +254,13 @@ class _SuppliersTableHeader extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: Text(
-              localizations.labelAccountNumber,
-              style: style,
-              textAlign: TextAlign.start,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                localizations.labelAccountNumber,
+                style: style,
+                textAlign: TextAlign.start,
+              ),
             ),
           ),
           Expanded(
@@ -356,6 +362,7 @@ class _SuppliersTableFooter extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                gapH8,
                 Text(
                   AppLocalizations.of(context).accountsCount,
                   style: AppTextStyles.caption.copyWith(color: theme.textWhite),

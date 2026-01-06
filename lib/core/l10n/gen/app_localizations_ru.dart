@@ -1283,4 +1283,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get labelAccountNumber => 'Номер счета';
+
+  @override
+  String get labelActiveWithColon => 'активен: ';
+
+  @override
+  String get labelActivity => 'Активность';
+
+  @override
+  String get contactInfo => 'Контактная информация';
+
+  @override
+  String get labelGroup => 'Группа';
+
+  @override
+  String get labelNameId => 'Имя / ID';
 }

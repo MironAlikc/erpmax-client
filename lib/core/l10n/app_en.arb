@@ -426,5 +426,10 @@
   "labelPhoneNumber": "Phone Number",
   "labelCity": "City",
   "labelName": "Name",
-  "labelAccountNumber": "Account Number"
+  "labelAccountNumber": "Account Number",
+  "labelActiveWithColon": "active: ",
+  "labelActivity": "Activity",
+  "contactInfo": "Contact Info",
+  "labelGroup": "Group",
+  "labelNameId": "Name / ID"
 }

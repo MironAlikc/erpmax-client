@@ -2517,6 +2517,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account Number'**
   String get labelAccountNumber;
+
+  /// No description provided for @labelActiveWithColon.
+  ///
+  /// In en, this message translates to:
+  /// **'active: '**
+  String get labelActiveWithColon;
+
+  /// No description provided for @labelActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get labelActivity;
+
+  /// No description provided for @contactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get contactInfo;
+
+  /// No description provided for @labelGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get labelGroup;
+
+  /// No description provided for @labelNameId.
+  ///
+  /// In en, this message translates to:
+  /// **'Name / ID'**
+  String get labelNameId;
 }
 
 class _AppLocalizationsDelegate

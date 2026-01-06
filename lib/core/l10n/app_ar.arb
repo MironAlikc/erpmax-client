@@ -419,5 +419,10 @@
   "labelPhoneNumber": "رقم الهاتف",
   "labelCity": "المدينة",
   "labelName": "الاسم",
-  "labelAccountNumber": "رقم الحساب"
+  "labelAccountNumber": "رقم الحساب",
+  "labelActiveWithColon": "نشط: ",
+  "labelActivity": "النشاط",
+  "contactInfo": "معلومات الاتصال",
+  "labelGroup": "المجموعة",
+  "labelNameId": "الاسم / المعرف"
 }

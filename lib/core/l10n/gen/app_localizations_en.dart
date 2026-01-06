@@ -1274,4 +1274,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelAccountNumber => 'Account Number';
+
+  @override
+  String get labelActiveWithColon => 'active: ';
+
+  @override
+  String get labelActivity => 'Activity';
+
+  @override
+  String get contactInfo => 'Contact Info';
+
+  @override
+  String get labelGroup => 'Group';
+
+  @override
+  String get labelNameId => 'Name / ID';
 }
