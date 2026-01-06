@@ -422,5 +422,9 @@
   "totalCustomers": "Total Customers",
   "totalReceivables": "Total Receivables",
   "totalSuppliers": "Total Suppliers",
-  "totalPayables": "Total Payables"
+  "totalPayables": "Total Payables",
+  "labelPhoneNumber": "Phone Number",
+  "labelCity": "City",
+  "labelName": "Name",
+  "labelAccountNumber": "Account Number"
 }

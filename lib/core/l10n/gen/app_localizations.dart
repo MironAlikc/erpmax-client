@@ -2493,6 +2493,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total Payables'**
   String get totalPayables;
+
+  /// No description provided for @labelPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get labelPhoneNumber;
+
+  /// No description provided for @labelCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get labelCity;
+
+  /// No description provided for @labelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get labelName;
+
+  /// No description provided for @labelAccountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Number'**
+  String get labelAccountNumber;
 }
 
 class _AppLocalizationsDelegate

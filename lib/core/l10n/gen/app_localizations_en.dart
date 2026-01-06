@@ -1262,4 +1262,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalPayables => 'Total Payables';
+
+  @override
+  String get labelPhoneNumber => 'Phone Number';
+
+  @override
+  String get labelCity => 'City';
+
+  @override
+  String get labelName => 'Name';
+
+  @override
+  String get labelAccountNumber => 'Account Number';
 }

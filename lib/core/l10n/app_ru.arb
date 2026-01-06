@@ -421,5 +421,9 @@
   "totalCustomers": "Всего клиентов",
   "totalReceivables": "Дебиторская задолженность",
   "totalSuppliers": "Всего поставщиков",
-  "totalPayables": "Кредиторская задолженность"
+  "totalPayables": "Кредиторская задолженность",
+  "labelPhoneNumber": "Номер телефона",
+  "labelCity": "Город",
+  "labelName": "Имя",
+  "labelAccountNumber": "Номер счета"
 }
