@@ -1265,4 +1265,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get totalPayables => 'إجمالي الذمم الدائنة';
+
+  @override
+  String get labelPhoneNumber => 'رقم الهاتف';
+
+  @override
+  String get labelCity => 'المدينة';
+
+  @override
+  String get labelName => 'الاسم';
+
+  @override
+  String get labelAccountNumber => 'رقم الحساب';
+
+  @override
+  String get labelActiveWithColon => 'نشط: ';
+
+  @override
+  String get labelActivity => 'النشاط';
+
+  @override
+  String get contactInfo => 'معلومات الاتصال';
+
+  @override
+  String get labelGroup => 'المجموعة';
+
+  @override
+  String get labelNameId => 'الاسم / المعرف';
 }

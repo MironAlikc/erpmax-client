@@ -6,6 +6,7 @@ import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
 import 'package:erpmax_client/core/widgets/common/greeting_time_section.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -469,21 +470,7 @@ class _UserAccountButton extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 12),
-        Container(
-          padding: const EdgeInsets.all(1.5),
-          decoration: BoxDecoration(
-            color: theme.gray400,
-            shape: BoxShape.circle,
-          ),
-          child: CircleAvatar(
-            radius: 18,
-            backgroundColor: theme.sidebarBackground,
-            child: Text(
-              'OM',
-              style: AppTextStyles.bodyMediumBold.copyWith(color: Colors.white),
-            ),
-          ),
-        ),
+        AppAvatar(initials: 'OM'),
       ],
     );
   }

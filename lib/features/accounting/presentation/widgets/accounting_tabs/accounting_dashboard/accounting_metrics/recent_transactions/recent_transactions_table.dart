@@ -27,15 +27,6 @@ enum TransactionStatus {
     }
   }
 
-  // double get iconSize {
-  //   switch (this) {
-  //     case TransactionStatus.posted:
-  //       return 14;
-  //     case TransactionStatus.draft:
-  //       return 10;
-  //   }
-  // }
-
   IconData? get icon =>
       this == TransactionStatus.posted ? LucideIcons.check : LucideIcons.circle;
 }
@@ -187,21 +178,30 @@ class RecentTransactionsTable extends StatelessWidget {
           theme,
           child: Text(
             ref,
-            style: AppTextStyles.bodyMedium.copyWith(fontSize: 13),
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontSize: 13,
+              color: theme.textPrimary,
+            ),
           ),
         ),
         _buildCell(
           theme,
           child: Text(
             date,
-            style: AppTextStyles.bodyMedium.copyWith(fontSize: 13),
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontSize: 13,
+              color: theme.textPrimary,
+            ),
           ),
         ),
         _buildCell(
           theme,
           child: Text(
             desc,
-            style: AppTextStyles.bodyMedium.copyWith(fontSize: 13),
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontSize: 13,
+              color: theme.textPrimary,
+            ),
           ),
         ),
         _buildCell(

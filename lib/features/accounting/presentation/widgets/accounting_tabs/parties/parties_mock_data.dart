@@ -26,6 +26,18 @@ class MockPartiesDataService {
         lastActivityAmount: 150000,
         isActive: true,
       ),
+      Customer(
+        id: "#1132",
+        name: "Customer B",
+        group: "VIP",
+        phone: "+966 53 123 4997",
+        city: "Riyadh",
+        balance: 63000,
+        limit: 100000,
+        lastActivityDate: "2024-03-23",
+        lastActivityAmount: 159000,
+        isActive: true,
+      ),
     ];
   }
 

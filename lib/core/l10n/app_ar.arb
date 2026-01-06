@@ -415,5 +415,14 @@
   "totalCustomers": "إجمالي العملاء",
   "totalReceivables": "إجمالي الذمم المدينة",
   "totalSuppliers": "إجمالي الموردين",
-  "totalPayables": "إجمالي الذمم الدائنة"
+  "totalPayables": "إجمالي الذمم الدائنة",
+  "labelPhoneNumber": "رقم الهاتف",
+  "labelCity": "المدينة",
+  "labelName": "الاسم",
+  "labelAccountNumber": "رقم الحساب",
+  "labelActiveWithColon": "نشط: ",
+  "labelActivity": "النشاط",
+  "contactInfo": "معلومات الاتصال",
+  "labelGroup": "المجموعة",
+  "labelNameId": "الاسم / المعرف"
 }

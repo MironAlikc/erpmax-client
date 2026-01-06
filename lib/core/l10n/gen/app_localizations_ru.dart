@@ -1271,4 +1271,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get totalPayables => 'Кредиторская задолженность';
+
+  @override
+  String get labelPhoneNumber => 'Номер телефона';
+
+  @override
+  String get labelCity => 'Город';
+
+  @override
+  String get labelName => 'Имя';
+
+  @override
+  String get labelAccountNumber => 'Номер счета';
+
+  @override
+  String get labelActiveWithColon => 'активен: ';
+
+  @override
+  String get labelActivity => 'Активность';
+
+  @override
+  String get contactInfo => 'Контактная информация';
+
+  @override
+  String get labelGroup => 'Группа';
+
+  @override
+  String get labelNameId => 'Имя / ID';
 }

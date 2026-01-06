@@ -6,15 +6,15 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/accountin
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class PartiesBoardSwitcher extends StatefulWidget {
-  const PartiesBoardSwitcher({super.key});
+class PartiesBoardSwitcher extends StatelessWidget {
+  final PartiesType currentType;
+  final ValueChanged<PartiesType> onChanged;
 
-  @override
-  State<PartiesBoardSwitcher> createState() => _PartiesBoardSwitcherState();
-}
-
-class _PartiesBoardSwitcherState extends State<PartiesBoardSwitcher> {
-  PartiesType currentType = PartiesType.customers;
+  const PartiesBoardSwitcher({
+    super.key,
+    required this.currentType,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +33,14 @@ class _PartiesBoardSwitcherState extends State<PartiesBoardSwitcher> {
             icon: LucideIcons.users,
             count: '156',
             label: 'Castomers',
-            onTap: () => setState(() => currentType = PartiesType.customers),
+            onTap: () => onChanged(PartiesType.customers),
           ),
           _PartiesSwitcherTab(
             isActive: currentType == PartiesType.suppliers,
             icon: LucideIcons.users,
             count: '45',
             label: 'Suppliers',
-            onTap: () => setState(() => currentType = PartiesType.suppliers),
+            onTap: () => onChanged(PartiesType.suppliers),
           ),
         ],
       ),

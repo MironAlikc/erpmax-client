@@ -421,5 +421,14 @@
   "totalCustomers": "Всего клиентов",
   "totalReceivables": "Дебиторская задолженность",
   "totalSuppliers": "Всего поставщиков",
-  "totalPayables": "Кредиторская задолженность"
+  "totalPayables": "Кредиторская задолженность",
+  "labelPhoneNumber": "Номер телефона",
+  "labelCity": "Город",
+  "labelName": "Имя",
+  "labelAccountNumber": "Номер счета",
+  "labelActiveWithColon": "активен: ",
+  "labelActivity": "Активность",
+  "contactInfo": "Контактная информация",
+  "labelGroup": "Группа",
+  "labelNameId": "Имя / ID"
 }
