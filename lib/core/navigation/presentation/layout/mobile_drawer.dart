@@ -1,6 +1,6 @@
+import 'package:erpmax_client/core/navigation/presentation/layout/widgets/sidebar_menu.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/sidebar/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
 class MobileDrawer extends StatelessWidget {

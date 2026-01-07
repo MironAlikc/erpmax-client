@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_web_plugins: 
+    sdk: flutter
   intl: ^0.20.2
   get_it: ^9.2.0
   injectable: ^2.7.1
@@ -30,7 +32,6 @@ dependencies:
   shared_preferences: ^2.5.4
   json_annotation: ^4.9.0
   equatable: ^2.0.5
-  provider: ^6.1.2
   cupertino_icons: ^1.0.8
   lucide_icons: ^0.257.0
   socket_io_client: ^3.1.3

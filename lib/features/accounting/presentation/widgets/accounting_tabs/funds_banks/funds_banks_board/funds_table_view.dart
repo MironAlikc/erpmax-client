@@ -4,9 +4,12 @@ import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/fund_bank_data.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/funds_banks_board/funds_detail_panel.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/tools/tools.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/funds_banks/widgets/acc_badge.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class FundsTableView extends StatelessWidget {
@@ -85,105 +88,115 @@ class _FundsRowState extends State<FundsRow> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       cursor: SystemMouseCursors.click,
-      child: Container(
-        decoration: BoxDecoration(
-          color: _isHovered
-              ? theme.primaryLight.withValues(alpha: 0.8)
-              : theme.white,
-          border: BoxBorder.fromSTEB(
-            bottom: BorderSide(width: 1, color: theme.border),
+      child: InkWell(
+        onTap: () {
+          context.read<SidePanelCubit>().open(
+            FundsDetailsPanel(account: widget.account),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? theme.primaryLight.withValues(alpha: 0.8)
+                : theme.white,
+            border: BoxBorder.fromSTEB(
+              bottom: BorderSide(width: 1, color: theme.border),
+            ),
           ),
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.p12,
-          vertical: Dimens.p12,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  _buildBankIcon(theme, widget.account),
-                  gapW12,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.account.name,
-                          style: AppTextStyles.tableHeader.copyWith(
-                            color: theme.textPrimary,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimens.p12,
+            vertical: Dimens.p12,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    _buildBankIcon(theme, widget.account),
+                    gapW12,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.account.name,
+                            style: AppTextStyles.tableHeader.copyWith(
+                              color: theme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          widget.account.accountNumber ??
-                              AppLocalizations.of(context).labelCashFund,
-                          style: AppTextStyles.caption.copyWith(
-                            color: theme.textSecondary,
+                          Text(
+                            widget.account.accountNumber ??
+                                AppLocalizations.of(context).labelCashFund,
+                            style: AppTextStyles.caption.copyWith(
+                              color: theme.textSecondary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Center(child: _buildTypeBadge(theme, widget.account)),
-            ),
-            Expanded(
-              flex: 2,
-              child: _buildBalanceInfo(
-                theme,
-                widget.account,
-                currentDisplayAmount,
-                currentDisplayCurrency,
-              ),
-            ),
-            Expanded(flex: 3, child: _buildCurrencyList(theme, widget.account)),
-            Expanded(
-              flex: 2,
-              child: _buildChangeIndicator(theme, widget.account),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                widget.account.lastActivity,
-                style: AppTextStyles.caption.copyWith(
-                  letterSpacing: 1.2,
-                  color: theme.textTertiary,
+                  ],
                 ),
-                textAlign: TextAlign.center,
               ),
-            ),
-            SizedBox(
-              width: 90,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildActionButton(
-                    theme,
-                    LucideIcons.arrowDownRight,
-                    localizations.actionWithdraw,
-                  ),
-                  _buildActionButton(
-                    theme,
-                    LucideIcons.arrowUpRight,
-                    localizations.actionDeposit,
-                  ),
-                  _buildActionButton(
-                    theme,
-                    LucideIcons.moreHorizontal,
-                    localizations.actionDeposit,
-                  ),
-                ],
+              Expanded(
+                flex: 2,
+                child: Center(child: _buildTypeBadge(theme, widget.account)),
               ),
-            ),
-          ],
+              Expanded(
+                flex: 2,
+                child: _buildBalanceInfo(
+                  theme,
+                  widget.account,
+                  currentDisplayAmount,
+                  currentDisplayCurrency,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: _buildCurrencyList(theme, widget.account),
+              ),
+              Expanded(
+                flex: 2,
+                child: _buildChangeIndicator(theme, widget.account),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  widget.account.lastActivity,
+                  style: AppTextStyles.caption.copyWith(
+                    letterSpacing: 1.2,
+                    color: theme.textTertiary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                width: 90,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildActionButton(
+                      theme,
+                      LucideIcons.arrowDownRight,
+                      localizations.actionWithdraw,
+                    ),
+                    _buildActionButton(
+                      theme,
+                      LucideIcons.arrowUpRight,
+                      localizations.actionDeposit,
+                    ),
+                    _buildActionButton(
+                      theme,
+                      LucideIcons.moreHorizontal,
+                      localizations.actionDeposit,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

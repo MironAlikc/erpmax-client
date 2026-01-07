@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/provisioning_job_entity.dart';
 
 part 'provisioning_job_model.freezed.dart';
