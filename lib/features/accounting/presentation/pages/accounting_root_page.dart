@@ -1,5 +1,5 @@
 import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/navigation/presentation/logic/tab_navigation_cubit.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
@@ -38,7 +38,7 @@ class _AccountingRootPageState extends State<AccountingRootPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.read<TabNavigationService>().updateTabs(
+        context.read<TabNavigationCubit>().updateTabs(
           _moduleTabs!,
           _tabController,
           branchIndex: 1,

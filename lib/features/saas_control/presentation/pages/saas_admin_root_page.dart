@@ -1,13 +1,13 @@
 import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/navigation/presentation/logic/tab_navigation_cubit.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/utils/responsive.dart';
+import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
 import 'package:erpmax_client/features/saas_control/presentation/config/saas_tabs_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/utils/responsive.dart';
-import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
 
 class SaaSAdminRootPage extends StatefulWidget {
   const SaaSAdminRootPage({super.key});
@@ -29,7 +29,7 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.read<TabNavigationService>().updateTabs(
+        context.read<TabNavigationCubit>().updateTabs(
           _moduleTabs,
           _tabController,
           branchIndex: SaasTabsConfig.saasShellIndex,

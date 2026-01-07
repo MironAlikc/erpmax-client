@@ -90,6 +90,7 @@ import '../../features/tenant/domain/usecases/update_user_role_usecase.dart'
 import '../api/api_client.dart' as _i277;
 import '../auth/secure_storage.dart' as _i934;
 import '../l10n/locale_cubit.dart' as _i171;
+import '../navigation/presentation/logic/tab_navigation_cubit.dart' as _i500;
 import '../realtime/realtime_service.dart' as _i854;
 import '../theme/theme_cubit.dart' as _i611;
 import 'injection.dart' as _i464;
@@ -126,6 +127,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i490.SSORemoteDataSource>(
       () => registerModule.ssoRemoteDataSource,
+    );
+    gh.lazySingleton<_i500.TabNavigationCubit>(
+      () => _i500.TabNavigationCubit(),
     );
     gh.lazySingleton<_i78.SidePanelCubit>(() => _i78.SidePanelCubit());
     gh.lazySingleton<_i171.LocaleCubit>(

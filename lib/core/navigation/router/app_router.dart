@@ -1,4 +1,5 @@
-import 'package:erpmax_client/core/navigation/fade_transition_page.dart';
+import 'package:erpmax_client/core/navigation/presentation/layout/dashboard_shell.dart';
+import 'package:erpmax_client/core/navigation/router/fade_transition_page.dart';
 import 'package:erpmax_client/features/accounting/presentation/pages/accounting_root_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/check_email_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
@@ -7,7 +8,6 @@ import 'package:erpmax_client/features/auth/presentation/pages/reset_password_ne
 import 'package:erpmax_client/features/auth/presentation/pages/reset_password_success_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/verify_2fa_page.dart';
-import 'package:erpmax_client/features/dashboard/presentation/pages/dashboard_shell.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/saas_admin_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

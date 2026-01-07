@@ -1,15 +1,15 @@
-import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
+import 'package:erpmax_client/core/constants/dimens.dart';
+import 'package:erpmax_client/core/navigation/presentation/layout/app_sidebar.dart';
+import 'package:erpmax_client/core/navigation/presentation/layout/mobile_drawer.dart';
+import 'package:erpmax_client/core/navigation/presentation/layout/top_nav_bar.dart';
+import 'package:erpmax_client/core/navigation/presentation/logic/tab_navigation_cubit.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/mobile/mobile_drawer.dart';
-import 'package:erpmax_client/features/dashboard/presentation/widgets/navigation/app_sidebar.dart';
-import 'package:erpmax_client/features/saas_control/presentation/widgets/navigation/top_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class DashboardShell extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -30,7 +30,7 @@ class _DashboardShellState extends State<DashboardShell> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.read<TabNavigationService>().setBranch(currentIndex);
+        context.read<TabNavigationCubit>().setBranch(currentIndex);
       }
     });
 
@@ -44,10 +44,6 @@ class _DashboardShellState extends State<DashboardShell> {
           : null,
       body: BlocBuilder<SidePanelCubit, SidePanelState>(
         builder: (context, panelState) {
-          print(
-            '🟡 Panel state: isOpen=${panelState.isOpen}, content=${panelState.content}',
-          );
-
           final screenWidth = MediaQuery.of(context).size.width;
           final bool isMobile = screenWidth < 600;
           final double panelWidth = isMobile
@@ -56,7 +52,6 @@ class _DashboardShellState extends State<DashboardShell> {
 
           return Stack(
             children: [
-              // ========== ОСНОВНОЙ КОНТЕНТ ==========
               Row(
                 children: [
                   if (isDesktop)
@@ -81,18 +76,21 @@ class _DashboardShellState extends State<DashboardShell> {
                             }
                           },
                         ),
-                        Consumer<TabNavigationService>(
-                          builder: (context, tabService, _) {
-                            if (tabService.tabs.isEmpty ||
-                                tabService.controller == null) {
+                        BlocBuilder<TabNavigationCubit, TabNavigationState>(
+                          builder: (context, tabState) {
+                            if (tabState.tabs.isEmpty ||
+                                tabState.controller == null) {
                               return const SizedBox.shrink();
                             }
                             return TabChipBar(
-                              controller: tabService.controller!,
-                              tabs: tabService.tabs,
+                              controller: tabState.controller!,
+                              tabs: tabState.tabs,
                               isMobile: !isDesktop,
-                              onTabSelected: (index) =>
-                                  tabService.selectTab(index),
+                              onTabSelected: (index) {
+                                context.read<TabNavigationCubit>().selectTab(
+                                  index,
+                                );
+                              },
                             );
                           },
                         ),
@@ -105,19 +103,16 @@ class _DashboardShellState extends State<DashboardShell> {
                 ],
               ),
 
-              // ========== ДИММЕР (ЗАТЕМНЕНИЕ) ==========
               if (panelState.isOpen)
                 Positioned.fill(
                   child: GestureDetector(
                     onTap: () {
-                      print('🔴 Dimmer tapped - hiding panel');
                       context.read<SidePanelCubit>().hide();
                     },
-                    child: Container(color: Colors.black.withOpacity(0.3)),
+                    child: Container(color: theme.black.withValues(alpha: 0.3)),
                   ),
                 ),
 
-              // ========== БОКОВАЯ ПАНЕЛЬ ==========
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutCubic,
@@ -132,7 +127,7 @@ class _DashboardShellState extends State<DashboardShell> {
                     }
                   },
                   child: Material(
-                    elevation: 24,
+                    elevation: Dimens.p24,
                     color: Colors.white,
                     child: panelState.content ?? const SizedBox.shrink(),
                   ),
@@ -146,10 +141,14 @@ class _DashboardShellState extends State<DashboardShell> {
   }
 
   void _onBranchSelected(int index) {
-    context.read<TabNavigationService>().setBranch(index);
+    context.read<TabNavigationCubit>().setBranch(index);
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,
     );
+    if (!Responsive.isDesktop(context)) {
+      Navigator.of(context).pop();
+    }
+    context.read<SidePanelCubit>().hide();
   }
 }
