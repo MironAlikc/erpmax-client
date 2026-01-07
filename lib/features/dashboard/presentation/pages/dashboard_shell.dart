@@ -2,10 +2,12 @@ import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/tab_chip_bar.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/mobile/mobile_drawer.dart';
 import 'package:erpmax_client/features/dashboard/presentation/widgets/navigation/app_sidebar.dart';
 import 'package:erpmax_client/features/saas_control/presentation/widgets/navigation/top_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +33,7 @@ class _DashboardShellState extends State<DashboardShell> {
         context.read<TabNavigationService>().setBranch(currentIndex);
       }
     });
+
     return Scaffold(
       backgroundColor: theme.gray50,
       drawer: !isDesktop
@@ -39,72 +42,114 @@ class _DashboardShellState extends State<DashboardShell> {
               onSelect: (index) => _onBranchSelected(index),
             )
           : null,
-      body: Row(
-        children: [
-          if (isDesktop)
-            AppSidebar(
-              isExpanded: _isExpanded,
-              selectedIndex: currentIndex,
-              onToggle: () => setState(() => _isExpanded = !_isExpanded),
-              onSelect: (index) => _onBranchSelected(index),
-            ),
-          Expanded(
-            child: Column(
-              children: [
-                TopNavigationBar(
-                  isMobile: !isDesktop,
-                  isSidebarExpanded: _isExpanded,
-                  onToggleSidebar: () {
-                    if (isDesktop) {
-                      setState(() => _isExpanded = !_isExpanded);
-                    } else {
-                      Scaffold.of(context).openDrawer();
+      body: BlocBuilder<SidePanelCubit, SidePanelState>(
+        builder: (context, panelState) {
+          print(
+            '🟡 Panel state: isOpen=${panelState.isOpen}, content=${panelState.content}',
+          );
+
+          final screenWidth = MediaQuery.of(context).size.width;
+          final bool isMobile = screenWidth < 600;
+          final double panelWidth = isMobile
+              ? screenWidth
+              : (screenWidth * 0.5).clamp(800.0, 1100.0);
+
+          return Stack(
+            children: [
+              // ========== ОСНОВНОЙ КОНТЕНТ ==========
+              Row(
+                children: [
+                  if (isDesktop)
+                    AppSidebar(
+                      isExpanded: _isExpanded,
+                      selectedIndex: currentIndex,
+                      onToggle: () =>
+                          setState(() => _isExpanded = !_isExpanded),
+                      onSelect: (index) => _onBranchSelected(index),
+                    ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        TopNavigationBar(
+                          isMobile: !isDesktop,
+                          isSidebarExpanded: _isExpanded,
+                          onToggleSidebar: () {
+                            if (isDesktop) {
+                              setState(() => _isExpanded = !_isExpanded);
+                            } else {
+                              Scaffold.of(context).openDrawer();
+                            }
+                          },
+                        ),
+                        Consumer<TabNavigationService>(
+                          builder: (context, tabService, _) {
+                            if (tabService.tabs.isEmpty ||
+                                tabService.controller == null) {
+                              return const SizedBox.shrink();
+                            }
+                            return TabChipBar(
+                              controller: tabService.controller!,
+                              tabs: tabService.tabs,
+                              isMobile: !isDesktop,
+                              onTabSelected: (index) =>
+                                  tabService.selectTab(index),
+                            );
+                          },
+                        ),
+                        Expanded(
+                          child: ClipRect(child: widget.navigationShell),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              // ========== ДИММЕР (ЗАТЕМНЕНИЕ) ==========
+              if (panelState.isOpen)
+                Positioned.fill(
+                  child: GestureDetector(
+                    onTap: () {
+                      print('🔴 Dimmer tapped - hiding panel');
+                      context.read<SidePanelCubit>().hide();
+                    },
+                    child: Container(color: Colors.black.withOpacity(0.3)),
+                  ),
+                ),
+
+              // ========== БОКОВАЯ ПАНЕЛЬ ==========
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutCubic,
+                right: panelState.isOpen ? 0 : -panelWidth,
+                top: 0,
+                bottom: 0,
+                width: panelWidth,
+                child: GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    if (details.primaryVelocity! > 500) {
+                      context.read<SidePanelCubit>().hide();
                     }
                   },
+                  child: Material(
+                    elevation: 24,
+                    color: Colors.white,
+                    child: panelState.content ?? const SizedBox.shrink(),
+                  ),
                 ),
-                // MainContentHeader(
-                //   title: _getModuleTitle(currentIndex),
-                //   isDashboard: currentIndex == 0,
-                // ),
-                Consumer<TabNavigationService>(
-                  builder: (context, tabService, _) {
-                    if (tabService.tabs.isEmpty ||
-                        tabService.controller == null) {
-                      return const SizedBox.shrink();
-                    }
-                    return TabChipBar(
-                      controller: tabService.controller!,
-                      tabs: tabService.tabs,
-                      isMobile: !isDesktop,
-                      onTabSelected: (index) => tabService.selectTab(index),
-                    );
-                  },
-                ),
-                Expanded(child: ClipRect(child: widget.navigationShell)),
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 
   void _onBranchSelected(int index) {
     context.read<TabNavigationService>().setBranch(index);
-
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,
     );
   }
-
-  // String _getModuleTitle(int index) {
-  //   return switch (index) {
-  //     0 => 'Dashboard',
-  //     1 => 'Accounting',
-  //     11 => 'SaaS Control',
-  //     14 => 'Settings',
-  //     _ => 'ERP Module',
-  //   };
-  // }
 }
