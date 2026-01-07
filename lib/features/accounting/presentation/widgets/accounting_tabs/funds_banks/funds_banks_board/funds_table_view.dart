@@ -12,31 +12,76 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class FundsTableView extends StatelessWidget {
+class FundsTableView extends StatefulWidget {
   final List<FundBankData> accounts;
   final String? activeFilter;
 
   const FundsTableView({super.key, required this.accounts, this.activeFilter});
 
   @override
+  State<FundsTableView> createState() => _FundsTableViewState();
+}
+
+class _FundsTableViewState extends State<FundsTableView> {
+  final ScrollController _horizontalController = ScrollController();
+  final double minWidth = 600;
+
+  @override
+  void dispose() {
+    _horizontalController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimens.p12),
-        border: Border.all(width: 1, color: theme.border),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _FundsTableHeader(activeFilter: activeFilter),
-          Divider(height: 1, color: theme.border),
-          ...accounts.map(
-            (account) => FundsRow(account: account, activeFilter: activeFilter),
-          ),
-          _FundsTableFooter(accounts: accounts, activeFilter: activeFilter),
-        ],
+      margin: EdgeInsets.only(bottom: Dimens.p24),
+      decoration: BoxDecoration(),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final contentWidth = constraints.maxWidth < minWidth
+              ? minWidth
+              : constraints.maxWidth;
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Scrollbar(
+                controller: _horizontalController,
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  controller: _horizontalController,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(bottom: Dimens.p12),
+                  child: SizedBox(
+                    width: contentWidth,
+                    child: Column(
+                      children: [
+                        _FundsTableHeader(activeFilter: widget.activeFilter),
+
+                        Divider(height: 1, color: theme.border),
+                        ...widget.accounts.map(
+                          (account) => FundsRow(
+                            account: account,
+                            activeFilter: widget.activeFilter,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              Divider(height: 1, color: theme.border),
+              _FundsTableFooter(
+                accounts: widget.accounts,
+                activeFilter: widget.activeFilter,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -100,6 +145,8 @@ class _FundsRowState extends State<FundsRow> {
                 ? theme.primaryLight.withValues(alpha: 0.8)
                 : theme.white,
             border: BoxBorder.fromSTEB(
+              start: BorderSide(width: 1, color: theme.border),
+              end: BorderSide(width: 1, color: theme.border),
               bottom: BorderSide(width: 1, color: theme.border),
             ),
           ),
@@ -430,11 +477,13 @@ class _FundsTableHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.primaryLight,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(Dimens.p12),
-          topRight: Radius.circular(Dimens.p12),
+        border: BoxBorder.fromSTEB(
+          top: BorderSide(width: 1, color: theme.border),
+          start: BorderSide(width: 1, color: theme.border),
+          end: BorderSide(width: 1, color: theme.border),
         ),
       ),
+
       padding: const EdgeInsets.symmetric(
         horizontal: Dimens.p12,
         vertical: Dimens.p14,
@@ -537,13 +586,7 @@ class _FundsTableFooter extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: Dimens.p12),
-      decoration: BoxDecoration(
-        color: theme.primaryFooter,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(Dimens.p12),
-          bottomRight: Radius.circular(Dimens.p12),
-        ),
-      ),
+      decoration: BoxDecoration(color: theme.primaryFooter),
       child: Row(
         children: [
           Expanded(
