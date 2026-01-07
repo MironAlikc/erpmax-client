@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_status_chip.dart';
 
 class AppStatusMapper extends StatelessWidget {
