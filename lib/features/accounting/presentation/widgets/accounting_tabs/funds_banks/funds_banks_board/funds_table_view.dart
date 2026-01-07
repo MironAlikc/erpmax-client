@@ -62,11 +62,17 @@ class _FundsTableViewState extends State<FundsTableView> {
                         _FundsTableHeader(activeFilter: widget.activeFilter),
 
                         Divider(height: 1, color: theme.border),
-                        ...widget.accounts.map(
-                          (account) => FundsRow(
-                            account: account,
-                            activeFilter: widget.activeFilter,
-                          ),
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.accounts.length,
+                          itemBuilder: (context, index) {
+                            return FundsRow(
+                              account: widget.accounts[index],
+                              activeFilter: widget.activeFilter,
+                            );
+                          },
                         ),
                       ],
                     ),

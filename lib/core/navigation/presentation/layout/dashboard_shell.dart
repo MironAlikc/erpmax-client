@@ -48,7 +48,7 @@ class _DashboardShellState extends State<DashboardShell> {
           final bool isMobile = screenWidth < 600;
           final double panelWidth = isMobile
               ? screenWidth
-              : (screenWidth * 0.5).clamp(800.0, 1100.0);
+              : (screenWidth * 0.5).clamp(450.0, 1100.0);
 
           return Stack(
             children: [
