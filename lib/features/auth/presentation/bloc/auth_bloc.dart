@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
-import '../../domain/usecases/get_current_user_usecase.dart';
+import '../../domain/usecases/check_auth_status_usecase.dart';
 import '../../domain/usecases/switch_tenant_usecase.dart';
 import '../../domain/entities/tenant_entity.dart';
 import 'auth_event.dart';
@@ -15,14 +15,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
   final LogoutUseCase logoutUseCase;
-  final GetCurrentUserUseCase getCurrentUserUseCase;
+  final CheckAuthStatusUseCase checkAuthStatusUseCase;
   final SwitchTenantUseCase switchTenantUseCase;
 
   AuthBloc({
     required this.loginUseCase,
     required this.registerUseCase,
     required this.logoutUseCase,
-    required this.getCurrentUserUseCase,
+    required this.checkAuthStatusUseCase,
     required this.switchTenantUseCase,
   }) : super(const AuthState.initial()) {
     on<AuthCheckRequested>(_onCheckRequested);
@@ -43,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthState.loading());
 
-    final result = await getCurrentUserUseCase();
+    final result = await checkAuthStatusUseCase();
 
     result.fold(
       (failure) {
@@ -51,6 +51,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthState.unauthenticated());
       },
       (userWithTenants) {
+        dev.log(
+          'Auth check successful: User ${userWithTenants.user.email} restored from storage',
+        );
         final defaultTenant = userWithTenants.tenants.firstWhere(
           (t) => t.isDefault,
           orElse: () => userWithTenants.tenants.first,
