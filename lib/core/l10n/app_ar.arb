@@ -428,5 +428,11 @@
   "customersList": "قائمة العملاء",
   "actionAddCustomer": "إضافة عميل",
   "suppliersList": "قائمة الموردين",
-  "actionAddSupplier": "إضافة مورد"
+  "actionAddSupplier": "إضافة مورد",
+  "billingManagement": "إدارة الفواتير",
+  "actionRefresh": "تحديث",
+  "actionNewInvoice": "فاتورة جديدة",
+  "totalInvoiced": "إجمالي المفوتر",
+  "statusPaid": "مدفوع",
+  "statusOverdue": "متأخر"
 }

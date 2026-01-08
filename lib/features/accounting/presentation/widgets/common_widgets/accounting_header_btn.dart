@@ -9,6 +9,7 @@ class AccountingHeaderBtn extends StatelessWidget {
   final bool isOutline;
   final Color? iconColor;
   final Color? textColor;
+  final Color? borderColor;
   final double height;
   final VoidCallback onTap;
 
@@ -21,6 +22,7 @@ class AccountingHeaderBtn extends StatelessWidget {
     this.isOutline = false,
     this.iconColor,
     this.textColor,
+    this.borderColor,
     this.height = 16,
   });
 
@@ -48,7 +50,10 @@ class AccountingHeaderBtn extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
               side: isOutline
-                  ? BorderSide(color: theme.borderLight, width: 1)
+                  ? BorderSide(
+                      color: borderColor ?? theme.borderLight,
+                      width: 1,
+                    )
                   : BorderSide.none,
             ),
           ).copyWith(

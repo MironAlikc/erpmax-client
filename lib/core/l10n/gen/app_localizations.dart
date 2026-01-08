@@ -2571,6 +2571,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Supplier'**
   String get actionAddSupplier;
+
+  /// No description provided for @billingManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Management'**
+  String get billingManagement;
+
+  /// No description provided for @actionRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get actionRefresh;
+
+  /// No description provided for @actionNewInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'New Invoice'**
+  String get actionNewInvoice;
+
+  /// No description provided for @totalInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Invoiced'**
+  String get totalInvoiced;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statusPaid;
+
+  /// No description provided for @statusOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get statusOverdue;
 }
 
 class _AppLocalizationsDelegate

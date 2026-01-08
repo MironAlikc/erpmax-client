@@ -29,7 +29,6 @@
   <title>erpmax_client</title>
   <link rel="manifest" href="manifest.json">
 
-  <!-- РЕШЕНИЕ ПРОБЛЕМЫ БЕЛОГО ФОНА -->
   <style>
     html,
     body {
@@ -38,21 +37,17 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      /* Цвет фона для светлой темы - ваш gray50 */
       background-color: #FAF9F6;
     }
 
-    /* Автоматически переключается на тёмный фон для пользователей с тёмной темой */
     @media (prefers-color-scheme: dark) {
 
       html,
       body {
-        /* Цвет фона для тёмной темы - ваш gray50 из dark theme */
         background-color: #020617;
       }
     }
 
-    /* Убираем синюю подсветку при клике на мобильных */
     * {
       -webkit-tap-highlight-color: transparent;
     }

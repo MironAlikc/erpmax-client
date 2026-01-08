@@ -1304,4 +1304,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionAddSupplier => 'إضافة مورد';
+
+  @override
+  String get billingManagement => 'إدارة الفواتير';
+
+  @override
+  String get actionRefresh => 'تحديث';
+
+  @override
+  String get actionNewInvoice => 'فاتورة جديدة';
+
+  @override
+  String get totalInvoiced => 'إجمالي المفوتر';
+
+  @override
+  String get statusPaid => 'مدفوع';
+
+  @override
+  String get statusOverdue => 'متأخر';
 }

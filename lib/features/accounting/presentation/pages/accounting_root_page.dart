@@ -1,4 +1,6 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
+import 'package:erpmax_client/core/navigation/presentation/app_menu_type_config.dart';
 import 'package:erpmax_client/core/navigation/presentation/logic/tab_navigation_cubit.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
@@ -34,13 +36,17 @@ class _AccountingRootPageState extends State<AccountingRootPage>
       _tabController!.addListener(_handleTabChange);
 
       _moduleTabs = newTabs;
+      final accountingIndex = AppMenuConfig.getIndexByType(
+        AppMenuType.accounting,
+        AppLocalizations.of(context),
+      );
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           context.read<TabNavigationCubit>().updateTabs(
             _moduleTabs!,
             _tabController!,
-            branchIndex: 1,
+            branchIndex: accountingIndex,
           );
         }
       });
