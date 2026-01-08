@@ -7,6 +7,8 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
 import 'package:erpmax_client/core/widgets/common/greeting_time_section.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -392,6 +394,7 @@ class _UserAccountMenu extends StatelessWidget {
 
   void _handleSelection(BuildContext context, UserMenuItem item) {
     final themeCubit = context.read<ThemeCubit>();
+    final authBloc = context.read<AuthBloc>();
 
     switch (item) {
       case UserMenuItem.themeLight:
@@ -408,6 +411,7 @@ class _UserAccountMenu extends StatelessWidget {
       case UserMenuItem.navigationTopbar:
         break;
       case UserMenuItem.signOut:
+        authBloc.add(const AuthEvent.logoutRequested());
         break;
     }
   }

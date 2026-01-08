@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:erpmax_client/core/auth/secure_storage.dart';
@@ -35,7 +36,15 @@ class AuthRepositoryImpl implements AuthRepository {
         'company_name': companyName,
       });
 
-      final authResponse = response.data;
+      final baseResponse = response.data;
+      if (baseResponse.data == null) {
+        return Left(
+          ServerFailure(
+            message: baseResponse.error?.message ?? 'Registration failed',
+          ),
+        );
+      }
+      final authResponse = baseResponse.data!;
 
       final tokens = AuthTokens(
         accessToken: authResponse.accessToken,
@@ -71,7 +80,19 @@ class AuthRepositoryImpl implements AuthRepository {
         'password': password,
       });
 
-      final authResponse = response.data;
+      dev.log('Login response status: ${response.response.statusCode}');
+      dev.log('Login response data: ${response.response.data}');
+
+      final baseResponse = response.data;
+      if (baseResponse.data == null) {
+        return Left(
+          ServerFailure(message: baseResponse.error?.message ?? 'Login failed'),
+        );
+      }
+      final authResponse = baseResponse.data!;
+      dev.log(
+        'Parsed AuthResponseModel: accessToken=${authResponse.accessToken}, user=${authResponse.user.email}',
+      );
 
       final tokens = AuthTokens(
         accessToken: authResponse.accessToken,
@@ -225,7 +246,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final statusCode = e.response?.statusCode;
     final message =
-        e.response?.data?['message'] ?? e.message ?? 'Unknown error';
+        e.response?.data?['detail'] ??
+        e.response?.data?['message'] ??
+        e.message ??
+        'Unknown error';
 
     switch (statusCode) {
       case 401:

@@ -4,13 +4,15 @@ import 'package:erpmax_client/features/auth/presentation/widgets/reset_password/
 import 'package:flutter/material.dart';
 
 class CheckEmailPage extends StatelessWidget {
-  const CheckEmailPage({super.key});
+  final String email;
+
+  const CheckEmailPage({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return AuthBaseLayout(
-      sideBanner: LoginBanner(),
-      child: CheckEmailContent(email: 'user@example.com'),
+      sideBanner: const LoginBanner(),
+      child: CheckEmailContent(email: email),
     );
   }
 }

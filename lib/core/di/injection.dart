@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:erpmax_client/core/api/api_client.dart';
+import 'package:erpmax_client/core/auth/auth_interceptor.dart';
 import 'package:erpmax_client/core/auth/secure_storage.dart';
 import 'package:erpmax_client/core/config/api_config.dart';
 import 'package:erpmax_client/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -35,14 +36,20 @@ abstract class RegisterModule {
   SecureStorage get storage => SecureStorage(secureStorage);
 
   @lazySingleton
-  Dio get dio => Dio(
-    BaseOptions(
-      baseUrl: ApiConfig.baseUrl,
-      connectTimeout: ApiConfig.connectTimeout,
-      receiveTimeout: ApiConfig.receiveTimeout,
-      headers: ApiConfig.defaultHeaders,
-    ),
-  );
+  Dio get dio {
+    final dioInstance = Dio(
+      BaseOptions(
+        baseUrl: ApiConfig.baseUrl,
+        connectTimeout: ApiConfig.connectTimeout,
+        receiveTimeout: ApiConfig.receiveTimeout,
+        headers: ApiConfig.defaultHeaders,
+      ),
+    );
+
+    dioInstance.interceptors.add(AuthInterceptor(secureStorage: storage));
+
+    return dioInstance;
+  }
 
   @lazySingleton
   ApiClient get apiClient => ApiClient(baseUrl: ApiConfig.apiBaseUrl);

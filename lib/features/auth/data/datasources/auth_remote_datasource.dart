@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:erpmax_client/core/api/models/api_response.dart';
 import 'package:erpmax_client/features/auth/data/models/auth_response_model.dart';
 import 'package:erpmax_client/features/auth/data/models/switch_tenant_response_model.dart';
 import 'package:erpmax_client/features/auth/data/models/user_with_tenants_model.dart';
@@ -12,12 +13,12 @@ abstract class AuthRemoteDataSource {
       _AuthRemoteDataSource;
 
   @POST('/auth/register')
-  Future<HttpResponse<AuthResponseModel>> register(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> register(
     @Body() Map<String, dynamic> body,
   );
 
   @POST('/auth/login')
-  Future<HttpResponse<AuthResponseModel>> login(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> login(
     @Body() Map<String, dynamic> body,
   );
 
