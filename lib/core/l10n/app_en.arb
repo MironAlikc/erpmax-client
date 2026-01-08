@@ -436,5 +436,10 @@
   "actionAddCustomer": "Add Customer",
   "suppliersList": "Suppliers List",
   "actionAddSupplier": "Add Supplier",
-  "billingManagement": "Billing Management"
+  "billingManagement": "Billing Management",
+  "actionRefresh": "Refresh",
+  "actionNewInvoice": "New Invoice",
+  "totalInvoiced": "Total Invoiced",
+  "statusPaid": "Paid",
+  "statusOverdue": "Overdue"
 }

@@ -112,6 +112,9 @@ class _DashboardShellState extends State<DashboardShell>
                                 return const SizedBox.shrink();
                               }
                               return TabChipBar(
+                                key: ValueKey(
+                                  'branch_${tabState.currentBranch}',
+                                ),
                                 controller: tabState.controller!,
                                 tabs: tabState.tabs,
                                 isMobile: !isDesktop,

@@ -62,6 +62,10 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color violetBg;
   final Color violetText;
   final Color addButton;
+  final Color accentBlue;
+  final Color accentBlueLight;
+  final Color blueBg;
+  final Color blueText;
 
   const AppColorExtension({
     required this.primary,
@@ -124,6 +128,10 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     required this.violetBg,
     required this.violetText,
     required this.addButton,
+    required this.accentBlue,
+    required this.accentBlueLight,
+    required this.blueBg,
+    required this.blueText,
   });
 
   @override
@@ -188,6 +196,10 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
     Color? violetBg,
     Color? violetText,
     Color? addButton,
+    Color? accentBlue,
+    Color? accentBlueLight,
+    Color? blueBg,
+    Color? blueText,
   }) {
     return AppColorExtension(
       primary: primary ?? this.primary,
@@ -250,6 +262,10 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       violetBg: violetBg ?? this.violetBg,
       violetText: violetText ?? this.violetText,
       addButton: addButton ?? this.addButton,
+      accentBlue: accentBlue ?? this.accentBlue,
+      accentBlueLight: accentBlueLight ?? this.accentBlueLight,
+      blueBg: blueBg ?? this.blueBg,
+      blueText: blueText ?? this.blueText,
     );
   }
 
@@ -345,6 +361,10 @@ class AppColorExtension extends ThemeExtension<AppColorExtension> {
       violetBg: Color.lerp(violetBg, other.violetBg, t)!,
       violetText: Color.lerp(violetText, other.violetText, t)!,
       addButton: Color.lerp(addButton, other.addButton, t)!,
+      accentBlue: Color.lerp(accentBlue, other.accentBlue, t)!,
+      accentBlueLight: Color.lerp(accentBlueLight, other.accentBlueLight, t)!,
+      blueBg: Color.lerp(blueBg, other.blueBg, t)!,
+      blueText: Color.lerp(blueText, other.blueText, t)!,
     );
   }
 }

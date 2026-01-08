@@ -1304,4 +1304,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get billingManagement => 'Billing Management';
+
+  @override
+  String get actionRefresh => 'Refresh';
+
+  @override
+  String get actionNewInvoice => 'New Invoice';
+
+  @override
+  String get totalInvoiced => 'Total Invoiced';
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusOverdue => 'Overdue';
 }

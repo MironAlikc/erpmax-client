@@ -66,6 +66,10 @@ class AppTheme {
         violetBg: const Color(0xFFF5F3FF),
         violetText: const Color(0xFF7C3AED),
         addButton: const Color(0xFF020817),
+        accentBlue: const Color(0xFF3983F5),
+        accentBlueLight: const Color(0xFFEFF6FF),
+        blueBg: const Color(0xFFEFF6FF),
+        blueText: const Color(0xFF1D4ED8),
       ),
     ],
   );
@@ -134,6 +138,10 @@ class AppTheme {
         violetBg: const Color(0xFF4C1D95),
         violetText: const Color(0xFFDDD6FE),
         addButton: const Color(0xFF0F172A),
+        accentBlue: const Color(0xFF60A5FA),
+        accentBlueLight: const Color(0xFF1E3A8A),
+        blueBg: const Color(0xFF1E3A8A),
+        blueText: const Color(0xFFDBEAFE),
       ),
     ],
   );
