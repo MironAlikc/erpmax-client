@@ -2469,6 +2469,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Count: '**
   String get accountsCount;
+
+  /// No description provided for @totalCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Customers'**
+  String get totalCustomers;
+
+  /// No description provided for @totalReceivables.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Receivables'**
+  String get totalReceivables;
+
+  /// No description provided for @totalSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Suppliers'**
+  String get totalSuppliers;
+
+  /// No description provided for @totalPayables.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Payables'**
+  String get totalPayables;
+
+  /// No description provided for @labelPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get labelPhoneNumber;
+
+  /// No description provided for @labelCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get labelCity;
+
+  /// No description provided for @labelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get labelName;
+
+  /// No description provided for @labelAccountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Number'**
+  String get labelAccountNumber;
+
+  /// No description provided for @labelActiveWithColon.
+  ///
+  /// In en, this message translates to:
+  /// **'active: '**
+  String get labelActiveWithColon;
+
+  /// No description provided for @labelActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get labelActivity;
+
+  /// No description provided for @contactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get contactInfo;
+
+  /// No description provided for @labelGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get labelGroup;
+
+  /// No description provided for @labelNameId.
+  ///
+  /// In en, this message translates to:
+  /// **'Name / ID'**
+  String get labelNameId;
+
+  /// No description provided for @customersList.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers List'**
+  String get customersList;
+
+  /// No description provided for @actionAddCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Customer'**
+  String get actionAddCustomer;
+
+  /// No description provided for @suppliersList.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers List'**
+  String get suppliersList;
+
+  /// No description provided for @actionAddSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Supplier'**
+  String get actionAddSupplier;
+
+  /// No description provided for @billingManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Management'**
+  String get billingManagement;
+
+  /// No description provided for @actionRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get actionRefresh;
+
+  /// No description provided for @actionNewInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'New Invoice'**
+  String get actionNewInvoice;
+
+  /// No description provided for @totalInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Invoiced'**
+  String get totalInvoiced;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statusPaid;
+
+  /// No description provided for @statusOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get statusOverdue;
 }
 
 class _AppLocalizationsDelegate

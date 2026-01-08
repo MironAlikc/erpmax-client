@@ -1259,4 +1259,73 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get accountsCount => 'Количество: ';
+
+  @override
+  String get totalCustomers => 'Всего клиентов';
+
+  @override
+  String get totalReceivables => 'Дебиторская задолженность';
+
+  @override
+  String get totalSuppliers => 'Всего поставщиков';
+
+  @override
+  String get totalPayables => 'Кредиторская задолженность';
+
+  @override
+  String get labelPhoneNumber => 'Номер телефона';
+
+  @override
+  String get labelCity => 'Город';
+
+  @override
+  String get labelName => 'Имя';
+
+  @override
+  String get labelAccountNumber => 'Номер счета';
+
+  @override
+  String get labelActiveWithColon => 'активен: ';
+
+  @override
+  String get labelActivity => 'Активность';
+
+  @override
+  String get contactInfo => 'Контактная информация';
+
+  @override
+  String get labelGroup => 'Группа';
+
+  @override
+  String get labelNameId => 'Имя / ID';
+
+  @override
+  String get customersList => 'Список клиентов';
+
+  @override
+  String get actionAddCustomer => 'Добавить клиента';
+
+  @override
+  String get suppliersList => 'Список поставщиков';
+
+  @override
+  String get actionAddSupplier => 'Добавить поставщика';
+
+  @override
+  String get billingManagement => 'Управление счетами';
+
+  @override
+  String get actionRefresh => 'Обновить';
+
+  @override
+  String get actionNewInvoice => 'Новый счет';
+
+  @override
+  String get totalInvoiced => 'Итого выставлено';
+
+  @override
+  String get statusPaid => 'Оплачено';
+
+  @override
+  String get statusOverdue => 'Просрочено';
 }

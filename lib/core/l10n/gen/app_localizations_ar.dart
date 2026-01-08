@@ -1253,4 +1253,73 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountsCount => 'العدد: ';
+
+  @override
+  String get totalCustomers => 'إجمالي العملاء';
+
+  @override
+  String get totalReceivables => 'إجمالي الذمم المدينة';
+
+  @override
+  String get totalSuppliers => 'إجمالي الموردين';
+
+  @override
+  String get totalPayables => 'إجمالي الذمم الدائنة';
+
+  @override
+  String get labelPhoneNumber => 'رقم الهاتف';
+
+  @override
+  String get labelCity => 'المدينة';
+
+  @override
+  String get labelName => 'الاسم';
+
+  @override
+  String get labelAccountNumber => 'رقم الحساب';
+
+  @override
+  String get labelActiveWithColon => 'نشط: ';
+
+  @override
+  String get labelActivity => 'النشاط';
+
+  @override
+  String get contactInfo => 'معلومات الاتصال';
+
+  @override
+  String get labelGroup => 'المجموعة';
+
+  @override
+  String get labelNameId => 'الاسم / المعرف';
+
+  @override
+  String get customersList => 'قائمة العملاء';
+
+  @override
+  String get actionAddCustomer => 'إضافة عميل';
+
+  @override
+  String get suppliersList => 'قائمة الموردين';
+
+  @override
+  String get actionAddSupplier => 'إضافة مورد';
+
+  @override
+  String get billingManagement => 'إدارة الفواتير';
+
+  @override
+  String get actionRefresh => 'تحديث';
+
+  @override
+  String get actionNewInvoice => 'فاتورة جديدة';
+
+  @override
+  String get totalInvoiced => 'إجمالي المفوتر';
+
+  @override
+  String get statusPaid => 'مدفوع';
+
+  @override
+  String get statusOverdue => 'متأخر';
 }

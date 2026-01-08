@@ -1250,4 +1250,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountsCount => 'Count: ';
+
+  @override
+  String get totalCustomers => 'Total Customers';
+
+  @override
+  String get totalReceivables => 'Total Receivables';
+
+  @override
+  String get totalSuppliers => 'Total Suppliers';
+
+  @override
+  String get totalPayables => 'Total Payables';
+
+  @override
+  String get labelPhoneNumber => 'Phone Number';
+
+  @override
+  String get labelCity => 'City';
+
+  @override
+  String get labelName => 'Name';
+
+  @override
+  String get labelAccountNumber => 'Account Number';
+
+  @override
+  String get labelActiveWithColon => 'active: ';
+
+  @override
+  String get labelActivity => 'Activity';
+
+  @override
+  String get contactInfo => 'Contact Info';
+
+  @override
+  String get labelGroup => 'Group';
+
+  @override
+  String get labelNameId => 'Name / ID';
+
+  @override
+  String get customersList => 'Customers List';
+
+  @override
+  String get actionAddCustomer => 'Add Customer';
+
+  @override
+  String get suppliersList => 'Suppliers List';
+
+  @override
+  String get actionAddSupplier => 'Add Supplier';
+
+  @override
+  String get billingManagement => 'Billing Management';
+
+  @override
+  String get actionRefresh => 'Refresh';
+
+  @override
+  String get actionNewInvoice => 'New Invoice';
+
+  @override
+  String get totalInvoiced => 'Total Invoiced';
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusOverdue => 'Overdue';
 }

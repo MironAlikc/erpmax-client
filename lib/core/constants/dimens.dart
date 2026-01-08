@@ -13,7 +13,9 @@ class Dimens {
   static const p18 = 18.0;
   static const p20 = 20.0;
   static const p24 = 24.0;
+  static const p28 = 28.0;
   static const p32 = 32.0;
+  static const p38 = 38.0;
   static const p40 = 40.0;
   static const p48 = 48.0;
   static const p64 = 64.0;
@@ -28,7 +30,9 @@ const gapW12 = SizedBox(width: Dimens.p12);
 const gapW16 = SizedBox(width: Dimens.p16);
 const gapW20 = SizedBox(width: Dimens.p20);
 const gapW24 = SizedBox(width: Dimens.p24);
+const gapW28 = SizedBox(width: Dimens.p28);
 const gapW32 = SizedBox(width: Dimens.p32);
+const gapW38 = SizedBox(width: Dimens.p38);
 const gapW48 = SizedBox(width: Dimens.p48);
 const gapW64 = SizedBox(width: Dimens.p64);
 

@@ -1,11 +1,13 @@
+import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
-import 'package:erpmax_client/core/navigation/tab_navigation_service.dart';
-import 'package:erpmax_client/core/utils/responsive.dart';
-import 'package:erpmax_client/core/widgets/common/app_module_header.dart';
+import 'package:erpmax_client/core/navigation/presentation/app_menu_type_config.dart';
+import 'package:erpmax_client/core/navigation/presentation/logic/tab_navigation_cubit.dart';
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
-import 'package:erpmax_client/features/saas_control/presentation/pages/saas_tabs_config.dart';
+import 'package:erpmax_client/features/saas_control/presentation/config/saas_tabs_config.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SaaSAdminRootPage extends StatefulWidget {
   const SaaSAdminRootPage({super.key});
@@ -16,67 +18,103 @@ class SaaSAdminRootPage extends StatefulWidget {
 
 class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-  late final List<ModuleTabItem> _moduleTabs;
+  TabController? _tabController;
+  List<ModuleTabItem>? _moduleTabs;
 
   @override
-  void initState() {
-    super.initState();
-    _moduleTabs = SaasTabsConfig.getTabs(context);
-    _tabController = TabController(length: _moduleTabs.length, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<TabNavigationService>().updateTabs(
-          _moduleTabs,
-          _tabController,
-          branchIndex: SaasTabsConfig.saasShellIndex,
-        );
-      }
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    _tabController.addListener(_handleTabSelection);
+    final newTabs = SaasTabsConfig.getTabs(
+      context,
+      (name) => _PlaceholderView(name: name),
+    );
+
+    if (_tabController == null || _moduleTabs?.length != newTabs.length) {
+      _tabController?.dispose();
+
+      _tabController = TabController(length: newTabs.length, vsync: this);
+      _tabController!.addListener(_handleTabSelection);
+      _moduleTabs = newTabs;
+
+      final saasIndex = AppMenuConfig.getIndexByType(
+        AppMenuType.saasControl,
+        AppLocalizations.of(context),
+      );
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<TabNavigationCubit>().updateTabs(
+            _moduleTabs!,
+            _tabController!,
+            branchIndex: saasIndex,
+          );
+        }
+      });
+    }
   }
 
   void _handleTabSelection() {
-    if (mounted && !_tabController.indexIsChanging) {
+    if (mounted && _tabController != null && !_tabController!.indexIsChanging) {
       setState(() {});
     }
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabSelection);
-    _tabController.dispose();
+    _tabController?.removeListener(_handleTabSelection);
+    _tabController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentTab = _moduleTabs[_tabController.index];
-    final bool isMobile = Responsive.isMobile(context);
-    return Column(
-      children: [
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (child, animation) =>
-              FadeTransition(opacity: animation, child: child),
-          child: AppModuleHeader(
-            key: ValueKey('header_${currentTab.id}'),
-            currentTab: currentTab,
-          ),
-        ),
-        Expanded(
+    if (_moduleTabs == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 600;
+
+        return Material(
+          color: context.theme.appColor.gray50,
           child: TabBarView(
             controller: _tabController,
             physics: isMobile
                 ? const BouncingScrollPhysics()
                 : const NeverScrollableScrollPhysics(),
-            children: _moduleTabs
-                .map((tab) => KeepAlivePage(child: tab.content))
+            children: _moduleTabs!
+                .map((t) => KeepAlivePage(child: t.content))
                 .toList(),
           ),
-        ),
-      ],
+        );
+      },
+    );
+  }
+}
+
+class _PlaceholderView extends StatelessWidget {
+  final String name;
+  const _PlaceholderView({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.construction_rounded, size: 48, color: theme.gray300),
+          const SizedBox(height: 16),
+          Text(
+            "$name\nComing Soon",
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyLarge.copyWith(color: theme.gray400),
+          ),
+        ],
+      ),
     );
   }
 }
