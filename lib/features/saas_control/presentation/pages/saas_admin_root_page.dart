@@ -6,8 +6,8 @@ import 'package:erpmax_client/core/utils/responsive.dart';
 import 'package:erpmax_client/core/widgets/common/keep_alive_page.dart';
 import 'package:erpmax_client/features/saas_control/presentation/config/saas_tabs_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:provider/provider.dart';
 
 class SaaSAdminRootPage extends StatefulWidget {
   const SaaSAdminRootPage({super.key});
@@ -18,51 +18,61 @@ class SaaSAdminRootPage extends StatefulWidget {
 
 class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-  late final List<ModuleTabItem> _moduleTabs;
+  TabController? _tabController;
+  List<ModuleTabItem>? _moduleTabs;
 
   @override
-  void initState() {
-    super.initState();
-    _moduleTabs = SaasTabsConfig.getTabs(context);
-    _tabController = TabController(length: _moduleTabs.length, vsync: this);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<TabNavigationCubit>().updateTabs(
-          _moduleTabs,
-          _tabController,
-          branchIndex: SaasTabsConfig.saasShellIndex,
-        );
-      }
-    });
+    final newTabs = SaasTabsConfig.getTabs(context);
 
-    _tabController.addListener(_handleTabSelection);
+    if (_tabController == null || _moduleTabs?.length != newTabs.length) {
+      _tabController?.dispose();
+
+      _tabController = TabController(length: newTabs.length, vsync: this);
+      _tabController!.addListener(_handleTabSelection);
+      _moduleTabs = newTabs;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<TabNavigationCubit>().updateTabs(
+            _moduleTabs!,
+            _tabController!,
+            branchIndex: SaasTabsConfig.saasShellIndex,
+          );
+        }
+      });
+    }
   }
 
   void _handleTabSelection() {
-    if (mounted && !_tabController.indexIsChanging) {
+    if (mounted && _tabController != null && !_tabController!.indexIsChanging) {
       setState(() {});
     }
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabSelection);
-    _tabController.dispose();
+    _tabController?.removeListener(_handleTabSelection);
+    _tabController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final int currentIndex = _tabController.index;
-    final currentTab = _moduleTabs[currentIndex];
+    if (_tabController == null || _moduleTabs == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final int currentIndex = _tabController!.index;
+    final currentTab = _moduleTabs![currentIndex];
     final bool isMobile = Responsive.isMobile(context);
     final theme = context.theme.appColor;
 
-    return Scaffold(
-      backgroundColor: theme.gray50,
-      body: Column(
+    return Material(
+      color: theme.gray50,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -127,7 +137,7 @@ class _SaaSAdminRootPageState extends State<SaaSAdminRootPage>
               physics: isMobile
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
-              children: _moduleTabs
+              children: _moduleTabs!
                   .map((tab) => KeepAlivePage(child: tab.content))
                   .toList(),
             ),
