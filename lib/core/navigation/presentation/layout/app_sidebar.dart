@@ -1,9 +1,29 @@
 import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
+import 'package:erpmax_client/core/navigation/presentation/app_menu_type_config.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+
+// enum AppMenuType {
+//   dashboard,
+//   accounting,
+//   inventory,
+//   sales,
+//   customerManagement,
+//   realEstateAsset,
+//   pos,
+//   exchangeAndRemittances,
+//   purchases,
+//   manufacturing,
+//   hrManagement,
+//   saasControl,
+//   aiAnalytics,
+//   authPages,
+//   settings;
+
+//   static int indexOf(AppMenuType type) => AppMenuType.values.indexOf(type);
+// }
 
 class AppSidebar extends StatelessWidget {
   final bool isExpanded;
@@ -22,7 +42,7 @@ class AppSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    final menuItems = _menuData(context);
+    final menuItems = AppMenuConfig.getMenuItems(AppLocalizations.of(context));
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
@@ -51,7 +71,7 @@ class AppSidebar extends StatelessWidget {
                 final l10n = AppLocalizations.of(context);
 
                 return _MenuItem(
-                  index: item.index,
+                  index: index,
                   title: item.title(l10n),
                   icon: item.icon,
                   selectedIndex: selectedIndex,
@@ -361,30 +381,90 @@ class _MenuItemState extends State<_MenuItem> {
   }
 }
 
-class _MenuData {
-  final int index;
-  final String Function(AppLocalizations) title;
-  final IconData icon;
+// class _MenuData {
+//   final AppMenuType type; // Используем enum
+//   final String Function(AppLocalizations) title;
+//   final IconData icon;
 
-  _MenuData(this.index, this.title, this.icon);
-}
+//   _MenuData({required this.type, required this.title, required this.icon});
+// }
 
-List<_MenuData> _menuData(BuildContext context) {
-  return [
-    _MenuData(0, (l) => l.menuDashboard, LucideIcons.layoutGrid),
-    _MenuData(1, (l) => l.menuAccounting, LucideIcons.calculator),
-    _MenuData(2, (l) => l.menuInventory, LucideIcons.package),
-    _MenuData(3, (l) => l.menuSales, LucideIcons.shoppingCart),
-    _MenuData(4, (l) => l.menuCustomerManagement, LucideIcons.users),
-    _MenuData(5, (l) => l.menuRealEstate, LucideIcons.building2),
-    _MenuData(6, (l) => l.menuPOS, LucideIcons.scan),
-    _MenuData(7, (l) => l.menuExchange, LucideIcons.arrowLeftRight),
-    _MenuData(8, (l) => l.menuPurchases, LucideIcons.shoppingBag),
-    _MenuData(9, (l) => l.menuManufacturing, LucideIcons.factory),
-    _MenuData(10, (l) => l.menuHR, LucideIcons.userCog),
-    _MenuData(11, (l) => l.menuSaaS, LucideIcons.crown),
-    _MenuData(12, (l) => l.menuAI, LucideIcons.brain),
-    _MenuData(13, (l) => l.menuAuthPages, LucideIcons.lock),
-    _MenuData(14, (l) => l.menuSettings, LucideIcons.settings),
-  ];
-}
+// List<_MenuData> _getMenuData(BuildContext context) {
+//   return [
+//     _MenuData(
+//       type: AppMenuType.dashboard,
+//       title: (l) => l.menuDashboard,
+//       icon: LucideIcons.layoutGrid,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.accounting,
+//       title: (l) => l.menuAccounting,
+//       icon: LucideIcons.calculator,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.inventory,
+//       title: (l) => l.menuInventory,
+//       icon: LucideIcons.package,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.sales,
+//       title: (l) => l.menuSales,
+//       icon: LucideIcons.shoppingCart,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.customerManagement,
+//       title: (l) => l.menuCustomerManagement,
+//       icon: LucideIcons.users,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.realEstateAsset,
+//       title: (l) => l.menuRealEstate,
+//       icon: LucideIcons.building2,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.pos,
+//       title: (l) => l.menuPOS,
+//       icon: LucideIcons.scan,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.exchangeAndRemittances,
+//       title: (l) => l.menuExchange,
+//       icon: LucideIcons.arrowLeftRight,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.purchases,
+//       title: (l) => l.menuPurchases,
+//       icon: LucideIcons.shoppingBag,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.manufacturing,
+//       title: (l) => l.menuManufacturing,
+//       icon: LucideIcons.factory,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.hrManagement,
+//       title: (l) => l.menuHR,
+//       icon: LucideIcons.userCog,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.saasControl,
+//       title: (l) => l.menuSaaS,
+//       icon: LucideIcons.crown,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.aiAnalytics,
+//       title: (l) => l.menuAI,
+//       icon: LucideIcons.brain,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.authPages,
+//       title: (l) => l.menuAuthPages,
+//       icon: LucideIcons.lock,
+//     ),
+//     _MenuData(
+//       type: AppMenuType.settings,
+//       title: (l) => l.menuSettings,
+//       icon: LucideIcons.settings,
+//     ),
+//   ];
+// }

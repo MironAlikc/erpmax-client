@@ -1301,4 +1301,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionAddSupplier => 'Add Supplier';
+
+  @override
+  String get billingManagement => 'Billing Management';
 }

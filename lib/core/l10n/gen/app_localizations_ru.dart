@@ -1310,4 +1310,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get actionAddSupplier => 'Добавить поставщика';
+
+  @override
+  String get billingManagement => 'Управление счетами';
 }

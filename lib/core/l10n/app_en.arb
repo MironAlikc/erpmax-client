@@ -435,5 +435,6 @@
   "customersList": "Customers List",
   "actionAddCustomer": "Add Customer",
   "suppliersList": "Suppliers List",
-  "actionAddSupplier": "Add Supplier"
+  "actionAddSupplier": "Add Supplier",
+  "billingManagement": "Billing Management"
 }

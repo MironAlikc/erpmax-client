@@ -428,5 +428,6 @@
   "customersList": "قائمة العملاء",
   "actionAddCustomer": "إضافة عميل",
   "suppliersList": "قائمة الموردين",
-  "actionAddSupplier": "إضافة مورد"
+  "actionAddSupplier": "إضافة مورد",
+  "billingManagement": "إدارة الفواتير"
 }

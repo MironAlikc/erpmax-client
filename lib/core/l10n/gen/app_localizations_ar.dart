@@ -1304,4 +1304,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionAddSupplier => 'إضافة مورد';
+
+  @override
+  String get billingManagement => 'إدارة الفواتير';
 }

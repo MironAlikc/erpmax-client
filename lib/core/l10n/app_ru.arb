@@ -434,5 +434,6 @@
   "customersList": "Список клиентов",
   "actionAddCustomer": "Добавить клиента",
   "suppliersList": "Список поставщиков",
-  "actionAddSupplier": "Добавить поставщика"
+  "actionAddSupplier": "Добавить поставщика",
+  "billingManagement": "Управление счетами"
 }

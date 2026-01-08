@@ -2571,6 +2571,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Supplier'**
   String get actionAddSupplier;
+
+  /// No description provided for @billingManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Management'**
+  String get billingManagement;
 }
 
 class _AppLocalizationsDelegate
