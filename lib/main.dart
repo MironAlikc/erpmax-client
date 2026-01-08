@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
                 ErrorWidget.builder = (FlutterErrorDetails details) {
                   return Material(
                     child: Container(
-                      color: context.theme.appColor.white,
+                      color: context.theme.appColor.gray50,
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context).errorGeneral,
