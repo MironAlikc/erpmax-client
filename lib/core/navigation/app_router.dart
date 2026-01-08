@@ -1,4 +1,5 @@
 import 'package:erpmax_client/core/navigation/fade_transition_page.dart';
+import 'package:erpmax_client/core/navigation/go_router_refresh_stream.dart';
 import 'package:erpmax_client/features/accounting/presentation/pages/accounting_root_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/check_email_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
@@ -9,6 +10,8 @@ import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart'
 import 'package:erpmax_client/features/auth/presentation/pages/verify_2fa_page.dart';
 import 'package:erpmax_client/features/dashboard/presentation/pages/dashboard_shell.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/saas_admin_root_page.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,10 +60,11 @@ class AppRouter {
   static final _shellAuth = GlobalKey<NavigatorState>(debugLabel: 'db_auth');
   static final _shellSet = GlobalKey<NavigatorState>(debugLabel: 'db_set');
 
-  static final GoRouter router = GoRouter(
+  static GoRouter createRouter(AuthBloc authBloc) => GoRouter(
     initialLocation: RouteNames.login,
     navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: true,
+    refreshListenable: GoRouterRefreshStream(authBloc.stream),
 
     redirect: (context, state) {
       final location = state.matchedLocation;
@@ -76,12 +80,20 @@ class AppRouter {
         RouteNames.passwordSuccess,
         RouteNames.verify2fa,
       ].contains(location);
-      const bool isAuthenticated = true;
+
+      final authState = authBloc.state;
+      final bool isAuthenticated = authState is AuthAuthenticated;
+
+      print(
+        'Redirect: location=$location, isPublicAuthPage=$isPublicAuthPage, isAuthenticated=$isAuthenticated',
+      );
 
       if (location == RouteNames.root) return RouteNames.login;
       if (!isAuthenticated && !isPublicAuthPage) return RouteNames.login;
-      if (isAuthenticated && location == RouteNames.login)
+      if (isAuthenticated && location == RouteNames.login) {
+        print('Redirecting to dashboard');
         return RouteNames.dashboard;
+      }
 
       return null;
     },
@@ -106,8 +118,13 @@ class AppRouter {
       ),
       GoRoute(
         path: RouteNames.checkEmail,
-        pageBuilder: (context, state) =>
-            FadeTransitionPage(key: state.pageKey, child: CheckEmailPage()),
+        pageBuilder: (context, state) {
+          final email = state.extra as String? ?? 'user@example.com';
+          return FadeTransitionPage(
+            key: state.pageKey,
+            child: CheckEmailPage(email: email),
+          );
+        },
       ),
       GoRoute(
         path: RouteNames.newPassword,
