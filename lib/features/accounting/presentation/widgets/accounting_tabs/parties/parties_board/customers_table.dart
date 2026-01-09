@@ -13,17 +13,119 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/common_wi
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+enum SortState { none, ascending, descending }
+
+class ColumnSettings {
+  SortState sortState;
+  String filterQuery;
+
+  ColumnSettings({this.sortState = SortState.none, this.filterQuery = ''});
+}
+
 class CustomersTableView extends StatefulWidget {
   final List<Customer> customers;
-
   const CustomersTableView({super.key, required this.customers});
 
   @override
   State<CustomersTableView> createState() => _CustomersTableViewState();
 }
 
+final Map<String, ColumnSettings> _columnSettings = {
+  'name': ColumnSettings(),
+  'group': ColumnSettings(),
+  'balance': ColumnSettings(),
+  'activity': ColumnSettings(),
+  'status': ColumnSettings(),
+};
+
 class _CustomersTableViewState extends State<CustomersTableView> {
   final Set<String> _selectedIds = {};
+  final ScrollController _horizontalController = ScrollController();
+
+  List<Customer> get _sortedCustomers {
+    String? activeColumnId;
+    SortState? activeSort;
+
+    _columnSettings.forEach((id, settings) {
+      if (settings.sortState != SortState.none) {
+        activeColumnId = id;
+        activeSort = settings.sortState;
+      }
+    });
+
+    if (activeColumnId == null) return widget.customers;
+
+    List<Customer> sorted = List.from(widget.customers);
+    sorted.sort((a, b) {
+      int cmp;
+      switch (activeColumnId) {
+        case 'name':
+          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          break;
+        case 'balance':
+          cmp = a.balance.compareTo(b.balance);
+          break;
+        case 'activity':
+          cmp = a.lastActivityAmount.compareTo(b.lastActivityAmount);
+          break;
+        default:
+          cmp = 0;
+      }
+      return activeSort == SortState.ascending ? cmp : -cmp;
+    });
+
+    return sorted;
+  }
+
+  OverlayEntry? _filterOverlay;
+
+  void _showFilterOverlay(LayerLink link, String columnId) {
+    _closeFilter();
+
+    _filterOverlay = OverlayEntry(
+      builder: (context) => Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _closeFilter,
+              behavior: HitTestBehavior.translucent,
+            ),
+          ),
+          Positioned(
+            child: CompositedTransformFollower(
+              link: link,
+              showWhenUnlinked: false,
+              targetAnchor: Alignment.bottomCenter,
+              followerAnchor: Alignment.topCenter,
+              offset: const Offset(0, 10),
+              child: _FilterDropdown(
+                columnId: columnId,
+                initialValue: _columnSettings[columnId]?.filterQuery ?? '',
+                onChanged: (value) {
+                  setState(() {
+                    _columnSettings[columnId]!.filterQuery = value;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Overlay.of(context).insert(_filterOverlay!);
+  }
+
+  void _closeFilter() {
+    _filterOverlay?.remove();
+    _filterOverlay = null;
+  }
+
+  @override
+  void dispose() {
+    _horizontalController.dispose();
+    super.dispose();
+  }
 
   void _toggleSelection(String id) {
     setState(() {
@@ -39,9 +141,10 @@ class _CustomersTableViewState extends State<CustomersTableView> {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
+    final displayList = _sortedCustomers;
 
     return Container(
-      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
+      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 24),
       decoration: BoxDecoration(
         color: theme.white,
         borderRadius: BorderRadius.circular(Dimens.p12),
@@ -74,17 +177,93 @@ class _CustomersTableViewState extends State<CustomersTableView> {
             ],
           ),
           gapH16,
-          _FundsTableHeader(),
-          ...widget.customers.map(
-            (customer) => CustomersTableRow(
-              customer: customer,
-              isSelected: _selectedIds.contains(customer.id),
-              onChanged: () => _toggleSelection(customer.id),
+          Flexible(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final availableWidth = constraints.maxWidth;
+                final tableWidth = availableWidth > 1100
+                    ? availableWidth
+                    : 1100.0;
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Scrollbar(
+                        controller: _horizontalController,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          controller: _horizontalController,
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minWidth: 1100,
+                              maxWidth: tableWidth,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _FundsTableHeader(
+                                  settings: _columnSettings,
+                                  onSortToggle: (columnId) {
+                                    setState(() {
+                                      final current =
+                                          _columnSettings[columnId]!.sortState;
+                                      _columnSettings[columnId]!.sortState =
+                                          SortState.values[(current.index + 1) %
+                                              SortState.values.length];
+
+                                      _columnSettings.forEach((key, value) {
+                                        if (key != columnId) {
+                                          value.sortState = SortState.none;
+                                        }
+                                      });
+                                    });
+                                  },
+                                  onFilterClick: (columnId, link) {
+                                    _showFilterOverlay(link, columnId);
+                                  },
+                                ),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: displayList.length,
+                                  itemBuilder: (context, index) {
+                                    final customer = displayList[index];
+                                    return CustomersTableRow(
+                                      index: index + 1,
+                                      customer: customer,
+                                      isSelected: _selectedIds.contains(
+                                        customer.id,
+                                      ),
+                                      onChanged: () =>
+                                          _toggleSelection(customer.id),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 1100,
+                          maxWidth: tableWidth,
+                        ),
+                        child: _CustomersTableFooter(
+                          customers: widget.customers,
+                          selectedCount: _selectedIds.length,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ),
-          _CustomersTableFooter(
-            customers: widget.customers,
-            selectedCount: _selectedIds.length,
           ),
         ],
       ),
@@ -93,22 +272,25 @@ class _CustomersTableViewState extends State<CustomersTableView> {
 }
 
 class CustomersTableRow extends StatefulWidget {
+  final int index;
+
   final Customer customer;
   final bool isSelected;
   final VoidCallback onChanged;
 
   const CustomersTableRow({
     super.key,
+    required this.index,
     required this.customer,
     required this.isSelected,
     required this.onChanged,
   });
 
   @override
-  State<CustomersTableRow> createState() => _CustomersTableHeader();
+  State<CustomersTableRow> createState() => _CustomersTableRowState();
 }
 
-class _CustomersTableHeader extends State<CustomersTableRow> {
+class _CustomersTableRowState extends State<CustomersTableRow> {
   bool _isHovered = false;
 
   @override
@@ -141,6 +323,17 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
           ),
           child: Row(
             children: [
+              SizedBox(
+                width: 24,
+                child: Center(
+                  child: Text(
+                    '${widget.index}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textSecondary,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 28,
                 child: Center(
@@ -371,6 +564,16 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
 }
 
 class _FundsTableHeader extends StatelessWidget {
+  final Map<String, ColumnSettings> settings;
+  final Function(String columnId) onSortToggle;
+  final Function(String columnId, LayerLink link) onFilterClick;
+
+  const _FundsTableHeader({
+    required this.settings,
+    required this.onSortToggle,
+    required this.onFilterClick,
+  });
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
@@ -381,10 +584,6 @@ class _FundsTableHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.primaryLight,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(Dimens.p12),
-          topRight: Radius.circular(Dimens.p12),
-        ),
         border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
@@ -394,27 +593,29 @@ class _FundsTableHeader extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
+            width: Dimens.p28,
+            child: Icon(LucideIcons.hash, size: 12, color: theme.gray600),
+          ),
+          SizedBox(
             width: 28,
             child: Icon(LucideIcons.check, size: 16, color: theme.gray600),
           ),
           Expanded(
             flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                localizations.labelNameId,
-                style: style,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-              ),
+            child: _TableColumnHeader(
+              label: localizations.labelNameId,
+              sortState: settings['name']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('name'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.labelGroup,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.labelGroup,
+              sortState: settings['group']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('group'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
@@ -427,29 +628,31 @@ class _FundsTableHeader extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.column_balance,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.column_balance,
+              sortState: settings['balance']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('balance'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.labelActivity,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.labelActivity,
+              sortState: settings['activity']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('activity'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.status,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.status,
+              sortState: settings['status']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('status'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
-
           SizedBox(
             width: 46,
             child: Text(
@@ -494,10 +697,6 @@ class _CustomersTableFooter extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: Dimens.p12),
       decoration: BoxDecoration(
         color: theme.primaryFooter,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(Dimens.p12),
-          bottomRight: Radius.circular(Dimens.p12),
-        ),
         border: BoxBorder.fromSTEB(
           bottom: BorderSide(width: 1, color: theme.border),
           start: BorderSide(width: 1, color: theme.border),
@@ -506,6 +705,14 @@ class _CustomersTableFooter extends StatelessWidget {
       ),
       child: Row(
         children: [
+          SizedBox(
+            width: 24,
+            child: Text(
+              selectedCount.toString(),
+              style: AppTextStyles.caption.copyWith(color: theme.textWhite),
+              textAlign: TextAlign.center,
+            ),
+          ),
           SizedBox(
             width: 28,
             child: Text(
@@ -590,4 +797,151 @@ class _CustomersTableFooter extends StatelessWidget {
       ),
     );
   }
+}
+
+class _TableColumnHeader extends StatefulWidget {
+  final String label;
+  final SortState sortState;
+  final VoidCallback onSortTap;
+  final Function(LayerLink link) onFilterTap;
+
+  const _TableColumnHeader({
+    required this.label,
+    required this.sortState,
+    required this.onSortTap,
+    required this.onFilterTap,
+  });
+
+  @override
+  State<_TableColumnHeader> createState() => _TableColumnHeaderState();
+}
+
+class _TableColumnHeaderState extends State<_TableColumnHeader> {
+  final LayerLink _link = LayerLink();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+    final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: Text(
+            widget.label,
+            style: style,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        gapW4,
+        GestureDetector(
+          onTap: widget.onSortTap,
+          child: Icon(
+            widget.sortState == SortState.ascending
+                ? LucideIcons.chevronUp
+                : widget.sortState == SortState.descending
+                ? LucideIcons.chevronDown
+                : LucideIcons.unfoldVertical,
+            size: 14,
+            color: widget.sortState == SortState.none
+                ? theme.gray500
+                : theme.primary,
+          ),
+        ),
+        gapW4,
+        CompositedTransformTarget(
+          link: _link,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => widget.onFilterTap(_link),
+            child: Icon(LucideIcons.filter, size: 12, color: theme.gray500),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _FilterDropdown extends StatelessWidget {
+  final String columnId;
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+
+  const _FilterDropdown({
+    required this.columnId,
+    required this.initialValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        width: 250,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: theme.border.withValues(alpha: 0.5)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Filter by ${columnId.capitalize()}',
+              style: AppTextStyles.caption.copyWith(
+                color: theme.textSecondary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              autofocus: true,
+              controller: TextEditingController(text: initialValue)
+                ..selection = TextSelection.collapsed(
+                  offset: initialValue.length,
+                ),
+              onChanged: onChanged,
+              style: AppTextStyles.bodyMedium,
+              decoration: InputDecoration(
+                hintText: 'Search $columnId...',
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.gray400,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: theme.border),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: theme.primary, width: 1.5),
+                ),
+                isDense: true,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() => "${this[0].toUpperCase()}${substring(1)}";
 }
