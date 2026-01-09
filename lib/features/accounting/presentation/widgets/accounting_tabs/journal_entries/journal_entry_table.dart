@@ -2,6 +2,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
+import 'package:erpmax_client/core/widgets/common/search_fields/app_search_field_table.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/journal_entries/journal_entry_data.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_checkbox.dart';
 import 'package:flutter/material.dart';
@@ -139,33 +140,9 @@ class _JournalEntryTableState extends State<JournalEntryTable> {
         alignment: WrapAlignment.spaceBetween,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          Container(
+          AppSearchFieldTable(
+            hintText: localizations.search_placeholder,
             width: 350,
-            height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              color: theme.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: theme.border),
-            ),
-            child: Row(
-              children: [
-                Icon(LucideIcons.search, size: 18, color: theme.textSecondary),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: localizations.search_placeholder,
-                      hintStyle: AppTextStyles.bodyMedium.copyWith(
-                        color: theme.textSecondary,
-                      ),
-                      border: InputBorder.none,
-                      isDense: true,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,

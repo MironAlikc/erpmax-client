@@ -1328,4 +1328,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelDueDate => 'Due Date';
+
+  @override
+  String get labelInvoices => 'Invoices';
 }

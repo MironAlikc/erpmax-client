@@ -7,14 +7,13 @@ import 'package:erpmax_client/core/theme/app_scroll_behavior.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
+import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,40 +25,46 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        // BlocProvider(
+        //   create: (_) =>
+        //       getIt<AuthBloc>()..add(const AuthEvent.checkRequested()),
+        // ),
+        // ! Temporarily disabled auto check auth on app start
+        BlocProvider(create: (_) => getIt<AuthBloc>()),
+
         BlocProvider(create: (_) => getIt<LocaleCubit>()),
         BlocProvider(create: (_) => getIt<ThemeCubit>()),
         BlocProvider(create: (_) => getIt<SidePanelCubit>()),
         BlocProvider(create: (_) => getIt<TabNavigationCubit>()),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) =>
-                getIt<AuthBloc>()..add(const AuthEvent.checkRequested()),
-          ),
-          BlocProvider(create: (_) => getIt<LocaleCubit>()),
-          BlocProvider(create: (_) => getIt<ThemeCubit>()),
-        ],
-        child: const AuthRouterWrapper(),
-      ),
+      child: const AuthRouterWrapper(),
     ),
   );
 }
 
-class AuthRouterWrapper extends StatelessWidget {
+class AuthRouterWrapper extends StatefulWidget {
   const AuthRouterWrapper({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
-    final router = AppRouter.createRouter(authBloc);
+  State<AuthRouterWrapper> createState() => _AuthRouterWrapperState();
+}
 
+class _AuthRouterWrapperState extends State<AuthRouterWrapper> {
+  late final GoRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _router = AppRouter.createRouter(context.read<AuthBloc>());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        print('BlocListener: Auth state changed to $state, refreshing router');
-        router.refresh();
+        // _router.refresh();
       },
-      child: MyApp(router: router),
+      child: MyApp(router: _router),
     );
   }
 }

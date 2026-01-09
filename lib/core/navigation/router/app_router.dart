@@ -1,7 +1,7 @@
-import 'package:erpmax_client/core/navigation/go_router_refresh_stream.dart';
 import 'package:erpmax_client/core/navigation/presentation/layout/dashboard_shell.dart';
 import 'package:erpmax_client/core/navigation/router/fade_transition_page.dart';
 import 'package:erpmax_client/features/accounting/presentation/pages/accounting_root_page.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/check_email_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/login_page.dart';
@@ -10,8 +10,6 @@ import 'package:erpmax_client/features/auth/presentation/pages/reset_password_su
 import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/verify_2fa_page.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/saas_admin_root_page.dart';
-import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -61,43 +59,57 @@ class AppRouter {
   static final _shellSet = GlobalKey<NavigatorState>(debugLabel: 'db_set');
 
   static GoRouter createRouter(AuthBloc authBloc) => GoRouter(
-    initialLocation: RouteNames.login,
+    initialLocation: RouteNames.dashboard,
+    // ! Temporarily disabled auto check auth on app start
+    // initialLocation: RouteNames.login,
+    // refreshListenable: GoRouterRefreshStream(authBloc.stream),
     navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: true,
-    refreshListenable: GoRouterRefreshStream(authBloc.stream),
 
+    // ! Temporarily disabled auto check auth on app start
     redirect: (context, state) {
       final location = state.matchedLocation;
 
-      if (location == RouteNames.journal) return RouteNames.accounting;
-
-      final bool isPublicAuthPage = [
-        RouteNames.login,
-        RouteNames.signup,
-        RouteNames.forgotPassword,
-        RouteNames.checkEmail,
-        RouteNames.newPassword,
-        RouteNames.passwordSuccess,
-        RouteNames.verify2fa,
-      ].contains(location);
-
-      final authState = authBloc.state;
-      final bool isAuthenticated = authState is AuthAuthenticated;
-
-      print(
-        'Redirect: location=$location, isPublicAuthPage=$isPublicAuthPage, isAuthenticated=$isAuthenticated',
-      );
-
-      if (location == RouteNames.root) return RouteNames.login;
-      if (!isAuthenticated && !isPublicAuthPage) return RouteNames.login;
-      if (isAuthenticated && location == RouteNames.login) {
-        print('Redirecting to dashboard');
+      if (location == RouteNames.login ||
+          location == RouteNames.root ||
+          location == '') {
         return RouteNames.dashboard;
       }
 
       return null;
     },
+    // ! Temporarily disabled auto check auth on app start
+    // redirect: (context, state) {
+    //   final location = state.matchedLocation;
 
+    //   if (location == RouteNames.journal) return RouteNames.accounting;
+
+    //   final bool isPublicAuthPage = [
+    //     RouteNames.login,
+    //     RouteNames.signup,
+    //     RouteNames.forgotPassword,
+    //     RouteNames.checkEmail,
+    //     RouteNames.newPassword,
+    //     RouteNames.passwordSuccess,
+    //     RouteNames.verify2fa,
+    //   ].contains(location);
+
+    //   final authState = authBloc.state;
+    //   final bool isAuthenticated = authState is AuthAuthenticated;
+
+    //   print(
+    //     'Redirect: location=$location, isPublicAuthPage=$isPublicAuthPage, isAuthenticated=$isAuthenticated',
+    //   );
+
+    //   if (location == RouteNames.root) return RouteNames.login;
+    //   if (!isAuthenticated && !isPublicAuthPage) return RouteNames.login;
+    //   if (isAuthenticated && location == RouteNames.login) {
+    //     print('Redirecting to dashboard');
+    //     return RouteNames.dashboard;
+    //   }
+
+    //   return null;
+    // },
     routes: [
       GoRoute(
         path: RouteNames.login,

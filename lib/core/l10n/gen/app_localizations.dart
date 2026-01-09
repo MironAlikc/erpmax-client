@@ -2625,6 +2625,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due Date'**
   String get labelDueDate;
+
+  /// No description provided for @labelInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get labelInvoices;
 }
 
 class _AppLocalizationsDelegate

@@ -444,5 +444,6 @@
   "statusOverdue": "Overdue",
   "labelInvoiceNumber": "Invoice Number",
   "labelPeriod": "Period",
-  "labelDueDate": "Due Date"
+  "labelDueDate": "Due Date",
+  "labelInvoices": "Invoices"
 }

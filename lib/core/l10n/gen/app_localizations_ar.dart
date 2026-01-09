@@ -1331,4 +1331,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelDueDate => 'تاريخ الاستحقاق';
+
+  @override
+  String get labelInvoices => 'الفواتير';
 }
