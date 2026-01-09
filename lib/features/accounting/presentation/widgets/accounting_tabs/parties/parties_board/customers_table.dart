@@ -15,7 +15,6 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 class CustomersTableView extends StatefulWidget {
   final List<Customer> customers;
-
   const CustomersTableView({super.key, required this.customers});
 
   @override
@@ -24,6 +23,13 @@ class CustomersTableView extends StatefulWidget {
 
 class _CustomersTableViewState extends State<CustomersTableView> {
   final Set<String> _selectedIds = {};
+  final ScrollController _horizontalController = ScrollController();
+
+  @override
+  void dispose() {
+    _horizontalController.dispose();
+    super.dispose();
+  }
 
   void _toggleSelection(String id) {
     setState(() {
@@ -41,7 +47,7 @@ class _CustomersTableViewState extends State<CustomersTableView> {
     final localizations = AppLocalizations.of(context);
 
     return Container(
-      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 16),
+      padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 24),
       decoration: BoxDecoration(
         color: theme.white,
         borderRadius: BorderRadius.circular(Dimens.p12),
@@ -74,17 +80,73 @@ class _CustomersTableViewState extends State<CustomersTableView> {
             ],
           ),
           gapH16,
-          _FundsTableHeader(),
-          ...widget.customers.map(
-            (customer) => CustomersTableRow(
-              customer: customer,
-              isSelected: _selectedIds.contains(customer.id),
-              onChanged: () => _toggleSelection(customer.id),
+          Flexible(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final availableWidth = constraints.maxWidth;
+                final tableWidth = availableWidth > 1100
+                    ? availableWidth
+                    : 1100.0;
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Scrollbar(
+                        controller: _horizontalController,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          controller: _horizontalController,
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minWidth: 1100,
+                              maxWidth: tableWidth,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _FundsTableHeader(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: widget.customers.length,
+                                  itemBuilder: (context, index) {
+                                    final customer = widget.customers[index];
+                                    return CustomersTableRow(
+                                      index: index + 1,
+                                      customer: customer,
+                                      isSelected: _selectedIds.contains(
+                                        customer.id,
+                                      ),
+                                      onChanged: () =>
+                                          _toggleSelection(customer.id),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 1100,
+                          maxWidth: tableWidth,
+                        ),
+                        child: _CustomersTableFooter(
+                          customers: widget.customers,
+                          selectedCount: _selectedIds.length,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ),
-          _CustomersTableFooter(
-            customers: widget.customers,
-            selectedCount: _selectedIds.length,
           ),
         ],
       ),
@@ -93,22 +155,25 @@ class _CustomersTableViewState extends State<CustomersTableView> {
 }
 
 class CustomersTableRow extends StatefulWidget {
+  final int index;
+
   final Customer customer;
   final bool isSelected;
   final VoidCallback onChanged;
 
   const CustomersTableRow({
     super.key,
+    required this.index,
     required this.customer,
     required this.isSelected,
     required this.onChanged,
   });
 
   @override
-  State<CustomersTableRow> createState() => _CustomersTableHeader();
+  State<CustomersTableRow> createState() => _CustomersTableRowState();
 }
 
-class _CustomersTableHeader extends State<CustomersTableRow> {
+class _CustomersTableRowState extends State<CustomersTableRow> {
   bool _isHovered = false;
 
   @override
@@ -141,6 +206,17 @@ class _CustomersTableHeader extends State<CustomersTableRow> {
           ),
           child: Row(
             children: [
+              SizedBox(
+                width: 24,
+                child: Center(
+                  child: Text(
+                    '${widget.index}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: theme.textSecondary,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 28,
                 child: Center(
@@ -381,10 +457,10 @@ class _FundsTableHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.primaryLight,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(Dimens.p12),
-          topRight: Radius.circular(Dimens.p12),
-        ),
+        // borderRadius: const BorderRadius.only(
+        //   topLeft: Radius.circular(Dimens.p12),
+        //   topRight: Radius.circular(Dimens.p12),
+        // ),
         border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
@@ -393,6 +469,10 @@ class _FundsTableHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
+          SizedBox(
+            width: 28,
+            child: Icon(LucideIcons.hash, size: 12, color: theme.gray600),
+          ),
           SizedBox(
             width: 28,
             child: Icon(LucideIcons.check, size: 16, color: theme.gray600),
@@ -494,10 +574,10 @@ class _CustomersTableFooter extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: Dimens.p12),
       decoration: BoxDecoration(
         color: theme.primaryFooter,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(Dimens.p12),
-          bottomRight: Radius.circular(Dimens.p12),
-        ),
+        // borderRadius: const BorderRadius.only(
+        //   bottomLeft: Radius.circular(Dimens.p12),
+        //   bottomRight: Radius.circular(Dimens.p12),
+        // ),
         border: BoxBorder.fromSTEB(
           bottom: BorderSide(width: 1, color: theme.border),
           start: BorderSide(width: 1, color: theme.border),
@@ -506,6 +586,14 @@ class _CustomersTableFooter extends StatelessWidget {
       ),
       child: Row(
         children: [
+          SizedBox(
+            width: 24,
+            child: Text(
+              selectedCount.toString(),
+              style: AppTextStyles.caption.copyWith(color: theme.textWhite),
+              textAlign: TextAlign.center,
+            ),
+          ),
           SizedBox(
             width: 28,
             child: Text(

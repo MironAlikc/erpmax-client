@@ -16,8 +16,6 @@ class GeneralLedgerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    // final bool isMobile = MediaQuery.of(context).size.width < 1100;
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(Dimens.p24),
       child: Column(
