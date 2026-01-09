@@ -1,6 +1,6 @@
-enum SubscriptionPlan { starter, professional, enterprise }
+import 'package:erpmax_client/features/saas_control/presentation/pages/billing/widgets/status_badge.dart';
 
-enum InvoiceStatus { paid, pending, overdue, draft }
+enum SubscriptionPlan { starter, professional, enterprise }
 
 enum InvoiceStatType { total, paid, pending, overdue }
 
@@ -28,7 +28,6 @@ class MockInvoicesDataService {
     ),
   );
 
-  // Данные для таблицы
   static List<Invoice> getInvoices() {
     return [
       Invoice(
@@ -84,7 +83,7 @@ class Invoice {
   final String invoiceNumber;
   final String tenantName;
   final SubscriptionPlan plan;
-  final String period; // Например, "January 2024"
+  final String period;
   final double amount;
   final String currency;
   final DateTime dueDate;

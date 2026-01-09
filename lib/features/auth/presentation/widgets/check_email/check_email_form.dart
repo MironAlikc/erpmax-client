@@ -3,7 +3,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/navigation/router/app_router.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/common/app_button.dart';
+import 'package:erpmax_client/core/widgets/common/buttons/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';

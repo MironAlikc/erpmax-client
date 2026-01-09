@@ -434,5 +434,8 @@
   "actionNewInvoice": "فاتورة جديدة",
   "totalInvoiced": "إجمالي المفوتر",
   "statusPaid": "مدفوع",
-  "statusOverdue": "متأخر"
+  "statusOverdue": "متأخر",
+  "labelInvoiceNumber": "رقم الفاتورة",
+  "labelPeriod": "الفترة",
+  "labelDueDate": "تاريخ الاستحقاق"
 }
