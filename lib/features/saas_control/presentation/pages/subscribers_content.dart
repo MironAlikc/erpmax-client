@@ -1,7 +1,8 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 import 'package:flutter/material.dart';
 
 enum SubscriberStatus { active, expired, trial, suspended }
@@ -30,8 +31,16 @@ class SubscriberModel {
   });
 }
 
-class SubscribersContent extends StatelessWidget {
+class SubscribersContent extends StatefulWidget {
   const SubscribersContent({super.key});
+
+  @override
+  State<SubscribersContent> createState() => _SubscribersContentState();
+}
+
+class _SubscribersContentState extends State<SubscribersContent> {
+  // Состояние выбора строк
+  Set<String> _selectedSubscriberIds = {};
 
   static const List<SubscriberModel> _subscribers = [
     SubscriberModel(
@@ -106,17 +115,73 @@ class SubscribersContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    final List<ErpMaxColumn> columns = [
-      ErpMaxColumn(title: localizations.columnTenant, weight: 0.22),
-      ErpMaxColumn(title: localizations.columnPlan, weight: 0.12),
-      ErpMaxColumn(title: localizations.status, weight: 0.12),
-      ErpMaxColumn(title: localizations.columnUsers, weight: 0.16),
-      ErpMaxColumn(title: localizations.columnStorage, weight: 0.16),
-      ErpMaxColumn(title: localizations.columnRenewalDate, weight: 0.15),
+    // Определение колонок для UniversalErpTable
+    final List<ErpMaxColumn<SubscriberModel>> columns = [
       ErpMaxColumn(
+        id: 'tenant',
+        title: localizations.columnTenant,
+        weight: 2.2,
+        valueGetter: (i) => i.companyName,
+        customCell: (item) => _buildTenantCell(context, item),
+      ),
+      ErpMaxColumn(
+        id: 'plan',
+        title: localizations.columnPlan,
+        weight: 1.2,
+        valueGetter: (i) => i.planName,
+        customCell: (item) => _buildPlanBadge(context, item.planName),
+      ),
+      ErpMaxColumn(
+        id: 'status',
+        title: localizations.status,
+        weight: 1.2,
+        valueGetter: (i) => i.status.name,
+        customCell: (item) => _buildStatusBadge(context, item.status),
+      ),
+      ErpMaxColumn(
+        id: 'users',
+        title: localizations.columnUsers,
+        weight: 1.6,
+        // Исправлено: используем 'i' (аргумент функции)
+        valueGetter: (i) => "${i.currentUsers}/${i.maxUsers}",
+        customCell: (item) => _buildProgressCell(
+          context,
+          item.currentUsers,
+          item.maxUsers,
+          Icons.people_outline,
+          "",
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'storage',
+        title: localizations.columnStorage,
+        weight: 1.6,
+        // Исправлено: используем 'i', так как аргумент назван 'i'
+        valueGetter: (i) => "${i.currentStorage}/${i.maxStorage}",
+        customCell: (item) => _buildProgressCell(
+          context,
+          item.currentStorage.toInt(),
+          item.maxStorage.toInt(),
+          Icons.inventory_2_outlined,
+          "GB",
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'date',
+        title: localizations.columnRenewalDate,
+        weight: 1.5,
+        valueGetter: (i) => i.renewalDate,
+        customCell: (item) => _buildDateCell(context, item.renewalDate),
+      ),
+      ErpMaxColumn(
+        id: 'actions',
         title: localizations.actions,
-        weight: 0.05,
+        weight: 0.5,
+        isSortable: false,
+        hasFilter: false,
         textAlign: TextAlign.right,
+        customCell: (item) =>
+            const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
       ),
     ];
 
@@ -129,54 +194,33 @@ class SubscribersContent extends StatelessWidget {
           const SizedBox(height: 24),
           _buildSearchField(context),
           const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFF1F5F9)),
-            ),
-            child: Column(
-              children: [
-                ErpMaxTable(
-                  columns: columns,
-                  minWidth: 1100,
-                  rows: _subscribers.map((item) {
-                    return ErpMaxRow(
-                      columns: columns,
-                      cells: [
-                        _buildTenantCell(context, item),
-                        _buildPlanBadge(context, item.planName),
-                        _buildStatusBadge(context, item.status),
-                        _buildProgressCell(
-                          context,
-                          item.currentUsers,
-                          item.maxUsers,
-                          Icons.people_outline,
-                          "",
-                        ),
-                        _buildProgressCell(
-                          context,
-                          item.currentStorage.toInt(),
-                          item.maxStorage.toInt(),
-                          Icons.inventory_2_outlined,
-                          "GB",
-                        ),
-                        _buildDateCell(context, item.renewalDate),
-                        const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
-                      ],
-                    );
-                  }).toList(),
-                ),
-                _buildPaginationFooter(context),
-              ],
-            ),
+          // Сама таблица
+          UniversalErpTable<SubscriberModel>(
+            items: _subscribers,
+            columns: columns,
+            minWidth: 1100,
+            idGetter: (item) =>
+                item.email, // Используем email как уникальный ID
+            selectedIds: _selectedSubscriberIds,
+            onSelectionChanged: (newSelection) {
+              setState(() => _selectedSubscriberIds = newSelection);
+            },
+            showVerticalLines: true,
+            totals: {
+              'tenant': 'Total Subscribers: ${_subscribers.length}',
+              'users': 'Total Users: 203',
+            },
+            onRowTap: (item) {
+              debugPrint("Tapped on ${item.companyName}");
+            },
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
   }
 
-  // --- Widgets ---
+  // --- Копируем ваши оригинальные виджеты ячеек (без изменений) ---
 
   Widget _buildTopStatsRow(BuildContext context) {
     final localizations = AppLocalizations.of(context);
@@ -243,7 +287,6 @@ class SubscribersContent extends StatelessWidget {
     String? suffix,
   }) {
     final theme = context.theme.appColor;
-
     return Expanded(
       child: Container(
         height: 100,
@@ -310,7 +353,6 @@ class SubscribersContent extends StatelessWidget {
 
   Widget _buildSearchField(BuildContext context) {
     final theme = context.theme.appColor;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -331,7 +373,6 @@ class SubscribersContent extends StatelessWidget {
 
   Widget _buildTenantCell(BuildContext context, SubscriberModel item) {
     final theme = context.theme.appColor;
-
     return Row(
       children: [
         Container(
@@ -371,7 +412,6 @@ class SubscribersContent extends StatelessWidget {
 
   Widget _buildPlanBadge(BuildContext context, String plan) {
     final theme = context.theme.appColor;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -399,7 +439,6 @@ class SubscribersContent extends StatelessWidget {
   Widget _buildStatusBadge(BuildContext context, SubscriberStatus status) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
-
     Color bg;
     Color text;
     String label;
@@ -499,7 +538,6 @@ class SubscribersContent extends StatelessWidget {
 
   Widget _buildDateCell(BuildContext context, String date) {
     final theme = context.theme.appColor;
-
     return Row(
       children: [
         const Icon(
@@ -511,57 +549,6 @@ class SubscribersContent extends StatelessWidget {
         Text(
           date,
           style: AppTextStyles.label.copyWith(color: theme.textPrimary),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPaginationFooter(BuildContext context) {
-    final theme = context.theme.appColor;
-    final localizations = AppLocalizations.of(context);
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: theme.inactiveBg)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            localizations.paginationShowing(6, 6),
-            style: AppTextStyles.bodySmall.copyWith(color: theme.textTertiary),
-          ),
-          Row(
-            children: [
-              _footerStat(
-                context,
-                Icons.people_outline,
-                localizations.totalUsersCount(203),
-              ),
-              const SizedBox(width: 24),
-              _footerStat(
-                context,
-                Icons.visibility_outlined,
-                localizations.clickForDetails,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _footerStat(BuildContext context, IconData icon, String text) {
-    final theme = context.theme.appColor;
-
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: theme.textDisabled),
-        const SizedBox(width: 8),
-        Text(
-          text,
-          style: AppTextStyles.bodySmall.copyWith(color: theme.textTertiary),
         ),
       ],
     );
