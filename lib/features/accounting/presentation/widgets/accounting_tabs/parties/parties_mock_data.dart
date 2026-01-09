@@ -68,7 +68,7 @@ class MockPartiesDataService {
         group: "Regular",
         phone: "+966 59 777 8899",
         city: "Riyadh",
-        balance: -250.0, // Отрицательный баланс для теста
+        balance: -250.0,
         limit: 1000.0,
         lastActivityDate: "2023-12-20",
         lastActivityAmount: 500.0,

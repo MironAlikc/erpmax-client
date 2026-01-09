@@ -77,6 +77,50 @@ class _CustomersTableViewState extends State<CustomersTableView> {
     return sorted;
   }
 
+  OverlayEntry? _filterOverlay;
+
+  void _showFilterOverlay(LayerLink link, String columnId) {
+    _closeFilter();
+
+    _filterOverlay = OverlayEntry(
+      builder: (context) => Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _closeFilter,
+              behavior: HitTestBehavior.translucent,
+            ),
+          ),
+          Positioned(
+            child: CompositedTransformFollower(
+              link: link,
+              showWhenUnlinked: false,
+              targetAnchor: Alignment.bottomCenter,
+              followerAnchor: Alignment.topCenter,
+              offset: const Offset(0, 10),
+              child: _FilterDropdown(
+                columnId: columnId,
+                initialValue: _columnSettings[columnId]?.filterQuery ?? '',
+                onChanged: (value) {
+                  setState(() {
+                    _columnSettings[columnId]!.filterQuery = value;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Overlay.of(context).insert(_filterOverlay!);
+  }
+
+  void _closeFilter() {
+    _filterOverlay?.remove();
+    _filterOverlay = null;
+  }
+
   @override
   void dispose() {
     _horizontalController.dispose();
@@ -170,12 +214,15 @@ class _CustomersTableViewState extends State<CustomersTableView> {
                                               SortState.values.length];
 
                                       _columnSettings.forEach((key, value) {
-                                        if (key != columnId)
+                                        if (key != columnId) {
                                           value.sortState = SortState.none;
+                                        }
                                       });
                                     });
                                   },
-                                  onFilterClick: (columnId) {},
+                                  onFilterClick: (columnId, link) {
+                                    _showFilterOverlay(link, columnId);
+                                  },
                                 ),
                                 ListView.builder(
                                   shrinkWrap: true,
@@ -519,7 +566,7 @@ class _CustomersTableRowState extends State<CustomersTableRow> {
 class _FundsTableHeader extends StatelessWidget {
   final Map<String, ColumnSettings> settings;
   final Function(String columnId) onSortToggle;
-  final Function(String columnId) onFilterClick;
+  final Function(String columnId, LayerLink link) onFilterClick;
 
   const _FundsTableHeader({
     required this.settings,
@@ -546,7 +593,7 @@ class _FundsTableHeader extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 28,
+            width: Dimens.p28,
             child: Icon(LucideIcons.hash, size: 12, color: theme.gray600),
           ),
           SizedBox(
@@ -559,7 +606,7 @@ class _FundsTableHeader extends StatelessWidget {
               label: localizations.labelNameId,
               sortState: settings['name']?.sortState ?? SortState.none,
               onSortTap: () => onSortToggle('name'),
-              onFilterTap: () => onFilterClick('name'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
@@ -568,7 +615,7 @@ class _FundsTableHeader extends StatelessWidget {
               label: localizations.labelGroup,
               sortState: settings['group']?.sortState ?? SortState.none,
               onSortTap: () => onSortToggle('group'),
-              onFilterTap: () => onFilterClick('group'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
@@ -585,7 +632,7 @@ class _FundsTableHeader extends StatelessWidget {
               label: localizations.column_balance,
               sortState: settings['balance']?.sortState ?? SortState.none,
               onSortTap: () => onSortToggle('balance'),
-              onFilterTap: () => onFilterClick('balance'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
@@ -594,7 +641,7 @@ class _FundsTableHeader extends StatelessWidget {
               label: localizations.labelActivity,
               sortState: settings['activity']?.sortState ?? SortState.none,
               onSortTap: () => onSortToggle('activity'),
-              onFilterTap: () => onFilterClick('activity'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           Expanded(
@@ -603,7 +650,7 @@ class _FundsTableHeader extends StatelessWidget {
               label: localizations.status,
               sortState: settings['status']?.sortState ?? SortState.none,
               onSortTap: () => onSortToggle('status'),
-              onFilterTap: () => onFilterClick('status'),
+              onFilterTap: (link) => onFilterClick('name', link),
             ),
           ),
           SizedBox(
@@ -752,11 +799,11 @@ class _CustomersTableFooter extends StatelessWidget {
   }
 }
 
-class _TableColumnHeader extends StatelessWidget {
+class _TableColumnHeader extends StatefulWidget {
   final String label;
   final SortState sortState;
   final VoidCallback onSortTap;
-  final VoidCallback onFilterTap;
+  final Function(LayerLink link) onFilterTap;
 
   const _TableColumnHeader({
     required this.label,
@@ -764,6 +811,13 @@ class _TableColumnHeader extends StatelessWidget {
     required this.onSortTap,
     required this.onFilterTap,
   });
+
+  @override
+  State<_TableColumnHeader> createState() => _TableColumnHeaderState();
+}
+
+class _TableColumnHeaderState extends State<_TableColumnHeader> {
+  final LayerLink _link = LayerLink();
 
   @override
   Widget build(BuildContext context) {
@@ -774,34 +828,120 @@ class _TableColumnHeader extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: Text(label, style: style, overflow: TextOverflow.ellipsis),
-        ),
-        const SizedBox(width: 4),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onSortTap,
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Icon(
-              sortState == SortState.ascending
-                  ? LucideIcons.chevronUp
-                  : sortState == SortState.descending
-                  ? LucideIcons.chevronDown
-                  : LucideIcons.unfoldVertical,
-              size: 14,
-              color: sortState == SortState.none
-                  ? theme.gray400
-                  : theme.primary,
-            ),
+          child: Text(
+            widget.label,
+            style: style,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        const SizedBox(width: 4),
+        gapW4,
         GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onFilterTap,
-          child: Icon(LucideIcons.filter, size: 12, color: theme.gray400),
+          onTap: widget.onSortTap,
+          child: Icon(
+            widget.sortState == SortState.ascending
+                ? LucideIcons.chevronUp
+                : widget.sortState == SortState.descending
+                ? LucideIcons.chevronDown
+                : LucideIcons.unfoldVertical,
+            size: 14,
+            color: widget.sortState == SortState.none
+                ? theme.gray500
+                : theme.primary,
+          ),
+        ),
+        gapW4,
+        CompositedTransformTarget(
+          link: _link,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => widget.onFilterTap(_link),
+            child: Icon(LucideIcons.filter, size: 12, color: theme.gray500),
+          ),
         ),
       ],
     );
   }
+}
+
+class _FilterDropdown extends StatelessWidget {
+  final String columnId;
+  final String initialValue;
+  final ValueChanged<String> onChanged;
+
+  const _FilterDropdown({
+    required this.columnId,
+    required this.initialValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        width: 250,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: theme.border.withValues(alpha: 0.5)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Filter by ${columnId.capitalize()}',
+              style: AppTextStyles.caption.copyWith(
+                color: theme.textSecondary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              autofocus: true,
+              controller: TextEditingController(text: initialValue)
+                ..selection = TextSelection.collapsed(
+                  offset: initialValue.length,
+                ),
+              onChanged: onChanged,
+              style: AppTextStyles.bodyMedium,
+              decoration: InputDecoration(
+                hintText: 'Search $columnId...',
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.gray400,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: theme.border),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: theme.primary, width: 1.5),
+                ),
+                isDense: true,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() => "${this[0].toUpperCase()}${substring(1)}";
 }
