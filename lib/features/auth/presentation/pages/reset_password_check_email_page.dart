@@ -4,13 +4,20 @@ import 'package:erpmax_client/features/auth/presentation/widgets/reset_password/
 import 'package:flutter/material.dart';
 
 class ResetPasswordCheckEmailPage extends StatelessWidget {
-  const ResetPasswordCheckEmailPage({super.key});
+  final String email;
+  final VoidCallback? onResend;
+
+  const ResetPasswordCheckEmailPage({
+    super.key,
+    required this.email,
+    this.onResend,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AuthBaseLayout(
-      sideBanner: LoginBanner(),
-      child: CheckEmailContent(email: 'bob@reui.io', onResend: null),
+      sideBanner: const LoginBanner(),
+      child: CheckEmailContent(email: email, onResend: onResend),
     );
   }
 }

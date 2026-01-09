@@ -6,7 +6,11 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
 import 'package:erpmax_client/core/widgets/common/buttons/app_button.dart';
 import 'package:erpmax_client/features/auth/presentation/widgets/common/divider_with_text.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SignupForm extends StatefulWidget {
@@ -21,6 +25,8 @@ class _SignupFormState extends State<SignupForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _fullNameController = TextEditingController();
+  final _companyNameController = TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _isConfirmVisible = false;
@@ -31,12 +37,21 @@ class _SignupFormState extends State<SignupForm> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _fullNameController.dispose();
+    _companyNameController.dispose();
     super.dispose();
   }
 
   void _handleSignup() {
     if (_formKey.currentState!.validate() && _isTermsAccepted) {
-      context.go(RouteNames.journal);
+      context.read<AuthBloc>().add(
+        AuthEvent.registerRequested(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          fullName: _fullNameController.text.trim(),
+          companyName: _companyNameController.text.trim(),
+        ),
+      );
     }
   }
 
@@ -45,91 +60,146 @@ class _SignupFormState extends State<SignupForm> {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const _SignupHeader(),
-          const SizedBox(height: Dimens.p32),
-
-          const SocialAuthButtons(),
-          const SizedBox(height: Dimens.p16),
-
-          DividerWithText(text: localizations.or),
-          const SizedBox(height: Dimens.p16),
-
-          _FieldLabel(text: localizations.email),
-          AppTextField(
-            controller: _emailController,
-            hintText: 'email@email.com',
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) => (value == null || !value.contains('@'))
-                ? localizations.invalidEmail
-                : null,
-          ),
-          const SizedBox(height: Dimens.p16),
-
-          _FieldLabel(text: localizations.password),
-          AppTextField(
-            controller: _passwordController,
-            hintText: localizations.enterPassword,
-            obscureText: !_isPasswordVisible,
-            isPassword: true,
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isPasswordVisible
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                size: 20,
-                color: theme.gray400,
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          error: (message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                backgroundColor: context.theme.appColor.error,
               ),
-              onPressed: () =>
-                  setState(() => _isPasswordVisible = !_isPasswordVisible),
-            ),
-          ),
-          const SizedBox(height: Dimens.p16),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      builder: (context, state) {
+        final isLoading = state.maybeWhen(
+          loading: () => true,
+          orElse: () => false,
+        );
 
-          _FieldLabel(text: localizations.confirmPassword),
-          AppTextField(
-            controller: _confirmPasswordController,
-            hintText: localizations.reEnterPassword,
-            obscureText: !_isConfirmVisible,
-            isPassword: true,
-            validator: (value) {
-              if (value != _passwordController.text) {
-                return localizations.passwordsDoNotMatch;
-              }
-              return null;
-            },
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isConfirmVisible
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                size: 20,
-                color: theme.gray400,
+        return Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const _SignupHeader(),
+              const SizedBox(height: Dimens.p32),
+
+              const SocialAuthButtons(),
+              const SizedBox(height: Dimens.p16),
+
+              DividerWithText(text: localizations.or),
+              const SizedBox(height: Dimens.p16),
+
+              _FieldLabel(text: 'Full Name'),
+              AppTextField(
+                controller: _fullNameController,
+                hintText: 'John Doe',
+                enabled: !isLoading,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Please enter your full name'
+                    : null,
               ),
-              onPressed: () =>
-                  setState(() => _isConfirmVisible = !_isConfirmVisible),
-            ),
-          ),
-          const SizedBox(height: Dimens.p16),
+              const SizedBox(height: Dimens.p16),
 
-          _TermsCheckbox(
-            value: _isTermsAccepted,
-            onChanged: (v) => setState(() => _isTermsAccepted = v ?? false),
-          ),
-          const SizedBox(height: Dimens.p32),
+              _FieldLabel(text: 'Company Name'),
+              AppTextField(
+                controller: _companyNameController,
+                hintText: 'Company Inc.',
+                enabled: !isLoading,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Please enter your company name'
+                    : null,
+              ),
+              const SizedBox(height: Dimens.p16),
 
-          AppButton(
-            text: localizations.signUp,
-            onPressed: _isTermsAccepted ? _handleSignup : null,
-            isExpanded: true,
+              _FieldLabel(text: localizations.email),
+              AppTextField(
+                controller: _emailController,
+                hintText: 'email@email.com',
+                keyboardType: TextInputType.emailAddress,
+                enabled: !isLoading,
+                validator: (value) => (value == null || !value.contains('@'))
+                    ? localizations.invalidEmail
+                    : null,
+              ),
+              const SizedBox(height: Dimens.p16),
+
+              _FieldLabel(text: localizations.password),
+              AppTextField(
+                controller: _passwordController,
+                hintText: localizations.enterPassword,
+                obscureText: !_isPasswordVisible,
+                isPassword: true,
+                enabled: !isLoading,
+                validator: (value) => (value != null && value.length >= 8)
+                    ? null
+                    : localizations.errorMinLength,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 20,
+                    color: theme.gray400,
+                  ),
+                  onPressed: () =>
+                      setState(() => _isPasswordVisible = !_isPasswordVisible),
+                ),
+              ),
+              const SizedBox(height: Dimens.p16),
+
+              _FieldLabel(text: localizations.confirmPassword),
+              AppTextField(
+                controller: _confirmPasswordController,
+                hintText: localizations.reEnterPassword,
+                obscureText: !_isConfirmVisible,
+                isPassword: true,
+                enabled: !isLoading,
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return localizations.passwordsDoNotMatch;
+                  }
+                  return null;
+                },
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isConfirmVisible
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 20,
+                    color: theme.gray400,
+                  ),
+                  onPressed: () =>
+                      setState(() => _isConfirmVisible = !_isConfirmVisible),
+                ),
+              ),
+              const SizedBox(height: Dimens.p16),
+
+              _TermsCheckbox(
+                value: _isTermsAccepted,
+                onChanged: isLoading
+                    ? null
+                    : (v) => setState(() => _isTermsAccepted = v ?? false),
+              ),
+              const SizedBox(height: Dimens.p32),
+
+              AppButton(
+                text: localizations.signUp,
+                onPressed: (_isTermsAccepted && !isLoading)
+                    ? _handleSignup
+                    : null,
+                isLoading: isLoading,
+                isExpanded: true,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -197,7 +267,7 @@ class _FieldLabel extends StatelessWidget {
 
 class _TermsCheckbox extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool?> onChanged;
+  final ValueChanged<bool?>? onChanged;
   const _TermsCheckbox({required this.value, required this.onChanged});
 
   @override
@@ -205,7 +275,7 @@ class _TermsCheckbox extends StatelessWidget {
     final theme = context.theme.appColor;
 
     return InkWell(
-      onTap: () => onChanged(!value),
+      onTap: onChanged != null ? () => onChanged!(!value) : null,
       borderRadius: BorderRadius.circular(4),
       child: Row(
         children: [

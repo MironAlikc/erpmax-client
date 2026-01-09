@@ -22,6 +22,8 @@ import '../../features/auth/data/datasources/auth_remote_datasource.dart'
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
+import '../../features/auth/domain/usecases/check_auth_status_usecase.dart'
+    as _i52;
 import '../../features/auth/domain/usecases/get_current_user_usecase.dart'
     as _i17;
 import '../../features/auth/domain/usecases/login_usecase.dart' as _i188;
@@ -29,6 +31,7 @@ import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/domain/usecases/switch_tenant_usecase.dart'
     as _i253;
+import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/billing/data/datasources/billing_remote_datasource.dart'
     as _i504;
 import '../../features/billing/data/repositories/billing_repository_impl.dart'
@@ -144,6 +147,9 @@ extension GetItInjectableX on _i174.GetIt {
         secureStorage: gh<_i934.SecureStorage>(),
       ),
     );
+    gh.factory<_i52.CheckAuthStatusUseCase>(
+      () => _i52.CheckAuthStatusUseCase(gh<_i787.AuthRepository>()),
+    );
     gh.factory<_i17.GetCurrentUserUseCase>(
       () => _i17.GetCurrentUserUseCase(gh<_i787.AuthRepository>()),
     );
@@ -217,6 +223,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i232.GetSubscriptionUseCase>(
       () => _i232.GetSubscriptionUseCase(gh<_i276.BillingRepository>()),
+    );
+    gh.factory<_i797.AuthBloc>(
+      () => _i797.AuthBloc(
+        loginUseCase: gh<_i188.LoginUseCase>(),
+        registerUseCase: gh<_i941.RegisterUseCase>(),
+        logoutUseCase: gh<_i48.LogoutUseCase>(),
+        checkAuthStatusUseCase: gh<_i52.CheckAuthStatusUseCase>(),
+        switchTenantUseCase: gh<_i253.SwitchTenantUseCase>(),
+      ),
     );
     gh.factory<_i56.CancelJobUseCase>(
       () => _i56.CancelJobUseCase(gh<_i861.ProvisioningRepository>()),

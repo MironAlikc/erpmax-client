@@ -22,7 +22,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<AuthResponseModel>> register(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> register(
     Map<String, dynamic> body,
   ) async {
     final _extra = <String, dynamic>{};
@@ -30,20 +30,26 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<HttpResponse<AuthResponseModel>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/register',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _options =
+        _setStreamType<HttpResponse<BaseResponse<AuthResponseModel>>>(
+          Options(method: 'POST', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/auth/register',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseModel _value;
+    late BaseResponse<AuthResponseModel> _value;
     try {
-      _value = AuthResponseModel.fromJson(_result.data!);
+      _value = BaseResponse<AuthResponseModel>.fromJson(
+        _result.data!,
+        (json) => AuthResponseModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -53,7 +59,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<AuthResponseModel>> login(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> login(
     Map<String, dynamic> body,
   ) async {
     final _extra = <String, dynamic>{};
@@ -61,20 +67,26 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<HttpResponse<AuthResponseModel>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/login',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _options =
+        _setStreamType<HttpResponse<BaseResponse<AuthResponseModel>>>(
+          Options(method: 'POST', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/auth/login',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseModel _value;
+    late BaseResponse<AuthResponseModel> _value;
     try {
-      _value = AuthResponseModel.fromJson(_result.data!);
+      _value = BaseResponse<AuthResponseModel>.fromJson(
+        _result.data!,
+        (json) => AuthResponseModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

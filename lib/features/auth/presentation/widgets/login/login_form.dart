@@ -6,7 +6,11 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_text_field.dart';
 import 'package:erpmax_client/core/widgets/common/buttons/app_button.dart';
 import 'package:erpmax_client/features/auth/presentation/widgets/common/divider_with_text.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatefulWidget {
@@ -23,7 +27,6 @@ class _LoginFormState extends State<LoginForm> {
 
   bool _obscure = true;
   bool _remember = false;
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -32,16 +35,14 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  Future<void> _handleSignIn() async {
+  void _handleSignIn() {
     if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (mounted) {
-        setState(() => _isLoading = false);
-        context.go(RouteNames.journal);
-      }
+      context.read<AuthBloc>().add(
+        AuthEvent.loginRequested(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        ),
+      );
     }
   }
 
@@ -49,65 +50,87 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const _FormHeader(),
-          const SizedBox(height: Dimens.p32),
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          error: (message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                backgroundColor: context.theme.appColor.error,
+              ),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      builder: (context, state) {
+        final isLoading = state.maybeWhen(
+          loading: () => true,
+          orElse: () => false,
+        );
 
-          const SocialAuthButtons(),
-          const SizedBox(height: Dimens.p16),
+        return Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const _FormHeader(),
+              const SizedBox(height: Dimens.p32),
 
-          DividerWithText(text: localizations.or),
-          const SizedBox(height: Dimens.p16),
+              const SocialAuthButtons(),
+              const SizedBox(height: Dimens.p16),
 
-          AppTextField(
-            controller: _emailController,
-            label: localizations.email,
-            hintText: 'example@company.com',
-            keyboardType: TextInputType.emailAddress,
-            enabled: !_isLoading,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return localizations.errorEnterEmail;
-              }
+              DividerWithText(text: localizations.or),
+              const SizedBox(height: Dimens.p16),
 
-              if (!value.contains('@')) {
-                return localizations.errorInvalidEmail;
-              }
+              AppTextField(
+                controller: _emailController,
+                label: localizations.email,
+                hintText: 'example@company.com',
+                keyboardType: TextInputType.emailAddress,
+                enabled: !isLoading,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return localizations.errorEnterEmail;
+                  }
 
-              return null;
-            },
+                  if (!value.contains('@')) {
+                    return localizations.errorInvalidEmail;
+                  }
+
+                  return null;
+                },
+              ),
+              const SizedBox(height: Dimens.p16),
+
+              _PasswordField(
+                controller: _passwordController,
+                isObscured: _obscure,
+                onToggle: () => setState(() => _obscure = !_obscure),
+                enabled: !isLoading,
+              ),
+
+              _RememberMeRow(
+                value: _remember,
+                onChanged: isLoading
+                    ? null
+                    : (val) => setState(() => _remember = val ?? false),
+              ),
+
+              const SizedBox(height: Dimens.p32),
+
+              AppButton(
+                text: localizations.signIn,
+                isExpanded: true,
+                isLoading: isLoading,
+                onPressed: isLoading ? null : _handleSignIn,
+              ),
+            ],
           ),
-          const SizedBox(height: Dimens.p16),
-
-          _PasswordField(
-            controller: _passwordController,
-            isObscured: _obscure,
-            onToggle: () => setState(() => _obscure = !_obscure),
-            enabled: !_isLoading,
-          ),
-
-          _RememberMeRow(
-            value: _remember,
-            onChanged: _isLoading
-                ? null
-                : (val) => setState(() => _remember = val ?? false),
-          ),
-
-          const SizedBox(height: Dimens.p32),
-
-          AppButton(
-            text: localizations.signIn,
-            isExpanded: true,
-            isLoading: _isLoading,
-            onPressed: _isLoading ? null : _handleSignIn,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -122,7 +145,7 @@ class _FormHeader extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Sign in',
+          localizations.signIn,
           style: AppTextStyles.h1.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,
@@ -174,7 +197,7 @@ class _PasswordField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Password',
+              AppLocalizations.of(context).password,
               style: AppTextStyles.base.copyWith(
                 fontWeight: FontWeight.w600,
                 color: theme.gray900,
@@ -185,7 +208,7 @@ class _PasswordField extends StatelessWidget {
                   ? () => context.push(RouteNames.forgotPassword)
                   : null,
               child: Text(
-                'Forgot?',
+                AppLocalizations.of(context).forgot,
                 style: AppTextStyles.link.copyWith(fontSize: 13),
               ),
             ),
