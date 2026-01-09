@@ -441,5 +441,8 @@
   "actionNewInvoice": "New Invoice",
   "totalInvoiced": "Total Invoiced",
   "statusPaid": "Paid",
-  "statusOverdue": "Overdue"
+  "statusOverdue": "Overdue",
+  "labelInvoiceNumber": "Invoice Number",
+  "labelPeriod": "Period",
+  "labelDueDate": "Due Date"
 }

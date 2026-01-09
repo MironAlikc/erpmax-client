@@ -2607,6 +2607,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overdue'**
   String get statusOverdue;
+
+  /// No description provided for @labelInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Number'**
+  String get labelInvoiceNumber;
+
+  /// No description provided for @labelPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get labelPeriod;
+
+  /// No description provided for @labelDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get labelDueDate;
 }
 
 class _AppLocalizationsDelegate

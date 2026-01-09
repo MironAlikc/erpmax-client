@@ -1322,4 +1322,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get statusOverdue => 'متأخر';
+
+  @override
+  String get labelInvoiceNumber => 'رقم الفاتورة';
+
+  @override
+  String get labelPeriod => 'الفترة';
+
+  @override
+  String get labelDueDate => 'تاريخ الاستحقاق';
 }

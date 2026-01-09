@@ -1328,4 +1328,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get statusOverdue => 'Просрочено';
+
+  @override
+  String get labelInvoiceNumber => 'Номер счета';
+
+  @override
+  String get labelPeriod => 'Период';
+
+  @override
+  String get labelDueDate => 'Срок оплаты';
 }

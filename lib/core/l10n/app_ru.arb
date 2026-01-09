@@ -440,5 +440,8 @@
   "actionNewInvoice": "Новый счет",
   "totalInvoiced": "Итого выставлено",
   "statusPaid": "Оплачено",
-  "statusOverdue": "Просрочено"
+  "statusOverdue": "Просрочено",
+  "labelInvoiceNumber": "Номер счета",
+  "labelPeriod": "Период",
+  "labelDueDate": "Срок оплаты"
 }

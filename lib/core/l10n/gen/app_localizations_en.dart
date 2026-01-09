@@ -1319,4 +1319,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusOverdue => 'Overdue';
+
+  @override
+  String get labelInvoiceNumber => 'Invoice Number';
+
+  @override
+  String get labelPeriod => 'Period';
+
+  @override
+  String get labelDueDate => 'Due Date';
 }
