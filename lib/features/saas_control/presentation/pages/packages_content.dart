@@ -1,7 +1,7 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
 import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 
 class PackageModel {
   final String planName;
@@ -21,8 +21,15 @@ class PackageModel {
   });
 }
 
-class PackagesContent extends StatelessWidget {
+class PackagesContent extends StatefulWidget {
   const PackagesContent({super.key});
+
+  @override
+  State<PackagesContent> createState() => _PackagesContentState();
+}
+
+class _PackagesContentState extends State<PackagesContent> {
+  Set<String> _selectedPackageIds = {};
 
   static const List<PackageModel> _packages = [
     PackageModel(
@@ -51,98 +58,118 @@ class PackagesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = MediaQuery.of(context).size.width < 900;
-
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [_buildPackagesTable(context, isMobile)],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPackagesTable(BuildContext context, bool isMobile) {
     final theme = context.theme.appColor;
 
-    final List<ErpMaxColumn> columns = [
-      ErpMaxColumn(title: "Plan Name", weight: 0.25),
-      ErpMaxColumn(title: "Price", weight: 0.15),
-      ErpMaxColumn(title: "Users Limit", weight: 0.15),
-      ErpMaxColumn(title: "Storage Limit", weight: 0.15),
-      ErpMaxColumn(title: "Status", weight: 0.2),
-      ErpMaxColumn(title: "Actions", weight: 0.1, textAlign: TextAlign.right),
+    // Определяем колонки на основе нашей универсальной модели
+    final List<ErpMaxColumn<PackageModel>> columns = [
+      ErpMaxColumn(
+        id: 'plan',
+        title: "Plan Name",
+        weight: 2.5,
+        valueGetter: (item) => item.planName,
+        customCell: (item) => Row(
+          children: [
+            Text(
+              item.planName,
+              style: AppTextStyles.label.copyWith(fontWeight: FontWeight.bold),
+            ),
+            if (item.isPopular) ...[
+              const SizedBox(width: 8),
+              const _PopularBadge(),
+            ],
+          ],
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'price',
+        title: "Price",
+        weight: 1.5,
+        valueGetter: (item) => item.price,
+        customCell: (item) => Text(
+          "\$${item.price}/mo",
+          style: AppTextStyles.bodySmall.copyWith(
+            fontWeight: FontWeight.w600,
+            color: theme.textSecondary,
+          ),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'users',
+        title: "Users Limit",
+        weight: 1.5,
+        valueGetter: (item) => item.usersLimit,
+      ),
+      ErpMaxColumn(
+        id: 'storage',
+        title: "Storage Limit",
+        weight: 1.5,
+        valueGetter: (item) => item.storageLimit,
+      ),
+      ErpMaxColumn(
+        id: 'status',
+        title: "Status",
+        weight: 2.0,
+        valueGetter: (item) => item.isActive ? "Active" : "Inactive",
+        customCell: (item) => _StatusBadge(isActive: item.isActive),
+      ),
+      ErpMaxColumn(
+        id: 'actions',
+        title: "Actions",
+        weight: 1.0,
+        textAlign: TextAlign.right,
+        isSortable: false,
+        hasFilter: false,
+        customCell: (item) => Icon(Icons.more_horiz, color: theme.gray400),
+      ),
     ];
 
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.border),
-        boxShadow: [
-          BoxShadow(
-            color: theme.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ErpMaxTable(
-            columns: columns,
-            minWidth: 850,
-            rows: _packages.map((item) {
-              return ErpMaxRow(
-                columns: columns,
-                cells: [
-                  Row(
-                    children: [
-                      Text(
-                        item.planName,
-                        style: AppTextStyles.label.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      if (item.isPopular) ...[
-                        const SizedBox(width: 8),
-                        _PopularBadge(),
-                      ],
-                    ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.black.withValues(alpha: 0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  Text(
-                    "\$${item.price}/mo",
-                    style: AppTextStyles.bodySmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                  Text(item.usersLimit),
-                  Text(item.storageLimit),
-                  _StatusBadge(isActive: item.isActive),
-                  Icon(Icons.more_horiz, color: theme.gray400),
                 ],
-              );
-            }).toList(),
-          ),
-        ],
+              ),
+              child: UniversalErpTable<PackageModel>(
+                items: _packages,
+                columns: columns,
+                minWidth: 850,
+                idGetter: (item) => item.planName, // План как ID
+                selectedIds: _selectedPackageIds,
+                onSelectionChanged: (ids) {
+                  setState(() => _selectedPackageIds = ids);
+                },
+                totals: {
+                  'plan': 'Total Plans: ${_packages.length}',
+                  'price': 'AVG: \$265',
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+// --- Вспомогательные виджеты ---
+
 class _PopularBadge extends StatelessWidget {
+  const _PopularBadge();
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
@@ -163,13 +190,11 @@ class _PopularBadge extends StatelessWidget {
 
 class _StatusBadge extends StatelessWidget {
   final bool isActive;
-
   const _StatusBadge({required this.isActive});
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(

@@ -1,74 +1,158 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
-import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart'; // Путь к вашему ErpMaxTable
-import 'package:erpmax_client/features/saas_control/data/models/saas_subscriber_record.dart';
-import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/theme/text_style_source.dart';import 'package:flutter/material.dart';
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 
-class RecentSubscribersSection extends StatelessWidget {
+class SaasSubscriberRecord {
+  final String id;
+  final String company;
+  final String plan;
+  final String status;
+  final String date;
+  final String startDate;
+  final String endDate;
+  final String price;
+
+  const SaasSubscriberRecord({
+    required this.id,
+    required this.company,
+    required this.plan,
+    required this.status,
+    required this.date,
+    required this.startDate,
+    required this.endDate,
+    required this.price,
+  });
+}
+
+class RecentSubscribersSection extends StatefulWidget {
   const RecentSubscribersSection({super.key});
+
+  @override
+  State<RecentSubscribersSection> createState() =>
+      _RecentSubscribersSectionState();
+}
+
+class _RecentSubscribersSectionState extends State<RecentSubscribersSection> {
+  // Состояние для выбранных элементов
+  Set<String> _selectedSubscriberIds = {};
+
+  final List<SaasSubscriberRecord> _subscribers = [
+    const SaasSubscriberRecord(
+      id: 'SUB-001',
+      company: 'Al-Amal Co.',
+      plan: 'Pro',
+      status: 'Active',
+      date: '2024-03-20',
+      startDate: '2024-03-20',
+      endDate: '2025-03-20',
+      price: '1500',
+    ),
+    const SaasSubscriberRecord(
+      id: 'SUB-002',
+      company: 'Al-Noor Est.',
+      plan: 'Basic',
+      status: 'Trial',
+      date: '2024-03-19',
+      startDate: '2024-03-19',
+      endDate: '2024-03-26',
+      price: '0',
+    ),
+    const SaasSubscriberRecord(
+      id: 'SUB-003',
+      company: 'Build Corp',
+      plan: 'Enterprise',
+      status: 'Active',
+      date: '2024-03-18',
+      startDate: '2024-03-18',
+      endDate: '2025-03-18',
+      price: '5000',
+    ),
+    const SaasSubscriberRecord(
+      id: 'SUB-004',
+      company: 'Tech Group',
+      plan: 'Pro',
+      status: 'Pending',
+      date: '2024-03-17',
+      startDate: '2024-03-17',
+      endDate: '2025-03-17',
+      price: '1500',
+    ),
+    const SaasSubscriberRecord(
+      id: 'SUB-005',
+      company: 'Gulf Co.',
+      plan: 'Basic',
+      status: 'Active',
+      date: '2024-03-16',
+      startDate: '2024-03-16',
+      endDate: '2025-03-16',
+      price: '500',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
-    final List<SaasSubscriberRecord> subscribers = [
-      const SaasSubscriberRecord(
-        id: 'SUB-001',
-        company: 'Al-Amal Co.',
-        plan: 'Pro',
-        status: 'Active',
-        date: '2024-03-20',
-        startDate: '2024-03-20',
-        endDate: '2025-03-20',
-        price: '1500',
-      ),
-      const SaasSubscriberRecord(
-        id: 'SUB-002',
-        company: 'Al-Noor Est.',
-        plan: 'Basic',
-        status: 'Trial',
-        date: '2024-03-19',
-        startDate: '2024-03-19',
-        endDate: '2024-03-26',
-        price: '0',
-      ),
-      const SaasSubscriberRecord(
-        id: 'SUB-003',
-        company: 'Build Corp',
-        plan: 'Enterprise',
-        status: 'Active',
-        date: '2024-03-18',
-        startDate: '2024-03-18',
-        endDate: '2025-03-18',
-        price: '5000',
-      ),
-      const SaasSubscriberRecord(
-        id: 'SUB-004',
-        company: 'Tech Group',
-        plan: 'Pro',
-        status: 'Pending',
-        date: '2024-03-17',
-        startDate: '2024-03-17',
-        endDate: '2025-03-17',
-        price: '1500',
-      ),
-      const SaasSubscriberRecord(
-        id: 'SUB-005',
-        company: 'Gulf Co.',
-        plan: 'Basic',
-        status: 'Active',
-        date: '2024-03-16',
-        startDate: '2024-03-16',
-        endDate: '2025-03-16',
-        price: '500',
-      ),
-    ];
 
-    final tableColumns = [
-      ErpMaxColumn(title: "ID", weight: 0.15),
-      ErpMaxColumn(title: "Company", weight: 0.35),
-      ErpMaxColumn(title: "Plan", weight: 0.15),
-      ErpMaxColumn(title: "Status", weight: 0.15),
-      ErpMaxColumn(title: "Date", weight: 0.20),
+    // Определяем колонки
+    final List<ErpMaxColumn<SaasSubscriberRecord>> columns = [
+      ErpMaxColumn(
+        id: 'id',
+        title: "ID",
+        weight: 1.2,
+        valueGetter: (i) => i.id,
+        customCell: (item) => Text(
+          item.id,
+          style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'company',
+        title: "Company",
+        weight: 3.0,
+        valueGetter: (i) => i.company,
+        customCell: (item) => Text(
+          item.company,
+          style: AppTextStyles.bodySmallBold.copyWith(color: theme.gray900),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'plan',
+        title: "Plan",
+        weight: 1.2,
+        valueGetter: (i) => i.plan,
+        customCell: (item) => Text(
+          item.plan,
+          style: AppTextStyles.bodySmall.copyWith(color: theme.gray600),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'price',
+        title: "Price",
+        weight: 1.2,
+        textAlign: TextAlign.right,
+        valueGetter: (i) => i.price,
+        customCell: (item) => Text(
+          "${item.price} \$",
+          style: AppTextStyles.bodySmall.copyWith(color: theme.textPrimary),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'status',
+        title: "Status",
+        weight: 1.5,
+        valueGetter: (i) => i.status,
+        customCell: (item) => _buildStatusBadge(item.status, theme),
+      ),
+      ErpMaxColumn(
+        id: 'date',
+        title: "Date",
+        weight: 1.8,
+        valueGetter: (i) => i.date,
+        customCell: (item) => Text(
+          item.date,
+          style: AppTextStyles.bodySmall.copyWith(color: theme.gray500),
+        ),
+      ),
     ];
 
     return Container(
@@ -78,7 +162,9 @@ class RecentSubscribersSection extends StatelessWidget {
         border: Border.all(color: theme.gray100),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Header section
           Padding(
             padding: const EdgeInsets.all(24.0),
             child: Row(
@@ -103,41 +189,27 @@ class RecentSubscribersSection extends StatelessWidget {
               ],
             ),
           ),
-          ErpMaxTable(
-            minWidth: 800,
-            columns: tableColumns,
-            rows: subscribers.map((sub) {
-              return ErpMaxRow(
-                columns: tableColumns,
-                cells: [
-                  Text(
-                    sub.id,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: theme.gray500,
-                    ),
-                  ),
-                  Text(
-                    sub.company,
-                    style: AppTextStyles.bodySmallBold.copyWith(
-                      color: theme.gray900,
-                    ),
-                  ),
-                  Text(
-                    sub.plan,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: theme.gray600,
-                    ),
-                  ),
-                  _buildStatusBadge(sub.status, theme),
-                  Text(
-                    sub.date,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: theme.gray500,
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
+
+          // Universal Table implementation
+          UniversalErpTable<SaasSubscriberRecord>(
+            items: _subscribers,
+            columns: columns,
+            minWidth: 850,
+            idGetter: (item) => item.id,
+            selectedIds: _selectedSubscriberIds,
+            onSelectionChanged: (newSelection) {
+              setState(() => _selectedSubscriberIds = newSelection);
+            },
+            // АКТИВАЦИЯ ВЕРТИКАЛЬНЫХ ПОЛОСОК
+            showVerticalLines: true,
+            onRowTap: (item) {
+              debugPrint("Selected subscriber: ${item.company}");
+            },
+            totals: {
+              'company': 'Total Count: ${_subscribers.length}',
+              'price':
+                  'Sum: ${_subscribers.fold(0, (sum, i) => sum + int.parse(i.price))} \$',
+            },
           ),
         ],
       ),
