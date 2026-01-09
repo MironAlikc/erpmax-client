@@ -1,6 +1,6 @@
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
+import 'package:erpmax_client/core/widgets/common/dropdowns/app_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -50,7 +50,7 @@ class _GeneralLedgerAdvancedFiltersState
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             _buildAccountSelector(context),
-            AccDropdown(
+            AppDropdown(
               value: selectedCurrency,
               items: currencyItems,
               itemLabelBuilder: currencyItemLabelBuilder,

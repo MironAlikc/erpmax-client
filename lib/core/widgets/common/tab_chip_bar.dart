@@ -3,7 +3,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/models/module_tab_item.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/common/app_search_field.dart';
+import 'package:erpmax_client/core/widgets/common/search_fields/app_search_field.dart';
 import 'package:flutter/material.dart';
 
 class TabChipBar extends StatefulWidget {

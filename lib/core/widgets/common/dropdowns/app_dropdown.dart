@@ -4,22 +4,22 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class AccDropdown<T> extends StatelessWidget {
+class AppDropdown<T> extends StatelessWidget {
   final T value;
   final List<T> items;
   final String Function(T) itemLabelBuilder;
-  final IconData leadingIcon;
+  final IconData? leadingIcon;
   final ValueChanged<T> onChanged;
   final String? tooltipMessage;
   final bool isBg;
 
-  const AccDropdown({
+  const AppDropdown({
     super.key,
     required this.value,
     required this.items,
     required this.itemLabelBuilder,
-    required this.leadingIcon,
     required this.onChanged,
+    this.leadingIcon,
     this.tooltipMessage,
     this.isBg = true,
   });
@@ -57,7 +57,8 @@ class AccDropdown<T> extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(leadingIcon, size: 16, color: theme.textSecondary),
+                if (leadingIcon != null)
+                  Icon(leadingIcon, size: 16, color: theme.textSecondary),
                 const SizedBox(width: 8),
                 Text(
                   itemLabelBuilder(value),

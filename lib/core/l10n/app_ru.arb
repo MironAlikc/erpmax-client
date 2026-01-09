@@ -443,5 +443,6 @@
   "statusOverdue": "Просрочено",
   "labelInvoiceNumber": "Номер счета",
   "labelPeriod": "Период",
-  "labelDueDate": "Срок оплаты"
+  "labelDueDate": "Срок оплаты",
+  "labelInvoices": "Счета"
 }

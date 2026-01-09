@@ -2,7 +2,7 @@ import 'package:erpmax_client/core/extensions/dropdown_ext.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_dropdown.dart';
+import 'package:erpmax_client/core/widgets/common/dropdowns/app_dropdown.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/acc_input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -45,7 +45,7 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
       runSpacing: 8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        AccDropdown(
+        AppDropdown(
           value: selectedOrg,
           items: OrganizationType.values,
           itemLabelBuilder: (val) => val.label(context),
@@ -56,7 +56,7 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
             });
           },
         ),
-        AccDropdown(
+        AppDropdown(
           value: selectedBook,
           items: BookType.values,
           itemLabelBuilder: (val) => val.label(context),
@@ -67,7 +67,7 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
             });
           },
         ),
-        AccDropdown(
+        AppDropdown(
           value: selectedDept,
           items: DeptType.values,
           itemLabelBuilder: (val) => val.label(context),
@@ -78,7 +78,7 @@ class _GeneralLedgerFilterBarState extends State<GeneralLedgerFilterBar> {
             });
           },
         ),
-        AccDropdown(
+        AppDropdown(
           value: selectedProject,
           items: ProjectType.values,
           itemLabelBuilder: (val) => val.label(context),

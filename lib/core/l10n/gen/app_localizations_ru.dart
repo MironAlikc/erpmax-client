@@ -1337,4 +1337,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get labelDueDate => 'Срок оплаты';
+
+  @override
+  String get labelInvoices => 'Счета';
 }

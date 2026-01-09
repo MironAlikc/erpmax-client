@@ -437,5 +437,6 @@
   "statusOverdue": "متأخر",
   "labelInvoiceNumber": "رقم الفاتورة",
   "labelPeriod": "الفترة",
-  "labelDueDate": "تاريخ الاستحقاق"
+  "labelDueDate": "تاريخ الاستحقاق",
+  "labelInvoices": "الفواتير"
 }
