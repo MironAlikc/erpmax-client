@@ -13,6 +13,15 @@ import 'package:erpmax_client/features/accounting/presentation/widgets/common_wi
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+enum SortState { none, ascending, descending }
+
+class ColumnSettings {
+  SortState sortState;
+  String filterQuery;
+
+  ColumnSettings({this.sortState = SortState.none, this.filterQuery = ''});
+}
+
 class CustomersTableView extends StatefulWidget {
   final List<Customer> customers;
   const CustomersTableView({super.key, required this.customers});
@@ -21,9 +30,52 @@ class CustomersTableView extends StatefulWidget {
   State<CustomersTableView> createState() => _CustomersTableViewState();
 }
 
+final Map<String, ColumnSettings> _columnSettings = {
+  'name': ColumnSettings(),
+  'group': ColumnSettings(),
+  'balance': ColumnSettings(),
+  'activity': ColumnSettings(),
+  'status': ColumnSettings(),
+};
+
 class _CustomersTableViewState extends State<CustomersTableView> {
   final Set<String> _selectedIds = {};
   final ScrollController _horizontalController = ScrollController();
+
+  List<Customer> get _sortedCustomers {
+    String? activeColumnId;
+    SortState? activeSort;
+
+    _columnSettings.forEach((id, settings) {
+      if (settings.sortState != SortState.none) {
+        activeColumnId = id;
+        activeSort = settings.sortState;
+      }
+    });
+
+    if (activeColumnId == null) return widget.customers;
+
+    List<Customer> sorted = List.from(widget.customers);
+    sorted.sort((a, b) {
+      int cmp;
+      switch (activeColumnId) {
+        case 'name':
+          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          break;
+        case 'balance':
+          cmp = a.balance.compareTo(b.balance);
+          break;
+        case 'activity':
+          cmp = a.lastActivityAmount.compareTo(b.lastActivityAmount);
+          break;
+        default:
+          cmp = 0;
+      }
+      return activeSort == SortState.ascending ? cmp : -cmp;
+    });
+
+    return sorted;
+  }
 
   @override
   void dispose() {
@@ -45,6 +97,7 @@ class _CustomersTableViewState extends State<CustomersTableView> {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
+    final displayList = _sortedCustomers;
 
     return Container(
       padding: EdgeInsets.only(left: 12, right: 12, top: 16, bottom: 24),
@@ -106,13 +159,30 @@ class _CustomersTableViewState extends State<CustomersTableView> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                _FundsTableHeader(),
+                                _FundsTableHeader(
+                                  settings: _columnSettings,
+                                  onSortToggle: (columnId) {
+                                    setState(() {
+                                      final current =
+                                          _columnSettings[columnId]!.sortState;
+                                      _columnSettings[columnId]!.sortState =
+                                          SortState.values[(current.index + 1) %
+                                              SortState.values.length];
+
+                                      _columnSettings.forEach((key, value) {
+                                        if (key != columnId)
+                                          value.sortState = SortState.none;
+                                      });
+                                    });
+                                  },
+                                  onFilterClick: (columnId) {},
+                                ),
                                 ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: widget.customers.length,
+                                  itemCount: displayList.length,
                                   itemBuilder: (context, index) {
-                                    final customer = widget.customers[index];
+                                    final customer = displayList[index];
                                     return CustomersTableRow(
                                       index: index + 1,
                                       customer: customer,
@@ -447,6 +517,16 @@ class _CustomersTableRowState extends State<CustomersTableRow> {
 }
 
 class _FundsTableHeader extends StatelessWidget {
+  final Map<String, ColumnSettings> settings;
+  final Function(String columnId) onSortToggle;
+  final Function(String columnId) onFilterClick;
+
+  const _FundsTableHeader({
+    required this.settings,
+    required this.onSortToggle,
+    required this.onFilterClick,
+  });
+
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
@@ -457,10 +537,6 @@ class _FundsTableHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.primaryLight,
-        // borderRadius: const BorderRadius.only(
-        //   topLeft: Radius.circular(Dimens.p12),
-        //   topRight: Radius.circular(Dimens.p12),
-        // ),
         border: Border.all(width: 1, color: theme.border),
       ),
       padding: const EdgeInsets.symmetric(
@@ -479,22 +555,20 @@ class _FundsTableHeader extends StatelessWidget {
           ),
           Expanded(
             flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                localizations.labelNameId,
-                style: style,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-              ),
+            child: _TableColumnHeader(
+              label: localizations.labelNameId,
+              sortState: settings['name']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('name'),
+              onFilterTap: () => onFilterClick('name'),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.labelGroup,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.labelGroup,
+              sortState: settings['group']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('group'),
+              onFilterTap: () => onFilterClick('group'),
             ),
           ),
           Expanded(
@@ -507,29 +581,31 @@ class _FundsTableHeader extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.column_balance,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.column_balance,
+              sortState: settings['balance']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('balance'),
+              onFilterTap: () => onFilterClick('balance'),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.labelActivity,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.labelActivity,
+              sortState: settings['activity']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('activity'),
+              onFilterTap: () => onFilterClick('activity'),
             ),
           ),
           Expanded(
             flex: 2,
-            child: Text(
-              localizations.status,
-              style: style,
-              textAlign: TextAlign.start,
+            child: _TableColumnHeader(
+              label: localizations.status,
+              sortState: settings['status']?.sortState ?? SortState.none,
+              onSortTap: () => onSortToggle('status'),
+              onFilterTap: () => onFilterClick('status'),
             ),
           ),
-
           SizedBox(
             width: 46,
             child: Text(
@@ -574,10 +650,6 @@ class _CustomersTableFooter extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: Dimens.p12),
       decoration: BoxDecoration(
         color: theme.primaryFooter,
-        // borderRadius: const BorderRadius.only(
-        //   bottomLeft: Radius.circular(Dimens.p12),
-        //   bottomRight: Radius.circular(Dimens.p12),
-        // ),
         border: BoxBorder.fromSTEB(
           bottom: BorderSide(width: 1, color: theme.border),
           start: BorderSide(width: 1, color: theme.border),
@@ -676,6 +748,60 @@ class _CustomersTableFooter extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _TableColumnHeader extends StatelessWidget {
+  final String label;
+  final SortState sortState;
+  final VoidCallback onSortTap;
+  final VoidCallback onFilterTap;
+
+  const _TableColumnHeader({
+    required this.label,
+    required this.sortState,
+    required this.onSortTap,
+    required this.onFilterTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.appColor;
+    final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: Text(label, style: style, overflow: TextOverflow.ellipsis),
+        ),
+        const SizedBox(width: 4),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onSortTap,
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Icon(
+              sortState == SortState.ascending
+                  ? LucideIcons.chevronUp
+                  : sortState == SortState.descending
+                  ? LucideIcons.chevronDown
+                  : LucideIcons.unfoldVertical,
+              size: 14,
+              color: sortState == SortState.none
+                  ? theme.gray400
+                  : theme.primary,
+            ),
+          ),
+        ),
+        const SizedBox(width: 4),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onFilterTap,
+          child: Icon(LucideIcons.filter, size: 12, color: theme.gray400),
+        ),
+      ],
     );
   }
 }
