@@ -10,6 +10,7 @@ import 'package:erpmax_client/features/saas_control/presentation/pages/billing/w
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart'; // Ваша новая таблица
 
 class BillingTableView extends StatefulWidget {
   final List<Invoice> invoices;
@@ -26,352 +27,162 @@ class BillingTableView extends StatefulWidget {
 }
 
 class _BillingTableViewState extends State<BillingTableView> {
-  final ScrollController _horizontalController = ScrollController();
-  final double minWidth = 600;
-
-  @override
-  void dispose() {
-    _horizontalController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-
-    return Container(
-      margin: EdgeInsets.only(bottom: Dimens.p24),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final contentWidth = constraints.maxWidth < minWidth
-              ? minWidth
-              : constraints.maxWidth;
-
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Scrollbar(
-                controller: _horizontalController,
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  controller: _horizontalController,
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(bottom: Dimens.p12),
-                  child: SizedBox(
-                    width: contentWidth,
-                    child: Column(
-                      children: [
-                        _BillingTableHeader(activeFilter: widget.activeFilter),
-
-                        Divider(height: 1, color: theme.border),
-
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.invoices.length,
-                          itemBuilder: (context, index) {
-                            return BillingTableRow(
-                              invoice: widget.invoices[index],
-                              activeFilter: widget.activeFilter,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class BillingTableRow extends StatefulWidget {
-  final Invoice invoice;
-  final String? activeFilter;
-
-  const BillingTableRow({super.key, required this.invoice, this.activeFilter});
-
-  @override
-  State<BillingTableRow> createState() => _BillingTableRowState();
-}
-
-class _BillingTableRowState extends State<BillingTableRow> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme.appColor;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      cursor: SystemMouseCursors.click,
-      child: InkWell(
-        child: Container(
-          decoration: BoxDecoration(
-            color: _isHovered
-                ? theme.primaryLight.withValues(alpha: 0.8)
-                : theme.white,
-            border: BoxBorder.fromSTEB(
-              start: BorderSide(width: 1, color: theme.border),
-              end: BorderSide(width: 1, color: theme.border),
-              bottom: BorderSide(width: 1, color: theme.border),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.p12,
-            vertical: Dimens.p12,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Icon(
-                      LucideIcons.fileText,
-                      size: 16,
-                      color: theme.textSecondary,
-                    ),
-                    gapW6,
-                    Flexible(
-                      child: Text(
-                        widget.invoice.invoiceNumber,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Icon(
-                      LucideIcons.building,
-                      size: 16,
-                      color: theme.textSecondary,
-                    ),
-                    gapW6,
-                    Flexible(
-                      child: Text(
-                        widget.invoice.tenantName,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: _buildTypeBadge(theme, widget.invoice),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  widget.invoice.period,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: theme.textSecondary,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  formatNum(widget.invoice.amount),
-                  style: AppTextStyles.h4.copyWith(
-                    color: theme.textPrimary,
-                    height: 1.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    Icon(
-                      LucideIcons.calendar,
-                      size: 16,
-                      color: theme.textSecondary,
-                    ),
-                    gapW6,
-                    Flexible(
-                      child: Text(
-                        DateFormat('yyyy-MM-dd').format(widget.invoice.dueDate),
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: StatusBadge(status: widget.invoice.status),
-                ),
-              ),
-              SizedBox(
-                width: 90,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppIconButton(
-                      icon: LucideIcons.view,
-                      onTap: () {},
-                      iconSize: 16,
-                    ),
-                    gapW2,
-                    AppIconButton(
-                      icon: LucideIcons.download,
-                      iconSize: 16,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTypeBadge(AppColorExtension colors, Invoice invoice) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.p8,
-        vertical: Dimens.p4,
-      ),
-      decoration: BoxDecoration(
-        color: colors.white,
-        borderRadius: BorderRadius.circular(Dimens.p6),
-        border: Border.all(color: colors.border, width: 1),
-      ),
-      child: Text(
-        invoice.plan.name.toString(),
-        style: AppTextStyles.caption.copyWith(
-          color: colors.textTertiary,
-          height: 1.0,
-        ),
-      ),
-    );
-  }
-}
-
-class _BillingTableHeader extends StatelessWidget {
-  final String? activeFilter;
-
-  const _BillingTableHeader({this.activeFilter});
+  Set<String> _selectedInvoiceIds = {};
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
 
-    final style = AppTextStyles.tableHeader.copyWith(color: theme.gray600);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.primaryLight,
-        border: BoxBorder.fromSTEB(
-          top: BorderSide(width: 1, color: theme.border),
-          start: BorderSide(width: 1, color: theme.border),
-          end: BorderSide(width: 1, color: theme.border),
+    // 1. Определяем конфигурацию колонок
+    final List<ErpMaxColumn<Invoice>> columns = [
+      ErpMaxColumn(
+        id: 'invoice_number',
+        title: localizations.labelInvoiceNumber,
+        weight: 3.0,
+        valueGetter: (i) => i.invoiceNumber,
+        customCell: (invoice) => Row(
+          children: [
+            Icon(LucideIcons.fileText, size: 16, color: theme.textSecondary),
+            gapW6,
+            Text(
+              invoice.invoiceNumber,
+              style: AppTextStyles.bodyMediumBold.copyWith(
+                color: theme.textPrimary,
+              ),
+            ),
+          ],
         ),
       ),
-
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.p12,
-        vertical: Dimens.p14,
+      ErpMaxColumn(
+        id: 'tenant',
+        title: localizations.columnTenant,
+        weight: 3.0,
+        valueGetter: (i) => i.tenantName,
+        customCell: (invoice) => Row(
+          children: [
+            Icon(LucideIcons.building, size: 16, color: theme.textSecondary),
+            gapW6,
+            Flexible(
+              child: Text(
+                invoice.tenantName,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: theme.textPrimary,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              localizations.labelInvoiceNumber,
-              style: style,
-              textAlign: TextAlign.start,
+      ErpMaxColumn(
+        id: 'plan',
+        title: localizations.columnPlan,
+        weight: 2.0,
+        valueGetter: (i) => i.plan.name.toString(),
+        customCell: (invoice) => Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimens.p8,
+            vertical: Dimens.p4,
+          ),
+          decoration: BoxDecoration(
+            color: theme.white,
+            borderRadius: BorderRadius.circular(Dimens.p6),
+            border: Border.all(color: theme.border),
+          ),
+          child: Text(
+            invoice.plan.name.toString(),
+            style: AppTextStyles.caption.copyWith(
+              color: theme.textTertiary,
+              height: 1.0,
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              localizations.columnTenant,
-              style: style,
-              textAlign: TextAlign.start,
-            ),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'period',
+        title: localizations.labelPeriod,
+        weight: 2.0,
+        valueGetter: (i) => i.period,
+      ),
+      ErpMaxColumn(
+        id: 'amount',
+        title: localizations.amount,
+        weight: 2.0,
+        textAlign: TextAlign.center,
+        valueGetter: (i) => i.amount.toString(),
+        customCell: (invoice) => Text(
+          formatNum(invoice.amount),
+          style: AppTextStyles.h4.copyWith(
+            color: theme.textPrimary,
+            height: 1.0,
           ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              localizations.columnPlan,
-              style: style,
-              textAlign: TextAlign.start,
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'due_date',
+        title: localizations.labelDueDate,
+        weight: 2.0,
+        valueGetter: (i) => DateFormat('yyyy-MM-dd').format(i.dueDate),
+        customCell: (invoice) => Row(
+          children: [
+            Icon(LucideIcons.calendar, size: 16, color: theme.textSecondary),
+            gapW6,
+            Text(DateFormat('yyyy-MM-dd').format(invoice.dueDate)),
+          ],
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'status',
+        title: localizations.status,
+        weight: 2.0,
+        valueGetter: (i) => i.status.toString(),
+        customCell: (invoice) => StatusBadge(status: invoice.status),
+      ),
+      ErpMaxColumn(
+        id: 'actions',
+        title: localizations.actions,
+        weight: 1.5,
+        textAlign: TextAlign.center,
+        isSortable: false,
+        hasFilter: false,
+        customCell: (invoice) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppIconButton(icon: LucideIcons.view, onTap: () {}, iconSize: 16),
+            gapW2,
+            AppIconButton(
+              icon: LucideIcons.download,
+              iconSize: 16,
+              onTap: () {},
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              localizations.labelPeriod,
-              style: style,
-              textAlign: TextAlign.start,
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              localizations.amount,
-              style: style,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              localizations.labelDueDate,
-              style: style,
-              textAlign: TextAlign.start,
-            ),
-          ),
+          ],
+        ),
+      ),
+    ];
 
-          Expanded(
-            flex: 2,
-            child: Text(
-              localizations.status,
-              style: style,
-              textAlign: TextAlign.start,
-            ),
+    // 2. Возвращаем новую универсальную таблицу
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimens.p24),
+      child: UniversalErpTable<Invoice>(
+        items: widget.invoices,
+        columns: columns,
+        minWidth: 1000,
+        idGetter: (invoice) => invoice.invoiceNumber, // ID инвойса
+        selectedIds: _selectedInvoiceIds,
+        onSelectionChanged: (newSelection) {
+          setState(() => _selectedInvoiceIds = newSelection);
+        },
+        // Пример итогов в футере
+        totals: {
+          'invoice_number': 'Total: ${widget.invoices.length}',
+          'amount': formatNum(
+            widget.invoices.fold(0, (sum, i) => sum + i.amount.toInt()),
           ),
-
-          SizedBox(
-            width: 90,
-            child: Text(
-              localizations.actions,
-              style: style,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+        },
+        onRowTap: (invoice) {
+          debugPrint("Opening invoice: ${invoice.invoiceNumber}");
+        },
       ),
     );
   }

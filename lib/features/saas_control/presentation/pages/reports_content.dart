@@ -3,11 +3,9 @@ import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
 import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
-import 'package:erpmax_client/core/widgets/shared/app_placeholder.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 import 'package:erpmax_client/core/widgets/tables_cards/app_card.dart';
-import 'package:erpmax_client/features/saas_control/presentation/widgets/panels/subscriber_detail_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -69,6 +67,8 @@ class PerformanceData {
   });
 }
 
+// --- Main Content ---
+
 class ReportsContent extends StatefulWidget {
   const ReportsContent({super.key});
 
@@ -87,26 +87,16 @@ class _ReportsContentState extends State<ReportsContent> {
     const ErpMaxTabItem(name: 'Performance Report', icon: LucideIcons.gauge),
   ];
 
-  final List<PerformanceData> _performanceMockData = [
-    const PerformanceData(
-      date: "2024-05-21",
-      uptime: "99.9%",
-      responseTime: "120ms",
-      errorRate: "0.01%",
+  // --- Mock Data ---
+  final List<PerformanceData> _performanceMockData = List.generate(
+    10,
+    (i) => PerformanceData(
+      date: "2024-05-${21 + i}",
+      uptime: "99.9${i}%",
+      responseTime: "${120 + i}ms",
+      errorRate: "0.0${i}%",
     ),
-    const PerformanceData(
-      date: "2024-05-22",
-      uptime: "99.9%",
-      responseTime: "120ms",
-      errorRate: "0.01%",
-    ),
-    const PerformanceData(
-      date: "2024-05-23",
-      uptime: "99.9%",
-      responseTime: "120ms",
-      errorRate: "0.01%",
-    ),
-  ];
+  );
 
   final List<UsageModuleData> _usageMockData = [
     const UsageModuleData(
@@ -136,7 +126,7 @@ class _ReportsContentState extends State<ReportsContent> {
       status: "Active",
       startDate: "2024-05-20",
       endDate: "2025-05-20",
-      price: "SAR 1,000",
+      price: "1000",
     ),
     const ReportSubscriber(
       company: "New Ventures",
@@ -144,7 +134,7 @@ class _ReportsContentState extends State<ReportsContent> {
       status: "Active",
       startDate: "2024-05-18",
       endDate: "2025-05-18",
-      price: "SAR 2,500",
+      price: "2500",
     ),
     const ReportSubscriber(
       company: "Alpha Tech",
@@ -152,7 +142,7 @@ class _ReportsContentState extends State<ReportsContent> {
       status: "Active",
       startDate: "2024-05-15",
       endDate: "2025-05-15",
-      price: "SAR 5,000",
+      price: "5000",
     ),
   ];
 
@@ -163,7 +153,7 @@ class _ReportsContentState extends State<ReportsContent> {
       status: "Expired",
       startDate: "2023-05-01",
       endDate: "2024-05-01",
-      price: "SAR 10,000",
+      price: "10000",
     ),
     const ReportSubscriber(
       company: "Tech Giants",
@@ -171,7 +161,7 @@ class _ReportsContentState extends State<ReportsContent> {
       status: "Active",
       startDate: "2023-06-01",
       endDate: "2024-06-01",
-      price: "SAR 2,500",
+      price: "2500",
     ),
   ];
 
@@ -210,14 +200,11 @@ class _ReportsContentState extends State<ReportsContent> {
       case 'Performance Report':
         return _buildPerformanceTableSection();
       default:
-        return AppPlaceholder(
-          title: "Data for $_selectedReportType",
-          subtitle: "Analytical engine is calculating current metrics.",
-          icon: LucideIcons.loader,
-        );
+        return const SizedBox();
     }
   }
 
+  // 1. SUBSCRIPTIONS REPORT
   Widget _buildSubscriptionsReport() {
     return Column(
       children: [
@@ -245,14 +232,22 @@ class _ReportsContentState extends State<ReportsContent> {
           ),
         ]),
         const SizedBox(height: Dimens.p32),
-        _buildReportTableSection("New Subscribers", _newSubscribers),
+        _buildReportTableSection("New Subscribers", _newSubscribers, {
+          'company': '3 Total Companies',
+          'price': '8,500', // Число как на фото
+        }),
         const SizedBox(height: Dimens.p32),
-        _buildReportTableSection("Expiring Soon", _expiringSubscribers),
+        _buildReportTableSection("Expiring Soon", _expiringSubscribers, {
+          'company': '2 Total Companies',
+          'price': '12,500',
+        }),
       ],
     );
   }
 
+  // 2. REVENUE REPORT
   Widget _buildRevenueReport() {
+    final theme = context.theme.appColor;
     return Column(
       children: [
         _buildStatsGrid([
@@ -279,210 +274,289 @@ class _ReportsContentState extends State<ReportsContent> {
           ),
         ]),
         const SizedBox(height: Dimens.p32),
-        _buildRevenueTableContent(),
+        AppCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildTableHeader("Revenue Report"),
+              UniversalErpTable<ReportSubscriber>(
+                items: _newSubscribers,
+                idGetter: (i) => i.company,
+                minWidth: 1000,
+                showVerticalLines: true, // Включаем разделители
+                totals: {'company': 'Total Revenue', 'price': '8,500'},
+                columns: [
+                  ErpMaxColumn(
+                    id: 'company',
+                    title: 'Company Name',
+                    weight: 2.5,
+                    valueGetter: (i) => i.company,
+                  ),
+                  ErpMaxColumn(
+                    id: 'plan',
+                    title: 'Plan',
+                    weight: 1.5,
+                    valueGetter: (i) => i.plan,
+                  ),
+                  ErpMaxColumn(
+                    id: 'price',
+                    title: 'Amount',
+                    weight: 1.5,
+                    textAlign: TextAlign.right,
+                    customCell: (i) => Text(
+                      "SAR ${i.price}",
+                      style: AppTextStyles.bodyMediumBold.copyWith(
+                        color: theme.successText,
+                      ),
+                    ),
+                    valueGetter: (i) => i.price,
+                  ),
+                  ErpMaxColumn(
+                    id: 'date',
+                    title: 'Payment Date',
+                    weight: 1.5,
+                    valueGetter: (i) => i.startDate,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
+  // 3. PERFORMANCE REPORT
   Widget _buildPerformanceTableSection() {
-    final theme = context.theme.appColor;
-    final List<ErpMaxColumn> cols = [
-      ErpMaxColumn(title: "Date", weight: 0.25),
-      ErpMaxColumn(title: "Uptime", weight: 0.25, textAlign: TextAlign.center),
-      ErpMaxColumn(
-        title: "Response Time",
-        weight: 0.25,
-        textAlign: TextAlign.center,
-      ),
-      ErpMaxColumn(
-        title: "Error Rate",
-        weight: 0.25,
-        textAlign: TextAlign.right,
-      ),
-    ];
-
     return AppCard(
       padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildTableHeader("Performance Report"),
-          ErpMaxTable(
+          _buildTableHeader("Performance Metrics"),
+          UniversalErpTable<PerformanceData>(
+            items: _performanceMockData,
+            idGetter: (i) => i.date,
             minWidth: 800,
-            columns: cols,
-            rows: _performanceMockData
-                .map(
-                  (data) => ErpMaxRow(
-                    columns: cols,
-                    cells: [
-                      Text(
-                        data.date,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        data.uptime,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                      Text(
-                        data.responseTime,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        data.errorRate,
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUsageTableSection() {
-    final theme = context.theme.appColor;
-    final List<ErpMaxColumn> cols = [
-      ErpMaxColumn(title: "Module Name", weight: 0.3),
-      ErpMaxColumn(
-        title: "Active Subscriptions",
-        weight: 0.25,
-        textAlign: TextAlign.center,
-      ),
-      ErpMaxColumn(
-        title: "Users Count",
-        weight: 0.2,
-        textAlign: TextAlign.center,
-      ),
-      ErpMaxColumn(
-        title: "Storage Limit",
-        weight: 0.25,
-        textAlign: TextAlign.right,
-      ),
-    ];
-
-    return AppCard(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTableHeader("Usage Report"),
-          ErpMaxTable(
-            minWidth: 900,
-            columns: cols,
-            rows: _usageMockData
-                .map(
-                  (data) => ErpMaxRow(
-                    columns: cols,
-                    cells: [
-                      Text(
-                        data.moduleName,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                      Text(
-                        "${data.activeSubscriptions}",
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        "${data.usersCount}",
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        data.storageLimit,
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCustomersTableSection() {
-    final theme = context.theme.appColor;
-    final cols = [
-      ErpMaxColumn(title: "Company Name", weight: 0.25),
-      ErpMaxColumn(title: "Contact Person", weight: 0.25),
-      ErpMaxColumn(title: "Email", weight: 0.25),
-      ErpMaxColumn(
-        title: "Join Date",
-        weight: 0.25,
-        textAlign: TextAlign.right,
-      ),
-    ];
-    return AppCard(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTableHeader("Customers Report"),
-          ErpMaxTable(
-            minWidth: 1000,
-            columns: cols,
-            rows: List.generate(
-              3,
-              (i) => ErpMaxRow(
-                columns: cols,
-                cells: [
-                  Text(
-                    "Company ${i + 1}",
-                    style: AppTextStyles.bodyMediumBold.copyWith(
-                      color: theme.textPrimary,
-                    ),
-                  ),
-                  Text(
-                    "Manager ${i + 1}",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    "contact${i + 1}@company.com",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    "2024-01-15",
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                ],
+            showVerticalLines: true,
+            totals: {'date': 'Average Performance', 'error': '0.05%'},
+            columns: [
+              ErpMaxColumn(
+                id: 'date',
+                title: 'Date',
+                weight: 1.0,
+                valueGetter: (i) => i.date,
               ),
-            ),
+              ErpMaxColumn(
+                id: 'uptime',
+                title: 'Uptime',
+                weight: 1.0,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.uptime,
+              ),
+              ErpMaxColumn(
+                id: 'resp',
+                title: 'Response Time',
+                weight: 1.0,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.responseTime,
+              ),
+              ErpMaxColumn(
+                id: 'error',
+                title: 'Error Rate',
+                weight: 1.0,
+                textAlign: TextAlign.right,
+                valueGetter: (i) => i.errorRate,
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+
+  // 4. USAGE REPORT
+  Widget _buildUsageTableSection() {
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildTableHeader("Module Usage Statistics"),
+          UniversalErpTable<UsageModuleData>(
+            items: _usageMockData,
+            idGetter: (i) => i.moduleName,
+            minWidth: 900,
+            showVerticalLines: true,
+            totals: {'module': 'Total Usage', 'users': '1350 Users'},
+            columns: [
+              ErpMaxColumn(
+                id: 'module',
+                title: 'Module Name',
+                weight: 1.5,
+                valueGetter: (i) => i.moduleName,
+              ),
+              ErpMaxColumn(
+                id: 'subs',
+                title: 'Active Subs',
+                weight: 1.0,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.activeSubscriptions.toString(),
+              ),
+              ErpMaxColumn(
+                id: 'users',
+                title: 'Total Users',
+                weight: 1.0,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.usersCount.toString(),
+              ),
+              ErpMaxColumn(
+                id: 'storage',
+                title: 'Storage Used',
+                weight: 1.2,
+                textAlign: TextAlign.right,
+                valueGetter: (i) => i.storageLimit,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 5. CUSTOMERS REPORT
+  Widget _buildCustomersTableSection() {
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildTableHeader("Customer Directory"),
+          UniversalErpTable<ReportSubscriber>(
+            items: _newSubscribers,
+            idGetter: (i) => i.company,
+            minWidth: 1000,
+            showVerticalLines: true,
+            totals: {'company': 'Total Records', 'status': '3 Active'},
+            columns: [
+              ErpMaxColumn(
+                id: 'company',
+                title: 'Company',
+                weight: 2.0,
+                valueGetter: (i) => i.company,
+              ),
+              ErpMaxColumn(
+                id: 'plan',
+                title: 'Plan Type',
+                weight: 1.5,
+                valueGetter: (i) => i.plan,
+              ),
+              ErpMaxColumn(
+                id: 'start',
+                title: 'Member Since',
+                weight: 1.5,
+                valueGetter: (i) => i.startDate,
+              ),
+              ErpMaxColumn(
+                id: 'status',
+                title: 'Status',
+                weight: 1.0,
+                customCell: (i) => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    i.status,
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                valueGetter: (i) => i.status,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Хелпер для секций Subscriptions
+  Widget _buildReportTableSection(
+    String title,
+    List<ReportSubscriber> data,
+    Map<String, dynamic> totalsMap,
+  ) {
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildTableHeader(title),
+          UniversalErpTable<ReportSubscriber>(
+            items: data,
+            idGetter: (i) => "${i.company}_$title",
+            minWidth: 1100,
+            showVerticalLines: true, // Вертикальные разделители
+            totals: totalsMap,
+            onRowTap: (item) => _openDetailPanel(item),
+            columns: [
+              ErpMaxColumn(
+                id: 'company',
+                title: 'Company Name',
+                weight: 2.2,
+                valueGetter: (i) => i.company,
+              ),
+              ErpMaxColumn(
+                id: 'plan',
+                title: 'Plan',
+                weight: 1.5,
+                valueGetter: (i) => i.plan,
+              ),
+              ErpMaxColumn(
+                id: 'status',
+                title: 'Status',
+                weight: 1.2,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.status,
+              ),
+              ErpMaxColumn(
+                id: 'start',
+                title: 'Start Date',
+                weight: 1.4,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.startDate,
+              ),
+              ErpMaxColumn(
+                id: 'end',
+                title: 'End Date',
+                weight: 1.4,
+                textAlign: TextAlign.center,
+                valueGetter: (i) => i.endDate,
+              ),
+              ErpMaxColumn(
+                id: 'price',
+                title: 'Price',
+                weight: 1.2,
+                textAlign: TextAlign.right,
+                valueGetter: (i) => i.price,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // --- UI Helpers ---
 
   Widget _buildStatsGrid(List<StatData> stats) {
     return LayoutBuilder(
@@ -530,187 +604,653 @@ class _ReportsContentState extends State<ReportsContent> {
     );
   }
 
-  Widget _buildRevenueTableContent() {
-    final theme = context.theme.appColor;
-    final cols = [
-      ErpMaxColumn(title: "Date", weight: 0.15),
-      ErpMaxColumn(title: "Company Name", weight: 0.25),
-      ErpMaxColumn(title: "Plan Name", weight: 0.20),
-      ErpMaxColumn(title: "Amount", weight: 0.20),
-      ErpMaxColumn(title: "Payment Method", weight: 0.20),
-    ];
-    return AppCard(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTableHeader("Revenue Report"),
-          ErpMaxTable(
-            minWidth: 1000,
-            columns: cols,
-            rows: List.generate(
-              5,
-              (i) => ErpMaxRow(
-                columns: cols,
-                cells: [
-                  Text(
-                    "2024-05-${11 + i}",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    "Company ${i + 1}",
-                    style: AppTextStyles.bodyMediumBold.copyWith(
-                      color: theme.textPrimary,
-                    ),
-                  ),
-                  Text(
-                    "Enterprise",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    "SAR 10,000",
-                    style: AppTextStyles.bodyMediumBold.copyWith(
-                      color: theme.textPrimary,
-                    ),
-                  ),
-                  Text(
-                    "Credit Card",
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: theme.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReportTableSection(String title, List<ReportSubscriber> data) {
-    final theme = context.theme.appColor;
-    final cols = [
-      ErpMaxColumn(title: "Company Name", weight: 0.22),
-      ErpMaxColumn(title: "Plan Name", weight: 0.18),
-      ErpMaxColumn(title: "Status", weight: 0.12, textAlign: TextAlign.center),
-      ErpMaxColumn(
-        title: "Start Date",
-        weight: 0.14,
-        textAlign: TextAlign.center,
-      ),
-      ErpMaxColumn(
-        title: "End Date",
-        weight: 0.14,
-        textAlign: TextAlign.center,
-      ),
-      ErpMaxColumn(title: "Price", weight: 0.12, textAlign: TextAlign.right),
-      ErpMaxColumn(title: "Actions", weight: 0.08, textAlign: TextAlign.right),
-    ];
-    return AppCard(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTableHeader(title),
-          ErpMaxTable(
-            minWidth: 1100,
-            columns: cols,
-            rows: data
-                .map(
-                  (item) => ErpMaxRow(
-                    onTap: () => _openDetailPanel(item),
-                    columns: cols,
-                    cells: [
-                      Text(
-                        item.company,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                      Text(
-                        item.plan,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Center(child: AppStatusMapper(status: item.status)),
-                      Text(
-                        item.startDate,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        item.endDate,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: theme.textSecondary,
-                        ),
-                      ),
-                      Text(
-                        item.price,
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: theme.textPrimary,
-                        ),
-                      ),
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(
-                          LucideIcons.moreHorizontal,
-                          color: Color(0xFF667085),
-                          size: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _openDetailPanel(ReportSubscriber subscriber) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Close',
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (ctx, anim1, anim2) {
-        return Align(
-          alignment: Alignment.centerRight,
-          child: Material(
-            elevation: 16,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              height: double.infinity,
-              color: Colors.white,
-              child: SubscriberDetailPanel(
-                subscriber: subscriber,
-                onClose: () => Navigator.of(ctx).pop(),
-              ),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (ctx, anim1, anim2, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(parent: anim1, curve: Curves.easeOutQuart)),
-          child: child,
-        );
-      },
-    );
+    // Логика панели деталей
   }
 }
+
+// class ReportsContent extends StatefulWidget {
+//   const ReportsContent({super.key});
+
+//   @override
+//   State<ReportsContent> createState() => _ReportsContentState();
+// }
+
+// class _ReportsContentState extends State<ReportsContent> {
+//   String _selectedReportType = 'Subscriptions Report';
+
+//   final List<ErpMaxTabItem> _reportTabs = [
+//     const ErpMaxTabItem(name: 'Subscriptions Report', icon: LucideIcons.users),
+//     const ErpMaxTabItem(name: 'Revenue Report', icon: LucideIcons.wallet),
+//     const ErpMaxTabItem(name: 'Customers Report', icon: LucideIcons.search),
+//     const ErpMaxTabItem(name: 'Usage Report', icon: LucideIcons.barChart3),
+//     const ErpMaxTabItem(name: 'Performance Report', icon: LucideIcons.gauge),
+//   ];
+
+//   final List<PerformanceData> _performanceMockData = [
+//     const PerformanceData(
+//       date: "2024-05-21",
+//       uptime: "99.9%",
+//       responseTime: "120ms",
+//       errorRate: "0.01%",
+//     ),
+//     const PerformanceData(
+//       date: "2024-05-22",
+//       uptime: "99.9%",
+//       responseTime: "120ms",
+//       errorRate: "0.01%",
+//     ),
+//     const PerformanceData(
+//       date: "2024-05-23",
+//       uptime: "99.9%",
+//       responseTime: "120ms",
+//       errorRate: "0.01%",
+//     ),
+//   ];
+
+//   final List<UsageModuleData> _usageMockData = [
+//     const UsageModuleData(
+//       moduleName: "Accounting",
+//       activeSubscriptions: 150,
+//       usersCount: 450,
+//       storageLimit: "500 GB",
+//     ),
+//     const UsageModuleData(
+//       moduleName: "Inventory",
+//       activeSubscriptions: 120,
+//       usersCount: 300,
+//       storageLimit: "300 GB",
+//     ),
+//     const UsageModuleData(
+//       moduleName: "Sales",
+//       activeSubscriptions: 180,
+//       usersCount: 600,
+//       storageLimit: "200 GB",
+//     ),
+//   ];
+
+//   final List<ReportSubscriber> _newSubscribers = [
+//     const ReportSubscriber(
+//       company: "StartUp Inc",
+//       plan: "Starter",
+//       status: "Active",
+//       startDate: "2024-05-20",
+//       endDate: "2025-05-20",
+//       price: "SAR 1,000",
+//     ),
+//     const ReportSubscriber(
+//       company: "New Ventures",
+//       plan: "Professional",
+//       status: "Active",
+//       startDate: "2024-05-18",
+//       endDate: "2025-05-18",
+//       price: "SAR 2,500",
+//     ),
+//     const ReportSubscriber(
+//       company: "Alpha Tech",
+//       plan: "Enterprise",
+//       status: "Active",
+//       startDate: "2024-05-15",
+//       endDate: "2025-05-15",
+//       price: "SAR 5,000",
+//     ),
+//   ];
+
+//   final List<ReportSubscriber> _expiringSubscribers = [
+//     const ReportSubscriber(
+//       company: "Old Co",
+//       plan: "Enterprise",
+//       status: "Expired",
+//       startDate: "2023-05-01",
+//       endDate: "2024-05-01",
+//       price: "SAR 10,000",
+//     ),
+//     const ReportSubscriber(
+//       company: "Tech Giants",
+//       plan: "Professional",
+//       status: "Active",
+//       startDate: "2023-06-01",
+//       endDate: "2024-06-01",
+//       price: "SAR 2,500",
+//     ),
+//   ];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SingleChildScrollView(
+//       physics: const BouncingScrollPhysics(),
+//       padding: const EdgeInsets.all(Dimens.p24),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           const SizedBox(height: Dimens.p16),
+//           ErpMaxTabFilter(
+//             items: _reportTabs,
+//             selectedItem: _selectedReportType,
+//             onSelected: (name) => setState(() => _selectedReportType = name),
+//           ),
+//           const SizedBox(height: Dimens.p32),
+//           _buildActiveReportContent(),
+//           const SizedBox(height: 40),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildActiveReportContent() {
+//     switch (_selectedReportType) {
+//       case 'Subscriptions Report':
+//         return _buildSubscriptionsReport();
+//       case 'Revenue Report':
+//         return _buildRevenueReport();
+//       case 'Customers Report':
+//         return _buildCustomersTableSection();
+//       case 'Usage Report':
+//         return _buildUsageTableSection();
+//       case 'Performance Report':
+//         return _buildPerformanceTableSection();
+//       default:
+//         return AppPlaceholder(
+//           title: "Data for $_selectedReportType",
+//           subtitle: "Analytical engine is calculating current metrics.",
+//           icon: LucideIcons.loader,
+//         );
+//     }
+//   }
+
+//   Widget _buildSubscriptionsReport() {
+//     return Column(
+//       children: [
+//         _buildStatsGrid([
+//           const StatData(
+//             title: "Active Subscriptions",
+//             value: "1,234",
+//             icon: LucideIcons.users,
+//             trend: "+12.5%",
+//             isPositive: true,
+//           ),
+//           const StatData(
+//             title: "New Subscribers",
+//             value: "56",
+//             icon: LucideIcons.userPlus,
+//             trend: "+8.2%",
+//             isPositive: true,
+//           ),
+//           const StatData(
+//             title: "Expiring Soon",
+//             value: "23",
+//             icon: LucideIcons.clock,
+//             trend: "-2.4%",
+//             isPositive: false,
+//           ),
+//         ]),
+//         const SizedBox(height: Dimens.p32),
+//         _buildReportTableSection("New Subscribers", _newSubscribers),
+//         const SizedBox(height: Dimens.p32),
+//         _buildReportTableSection("Expiring Soon", _expiringSubscribers),
+//       ],
+//     );
+//   }
+
+//   Widget _buildRevenueReport() {
+//     return Column(
+//       children: [
+//         _buildStatsGrid([
+//           const StatData(
+//             title: "Total Revenue",
+//             value: "SAR 500,000",
+//             icon: LucideIcons.creditCard,
+//             trend: "+15%",
+//             isPositive: true,
+//           ),
+//           const StatData(
+//             title: "MRR",
+//             value: "SAR 45,000",
+//             icon: LucideIcons.trendingUp,
+//             trend: "+8%",
+//             isPositive: true,
+//           ),
+//           const StatData(
+//             title: "ARPU",
+//             value: "SAR 400",
+//             icon: LucideIcons.activity,
+//             trend: "+2%",
+//             isPositive: true,
+//           ),
+//         ]),
+//         const SizedBox(height: Dimens.p32),
+//         _buildRevenueTableContent(),
+//       ],
+//     );
+//   }
+
+//   Widget _buildPerformanceTableSection() {
+//     final theme = context.theme.appColor;
+//     final List<ErpMaxColumn> cols = [
+//       ErpMaxColumn(title: "Date", weight: 0.25),
+//       ErpMaxColumn(title: "Uptime", weight: 0.25, textAlign: TextAlign.center),
+//       ErpMaxColumn(
+//         title: "Response Time",
+//         weight: 0.25,
+//         textAlign: TextAlign.center,
+//       ),
+//       ErpMaxColumn(
+//         title: "Error Rate",
+//         weight: 0.25,
+//         textAlign: TextAlign.right,
+//       ),
+//     ];
+
+//     return AppCard(
+//       padding: EdgeInsets.zero,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           _buildTableHeader("Performance Report"),
+//           ErpMaxTable(
+//             minWidth: 800,
+//             columns: cols,
+//             rows: _performanceMockData
+//                 .map(
+//                   (data) => ErpMaxRow(
+//                     columns: cols,
+//                     cells: [
+//                       Text(
+//                         data.date,
+//                         style: AppTextStyles.bodyMedium.copyWith(
+//                           color: theme.textSecondary,
+//                         ),
+//                       ),
+//                       Text(
+//                         data.uptime,
+//                         textAlign: TextAlign.center,
+//                         style: AppTextStyles.bodyMediumBold.copyWith(
+//                           color: theme.textPrimary,
+//                         ),
+//                       ),
+//                       Text(
+//                         data.responseTime,
+//                         textAlign: TextAlign.center,
+//                         style: AppTextStyles.bodyMedium.copyWith(
+//                           color: theme.textSecondary,
+//                         ),
+//                       ),
+//                       Text(
+//                         data.errorRate,
+//                         textAlign: TextAlign.right,
+//                         style: AppTextStyles.bodyMediumBold.copyWith(
+//                           color: theme.textPrimary,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//                 .toList(),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildUsageTableSection() {
+//     final theme = context.theme.appColor;
+//     final List<ErpMaxColumn> cols = [
+//       ErpMaxColumn(title: "Module Name", weight: 0.3),
+//       ErpMaxColumn(
+//         title: "Active Subscriptions",
+//         weight: 0.25,
+//         textAlign: TextAlign.center,
+//       ),
+//       ErpMaxColumn(
+//         title: "Users Count",
+//         weight: 0.2,
+//         textAlign: TextAlign.center,
+//       ),
+//       ErpMaxColumn(
+//         title: "Storage Limit",
+//         weight: 0.25,
+//         textAlign: TextAlign.right,
+//       ),
+//     ];
+
+//     return AppCard(
+//       padding: EdgeInsets.zero,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           _buildTableHeader("Usage Report"),
+//           ErpMaxTable(
+//             minWidth: 900,
+//             columns: cols,
+//             rows: _usageMockData
+//                 .map(
+//                   (data) => ErpMaxRow(
+//                     columns: cols,
+//                     cells: [
+//                       Text(
+//                         data.moduleName,
+//                         style: AppTextStyles.bodyMediumBold.copyWith(
+//                           color: theme.textPrimary,
+//                         ),
+//                       ),
+//                       Text(
+//                         "${data.activeSubscriptions}",
+//                         textAlign: TextAlign.center,
+//                         style: AppTextStyles.bodyMedium.copyWith(
+//                           color: theme.textSecondary,
+//                         ),
+//                       ),
+//                       Text(
+//                         "${data.usersCount}",
+//                         textAlign: TextAlign.center,
+//                         style: AppTextStyles.bodyMedium.copyWith(
+//                           color: theme.textSecondary,
+//                         ),
+//                       ),
+//                       Text(
+//                         data.storageLimit,
+//                         textAlign: TextAlign.right,
+//                         style: AppTextStyles.bodyMediumBold.copyWith(
+//                           color: theme.textPrimary,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//                 .toList(),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildCustomersTableSection() {
+//     final theme = context.theme.appColor;
+//     final cols = [
+//       ErpMaxColumn(title: "Company Name", weight: 0.25),
+//       ErpMaxColumn(title: "Contact Person", weight: 0.25),
+//       ErpMaxColumn(title: "Email", weight: 0.25),
+//       ErpMaxColumn(
+//         title: "Join Date",
+//         weight: 0.25,
+//         textAlign: TextAlign.right,
+//       ),
+//     ];
+//     return AppCard(
+//       padding: EdgeInsets.zero,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           _buildTableHeader("Customers Report"),
+//           ErpMaxTable(
+//             minWidth: 1000,
+//             columns: cols,
+//             rows: List.generate(
+//               3,
+//               (i) => ErpMaxRow(
+//                 columns: cols,
+//                 cells: [
+//                   Text(
+//                     "Company ${i + 1}",
+//                     style: AppTextStyles.bodyMediumBold.copyWith(
+//                       color: theme.textPrimary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Manager ${i + 1}",
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "contact${i + 1}@company.com",
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "2024-01-15",
+//                     textAlign: TextAlign.right,
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildStatsGrid(List<StatData> stats) {
+//     return LayoutBuilder(
+//       builder: (context, constraints) {
+//         int count = constraints.maxWidth > 1200
+//             ? 3
+//             : (constraints.maxWidth > 768 ? 2 : 1);
+//         return GridView.builder(
+//           shrinkWrap: true,
+//           physics: const NeverScrollableScrollPhysics(),
+//           itemCount: stats.length,
+//           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//             crossAxisCount: count,
+//             crossAxisSpacing: 24,
+//             mainAxisSpacing: 24,
+//             mainAxisExtent: 160,
+//           ),
+//           itemBuilder: (context, index) {
+//             final item = stats[index];
+//             return AppBaseStatCard(
+//               title: item.title,
+//               value: item.value,
+//               icon: item.icon,
+//               trailing: StatTrendBadge(
+//                 trend: item.trend,
+//                 isPositive: item.isPositive,
+//               ),
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+
+//   Widget _buildTableHeader(String title) {
+//     return Padding(
+//       padding: const EdgeInsets.all(24),
+//       child: Text(
+//         title,
+//         style: AppTextStyles.h3.copyWith(
+//           color: context.theme.appColor.textPrimary,
+//           fontWeight: FontWeight.w800,
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildRevenueTableContent() {
+//     final theme = context.theme.appColor;
+//     final cols = [
+//       ErpMaxColumn(title: "Date", weight: 0.15),
+//       ErpMaxColumn(title: "Company Name", weight: 0.25),
+//       ErpMaxColumn(title: "Plan Name", weight: 0.20),
+//       ErpMaxColumn(title: "Amount", weight: 0.20),
+//       ErpMaxColumn(title: "Payment Method", weight: 0.20),
+//     ];
+//     return AppCard(
+//       padding: EdgeInsets.zero,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           _buildTableHeader("Revenue Report"),
+//           ErpMaxTable(
+//             minWidth: 1000,
+//             columns: cols,
+//             rows: List.generate(
+//               5,
+//               (i) => ErpMaxRow(
+//                 columns: cols,
+//                 cells: [
+//                   Text(
+//                     "2024-05-${11 + i}",
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Company ${i + 1}",
+//                     style: AppTextStyles.bodyMediumBold.copyWith(
+//                       color: theme.textPrimary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Enterprise",
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "SAR 10,000",
+//                     style: AppTextStyles.bodyMediumBold.copyWith(
+//                       color: theme.textPrimary,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Credit Card",
+//                     style: AppTextStyles.bodyMedium.copyWith(
+//                       color: theme.textSecondary,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildReportTableSection(String title, List<ReportSubscriber> data) {
+//     final theme = context.theme.appColor;
+//     final cols = [
+//       ErpMaxColumn(title: "Company Name", weight: 0.22),
+//       ErpMaxColumn(title: "Plan Name", weight: 0.18),
+//       ErpMaxColumn(title: "Status", weight: 0.12, textAlign: TextAlign.center),
+//       ErpMaxColumn(
+//         title: "Start Date",
+//         weight: 0.14,
+//         textAlign: TextAlign.center,
+//       ),
+//       ErpMaxColumn(
+//         title: "End Date",
+//         weight: 0.14,
+//         textAlign: TextAlign.center,
+//       ),
+//       ErpMaxColumn(title: "Price", weight: 0.12, textAlign: TextAlign.right),
+//       ErpMaxColumn(title: "Actions", weight: 0.08, textAlign: TextAlign.right),
+//     ];
+//     return AppCard(
+//       padding: EdgeInsets.zero,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           _buildTableHeader(title),
+//           // ErpMaxTable(
+//           //   minWidth: 1100,
+//           //   columns: cols,
+//           //   rows: data
+//           //       .map(
+//           //         (item) => ErpMaxRow(
+//           //           onTap: () => _openDetailPanel(item),
+//           //           columns: cols,
+//           //           cells: [
+//           //             Text(
+//           //               item.company,
+//           //               style: AppTextStyles.bodyMediumBold.copyWith(
+//           //                 color: theme.textPrimary,
+//           //               ),
+//           //             ),
+//           //             Text(
+//           //               item.plan,
+//           //               style: AppTextStyles.bodyMedium.copyWith(
+//           //                 color: theme.textSecondary,
+//           //               ),
+//           //             ),
+//           //             Center(child: AppStatusMapper(status: item.status)),
+//           //             Text(
+//           //               item.startDate,
+//           //               textAlign: TextAlign.center,
+//           //               style: AppTextStyles.bodySmall.copyWith(
+//           //                 color: theme.textSecondary,
+//           //               ),
+//           //             ),
+//           //             Text(
+//           //               item.endDate,
+//           //               textAlign: TextAlign.center,
+//           //               style: AppTextStyles.bodySmall.copyWith(
+//           //                 color: theme.textSecondary,
+//           //               ),
+//           //             ),
+//           //             Text(
+//           //               item.price,
+//           //               textAlign: TextAlign.right,
+//           //               style: AppTextStyles.bodyMediumBold.copyWith(
+//           //                 color: theme.textPrimary,
+//           //               ),
+//           //             ),
+//           //             const Align(
+//           //               alignment: Alignment.centerRight,
+//           //               child: Icon(
+//           //                 LucideIcons.moreHorizontal,
+//           //                 color: Color(0xFF667085),
+//           //                 size: 20,
+//           //               ),
+//           //             ),
+//           //           ],
+//           //         ),
+//           //       )
+//           //       .toList(),
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   void _openDetailPanel(ReportSubscriber subscriber) {
+//     showGeneralDialog(
+//       context: context,
+//       barrierDismissible: true,
+//       barrierLabel: 'Close',
+//       barrierColor: Colors.black.withOpacity(0.5),
+//       transitionDuration: const Duration(milliseconds: 300),
+//       pageBuilder: (ctx, anim1, anim2) {
+//         return Align(
+//           alignment: Alignment.centerRight,
+//           child: Material(
+//             elevation: 16,
+//             child: Container(
+//               width: MediaQuery.of(context).size.width * 0.4,
+//               height: double.infinity,
+//               color: Colors.white,
+//               child: SubscriberDetailPanel(
+//                 subscriber: subscriber,
+//                 onClose: () => Navigator.of(ctx).pop(),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//       transitionBuilder: (ctx, anim1, anim2, child) {
+//         return SlideTransition(
+//           position: Tween<Offset>(
+//             begin: const Offset(1, 0),
+//             end: Offset.zero,
+//           ).animate(CurvedAnimation(parent: anim1, curve: Curves.easeOutQuart)),
+//           child: child,
+//         );
+//       },
+//     );
+//   }
+// }

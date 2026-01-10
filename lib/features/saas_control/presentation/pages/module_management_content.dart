@@ -1,5 +1,10 @@
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart';
+import 'package:erpmax_client/core/widgets/table/erpmax_table.dart'
+    hide ErpMaxColumn;
 import 'package:flutter/material.dart';
+
+import 'package:erpmax_client/core/theme/app_theme.dart';
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class ModuleModel {
   final String name;
@@ -24,6 +29,9 @@ class ModuleManagementContent extends StatefulWidget {
 }
 
 class _ModuleManagementContentState extends State<ModuleManagementContent> {
+  // Состояние для управления выделением строк
+  Set<String> _selectedModuleNames = {};
+
   static const List<ModuleModel> _modules = [
     ModuleModel(
       name: "Accounting",
@@ -77,93 +85,119 @@ class _ModuleManagementContentState extends State<ModuleManagementContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [const SizedBox(height: 32), _buildModuleTable()],
-            ),
+    final theme = context.theme.appColor;
+
+    // Определение колонок для UniversalErpTable
+    final List<ErpMaxColumn<ModuleModel>> columns = [
+      ErpMaxColumn(
+        id: 'name',
+        title: "Module Name",
+        weight: 2.5,
+        valueGetter: (item) => item.name,
+        customCell: (item) => Text(
+          item.name,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1E293B),
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildModuleTable() {
-    final List<ErpMaxColumn> columns = [
-      ErpMaxColumn(title: "Module Name", weight: 0.25),
-      ErpMaxColumn(title: "Assigned Packages", weight: 0.4),
-      ErpMaxColumn(title: "Version", weight: 0.15),
-      ErpMaxColumn(title: "Status", weight: 0.15),
-      ErpMaxColumn(title: "Actions", weight: 0.05, textAlign: TextAlign.right),
+      ),
+      ErpMaxColumn(
+        id: 'packages',
+        title: "Assigned Packages",
+        weight: 4.0,
+        isSortable: false, // Список пакетов сложно сортировать по строке
+        valueGetter: (item) => item.packages.join(", "),
+        customCell: (item) => _buildPackageBadges(item.packages),
+      ),
+      ErpMaxColumn(
+        id: 'version',
+        title: "Version",
+        weight: 1.5,
+        valueGetter: (item) => item.version,
+        customCell: (item) => Text(
+          item.version,
+          style: const TextStyle(color: Color(0xFF64748B)),
+        ),
+      ),
+      ErpMaxColumn(
+        id: 'status',
+        title: "Status",
+        weight: 1.5,
+        valueGetter: (item) => item.isActive ? "Active" : "Inactive",
+        customCell: (item) => _buildStatusBadge(item.isActive),
+      ),
+      ErpMaxColumn(
+        id: 'actions',
+        title: "Actions",
+        weight: 1.0,
+        textAlign: TextAlign.right,
+        isSortable: false,
+        hasFilter: false,
+        customCell: (item) =>
+            const Icon(LucideIcons.moreHorizontal, color: Color(0xFF94A3B8)),
+      ),
     ];
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ErpMaxTable(
-            columns: columns,
-            minWidth: 900,
-            rows: _modules.map((item) {
-              return ErpMaxRow(
-                columns: columns,
-                cells: [
-                  Text(
-                    item.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
-                    ),
-                  ),
-                  _buildPackageBadges(item.packages),
-                  Text(
-                    item.version,
-                    style: const TextStyle(color: Color(0xFF64748B)),
-                  ),
-                  _buildStatusBadge(item.isActive),
-                  const Icon(Icons.more_horiz, color: Color(0xFF94A3B8)),
-                ],
-              );
-            }).toList(),
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 32),
+            UniversalErpTable<ModuleModel>(
+              items: _modules,
+              columns: columns,
+              minWidth: 900,
+              idGetter: (item) => item.name,
+              selectedIds: _selectedModuleNames,
+              onSelectionChanged: (newSelection) {
+                setState(() => _selectedModuleNames = newSelection);
+              },
+              showVerticalLines: true,
+              // Добавляем статистику в футер
+              totals: {
+                'name': 'Total: ${_modules.length}',
+                'status': 'Active: ${_modules.where((m) => m.isActive).length}',
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  // --- Вспомогательные виджеты для ячеек ---
+
   Widget _buildPackageBadges(List<String> packages) {
-    return Wrap(
-      spacing: 6,
-      runSpacing: 4,
-      children: packages
-          .map(
-            (p) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
-              ),
-              child: Text(
-                p,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1E293B),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Wrap(
+        spacing: 6,
+        runSpacing: 4,
+        children: packages
+            .map(
+              (p) => Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Text(
+                  p,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
               ),
-            ),
-          )
-          .toList(),
+            )
+            .toList(),
+      ),
     );
   }
 

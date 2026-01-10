@@ -392,7 +392,7 @@ class _CustomersTableRowState extends State<CustomersTableRow> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        Icon( 
                           LucideIcons.phone,
                           size: 12,
                           color: theme.textSecondary,
