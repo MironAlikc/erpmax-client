@@ -10,7 +10,7 @@ _SSOTokenModel _$SSOTokenModelFromJson(Map<String, dynamic> json) =>
     _SSOTokenModel(
       ssoUrl: json['sso_url'] as String,
       token: json['token'] as String,
-      expiresAt: DateTime.parse(json['expires_at'] as String),
+      expiresAt: _parseUtcDateTime(json['expires_at']),
     );
 
 Map<String, dynamic> _$SSOTokenModelToJson(_SSOTokenModel instance) =>

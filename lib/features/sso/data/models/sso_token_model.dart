@@ -11,7 +11,8 @@ abstract class SSOTokenModel with _$SSOTokenModel {
   const factory SSOTokenModel({
     @JsonKey(name: 'sso_url') required String ssoUrl,
     required String token,
-    @JsonKey(name: 'expires_at') required DateTime expiresAt,
+    @JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime)
+    required DateTime expiresAt,
   }) = _SSOTokenModel;
 
   factory SSOTokenModel.fromJson(Map<String, dynamic> json) =>
@@ -19,4 +20,23 @@ abstract class SSOTokenModel with _$SSOTokenModel {
 
   SSOTokenEntity toEntity() =>
       SSOTokenEntity(ssoUrl: ssoUrl, token: token, expiresAt: expiresAt);
+}
+
+DateTime _parseUtcDateTime(dynamic value) {
+  if (value is String) {
+    final dateTime = DateTime.parse(value);
+    return dateTime.isUtc
+        ? dateTime
+        : DateTime.utc(
+            dateTime.year,
+            dateTime.month,
+            dateTime.day,
+            dateTime.hour,
+            dateTime.minute,
+            dateTime.second,
+            dateTime.millisecond,
+            dateTime.microsecond,
+          );
+  }
+  throw ArgumentError('Invalid datetime value: $value');
 }

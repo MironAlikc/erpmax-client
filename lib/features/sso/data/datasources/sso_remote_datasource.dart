@@ -9,7 +9,7 @@ part 'sso_remote_datasource.g.dart';
 abstract class SSORemoteDataSource {
   factory SSORemoteDataSource(Dio dio, {String baseUrl}) = _SSORemoteDataSource;
 
-  @POST('/sso/token')
+  @POST('/sso/erpnext/token')
   Future<HttpResponse<SSOTokenModel>> generateToken();
 
   @GET('/sso/erpnext/validate/{token}')

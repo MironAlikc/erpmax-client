@@ -31,7 +31,7 @@ class _SSORemoteDataSource implements SSORemoteDataSource {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/sso/token',
+            '/sso/erpnext/token',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -40,7 +40,8 @@ class _SSORemoteDataSource implements SSORemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SSOTokenModel _value;
     try {
-      _value = SSOTokenModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = SSOTokenModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
