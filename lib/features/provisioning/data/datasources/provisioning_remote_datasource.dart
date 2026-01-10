@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:erpmax_client/features/provisioning/data/models/provisioning_job_model.dart';
+import 'package:erpmax_client/features/provisioning/data/models/provisioning_jobs_response_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'provisioning_remote_datasource.g.dart';
@@ -10,7 +11,7 @@ abstract class ProvisioningRemoteDataSource {
       _ProvisioningRemoteDataSource;
 
   @GET('/provisioning/jobs')
-  Future<HttpResponse<List<ProvisioningJobModel>>> getJobs({
+  Future<HttpResponse<ProvisioningJobsResponseModel>> getJobs({
     @Query('page') int page = 1,
     @Query('size') int size = 20,
   });

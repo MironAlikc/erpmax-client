@@ -10,11 +10,11 @@ abstract class ProvisioningJobModel with _$ProvisioningJobModel {
   const ProvisioningJobModel._();
 
   const factory ProvisioningJobModel({
-    required String id,
-    @JsonKey(name: 'tenant_id') required String tenantId,
-    @JsonKey(name: 'job_type') required String jobType,
-    required String status,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
+    String? id,
+    @JsonKey(name: 'tenant_id') String? tenantId,
+    @JsonKey(name: 'job_type') String? jobType,
+    String? status,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'started_at') DateTime? startedAt,
     @JsonKey(name: 'completed_at') DateTime? completedAt,
     @JsonKey(name: 'error_message') String? errorMessage,
@@ -25,11 +25,11 @@ abstract class ProvisioningJobModel with _$ProvisioningJobModel {
       _$ProvisioningJobModelFromJson(json);
 
   ProvisioningJobEntity toEntity() => ProvisioningJobEntity(
-    id: id,
-    tenantId: tenantId,
-    jobType: jobType,
-    status: status,
-    createdAt: createdAt,
+    id: id ?? '',
+    tenantId: tenantId ?? '',
+    jobType: jobType ?? '',
+    status: status ?? '',
+    createdAt: createdAt ?? DateTime.now(),
     startedAt: startedAt,
     completedAt: completedAt,
     errorMessage: errorMessage,

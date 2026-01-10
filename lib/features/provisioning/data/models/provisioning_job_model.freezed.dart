@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProvisioningJobModel {
 
- String get id;@JsonKey(name: 'tenant_id') String get tenantId;@JsonKey(name: 'job_type') String get jobType; String get status;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'started_at') DateTime? get startedAt;@JsonKey(name: 'completed_at') DateTime? get completedAt;@JsonKey(name: 'error_message') String? get errorMessage; Map<String, dynamic>? get metadata;
+ String? get id;@JsonKey(name: 'tenant_id') String? get tenantId;@JsonKey(name: 'job_type') String? get jobType; String? get status;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'started_at') DateTime? get startedAt;@JsonKey(name: 'completed_at') DateTime? get completedAt;@JsonKey(name: 'error_message') String? get errorMessage; Map<String, dynamic>? get metadata;
 /// Create a copy of ProvisioningJobModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ProvisioningJobModelCopyWith<$Res>  {
   factory $ProvisioningJobModelCopyWith(ProvisioningJobModel value, $Res Function(ProvisioningJobModel) _then) = _$ProvisioningJobModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'job_type') String jobType, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'completed_at') DateTime? completedAt,@JsonKey(name: 'error_message') String? errorMessage, Map<String, dynamic>? metadata
+ String? id,@JsonKey(name: 'tenant_id') String? tenantId,@JsonKey(name: 'job_type') String? jobType, String? status,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'completed_at') DateTime? completedAt,@JsonKey(name: 'error_message') String? errorMessage, Map<String, dynamic>? metadata
 });
 
 
@@ -65,14 +65,14 @@ class _$ProvisioningJobModelCopyWithImpl<$Res>
 
 /// Create a copy of ProvisioningJobModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tenantId = null,Object? jobType = null,Object? status = null,Object? createdAt = null,Object? startedAt = freezed,Object? completedAt = freezed,Object? errorMessage = freezed,Object? metadata = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? tenantId = freezed,Object? jobType = freezed,Object? status = freezed,Object? createdAt = freezed,Object? startedAt = freezed,Object? completedAt = freezed,Object? errorMessage = freezed,Object? metadata = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,tenantId: null == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String,jobType: null == jobType ? _self.jobType : jobType // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
+as String?,jobType: freezed == jobType ? _self.jobType : jobType // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'job_type')  String jobType,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'job_type')  String? jobType,  String? status, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProvisioningJobModel() when $default != null:
 return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.createdAt,_that.startedAt,_that.completedAt,_that.errorMessage,_that.metadata);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.created
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'job_type')  String jobType,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'job_type')  String? jobType,  String? status, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)  $default,) {final _that = this;
 switch (_that) {
 case _ProvisioningJobModel():
 return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.createdAt,_that.startedAt,_that.completedAt,_that.errorMessage,_that.metadata);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.created
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'job_type')  String jobType,  String status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'job_type')  String? jobType,  String? status, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'started_at')  DateTime? startedAt, @JsonKey(name: 'completed_at')  DateTime? completedAt, @JsonKey(name: 'error_message')  String? errorMessage,  Map<String, dynamic>? metadata)?  $default,) {final _that = this;
 switch (_that) {
 case _ProvisioningJobModel() when $default != null:
 return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.createdAt,_that.startedAt,_that.completedAt,_that.errorMessage,_that.metadata);case _:
@@ -217,14 +217,14 @@ return $default(_that.id,_that.tenantId,_that.jobType,_that.status,_that.created
 @JsonSerializable()
 
 class _ProvisioningJobModel extends ProvisioningJobModel {
-  const _ProvisioningJobModel({required this.id, @JsonKey(name: 'tenant_id') required this.tenantId, @JsonKey(name: 'job_type') required this.jobType, required this.status, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'started_at') this.startedAt, @JsonKey(name: 'completed_at') this.completedAt, @JsonKey(name: 'error_message') this.errorMessage, final  Map<String, dynamic>? metadata}): _metadata = metadata,super._();
+  const _ProvisioningJobModel({this.id, @JsonKey(name: 'tenant_id') this.tenantId, @JsonKey(name: 'job_type') this.jobType, this.status, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'started_at') this.startedAt, @JsonKey(name: 'completed_at') this.completedAt, @JsonKey(name: 'error_message') this.errorMessage, final  Map<String, dynamic>? metadata}): _metadata = metadata,super._();
   factory _ProvisioningJobModel.fromJson(Map<String, dynamic> json) => _$ProvisioningJobModelFromJson(json);
 
-@override final  String id;
-@override@JsonKey(name: 'tenant_id') final  String tenantId;
-@override@JsonKey(name: 'job_type') final  String jobType;
-@override final  String status;
-@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override final  String? id;
+@override@JsonKey(name: 'tenant_id') final  String? tenantId;
+@override@JsonKey(name: 'job_type') final  String? jobType;
+@override final  String? status;
+@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
 @override@JsonKey(name: 'started_at') final  DateTime? startedAt;
 @override@JsonKey(name: 'completed_at') final  DateTime? completedAt;
 @override@JsonKey(name: 'error_message') final  String? errorMessage;
@@ -271,7 +271,7 @@ abstract mixin class _$ProvisioningJobModelCopyWith<$Res> implements $Provisioni
   factory _$ProvisioningJobModelCopyWith(_ProvisioningJobModel value, $Res Function(_ProvisioningJobModel) _then) = __$ProvisioningJobModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'job_type') String jobType, String status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'completed_at') DateTime? completedAt,@JsonKey(name: 'error_message') String? errorMessage, Map<String, dynamic>? metadata
+ String? id,@JsonKey(name: 'tenant_id') String? tenantId,@JsonKey(name: 'job_type') String? jobType, String? status,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'completed_at') DateTime? completedAt,@JsonKey(name: 'error_message') String? errorMessage, Map<String, dynamic>? metadata
 });
 
 
@@ -288,14 +288,14 @@ class __$ProvisioningJobModelCopyWithImpl<$Res>
 
 /// Create a copy of ProvisioningJobModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tenantId = null,Object? jobType = null,Object? status = null,Object? createdAt = null,Object? startedAt = freezed,Object? completedAt = freezed,Object? errorMessage = freezed,Object? metadata = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? tenantId = freezed,Object? jobType = freezed,Object? status = freezed,Object? createdAt = freezed,Object? startedAt = freezed,Object? completedAt = freezed,Object? errorMessage = freezed,Object? metadata = freezed,}) {
   return _then(_ProvisioningJobModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,tenantId: null == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String,jobType: null == jobType ? _self.jobType : jobType // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
+as String?,jobType: freezed == jobType ? _self.jobType : jobType // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,metadata: freezed == metadata ? _self._metadata : metadata // ignore: cast_nullable_to_non_nullable

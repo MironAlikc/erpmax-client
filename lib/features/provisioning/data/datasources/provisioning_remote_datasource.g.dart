@@ -22,7 +22,7 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<List<ProvisioningJobModel>>> getJobs({
+  Future<HttpResponse<ProvisioningJobsResponseModel>> getJobs({
     int page = 1,
     int size = 20,
   }) async {
@@ -30,25 +30,23 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     final queryParameters = <String, dynamic>{r'page': page, r'size': size};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<List<ProvisioningJobModel>>>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/provisioning/jobs',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<ProvisioningJobModel> _value;
+    final _options =
+        _setStreamType<HttpResponse<ProvisioningJobsResponseModel>>(
+          Options(method: 'GET', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/provisioning/jobs',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ProvisioningJobsResponseModel _value;
     try {
-      _value = _result.data!
-          .map(
-            (dynamic i) =>
-                ProvisioningJobModel.fromJson(i as Map<String, dynamic>),
-          )
-          .toList();
+      _value = ProvisioningJobsResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
