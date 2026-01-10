@@ -21,6 +21,7 @@ class LoggingInterceptor extends Interceptor {
       'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}',
       name: 'HTTP',
     );
+    dev.log('RESPONSE DATA: ${response.data}', name: 'HTTP_DATA');
     handler.next(response);
   }
 

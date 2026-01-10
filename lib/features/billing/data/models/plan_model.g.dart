@@ -10,12 +10,12 @@ _PlanModel _$PlanModelFromJson(Map<String, dynamic> json) => _PlanModel(
   id: json['id'] as String,
   name: json['name'] as String,
   description: json['description'] as String,
-  monthlyPrice: (json['monthly_price'] as num).toDouble(),
-  yearlyPrice: (json['yearly_price'] as num).toDouble(),
-  features: json['features'] as Map<String, dynamic>,
-  maxUsers: (json['max_users'] as num).toInt(),
-  maxStorage: (json['max_storage'] as num).toInt(),
-  isActive: json['is_active'] as bool,
+  monthlyPrice: (json['monthly_price'] as num?)?.toDouble() ?? 0.0,
+  yearlyPrice: (json['yearly_price'] as num?)?.toDouble() ?? 0.0,
+  features: json['features'],
+  maxUsers: (json['max_users'] as num?)?.toInt() ?? 0,
+  maxStorage: (json['max_storage'] as num?)?.toInt() ?? 0,
+  isActive: json['is_active'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$PlanModelToJson(_PlanModel instance) =>

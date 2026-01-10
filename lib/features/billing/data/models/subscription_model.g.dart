@@ -8,18 +8,20 @@ part of 'subscription_model.dart';
 
 _SubscriptionModel _$SubscriptionModelFromJson(Map<String, dynamic> json) =>
     _SubscriptionModel(
-      id: json['id'] as String,
-      tenantId: json['tenant_id'] as String,
-      planId: json['plan_id'] as String,
-      planName: json['plan_name'] as String,
-      status: json['status'] as String,
-      billingPeriod: json['billing_period'] as String,
-      amount: (json['amount'] as num).toDouble(),
-      currentPeriodStart: DateTime.parse(
-        json['current_period_start'] as String,
-      ),
-      currentPeriodEnd: DateTime.parse(json['current_period_end'] as String),
-      cancelAtPeriodEnd: json['cancel_at_period_end'] as bool,
+      id: json['id'] as String?,
+      tenantId: json['tenant_id'] as String?,
+      planId: json['plan_id'] as String?,
+      planName: json['plan_name'] as String?,
+      status: json['status'] as String?,
+      billingPeriod: json['billing_period'] as String?,
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      currentPeriodStart: json['current_period_start'] == null
+          ? null
+          : DateTime.parse(json['current_period_start'] as String),
+      currentPeriodEnd: json['current_period_end'] == null
+          ? null
+          : DateTime.parse(json['current_period_end'] as String),
+      cancelAtPeriodEnd: json['cancel_at_period_end'] as bool? ?? false,
       canceledAt: json['canceled_at'] == null
           ? null
           : DateTime.parse(json['canceled_at'] as String),
@@ -37,8 +39,8 @@ Map<String, dynamic> _$SubscriptionModelToJson(_SubscriptionModel instance) =>
       'status': instance.status,
       'billing_period': instance.billingPeriod,
       'amount': instance.amount,
-      'current_period_start': instance.currentPeriodStart.toIso8601String(),
-      'current_period_end': instance.currentPeriodEnd.toIso8601String(),
+      'current_period_start': instance.currentPeriodStart?.toIso8601String(),
+      'current_period_end': instance.currentPeriodEnd?.toIso8601String(),
       'cancel_at_period_end': instance.cancelAtPeriodEnd,
       'canceled_at': instance.canceledAt?.toIso8601String(),
       'trial_end': instance.trialEnd?.toIso8601String(),

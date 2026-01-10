@@ -9,8 +9,8 @@ part of 'checkout_response_model.dart';
 _CheckoutResponseModel _$CheckoutResponseModelFromJson(
   Map<String, dynamic> json,
 ) => _CheckoutResponseModel(
-  sessionId: json['session_id'] as String,
-  checkoutUrl: json['checkout_url'] as String,
+  sessionId: json['session_id'] as String?,
+  checkoutUrl: json['checkout_url'] as String?,
 );
 
 Map<String, dynamic> _$CheckoutResponseModelToJson(

@@ -19,7 +19,9 @@ class BillingRepositoryImpl implements BillingRepository {
   Future<Either<Failure, List<PlanEntity>>> getPlans() async {
     try {
       final response = await remoteDataSource.getPlans();
-      final plans = response.data.map((model) => model.toEntity()).toList();
+      final plans = response.data.data
+          .map((model) => model.toEntity())
+          .toList();
       return Right(plans);
     } on DioException catch (e) {
       return Left(_handleDioException(e));
@@ -66,7 +68,7 @@ class BillingRepositoryImpl implements BillingRepository {
   @override
   Future<Either<Failure, void>> cancelSubscription() async {
     try {
-      await remoteDataSource.cancelSubscription();
+      await remoteDataSource.cancelSubscription({});
       return const Right(null);
     } on DioException catch (e) {
       return Left(_handleDioException(e));
@@ -86,7 +88,9 @@ class BillingRepositoryImpl implements BillingRepository {
         size: size,
       );
 
-      final invoices = response.data.map((model) => model.toEntity()).toList();
+      final invoices = response.data.data
+          .map((model) => model.toEntity())
+          .toList();
       return Right(invoices);
     } on DioException catch (e) {
       return Left(_handleDioException(e));
