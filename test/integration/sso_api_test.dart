@@ -29,8 +29,8 @@ void main() {
 
     final authData = registerResponse.data.data!;
     await testClient.saveTokens(
-      accessToken: authData.accessToken,
-      refreshToken: authData.refreshToken,
+      accessToken: authData.accessToken!,
+      refreshToken: authData.refreshToken!,
     );
   });
 

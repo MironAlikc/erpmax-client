@@ -62,7 +62,7 @@ class _AuthRouterWrapperState extends State<AuthRouterWrapper> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // _router.refresh();
+        _router.refresh();
       },
       child: MyApp(router: _router),
     );

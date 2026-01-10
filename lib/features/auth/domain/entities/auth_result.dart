@@ -12,6 +12,6 @@ abstract class AuthResult with _$AuthResult {
     required AuthTokens tokens,
     required UserEntity user,
     required List<UserTenantEntity> tenants,
-    required TenantEntity currentTenant,
+    TenantEntity? currentTenant,
   }) = _AuthResult;
 }

@@ -2,8 +2,6 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart'
-    hide ErpMaxColumn;
 import 'package:flutter/material.dart';
 import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 
@@ -174,8 +172,6 @@ class _VisitorLogsContentState extends State<VisitorLogsContent> {
       ),
     );
   }
-
-  // --- Вспомогательные виджеты ---
 
   Widget _buildAdaptiveStatsGrid(BuildContext context, bool isMobile) {
     final theme = context.theme.appColor;

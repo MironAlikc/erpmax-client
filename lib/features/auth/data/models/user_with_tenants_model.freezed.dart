@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserWithTenantsModel {
 
- UserModel get user; List<UserTenantModel> get tenants;
+ String get id; String get email;@JsonKey(name: 'full_name') String? get fullName;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'is_superuser') bool get isSuperuser;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt; List<UserTenantModel> get tenants;
 /// Create a copy of UserWithTenantsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserWithTenantsModelCopyWith<UserWithTenantsModel> get copyWith => _$UserWithTe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserWithTenantsModel&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.tenants, tenants));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserWithTenantsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isSuperuser, isSuperuser) || other.isSuperuser == isSuperuser)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.tenants, tenants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(tenants));
+int get hashCode => Object.hash(runtimeType,id,email,fullName,isActive,isSuperuser,createdAt,updatedAt,const DeepCollectionEquality().hash(tenants));
 
 @override
 String toString() {
-  return 'UserWithTenantsModel(user: $user, tenants: $tenants)';
+  return 'UserWithTenantsModel(id: $id, email: $email, fullName: $fullName, isActive: $isActive, isSuperuser: $isSuperuser, createdAt: $createdAt, updatedAt: $updatedAt, tenants: $tenants)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $UserWithTenantsModelCopyWith<$Res>  {
   factory $UserWithTenantsModelCopyWith(UserWithTenantsModel value, $Res Function(UserWithTenantsModel) _then) = _$UserWithTenantsModelCopyWithImpl;
 @useResult
 $Res call({
- UserModel user, List<UserTenantModel> tenants
+ String id, String email,@JsonKey(name: 'full_name') String? fullName,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_superuser') bool isSuperuser,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt, List<UserTenantModel> tenants
 });
 
 
-$UserModelCopyWith<$Res> get user;
+
 
 }
 /// @nodoc
@@ -65,23 +65,20 @@ class _$UserWithTenantsModelCopyWithImpl<$Res>
 
 /// Create a copy of UserWithTenantsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? tenants = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? fullName = freezed,Object? isActive = null,Object? isSuperuser = null,Object? createdAt = null,Object? updatedAt = null,Object? tenants = null,}) {
   return _then(_self.copyWith(
-user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,fullName: freezed == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
+as String?,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,isSuperuser: null == isSuperuser ? _self.isSuperuser : isSuperuser // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
 as List<UserTenantModel>,
   ));
 }
-/// Create a copy of UserWithTenantsModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get user {
-  
-  return $UserModelCopyWith<$Res>(_self.user, (value) {
-    return _then(_self.copyWith(user: value));
-  });
-}
+
 }
 
 
@@ -163,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserModel user,  List<UserTenantModel> tenants)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: 'full_name')  String? fullName, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_superuser')  bool isSuperuser, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt,  List<UserTenantModel> tenants)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserWithTenantsModel() when $default != null:
-return $default(_that.user,_that.tenants);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.isActive,_that.isSuperuser,_that.createdAt,_that.updatedAt,_that.tenants);case _:
   return orElse();
 
 }
@@ -184,10 +181,10 @@ return $default(_that.user,_that.tenants);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserModel user,  List<UserTenantModel> tenants)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: 'full_name')  String? fullName, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_superuser')  bool isSuperuser, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt,  List<UserTenantModel> tenants)  $default,) {final _that = this;
 switch (_that) {
 case _UserWithTenantsModel():
-return $default(_that.user,_that.tenants);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.isActive,_that.isSuperuser,_that.createdAt,_that.updatedAt,_that.tenants);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +201,10 @@ return $default(_that.user,_that.tenants);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserModel user,  List<UserTenantModel> tenants)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email, @JsonKey(name: 'full_name')  String? fullName, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'is_superuser')  bool isSuperuser, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt,  List<UserTenantModel> tenants)?  $default,) {final _that = this;
 switch (_that) {
 case _UserWithTenantsModel() when $default != null:
-return $default(_that.user,_that.tenants);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.isActive,_that.isSuperuser,_that.createdAt,_that.updatedAt,_that.tenants);case _:
   return null;
 
 }
@@ -219,10 +216,16 @@ return $default(_that.user,_that.tenants);case _:
 @JsonSerializable()
 
 class _UserWithTenantsModel extends UserWithTenantsModel {
-  const _UserWithTenantsModel({required this.user, required final  List<UserTenantModel> tenants}): _tenants = tenants,super._();
+  const _UserWithTenantsModel({required this.id, required this.email, @JsonKey(name: 'full_name') this.fullName, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'is_superuser') required this.isSuperuser, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt, required final  List<UserTenantModel> tenants}): _tenants = tenants,super._();
   factory _UserWithTenantsModel.fromJson(Map<String, dynamic> json) => _$UserWithTenantsModelFromJson(json);
 
-@override final  UserModel user;
+@override final  String id;
+@override final  String email;
+@override@JsonKey(name: 'full_name') final  String? fullName;
+@override@JsonKey(name: 'is_active') final  bool isActive;
+@override@JsonKey(name: 'is_superuser') final  bool isSuperuser;
+@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
  final  List<UserTenantModel> _tenants;
 @override List<UserTenantModel> get tenants {
   if (_tenants is EqualUnmodifiableListView) return _tenants;
@@ -244,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserWithTenantsModel&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._tenants, _tenants));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserWithTenantsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isSuperuser, isSuperuser) || other.isSuperuser == isSuperuser)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other._tenants, _tenants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(_tenants));
+int get hashCode => Object.hash(runtimeType,id,email,fullName,isActive,isSuperuser,createdAt,updatedAt,const DeepCollectionEquality().hash(_tenants));
 
 @override
 String toString() {
-  return 'UserWithTenantsModel(user: $user, tenants: $tenants)';
+  return 'UserWithTenantsModel(id: $id, email: $email, fullName: $fullName, isActive: $isActive, isSuperuser: $isSuperuser, createdAt: $createdAt, updatedAt: $updatedAt, tenants: $tenants)';
 }
 
 
@@ -264,11 +267,11 @@ abstract mixin class _$UserWithTenantsModelCopyWith<$Res> implements $UserWithTe
   factory _$UserWithTenantsModelCopyWith(_UserWithTenantsModel value, $Res Function(_UserWithTenantsModel) _then) = __$UserWithTenantsModelCopyWithImpl;
 @override @useResult
 $Res call({
- UserModel user, List<UserTenantModel> tenants
+ String id, String email,@JsonKey(name: 'full_name') String? fullName,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'is_superuser') bool isSuperuser,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt, List<UserTenantModel> tenants
 });
 
 
-@override $UserModelCopyWith<$Res> get user;
+
 
 }
 /// @nodoc
@@ -281,24 +284,21 @@ class __$UserWithTenantsModelCopyWithImpl<$Res>
 
 /// Create a copy of UserWithTenantsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? tenants = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? fullName = freezed,Object? isActive = null,Object? isSuperuser = null,Object? createdAt = null,Object? updatedAt = null,Object? tenants = null,}) {
   return _then(_UserWithTenantsModel(
-user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,fullName: freezed == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
+as String?,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,isSuperuser: null == isSuperuser ? _self.isSuperuser : isSuperuser // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
 as List<UserTenantModel>,
   ));
 }
 
-/// Create a copy of UserWithTenantsModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get user {
-  
-  return $UserModelCopyWith<$Res>(_self.user, (value) {
-    return _then(_self.copyWith(user: value));
-  });
-}
+
 }
 
 // dart format on

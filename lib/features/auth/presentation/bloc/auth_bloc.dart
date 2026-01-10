@@ -95,14 +95,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (authResult) {
         dev.log('Login successful for user: ${authResult.user.email}');
+        final currentTenant =
+            authResult.currentTenant ??
+            (authResult.tenants.isNotEmpty
+                ? TenantEntity(
+                    id: authResult.tenants.first.tenantId,
+                    name: authResult.tenants.first.tenantName,
+                    slug: '',
+                    status: TenantStatus.active,
+                    createdAt: DateTime.now(),
+                    updatedAt: DateTime.now(),
+                  )
+                : throw Exception('No tenants available for user'));
         final authenticatedState = AuthState.authenticated(
           user: authResult.user,
           tenants: authResult.tenants,
-          currentTenant: authResult.currentTenant,
+          currentTenant: currentTenant,
         );
         emit(authenticatedState);
         dev.log('AuthBloc: Emitted authenticated state: $authenticatedState');
-        dev.log('AuthBloc: Current state after emit: ${state}');
+        dev.log('AuthBloc: Current state after emit: $state');
       },
     );
   }
@@ -127,11 +139,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (authResult) {
         dev.log('Registration successful for user: ${authResult.user.email}');
+        final currentTenant =
+            authResult.currentTenant ??
+            (authResult.tenants.isNotEmpty
+                ? TenantEntity(
+                    id: authResult.tenants.first.tenantId,
+                    name: authResult.tenants.first.tenantName,
+                    slug: '',
+                    status: TenantStatus.active,
+                    createdAt: DateTime.now(),
+                    updatedAt: DateTime.now(),
+                  )
+                : throw Exception('No tenants available for user'));
         emit(
           AuthState.authenticated(
             user: authResult.user,
             tenants: authResult.tenants,
-            currentTenant: authResult.currentTenant,
+            currentTenant: currentTenant,
           ),
         );
       },

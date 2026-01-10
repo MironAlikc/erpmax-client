@@ -29,11 +29,16 @@ void main() {
     });
 
     final authData = registerResponse.data.data!;
+
+    if (authData.accessToken == null || authData.refreshToken == null) {
+      throw Exception('Registration failed: missing tokens');
+    }
+
     await testClient.saveTokens(
-      accessToken: authData.accessToken,
-      refreshToken: authData.refreshToken,
+      accessToken: authData.accessToken!,
+      refreshToken: authData.refreshToken!,
     );
-    testTenantId = authData.currentTenant.id;
+    testTenantId = authData.currentTenant?.id;
   });
 
   tearDownAll(() async {

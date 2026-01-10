@@ -8,15 +8,19 @@ part of 'auth_response_model.dart';
 
 _AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) =>
     _AuthResponseModel(
-      accessToken: json['access_token'] as String,
-      refreshToken: json['refresh_token'] as String,
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      tenants: (json['tenants'] as List<dynamic>)
-          .map((e) => UserTenantModel.fromJson(e as Map<String, dynamic>))
+      accessToken: json['access_token'] as String?,
+      refreshToken: json['refresh_token'] as String?,
+      user: json['user'] == null
+          ? null
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      tenants: (json['tenants'] as List<dynamic>?)
+          ?.map((e) => UserTenantModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      currentTenant: TenantModel.fromJson(
-        json['current_tenant'] as Map<String, dynamic>,
-      ),
+      currentTenant: json['current_tenant'] == null
+          ? null
+          : TenantModel.fromJson(
+              json['current_tenant'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$AuthResponseModelToJson(_AuthResponseModel instance) =>
