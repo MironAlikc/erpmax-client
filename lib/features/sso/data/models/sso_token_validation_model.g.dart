@@ -12,7 +12,7 @@ _SSOTokenValidationModel _$SSOTokenValidationModelFromJson(
   valid: json['valid'] as bool,
   userId: json['user_id'] as String,
   tenantId: json['tenant_id'] as String,
-  createdAt: DateTime.parse(json['created_at'] as String),
+  createdAt: _parseUtcDateTime(json['created_at']),
 );
 
 Map<String, dynamic> _$SSOTokenValidationModelToJson(

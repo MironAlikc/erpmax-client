@@ -40,10 +40,11 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late List<TenantModel> _value;
     try {
-      _value = _result.data!
+      final responseData = _result.data!['data'] as List<dynamic>;
+      _value = responseData
           .map((dynamic i) => TenantModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
@@ -73,7 +74,8 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late TenantModel _value;
     try {
-      _value = TenantModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = TenantModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -101,7 +103,8 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late TenantModel _value;
     try {
-      _value = TenantModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = TenantModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -133,7 +136,8 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late TenantModel _value;
     try {
-      _value = TenantModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = TenantModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -162,10 +166,11 @@ class _TenantRemoteDataSource implements TenantRemoteDataSource {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late List<TenantUserModel> _value;
     try {
-      _value = _result.data!
+      final responseData = _result.data!['data'] as List<dynamic>;
+      _value = responseData
           .map(
             (dynamic i) => TenantUserModel.fromJson(i as Map<String, dynamic>),
           )

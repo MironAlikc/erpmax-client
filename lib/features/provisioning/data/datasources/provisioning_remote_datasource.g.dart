@@ -46,7 +46,8 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProvisioningJobsResponseModel _value;
     try {
-      _value = ProvisioningJobsResponseModel.fromJson(_result.data!);
+      final dataList = _result.data!['data'] as List<dynamic>;
+      _value = ProvisioningJobsResponseModel.fromJson({'data': dataList});
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -74,7 +75,8 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProvisioningJobModel _value;
     try {
-      _value = ProvisioningJobModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = ProvisioningJobModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -105,7 +107,8 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProvisioningJobModel _value;
     try {
-      _value = ProvisioningJobModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = ProvisioningJobModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -133,7 +136,8 @@ class _ProvisioningRemoteDataSource implements ProvisioningRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ProvisioningJobModel _value;
     try {
-      _value = ProvisioningJobModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = ProvisioningJobModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

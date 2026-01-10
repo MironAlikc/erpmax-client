@@ -228,7 +228,7 @@ void main() {
           'Invite user response status: ${response.response.statusCode}',
         );
 
-        expect(response.response.statusCode, equals(200));
+        expect(response.response.statusCode, equals(201));
 
         logTestInfo('User invited successfully: $inviteEmail');
       },
