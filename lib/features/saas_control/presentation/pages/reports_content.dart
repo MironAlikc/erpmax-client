@@ -2,7 +2,6 @@ import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
-import 'package:erpmax_client/core/widgets/common/app_status_mapper.dart';
 import 'package:erpmax_client/core/widgets/table/erp_max_tab_filter.dart';
 import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 import 'package:erpmax_client/core/widgets/tables_cards/app_card.dart';

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SSOTokenModel {
 
-@JsonKey(name: 'sso_url') String get ssoUrl; String get token;@JsonKey(name: 'expires_at') DateTime get expiresAt;
+@JsonKey(name: 'sso_url') String get ssoUrl; String get token;@JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime) DateTime get expiresAt;
 /// Create a copy of SSOTokenModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SSOTokenModelCopyWith<$Res>  {
   factory $SSOTokenModelCopyWith(SSOTokenModel value, $Res Function(SSOTokenModel) _then) = _$SSOTokenModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'sso_url') String ssoUrl, String token,@JsonKey(name: 'expires_at') DateTime expiresAt
+@JsonKey(name: 'sso_url') String ssoUrl, String token,@JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime) DateTime expiresAt
 });
 
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at')  DateTime expiresAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime)  DateTime expiresAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SSOTokenModel() when $default != null:
 return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
@@ -176,7 +176,7 @@ return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at')  DateTime expiresAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime)  DateTime expiresAt)  $default,) {final _that = this;
 switch (_that) {
 case _SSOTokenModel():
 return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
@@ -196,7 +196,7 @@ return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at')  DateTime expiresAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'sso_url')  String ssoUrl,  String token, @JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime)  DateTime expiresAt)?  $default,) {final _that = this;
 switch (_that) {
 case _SSOTokenModel() when $default != null:
 return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
@@ -211,12 +211,12 @@ return $default(_that.ssoUrl,_that.token,_that.expiresAt);case _:
 @JsonSerializable()
 
 class _SSOTokenModel extends SSOTokenModel {
-  const _SSOTokenModel({@JsonKey(name: 'sso_url') required this.ssoUrl, required this.token, @JsonKey(name: 'expires_at') required this.expiresAt}): super._();
+  const _SSOTokenModel({@JsonKey(name: 'sso_url') required this.ssoUrl, required this.token, @JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime) required this.expiresAt}): super._();
   factory _SSOTokenModel.fromJson(Map<String, dynamic> json) => _$SSOTokenModelFromJson(json);
 
 @override@JsonKey(name: 'sso_url') final  String ssoUrl;
 @override final  String token;
-@override@JsonKey(name: 'expires_at') final  DateTime expiresAt;
+@override@JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime) final  DateTime expiresAt;
 
 /// Create a copy of SSOTokenModel
 /// with the given fields replaced by the non-null parameter values.
@@ -251,7 +251,7 @@ abstract mixin class _$SSOTokenModelCopyWith<$Res> implements $SSOTokenModelCopy
   factory _$SSOTokenModelCopyWith(_SSOTokenModel value, $Res Function(_SSOTokenModel) _then) = __$SSOTokenModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'sso_url') String ssoUrl, String token,@JsonKey(name: 'expires_at') DateTime expiresAt
+@JsonKey(name: 'sso_url') String ssoUrl, String token,@JsonKey(name: 'expires_at', fromJson: _parseUtcDateTime) DateTime expiresAt
 });
 
 

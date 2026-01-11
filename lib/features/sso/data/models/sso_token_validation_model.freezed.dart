@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SSOTokenValidationModel {
 
- bool get valid;@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'tenant_id') String get tenantId;@JsonKey(name: 'created_at') DateTime get createdAt;
+ bool get valid;@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'tenant_id') String get tenantId;@JsonKey(name: 'created_at', fromJson: _parseUtcDateTime) DateTime get createdAt;
 /// Create a copy of SSOTokenValidationModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SSOTokenValidationModelCopyWith<$Res>  {
   factory $SSOTokenValidationModelCopyWith(SSOTokenValidationModel value, $Res Function(SSOTokenValidationModel) _then) = _$SSOTokenValidationModelCopyWithImpl;
 @useResult
 $Res call({
- bool valid,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'created_at') DateTime createdAt
+ bool valid,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'created_at', fromJson: _parseUtcDateTime) DateTime createdAt
 });
 
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at')  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at', fromJson: _parseUtcDateTime)  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SSOTokenValidationModel() when $default != null:
 return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
@@ -177,7 +177,7 @@ return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at')  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at', fromJson: _parseUtcDateTime)  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _SSOTokenValidationModel():
 return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
@@ -197,7 +197,7 @@ return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at')  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool valid, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'created_at', fromJson: _parseUtcDateTime)  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _SSOTokenValidationModel() when $default != null:
 return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
@@ -212,13 +212,13 @@ return $default(_that.valid,_that.userId,_that.tenantId,_that.createdAt);case _:
 @JsonSerializable()
 
 class _SSOTokenValidationModel extends SSOTokenValidationModel {
-  const _SSOTokenValidationModel({required this.valid, @JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'tenant_id') required this.tenantId, @JsonKey(name: 'created_at') required this.createdAt}): super._();
+  const _SSOTokenValidationModel({required this.valid, @JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'tenant_id') required this.tenantId, @JsonKey(name: 'created_at', fromJson: _parseUtcDateTime) required this.createdAt}): super._();
   factory _SSOTokenValidationModel.fromJson(Map<String, dynamic> json) => _$SSOTokenValidationModelFromJson(json);
 
 @override final  bool valid;
 @override@JsonKey(name: 'user_id') final  String userId;
 @override@JsonKey(name: 'tenant_id') final  String tenantId;
-@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override@JsonKey(name: 'created_at', fromJson: _parseUtcDateTime) final  DateTime createdAt;
 
 /// Create a copy of SSOTokenValidationModel
 /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +253,7 @@ abstract mixin class _$SSOTokenValidationModelCopyWith<$Res> implements $SSOToke
   factory _$SSOTokenValidationModelCopyWith(_SSOTokenValidationModel value, $Res Function(_SSOTokenValidationModel) _then) = __$SSOTokenValidationModelCopyWithImpl;
 @override @useResult
 $Res call({
- bool valid,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'created_at') DateTime createdAt
+ bool valid,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'created_at', fromJson: _parseUtcDateTime) DateTime createdAt
 });
 
 

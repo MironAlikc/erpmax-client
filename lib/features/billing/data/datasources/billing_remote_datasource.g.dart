@@ -22,12 +22,12 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<List<PlanModel>>> getPlans() async {
+  Future<HttpResponse<PlansResponseModel>> getPlans() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<List<PlanModel>>>(
+    final _options = _setStreamType<HttpResponse<PlansResponseModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -37,12 +37,11 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<PlanModel> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PlansResponseModel _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => PlanModel.fromJson(i as Map<String, dynamic>))
-          .toList();
+      final dataList = _result.data!['data'] as List<dynamic>;
+      _value = PlansResponseModel.fromJson({'data': dataList});
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -70,7 +69,8 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SubscriptionModel _value;
     try {
-      _value = SubscriptionModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = SubscriptionModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -101,7 +101,8 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late CheckoutResponseModel _value;
     try {
-      _value = CheckoutResponseModel.fromJson(_result.data!);
+      final responseData = _result.data!['data'] as Map<String, dynamic>;
+      _value = CheckoutResponseModel.fromJson(responseData);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -111,11 +112,14 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<void>> cancelSubscription() async {
+  Future<HttpResponse<void>> cancelSubscription(
+    Map<String, dynamic> body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<HttpResponse<void>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -132,7 +136,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<List<InvoiceModel>>> getInvoices({
+  Future<HttpResponse<InvoicesResponseModel>> getInvoices({
     int page = 1,
     int size = 20,
   }) async {
@@ -140,7 +144,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final queryParameters = <String, dynamic>{r'page': page, r'size': size};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<List<InvoiceModel>>>(
+    final _options = _setStreamType<HttpResponse<InvoicesResponseModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -150,12 +154,11 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<InvoiceModel> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late InvoicesResponseModel _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => InvoiceModel.fromJson(i as Map<String, dynamic>))
-          .toList();
+      final dataList = _result.data!['data'] as List<dynamic>;
+      _value = InvoicesResponseModel.fromJson({'data': dataList});
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

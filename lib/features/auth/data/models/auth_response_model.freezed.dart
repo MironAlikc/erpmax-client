@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthResponseModel {
 
-@JsonKey(name: 'access_token') String get accessToken;@JsonKey(name: 'refresh_token') String get refreshToken; UserModel get user; List<UserTenantModel> get tenants;@JsonKey(name: 'current_tenant') TenantModel get currentTenant;
+@JsonKey(name: 'access_token') String? get accessToken;@JsonKey(name: 'refresh_token') String? get refreshToken; UserModel? get user; List<UserTenantModel>? get tenants;@JsonKey(name: 'current_tenant') TenantModel? get currentTenant;
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $AuthResponseModelCopyWith<$Res>  {
   factory $AuthResponseModelCopyWith(AuthResponseModel value, $Res Function(AuthResponseModel) _then) = _$AuthResponseModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'refresh_token') String refreshToken, UserModel user, List<UserTenantModel> tenants,@JsonKey(name: 'current_tenant') TenantModel currentTenant
+@JsonKey(name: 'access_token') String? accessToken,@JsonKey(name: 'refresh_token') String? refreshToken, UserModel? user, List<UserTenantModel>? tenants,@JsonKey(name: 'current_tenant') TenantModel? currentTenant
 });
 
 
-$UserModelCopyWith<$Res> get user;$TenantModelCopyWith<$Res> get currentTenant;
+$UserModelCopyWith<$Res>? get user;$TenantModelCopyWith<$Res>? get currentTenant;
 
 }
 /// @nodoc
@@ -65,32 +65,38 @@ class _$AuthResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? refreshToken = null,Object? user = null,Object? tenants = null,Object? currentTenant = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = freezed,Object? refreshToken = freezed,Object? user = freezed,Object? tenants = freezed,Object? currentTenant = freezed,}) {
   return _then(_self.copyWith(
-accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
-as List<UserTenantModel>,currentTenant: null == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
-as TenantModel,
+accessToken: freezed == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String?,refreshToken: freezed == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserModel?,tenants: freezed == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
+as List<UserTenantModel>?,currentTenant: freezed == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
+as TenantModel?,
   ));
 }
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get user {
-  
-  return $UserModelCopyWith<$Res>(_self.user, (value) {
+$UserModelCopyWith<$Res>? get user {
+    if (_self.user == null) {
+    return null;
+  }
+
+  return $UserModelCopyWith<$Res>(_self.user!, (value) {
     return _then(_self.copyWith(user: value));
   });
 }/// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$TenantModelCopyWith<$Res> get currentTenant {
-  
-  return $TenantModelCopyWith<$Res>(_self.currentTenant, (value) {
+$TenantModelCopyWith<$Res>? get currentTenant {
+    if (_self.currentTenant == null) {
+    return null;
+  }
+
+  return $TenantModelCopyWith<$Res>(_self.currentTenant!, (value) {
     return _then(_self.copyWith(currentTenant: value));
   });
 }
@@ -175,7 +181,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  UserModel user,  List<UserTenantModel> tenants, @JsonKey(name: 'current_tenant')  TenantModel currentTenant)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String? accessToken, @JsonKey(name: 'refresh_token')  String? refreshToken,  UserModel? user,  List<UserTenantModel>? tenants, @JsonKey(name: 'current_tenant')  TenantModel? currentTenant)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthResponseModel() when $default != null:
 return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -196,7 +202,7 @@ return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  UserModel user,  List<UserTenantModel> tenants, @JsonKey(name: 'current_tenant')  TenantModel currentTenant)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'access_token')  String? accessToken, @JsonKey(name: 'refresh_token')  String? refreshToken,  UserModel? user,  List<UserTenantModel>? tenants, @JsonKey(name: 'current_tenant')  TenantModel? currentTenant)  $default,) {final _that = this;
 switch (_that) {
 case _AuthResponseModel():
 return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -216,7 +222,7 @@ return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'access_token')  String accessToken, @JsonKey(name: 'refresh_token')  String refreshToken,  UserModel user,  List<UserTenantModel> tenants, @JsonKey(name: 'current_tenant')  TenantModel currentTenant)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'access_token')  String? accessToken, @JsonKey(name: 'refresh_token')  String? refreshToken,  UserModel? user,  List<UserTenantModel>? tenants, @JsonKey(name: 'current_tenant')  TenantModel? currentTenant)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthResponseModel() when $default != null:
 return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -231,20 +237,22 @@ return $default(_that.accessToken,_that.refreshToken,_that.user,_that.tenants,_t
 @JsonSerializable()
 
 class _AuthResponseModel implements AuthResponseModel {
-  const _AuthResponseModel({@JsonKey(name: 'access_token') required this.accessToken, @JsonKey(name: 'refresh_token') required this.refreshToken, required this.user, required final  List<UserTenantModel> tenants, @JsonKey(name: 'current_tenant') required this.currentTenant}): _tenants = tenants;
+  const _AuthResponseModel({@JsonKey(name: 'access_token') this.accessToken, @JsonKey(name: 'refresh_token') this.refreshToken, this.user, final  List<UserTenantModel>? tenants, @JsonKey(name: 'current_tenant') this.currentTenant}): _tenants = tenants;
   factory _AuthResponseModel.fromJson(Map<String, dynamic> json) => _$AuthResponseModelFromJson(json);
 
-@override@JsonKey(name: 'access_token') final  String accessToken;
-@override@JsonKey(name: 'refresh_token') final  String refreshToken;
-@override final  UserModel user;
- final  List<UserTenantModel> _tenants;
-@override List<UserTenantModel> get tenants {
+@override@JsonKey(name: 'access_token') final  String? accessToken;
+@override@JsonKey(name: 'refresh_token') final  String? refreshToken;
+@override final  UserModel? user;
+ final  List<UserTenantModel>? _tenants;
+@override List<UserTenantModel>? get tenants {
+  final value = _tenants;
+  if (value == null) return null;
   if (_tenants is EqualUnmodifiableListView) return _tenants;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_tenants);
+  return EqualUnmodifiableListView(value);
 }
 
-@override@JsonKey(name: 'current_tenant') final  TenantModel currentTenant;
+@override@JsonKey(name: 'current_tenant') final  TenantModel? currentTenant;
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
@@ -279,11 +287,11 @@ abstract mixin class _$AuthResponseModelCopyWith<$Res> implements $AuthResponseM
   factory _$AuthResponseModelCopyWith(_AuthResponseModel value, $Res Function(_AuthResponseModel) _then) = __$AuthResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'access_token') String accessToken,@JsonKey(name: 'refresh_token') String refreshToken, UserModel user, List<UserTenantModel> tenants,@JsonKey(name: 'current_tenant') TenantModel currentTenant
+@JsonKey(name: 'access_token') String? accessToken,@JsonKey(name: 'refresh_token') String? refreshToken, UserModel? user, List<UserTenantModel>? tenants,@JsonKey(name: 'current_tenant') TenantModel? currentTenant
 });
 
 
-@override $UserModelCopyWith<$Res> get user;@override $TenantModelCopyWith<$Res> get currentTenant;
+@override $UserModelCopyWith<$Res>? get user;@override $TenantModelCopyWith<$Res>? get currentTenant;
 
 }
 /// @nodoc
@@ -296,14 +304,14 @@ class __$AuthResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? refreshToken = null,Object? user = null,Object? tenants = null,Object? currentTenant = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = freezed,Object? refreshToken = freezed,Object? user = freezed,Object? tenants = freezed,Object? currentTenant = freezed,}) {
   return _then(_AuthResponseModel(
-accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
-as List<UserTenantModel>,currentTenant: null == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
-as TenantModel,
+accessToken: freezed == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String?,refreshToken: freezed == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserModel?,tenants: freezed == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
+as List<UserTenantModel>?,currentTenant: freezed == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
+as TenantModel?,
   ));
 }
 
@@ -311,18 +319,24 @@ as TenantModel,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get user {
-  
-  return $UserModelCopyWith<$Res>(_self.user, (value) {
+$UserModelCopyWith<$Res>? get user {
+    if (_self.user == null) {
+    return null;
+  }
+
+  return $UserModelCopyWith<$Res>(_self.user!, (value) {
     return _then(_self.copyWith(user: value));
   });
 }/// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$TenantModelCopyWith<$Res> get currentTenant {
-  
-  return $TenantModelCopyWith<$Res>(_self.currentTenant, (value) {
+$TenantModelCopyWith<$Res>? get currentTenant {
+    if (_self.currentTenant == null) {
+    return null;
+  }
+
+  return $TenantModelCopyWith<$Res>(_self.currentTenant!, (value) {
     return _then(_self.copyWith(currentTenant: value));
   });
 }

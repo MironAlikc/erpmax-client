@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/checkout_response_model.dart';
-import '../models/invoice_model.dart';
-import '../models/plan_model.dart';
+import '../models/invoices_response_model.dart';
+import '../models/plans_response_model.dart';
 import '../models/subscription_model.dart';
 
 part 'billing_remote_datasource.g.dart';
@@ -14,7 +14,7 @@ abstract class BillingRemoteDataSource {
       _BillingRemoteDataSource;
 
   @GET('/billing/plans')
-  Future<HttpResponse<List<PlanModel>>> getPlans();
+  Future<HttpResponse<PlansResponseModel>> getPlans();
 
   @GET('/billing/subscription')
   Future<HttpResponse<SubscriptionModel>> getSubscription();
@@ -25,10 +25,12 @@ abstract class BillingRemoteDataSource {
   );
 
   @POST('/billing/cancel')
-  Future<HttpResponse<void>> cancelSubscription();
+  Future<HttpResponse<void>> cancelSubscription(
+    @Body() Map<String, dynamic> body,
+  );
 
   @GET('/billing/invoices')
-  Future<HttpResponse<List<InvoiceModel>>> getInvoices({
+  Future<HttpResponse<InvoicesResponseModel>> getInvoices({
     @Query('page') int page = 1,
     @Query('size') int size = 20,
   });

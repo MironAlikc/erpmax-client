@@ -21,7 +21,7 @@ class ProvisioningRepositoryImpl implements ProvisioningRepository {
     try {
       final response = await remoteDataSource.getJobs(page: page, size: size);
 
-      final jobs = response.data.map((model) => model.toEntity()).toList();
+      final jobs = response.data.data.map((model) => model.toEntity()).toList();
       return Right(jobs);
     } on DioException catch (e) {
       return Left(_handleDioException(e));

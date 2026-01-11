@@ -46,20 +46,30 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       final authResponse = baseResponse.data!;
 
+      if (authResponse.accessToken == null ||
+          authResponse.refreshToken == null) {
+        return Left(ServerFailure(message: 'Missing authentication tokens'));
+      }
+
+      if (authResponse.user == null) {
+        return Left(ServerFailure(message: 'Missing user data'));
+      }
+
       final tokens = AuthTokens(
-        accessToken: authResponse.accessToken,
-        refreshToken: authResponse.refreshToken,
+        accessToken: authResponse.accessToken!,
+        refreshToken: authResponse.refreshToken!,
       );
 
-      await secureStorage.saveAccessToken(authResponse.accessToken);
-      await secureStorage.saveRefreshToken(authResponse.refreshToken);
+      await secureStorage.saveAccessToken(authResponse.accessToken!);
+      await secureStorage.saveRefreshToken(authResponse.refreshToken!);
 
       return Right(
         AuthResult(
           tokens: tokens,
-          user: authResponse.user.toEntity(),
-          tenants: authResponse.tenants.map((t) => t.toEntity()).toList(),
-          currentTenant: authResponse.currentTenant.toEntity(),
+          user: authResponse.user!.toEntity(),
+          tenants:
+              authResponse.tenants?.map((t) => t.toEntity()).toList() ?? [],
+          currentTenant: authResponse.currentTenant?.toEntity(),
         ),
       );
     } on DioException catch (e) {
@@ -91,23 +101,33 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       final authResponse = baseResponse.data!;
       dev.log(
-        'Parsed AuthResponseModel: accessToken=${authResponse.accessToken}, user=${authResponse.user.email}',
+        'Parsed AuthResponseModel: accessToken=${authResponse.accessToken}, user=${authResponse.user?.email}',
       );
+
+      if (authResponse.accessToken == null ||
+          authResponse.refreshToken == null) {
+        return Left(ServerFailure(message: 'Missing authentication tokens'));
+      }
+
+      if (authResponse.user == null) {
+        return Left(ServerFailure(message: 'Missing user data'));
+      }
 
       final tokens = AuthTokens(
-        accessToken: authResponse.accessToken,
-        refreshToken: authResponse.refreshToken,
+        accessToken: authResponse.accessToken!,
+        refreshToken: authResponse.refreshToken!,
       );
 
-      await secureStorage.saveAccessToken(authResponse.accessToken);
-      await secureStorage.saveRefreshToken(authResponse.refreshToken);
+      await secureStorage.saveAccessToken(authResponse.accessToken!);
+      await secureStorage.saveRefreshToken(authResponse.refreshToken!);
 
       return Right(
         AuthResult(
           tokens: tokens,
-          user: authResponse.user.toEntity(),
-          tenants: authResponse.tenants.map((t) => t.toEntity()).toList(),
-          currentTenant: authResponse.currentTenant.toEntity(),
+          user: authResponse.user!.toEntity(),
+          tenants:
+              authResponse.tenants?.map((t) => t.toEntity()).toList() ?? [],
+          currentTenant: authResponse.currentTenant?.toEntity(),
         ),
       );
     } on DioException catch (e) {
@@ -124,10 +144,16 @@ class AuthRepositoryImpl implements AuthRepository {
         'refresh_token': refreshToken,
       });
 
-      final authResponse = response.data;
+      final authResponse = response.data.data!;
+
+      if (authResponse.accessToken == null ||
+          authResponse.refreshToken == null) {
+        return Left(ServerFailure(message: 'Missing authentication tokens'));
+      }
+
       final tokens = AuthTokens(
-        accessToken: authResponse.accessToken,
-        refreshToken: authResponse.refreshToken,
+        accessToken: authResponse.accessToken!,
+        refreshToken: authResponse.refreshToken!,
       );
 
       await secureStorage.saveAccessToken(tokens.accessToken);
@@ -161,7 +187,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserWithTenants>> getCurrentUser() async {
     try {
       final response = await remoteDataSource.getCurrentUser();
-      final model = response.data;
+      final model = response.data.data!;
 
       return Right(model.toEntity());
     } on DioException catch (e) {
@@ -180,7 +206,7 @@ class AuthRepositoryImpl implements AuthRepository {
         'tenant_id': tenantId,
       });
 
-      final model = response.data;
+      final model = response.data.data!;
 
       await secureStorage.saveAccessToken(model.accessToken);
       await secureStorage.saveRefreshToken(model.refreshToken);

@@ -96,7 +96,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<AuthResponseModel>> refreshToken(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> refreshToken(
     Map<String, dynamic> body,
   ) async {
     final _extra = <String, dynamic>{};
@@ -104,20 +104,26 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<HttpResponse<AuthResponseModel>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/refresh',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _options =
+        _setStreamType<HttpResponse<BaseResponse<AuthResponseModel>>>(
+          Options(method: 'POST', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/auth/refresh',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseModel _value;
+    late BaseResponse<AuthResponseModel> _value;
     try {
-      _value = AuthResponseModel.fromJson(_result.data!);
+      _value = BaseResponse<AuthResponseModel>.fromJson(
+        _result.data!,
+        (json) => AuthResponseModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -148,25 +154,32 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<UserWithTenantsModel>> getCurrentUser() async {
+  Future<HttpResponse<BaseResponse<UserWithTenantsModel>>>
+  getCurrentUser() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<UserWithTenantsModel>>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/me',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _options =
+        _setStreamType<HttpResponse<BaseResponse<UserWithTenantsModel>>>(
+          Options(method: 'GET', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/auth/me',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserWithTenantsModel _value;
+    late BaseResponse<UserWithTenantsModel> _value;
     try {
-      _value = UserWithTenantsModel.fromJson(_result.data!);
+      _value = BaseResponse<UserWithTenantsModel>.fromJson(
+        _result.data!,
+        (json) => UserWithTenantsModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -176,7 +189,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<SwitchTenantResponseModel>> switchTenant(
+  Future<HttpResponse<BaseResponse<SwitchTenantResponseModel>>> switchTenant(
     Map<String, dynamic> body,
   ) async {
     final _extra = <String, dynamic>{};
@@ -184,20 +197,27 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<HttpResponse<SwitchTenantResponseModel>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/auth/switch-tenant',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _options =
+        _setStreamType<HttpResponse<BaseResponse<SwitchTenantResponseModel>>>(
+          Options(method: 'POST', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                '/auth/switch-tenant',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late SwitchTenantResponseModel _value;
+    late BaseResponse<SwitchTenantResponseModel> _value;
     try {
-      _value = SwitchTenantResponseModel.fromJson(_result.data!);
+      _value = BaseResponse<SwitchTenantResponseModel>.fromJson(
+        _result.data!,
+        (json) =>
+            SwitchTenantResponseModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

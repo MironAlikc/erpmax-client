@@ -1,6 +1,5 @@
-import 'package:erpmax_client/core/widgets/table/erpmax_table.dart'
-    hide ErpMaxColumn;
 import 'package:flutter/material.dart';
+import 'dart:developer' as dev;
 
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
@@ -18,6 +17,67 @@ class ModuleModel {
     required this.version,
     required this.isActive,
   });
+
+  factory ModuleModel.fromJson(Map<String, dynamic> json) {
+    dev.log('=== ModuleModel.fromJson START ===');
+    dev.log('Raw JSON: $json');
+    dev.log('JSON type: ${json.runtimeType}');
+
+    // Log each field separately
+    dev.log('name field: ${json['name']} (type: ${json['name'].runtimeType})');
+    dev.log(
+      'packages field: ${json['packages']} (type: ${json['packages'].runtimeType})',
+    );
+    dev.log(
+      'version field: ${json['version']} (type: ${json['version'].runtimeType})',
+    );
+    dev.log(
+      'isActive field: ${json['isActive']} (type: ${json['isActive'].runtimeType})',
+    );
+    dev.log(
+      'is_active field: ${json['is_active']} (type: ${json['is_active'].runtimeType})',
+    );
+
+    try {
+      final name = json['name'] as String;
+      dev.log('✓ name parsed: $name');
+
+      final packagesRaw = json['packages'];
+      final packages = packagesRaw is List
+          ? packagesRaw.map((e) => e.toString()).toList()
+          : <String>[];
+      dev.log('✓ packages parsed: $packages');
+
+      final version = json['version'] as String;
+      dev.log('✓ version parsed: $version');
+
+      final isActive =
+          json['isActive'] as bool? ?? json['is_active'] as bool? ?? false;
+      dev.log('✓ isActive parsed: $isActive');
+
+      dev.log('=== ModuleModel.fromJson SUCCESS ===');
+
+      return ModuleModel(
+        name: name,
+        packages: packages,
+        version: version,
+        isActive: isActive,
+      );
+    } catch (e, stackTrace) {
+      dev.log('❌ ERROR in ModuleModel.fromJson: $e');
+      dev.log('Stack trace: $stackTrace');
+      rethrow;
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'packages': packages,
+      'version': version,
+      'isActive': isActive,
+    };
+  }
 }
 
 class ModuleManagementContent extends StatefulWidget {

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlanModel {
 
- String get id; String get name; String get description;@JsonKey(name: 'monthly_price') double get monthlyPrice;@JsonKey(name: 'yearly_price') double get yearlyPrice; Map<String, dynamic> get features;@JsonKey(name: 'max_users') int get maxUsers;@JsonKey(name: 'max_storage') int get maxStorage;@JsonKey(name: 'is_active') bool get isActive;
+ String get id; String get name; String get description;@JsonKey(name: 'monthly_price', defaultValue: 0.0) double? get monthlyPrice;@JsonKey(name: 'yearly_price', defaultValue: 0.0) double? get yearlyPrice; dynamic get features;@JsonKey(name: 'max_users', defaultValue: 0) int? get maxUsers;@JsonKey(name: 'max_storage', defaultValue: 0) int? get maxStorage;@JsonKey(name: 'is_active', defaultValue: false) bool? get isActive;
 /// Create a copy of PlanModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $PlanModelCopyWith<$Res>  {
   factory $PlanModelCopyWith(PlanModel value, $Res Function(PlanModel) _then) = _$PlanModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String description,@JsonKey(name: 'monthly_price') double monthlyPrice,@JsonKey(name: 'yearly_price') double yearlyPrice, Map<String, dynamic> features,@JsonKey(name: 'max_users') int maxUsers,@JsonKey(name: 'max_storage') int maxStorage,@JsonKey(name: 'is_active') bool isActive
+ String id, String name, String description,@JsonKey(name: 'monthly_price', defaultValue: 0.0) double? monthlyPrice,@JsonKey(name: 'yearly_price', defaultValue: 0.0) double? yearlyPrice, dynamic features,@JsonKey(name: 'max_users', defaultValue: 0) int? maxUsers,@JsonKey(name: 'max_storage', defaultValue: 0) int? maxStorage,@JsonKey(name: 'is_active', defaultValue: false) bool? isActive
 });
 
 
@@ -65,18 +65,18 @@ class _$PlanModelCopyWithImpl<$Res>
 
 /// Create a copy of PlanModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? monthlyPrice = null,Object? yearlyPrice = null,Object? features = null,Object? maxUsers = null,Object? maxStorage = null,Object? isActive = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? monthlyPrice = freezed,Object? yearlyPrice = freezed,Object? features = freezed,Object? maxUsers = freezed,Object? maxStorage = freezed,Object? isActive = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,monthlyPrice: null == monthlyPrice ? _self.monthlyPrice : monthlyPrice // ignore: cast_nullable_to_non_nullable
-as double,yearlyPrice: null == yearlyPrice ? _self.yearlyPrice : yearlyPrice // ignore: cast_nullable_to_non_nullable
-as double,features: null == features ? _self.features : features // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,maxUsers: null == maxUsers ? _self.maxUsers : maxUsers // ignore: cast_nullable_to_non_nullable
-as int,maxStorage: null == maxStorage ? _self.maxStorage : maxStorage // ignore: cast_nullable_to_non_nullable
-as int,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,monthlyPrice: freezed == monthlyPrice ? _self.monthlyPrice : monthlyPrice // ignore: cast_nullable_to_non_nullable
+as double?,yearlyPrice: freezed == yearlyPrice ? _self.yearlyPrice : yearlyPrice // ignore: cast_nullable_to_non_nullable
+as double?,features: freezed == features ? _self.features : features // ignore: cast_nullable_to_non_nullable
+as dynamic,maxUsers: freezed == maxUsers ? _self.maxUsers : maxUsers // ignore: cast_nullable_to_non_nullable
+as int?,maxStorage: freezed == maxStorage ? _self.maxStorage : maxStorage // ignore: cast_nullable_to_non_nullable
+as int?,isActive: freezed == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price')  double monthlyPrice, @JsonKey(name: 'yearly_price')  double yearlyPrice,  Map<String, dynamic> features, @JsonKey(name: 'max_users')  int maxUsers, @JsonKey(name: 'max_storage')  int maxStorage, @JsonKey(name: 'is_active')  bool isActive)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price', defaultValue: 0.0)  double? monthlyPrice, @JsonKey(name: 'yearly_price', defaultValue: 0.0)  double? yearlyPrice,  dynamic features, @JsonKey(name: 'max_users', defaultValue: 0)  int? maxUsers, @JsonKey(name: 'max_storage', defaultValue: 0)  int? maxStorage, @JsonKey(name: 'is_active', defaultValue: false)  bool? isActive)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlanModel() when $default != null:
 return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.yearlyPrice,_that.features,_that.maxUsers,_that.maxStorage,_that.isActive);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.y
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price')  double monthlyPrice, @JsonKey(name: 'yearly_price')  double yearlyPrice,  Map<String, dynamic> features, @JsonKey(name: 'max_users')  int maxUsers, @JsonKey(name: 'max_storage')  int maxStorage, @JsonKey(name: 'is_active')  bool isActive)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price', defaultValue: 0.0)  double? monthlyPrice, @JsonKey(name: 'yearly_price', defaultValue: 0.0)  double? yearlyPrice,  dynamic features, @JsonKey(name: 'max_users', defaultValue: 0)  int? maxUsers, @JsonKey(name: 'max_storage', defaultValue: 0)  int? maxStorage, @JsonKey(name: 'is_active', defaultValue: false)  bool? isActive)  $default,) {final _that = this;
 switch (_that) {
 case _PlanModel():
 return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.yearlyPrice,_that.features,_that.maxUsers,_that.maxStorage,_that.isActive);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.y
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price')  double monthlyPrice, @JsonKey(name: 'yearly_price')  double yearlyPrice,  Map<String, dynamic> features, @JsonKey(name: 'max_users')  int maxUsers, @JsonKey(name: 'max_storage')  int maxStorage, @JsonKey(name: 'is_active')  bool isActive)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description, @JsonKey(name: 'monthly_price', defaultValue: 0.0)  double? monthlyPrice, @JsonKey(name: 'yearly_price', defaultValue: 0.0)  double? yearlyPrice,  dynamic features, @JsonKey(name: 'max_users', defaultValue: 0)  int? maxUsers, @JsonKey(name: 'max_storage', defaultValue: 0)  int? maxStorage, @JsonKey(name: 'is_active', defaultValue: false)  bool? isActive)?  $default,) {final _that = this;
 switch (_that) {
 case _PlanModel() when $default != null:
 return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.yearlyPrice,_that.features,_that.maxUsers,_that.maxStorage,_that.isActive);case _:
@@ -217,24 +217,18 @@ return $default(_that.id,_that.name,_that.description,_that.monthlyPrice,_that.y
 @JsonSerializable()
 
 class _PlanModel extends PlanModel {
-  const _PlanModel({required this.id, required this.name, required this.description, @JsonKey(name: 'monthly_price') required this.monthlyPrice, @JsonKey(name: 'yearly_price') required this.yearlyPrice, required final  Map<String, dynamic> features, @JsonKey(name: 'max_users') required this.maxUsers, @JsonKey(name: 'max_storage') required this.maxStorage, @JsonKey(name: 'is_active') required this.isActive}): _features = features,super._();
+  const _PlanModel({required this.id, required this.name, required this.description, @JsonKey(name: 'monthly_price', defaultValue: 0.0) this.monthlyPrice, @JsonKey(name: 'yearly_price', defaultValue: 0.0) this.yearlyPrice, this.features, @JsonKey(name: 'max_users', defaultValue: 0) this.maxUsers, @JsonKey(name: 'max_storage', defaultValue: 0) this.maxStorage, @JsonKey(name: 'is_active', defaultValue: false) this.isActive}): super._();
   factory _PlanModel.fromJson(Map<String, dynamic> json) => _$PlanModelFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String description;
-@override@JsonKey(name: 'monthly_price') final  double monthlyPrice;
-@override@JsonKey(name: 'yearly_price') final  double yearlyPrice;
- final  Map<String, dynamic> _features;
-@override Map<String, dynamic> get features {
-  if (_features is EqualUnmodifiableMapView) return _features;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_features);
-}
-
-@override@JsonKey(name: 'max_users') final  int maxUsers;
-@override@JsonKey(name: 'max_storage') final  int maxStorage;
-@override@JsonKey(name: 'is_active') final  bool isActive;
+@override@JsonKey(name: 'monthly_price', defaultValue: 0.0) final  double? monthlyPrice;
+@override@JsonKey(name: 'yearly_price', defaultValue: 0.0) final  double? yearlyPrice;
+@override final  dynamic features;
+@override@JsonKey(name: 'max_users', defaultValue: 0) final  int? maxUsers;
+@override@JsonKey(name: 'max_storage', defaultValue: 0) final  int? maxStorage;
+@override@JsonKey(name: 'is_active', defaultValue: false) final  bool? isActive;
 
 /// Create a copy of PlanModel
 /// with the given fields replaced by the non-null parameter values.
@@ -249,12 +243,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.monthlyPrice, monthlyPrice) || other.monthlyPrice == monthlyPrice)&&(identical(other.yearlyPrice, yearlyPrice) || other.yearlyPrice == yearlyPrice)&&const DeepCollectionEquality().equals(other._features, _features)&&(identical(other.maxUsers, maxUsers) || other.maxUsers == maxUsers)&&(identical(other.maxStorage, maxStorage) || other.maxStorage == maxStorage)&&(identical(other.isActive, isActive) || other.isActive == isActive));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.monthlyPrice, monthlyPrice) || other.monthlyPrice == monthlyPrice)&&(identical(other.yearlyPrice, yearlyPrice) || other.yearlyPrice == yearlyPrice)&&const DeepCollectionEquality().equals(other.features, features)&&(identical(other.maxUsers, maxUsers) || other.maxUsers == maxUsers)&&(identical(other.maxStorage, maxStorage) || other.maxStorage == maxStorage)&&(identical(other.isActive, isActive) || other.isActive == isActive));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,monthlyPrice,yearlyPrice,const DeepCollectionEquality().hash(_features),maxUsers,maxStorage,isActive);
+int get hashCode => Object.hash(runtimeType,id,name,description,monthlyPrice,yearlyPrice,const DeepCollectionEquality().hash(features),maxUsers,maxStorage,isActive);
 
 @override
 String toString() {
@@ -269,7 +263,7 @@ abstract mixin class _$PlanModelCopyWith<$Res> implements $PlanModelCopyWith<$Re
   factory _$PlanModelCopyWith(_PlanModel value, $Res Function(_PlanModel) _then) = __$PlanModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String description,@JsonKey(name: 'monthly_price') double monthlyPrice,@JsonKey(name: 'yearly_price') double yearlyPrice, Map<String, dynamic> features,@JsonKey(name: 'max_users') int maxUsers,@JsonKey(name: 'max_storage') int maxStorage,@JsonKey(name: 'is_active') bool isActive
+ String id, String name, String description,@JsonKey(name: 'monthly_price', defaultValue: 0.0) double? monthlyPrice,@JsonKey(name: 'yearly_price', defaultValue: 0.0) double? yearlyPrice, dynamic features,@JsonKey(name: 'max_users', defaultValue: 0) int? maxUsers,@JsonKey(name: 'max_storage', defaultValue: 0) int? maxStorage,@JsonKey(name: 'is_active', defaultValue: false) bool? isActive
 });
 
 
@@ -286,18 +280,18 @@ class __$PlanModelCopyWithImpl<$Res>
 
 /// Create a copy of PlanModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? monthlyPrice = null,Object? yearlyPrice = null,Object? features = null,Object? maxUsers = null,Object? maxStorage = null,Object? isActive = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? monthlyPrice = freezed,Object? yearlyPrice = freezed,Object? features = freezed,Object? maxUsers = freezed,Object? maxStorage = freezed,Object? isActive = freezed,}) {
   return _then(_PlanModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,monthlyPrice: null == monthlyPrice ? _self.monthlyPrice : monthlyPrice // ignore: cast_nullable_to_non_nullable
-as double,yearlyPrice: null == yearlyPrice ? _self.yearlyPrice : yearlyPrice // ignore: cast_nullable_to_non_nullable
-as double,features: null == features ? _self._features : features // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,maxUsers: null == maxUsers ? _self.maxUsers : maxUsers // ignore: cast_nullable_to_non_nullable
-as int,maxStorage: null == maxStorage ? _self.maxStorage : maxStorage // ignore: cast_nullable_to_non_nullable
-as int,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,monthlyPrice: freezed == monthlyPrice ? _self.monthlyPrice : monthlyPrice // ignore: cast_nullable_to_non_nullable
+as double?,yearlyPrice: freezed == yearlyPrice ? _self.yearlyPrice : yearlyPrice // ignore: cast_nullable_to_non_nullable
+as double?,features: freezed == features ? _self.features : features // ignore: cast_nullable_to_non_nullable
+as dynamic,maxUsers: freezed == maxUsers ? _self.maxUsers : maxUsers // ignore: cast_nullable_to_non_nullable
+as int?,maxStorage: freezed == maxStorage ? _self.maxStorage : maxStorage // ignore: cast_nullable_to_non_nullable
+as int?,isActive: freezed == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

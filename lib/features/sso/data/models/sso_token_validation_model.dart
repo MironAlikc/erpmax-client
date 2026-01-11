@@ -12,7 +12,8 @@ abstract class SSOTokenValidationModel with _$SSOTokenValidationModel {
     required bool valid,
     @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'tenant_id') required String tenantId,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'created_at', fromJson: _parseUtcDateTime)
+    required DateTime createdAt,
   }) = _SSOTokenValidationModel;
 
   factory SSOTokenValidationModel.fromJson(Map<String, dynamic> json) =>
@@ -24,4 +25,23 @@ abstract class SSOTokenValidationModel with _$SSOTokenValidationModel {
     tenantId: tenantId,
     createdAt: createdAt,
   );
+}
+
+DateTime _parseUtcDateTime(dynamic value) {
+  if (value is String) {
+    final dateTime = DateTime.parse(value);
+    return dateTime.isUtc
+        ? dateTime
+        : DateTime.utc(
+            dateTime.year,
+            dateTime.month,
+            dateTime.day,
+            dateTime.hour,
+            dateTime.minute,
+            dateTime.second,
+            dateTime.millisecond,
+            dateTime.microsecond,
+          );
+  }
+  throw ArgumentError('Invalid datetime value: $value');
 }

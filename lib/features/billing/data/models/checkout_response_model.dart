@@ -10,13 +10,15 @@ abstract class CheckoutResponseModel with _$CheckoutResponseModel {
   const CheckoutResponseModel._();
 
   const factory CheckoutResponseModel({
-    @JsonKey(name: 'session_id') required String sessionId,
-    @JsonKey(name: 'checkout_url') required String checkoutUrl,
+    @JsonKey(name: 'session_id') String? sessionId,
+    @JsonKey(name: 'checkout_url') String? checkoutUrl,
   }) = _CheckoutResponseModel;
 
   factory CheckoutResponseModel.fromJson(Map<String, dynamic> json) =>
       _$CheckoutResponseModelFromJson(json);
 
-  CheckoutResponseEntity toEntity() =>
-      CheckoutResponseEntity(sessionId: sessionId, checkoutUrl: checkoutUrl);
+  CheckoutResponseEntity toEntity() => CheckoutResponseEntity(
+    sessionId: sessionId ?? '',
+    checkoutUrl: checkoutUrl ?? '',
+  );
 }

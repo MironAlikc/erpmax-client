@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CheckoutResponseModel {
 
-@JsonKey(name: 'session_id') String get sessionId;@JsonKey(name: 'checkout_url') String get checkoutUrl;
+@JsonKey(name: 'session_id') String? get sessionId;@JsonKey(name: 'checkout_url') String? get checkoutUrl;
 /// Create a copy of CheckoutResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CheckoutResponseModelCopyWith<$Res>  {
   factory $CheckoutResponseModelCopyWith(CheckoutResponseModel value, $Res Function(CheckoutResponseModel) _then) = _$CheckoutResponseModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'session_id') String sessionId,@JsonKey(name: 'checkout_url') String checkoutUrl
+@JsonKey(name: 'session_id') String? sessionId,@JsonKey(name: 'checkout_url') String? checkoutUrl
 });
 
 
@@ -65,11 +65,11 @@ class _$CheckoutResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sessionId = null,Object? checkoutUrl = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sessionId = freezed,Object? checkoutUrl = freezed,}) {
   return _then(_self.copyWith(
-sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
-as String,checkoutUrl: null == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
-as String,
+sessionId: freezed == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
+as String?,checkoutUrl: freezed == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'session_id')  String sessionId, @JsonKey(name: 'checkout_url')  String checkoutUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'session_id')  String? sessionId, @JsonKey(name: 'checkout_url')  String? checkoutUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CheckoutResponseModel() when $default != null:
 return $default(_that.sessionId,_that.checkoutUrl);case _:
@@ -175,7 +175,7 @@ return $default(_that.sessionId,_that.checkoutUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'session_id')  String sessionId, @JsonKey(name: 'checkout_url')  String checkoutUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'session_id')  String? sessionId, @JsonKey(name: 'checkout_url')  String? checkoutUrl)  $default,) {final _that = this;
 switch (_that) {
 case _CheckoutResponseModel():
 return $default(_that.sessionId,_that.checkoutUrl);case _:
@@ -195,7 +195,7 @@ return $default(_that.sessionId,_that.checkoutUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'session_id')  String sessionId, @JsonKey(name: 'checkout_url')  String checkoutUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'session_id')  String? sessionId, @JsonKey(name: 'checkout_url')  String? checkoutUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _CheckoutResponseModel() when $default != null:
 return $default(_that.sessionId,_that.checkoutUrl);case _:
@@ -210,11 +210,11 @@ return $default(_that.sessionId,_that.checkoutUrl);case _:
 @JsonSerializable()
 
 class _CheckoutResponseModel extends CheckoutResponseModel {
-  const _CheckoutResponseModel({@JsonKey(name: 'session_id') required this.sessionId, @JsonKey(name: 'checkout_url') required this.checkoutUrl}): super._();
+  const _CheckoutResponseModel({@JsonKey(name: 'session_id') this.sessionId, @JsonKey(name: 'checkout_url') this.checkoutUrl}): super._();
   factory _CheckoutResponseModel.fromJson(Map<String, dynamic> json) => _$CheckoutResponseModelFromJson(json);
 
-@override@JsonKey(name: 'session_id') final  String sessionId;
-@override@JsonKey(name: 'checkout_url') final  String checkoutUrl;
+@override@JsonKey(name: 'session_id') final  String? sessionId;
+@override@JsonKey(name: 'checkout_url') final  String? checkoutUrl;
 
 /// Create a copy of CheckoutResponseModel
 /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +249,7 @@ abstract mixin class _$CheckoutResponseModelCopyWith<$Res> implements $CheckoutR
   factory _$CheckoutResponseModelCopyWith(_CheckoutResponseModel value, $Res Function(_CheckoutResponseModel) _then) = __$CheckoutResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'session_id') String sessionId,@JsonKey(name: 'checkout_url') String checkoutUrl
+@JsonKey(name: 'session_id') String? sessionId,@JsonKey(name: 'checkout_url') String? checkoutUrl
 });
 
 
@@ -266,11 +266,11 @@ class __$CheckoutResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sessionId = null,Object? checkoutUrl = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sessionId = freezed,Object? checkoutUrl = freezed,}) {
   return _then(_CheckoutResponseModel(
-sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
-as String,checkoutUrl: null == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
-as String,
+sessionId: freezed == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
+as String?,checkoutUrl: freezed == checkoutUrl ? _self.checkoutUrl : checkoutUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

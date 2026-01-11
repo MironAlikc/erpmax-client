@@ -12,7 +12,13 @@ abstract class UserWithTenantsModel with _$UserWithTenantsModel {
   const UserWithTenantsModel._();
 
   const factory UserWithTenantsModel({
-    required UserModel user,
+    required String id,
+    required String email,
+    @JsonKey(name: 'full_name') String? fullName,
+    @JsonKey(name: 'is_active') required bool isActive,
+    @JsonKey(name: 'is_superuser') required bool isSuperuser,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'updated_at') required DateTime updatedAt,
     required List<UserTenantModel> tenants,
   }) = _UserWithTenantsModel;
 
@@ -20,7 +26,15 @@ abstract class UserWithTenantsModel with _$UserWithTenantsModel {
       _$UserWithTenantsModelFromJson(json);
 
   UserWithTenants toEntity() => UserWithTenants(
-    user: user.toEntity(),
-    tenants: tenants.map((t) => t.toEntity()).toList(),
+    user: UserModel(
+      id: this.id,
+      email: this.email,
+      fullName: this.fullName ?? '',
+      isActive: this.isActive,
+      isSuperuser: this.isSuperuser,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    ).toEntity(),
+    tenants: this.tenants.map((t) => t.toEntity()).toList(),
   );
 }

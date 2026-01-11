@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthResult {
 
- AuthTokens get tokens; UserEntity get user; List<UserTenantEntity> get tenants; TenantEntity get currentTenant;
+ AuthTokens get tokens; UserEntity get user; List<UserTenantEntity> get tenants; TenantEntity? get currentTenant;
 /// Create a copy of AuthResult
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $AuthResultCopyWith<$Res>  {
   factory $AuthResultCopyWith(AuthResult value, $Res Function(AuthResult) _then) = _$AuthResultCopyWithImpl;
 @useResult
 $Res call({
- AuthTokens tokens, UserEntity user, List<UserTenantEntity> tenants, TenantEntity currentTenant
+ AuthTokens tokens, UserEntity user, List<UserTenantEntity> tenants, TenantEntity? currentTenant
 });
 
 
-$AuthTokensCopyWith<$Res> get tokens;$UserEntityCopyWith<$Res> get user;$TenantEntityCopyWith<$Res> get currentTenant;
+$AuthTokensCopyWith<$Res> get tokens;$UserEntityCopyWith<$Res> get user;$TenantEntityCopyWith<$Res>? get currentTenant;
 
 }
 /// @nodoc
@@ -62,13 +62,13 @@ class _$AuthResultCopyWithImpl<$Res>
 
 /// Create a copy of AuthResult
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? tokens = null,Object? user = null,Object? tenants = null,Object? currentTenant = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? tokens = null,Object? user = null,Object? tenants = null,Object? currentTenant = freezed,}) {
   return _then(_self.copyWith(
 tokens: null == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
 as AuthTokens,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserEntity,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
-as List<UserTenantEntity>,currentTenant: null == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
-as TenantEntity,
+as List<UserTenantEntity>,currentTenant: freezed == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
+as TenantEntity?,
   ));
 }
 /// Create a copy of AuthResult
@@ -93,9 +93,12 @@ $UserEntityCopyWith<$Res> get user {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$TenantEntityCopyWith<$Res> get currentTenant {
-  
-  return $TenantEntityCopyWith<$Res>(_self.currentTenant, (value) {
+$TenantEntityCopyWith<$Res>? get currentTenant {
+    if (_self.currentTenant == null) {
+    return null;
+  }
+
+  return $TenantEntityCopyWith<$Res>(_self.currentTenant!, (value) {
     return _then(_self.copyWith(currentTenant: value));
   });
 }
@@ -180,7 +183,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity currentTenant)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity? currentTenant)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthResult() when $default != null:
 return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -201,7 +204,7 @@ return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity currentTenant)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity? currentTenant)  $default,) {final _that = this;
 switch (_that) {
 case _AuthResult():
 return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -221,7 +224,7 @@ return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity currentTenant)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthTokens tokens,  UserEntity user,  List<UserTenantEntity> tenants,  TenantEntity? currentTenant)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthResult() when $default != null:
 return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case _:
@@ -236,7 +239,7 @@ return $default(_that.tokens,_that.user,_that.tenants,_that.currentTenant);case 
 
 
 class _AuthResult implements AuthResult {
-  const _AuthResult({required this.tokens, required this.user, required final  List<UserTenantEntity> tenants, required this.currentTenant}): _tenants = tenants;
+  const _AuthResult({required this.tokens, required this.user, required final  List<UserTenantEntity> tenants, this.currentTenant}): _tenants = tenants;
   
 
 @override final  AuthTokens tokens;
@@ -248,7 +251,7 @@ class _AuthResult implements AuthResult {
   return EqualUnmodifiableListView(_tenants);
 }
 
-@override final  TenantEntity currentTenant;
+@override final  TenantEntity? currentTenant;
 
 /// Create a copy of AuthResult
 /// with the given fields replaced by the non-null parameter values.
@@ -280,11 +283,11 @@ abstract mixin class _$AuthResultCopyWith<$Res> implements $AuthResultCopyWith<$
   factory _$AuthResultCopyWith(_AuthResult value, $Res Function(_AuthResult) _then) = __$AuthResultCopyWithImpl;
 @override @useResult
 $Res call({
- AuthTokens tokens, UserEntity user, List<UserTenantEntity> tenants, TenantEntity currentTenant
+ AuthTokens tokens, UserEntity user, List<UserTenantEntity> tenants, TenantEntity? currentTenant
 });
 
 
-@override $AuthTokensCopyWith<$Res> get tokens;@override $UserEntityCopyWith<$Res> get user;@override $TenantEntityCopyWith<$Res> get currentTenant;
+@override $AuthTokensCopyWith<$Res> get tokens;@override $UserEntityCopyWith<$Res> get user;@override $TenantEntityCopyWith<$Res>? get currentTenant;
 
 }
 /// @nodoc
@@ -297,13 +300,13 @@ class __$AuthResultCopyWithImpl<$Res>
 
 /// Create a copy of AuthResult
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? tokens = null,Object? user = null,Object? tenants = null,Object? currentTenant = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tokens = null,Object? user = null,Object? tenants = null,Object? currentTenant = freezed,}) {
   return _then(_AuthResult(
 tokens: null == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
 as AuthTokens,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserEntity,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
-as List<UserTenantEntity>,currentTenant: null == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
-as TenantEntity,
+as List<UserTenantEntity>,currentTenant: freezed == currentTenant ? _self.currentTenant : currentTenant // ignore: cast_nullable_to_non_nullable
+as TenantEntity?,
   ));
 }
 
@@ -329,9 +332,12 @@ $UserEntityCopyWith<$Res> get user {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$TenantEntityCopyWith<$Res> get currentTenant {
-  
-  return $TenantEntityCopyWith<$Res>(_self.currentTenant, (value) {
+$TenantEntityCopyWith<$Res>? get currentTenant {
+    if (_self.currentTenant == null) {
+    return null;
+  }
+
+  return $TenantEntityCopyWith<$Res>(_self.currentTenant!, (value) {
     return _then(_self.copyWith(currentTenant: value));
   });
 }

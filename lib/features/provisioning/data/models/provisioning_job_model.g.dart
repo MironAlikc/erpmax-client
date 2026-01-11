@@ -9,11 +9,13 @@ part of 'provisioning_job_model.dart';
 _ProvisioningJobModel _$ProvisioningJobModelFromJson(
   Map<String, dynamic> json,
 ) => _ProvisioningJobModel(
-  id: json['id'] as String,
-  tenantId: json['tenant_id'] as String,
-  jobType: json['job_type'] as String,
-  status: json['status'] as String,
-  createdAt: DateTime.parse(json['created_at'] as String),
+  id: json['id'] as String?,
+  tenantId: json['tenant_id'] as String?,
+  jobType: json['job_type'] as String?,
+  status: json['status'] as String?,
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
   startedAt: json['started_at'] == null
       ? null
       : DateTime.parse(json['started_at'] as String),
@@ -31,7 +33,7 @@ Map<String, dynamic> _$ProvisioningJobModelToJson(
   'tenant_id': instance.tenantId,
   'job_type': instance.jobType,
   'status': instance.status,
-  'created_at': instance.createdAt.toIso8601String(),
+  'created_at': instance.createdAt?.toIso8601String(),
   'started_at': instance.startedAt?.toIso8601String(),
   'completed_at': instance.completedAt?.toIso8601String(),
   'error_message': instance.errorMessage,

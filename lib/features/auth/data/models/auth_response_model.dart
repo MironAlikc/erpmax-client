@@ -9,11 +9,11 @@ part 'auth_response_model.g.dart';
 @freezed
 abstract class AuthResponseModel with _$AuthResponseModel {
   const factory AuthResponseModel({
-    @JsonKey(name: 'access_token') required String accessToken,
-    @JsonKey(name: 'refresh_token') required String refreshToken,
-    required UserModel user,
-    required List<UserTenantModel> tenants,
-    @JsonKey(name: 'current_tenant') required TenantModel currentTenant,
+    @JsonKey(name: 'access_token') String? accessToken,
+    @JsonKey(name: 'refresh_token') String? refreshToken,
+    UserModel? user,
+    List<UserTenantModel>? tenants,
+    @JsonKey(name: 'current_tenant') TenantModel? currentTenant,
   }) = _AuthResponseModel;
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>

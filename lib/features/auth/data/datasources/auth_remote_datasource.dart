@@ -23,7 +23,7 @@ abstract class AuthRemoteDataSource {
   );
 
   @POST('/auth/refresh')
-  Future<HttpResponse<AuthResponseModel>> refreshToken(
+  Future<HttpResponse<BaseResponse<AuthResponseModel>>> refreshToken(
     @Body() Map<String, dynamic> body,
   );
 
@@ -31,10 +31,10 @@ abstract class AuthRemoteDataSource {
   Future<HttpResponse<void>> logout();
 
   @GET('/auth/me')
-  Future<HttpResponse<UserWithTenantsModel>> getCurrentUser();
+  Future<HttpResponse<BaseResponse<UserWithTenantsModel>>> getCurrentUser();
 
   @POST('/auth/switch-tenant')
-  Future<HttpResponse<SwitchTenantResponseModel>> switchTenant(
+  Future<HttpResponse<BaseResponse<SwitchTenantResponseModel>>> switchTenant(
     @Body() Map<String, dynamic> body,
   );
 }

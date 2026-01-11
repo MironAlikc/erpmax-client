@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SubscriptionModel {
 
- String get id;@JsonKey(name: 'tenant_id') String get tenantId;@JsonKey(name: 'plan_id') String get planId;@JsonKey(name: 'plan_name') String get planName; String get status;@JsonKey(name: 'billing_period') String get billingPeriod; double get amount;@JsonKey(name: 'current_period_start') DateTime get currentPeriodStart;@JsonKey(name: 'current_period_end') DateTime get currentPeriodEnd;@JsonKey(name: 'cancel_at_period_end') bool get cancelAtPeriodEnd;@JsonKey(name: 'canceled_at') DateTime? get canceledAt;@JsonKey(name: 'trial_end') DateTime? get trialEnd;
+ String? get id;@JsonKey(name: 'tenant_id') String? get tenantId;@JsonKey(name: 'plan_id') String? get planId;@JsonKey(name: 'plan_name') String? get planName; String? get status;@JsonKey(name: 'billing_period') String? get billingPeriod;@JsonKey(defaultValue: 0.0) double? get amount;@JsonKey(name: 'current_period_start') DateTime? get currentPeriodStart;@JsonKey(name: 'current_period_end') DateTime? get currentPeriodEnd;@JsonKey(name: 'cancel_at_period_end', defaultValue: false) bool? get cancelAtPeriodEnd;@JsonKey(name: 'canceled_at') DateTime? get canceledAt;@JsonKey(name: 'trial_end') DateTime? get trialEnd;
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SubscriptionModelCopyWith<$Res>  {
   factory $SubscriptionModelCopyWith(SubscriptionModel value, $Res Function(SubscriptionModel) _then) = _$SubscriptionModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'plan_id') String planId,@JsonKey(name: 'plan_name') String planName, String status,@JsonKey(name: 'billing_period') String billingPeriod, double amount,@JsonKey(name: 'current_period_start') DateTime currentPeriodStart,@JsonKey(name: 'current_period_end') DateTime currentPeriodEnd,@JsonKey(name: 'cancel_at_period_end') bool cancelAtPeriodEnd,@JsonKey(name: 'canceled_at') DateTime? canceledAt,@JsonKey(name: 'trial_end') DateTime? trialEnd
+ String? id,@JsonKey(name: 'tenant_id') String? tenantId,@JsonKey(name: 'plan_id') String? planId,@JsonKey(name: 'plan_name') String? planName, String? status,@JsonKey(name: 'billing_period') String? billingPeriod,@JsonKey(defaultValue: 0.0) double? amount,@JsonKey(name: 'current_period_start') DateTime? currentPeriodStart,@JsonKey(name: 'current_period_end') DateTime? currentPeriodEnd,@JsonKey(name: 'cancel_at_period_end', defaultValue: false) bool? cancelAtPeriodEnd,@JsonKey(name: 'canceled_at') DateTime? canceledAt,@JsonKey(name: 'trial_end') DateTime? trialEnd
 });
 
 
@@ -65,19 +65,19 @@ class _$SubscriptionModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tenantId = null,Object? planId = null,Object? planName = null,Object? status = null,Object? billingPeriod = null,Object? amount = null,Object? currentPeriodStart = null,Object? currentPeriodEnd = null,Object? cancelAtPeriodEnd = null,Object? canceledAt = freezed,Object? trialEnd = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? tenantId = freezed,Object? planId = freezed,Object? planName = freezed,Object? status = freezed,Object? billingPeriod = freezed,Object? amount = freezed,Object? currentPeriodStart = freezed,Object? currentPeriodEnd = freezed,Object? cancelAtPeriodEnd = freezed,Object? canceledAt = freezed,Object? trialEnd = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,tenantId: null == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String,planId: null == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
-as String,planName: null == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,billingPeriod: null == billingPeriod ? _self.billingPeriod : billingPeriod // ignore: cast_nullable_to_non_nullable
-as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as double,currentPeriodStart: null == currentPeriodStart ? _self.currentPeriodStart : currentPeriodStart // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPeriodEnd: null == currentPeriodEnd ? _self.currentPeriodEnd : currentPeriodEnd // ignore: cast_nullable_to_non_nullable
-as DateTime,cancelAtPeriodEnd: null == cancelAtPeriodEnd ? _self.cancelAtPeriodEnd : cancelAtPeriodEnd // ignore: cast_nullable_to_non_nullable
-as bool,canceledAt: freezed == canceledAt ? _self.canceledAt : canceledAt // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
+as String?,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
+as String?,planName: freezed == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,billingPeriod: freezed == billingPeriod ? _self.billingPeriod : billingPeriod // ignore: cast_nullable_to_non_nullable
+as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double?,currentPeriodStart: freezed == currentPeriodStart ? _self.currentPeriodStart : currentPeriodStart // ignore: cast_nullable_to_non_nullable
+as DateTime?,currentPeriodEnd: freezed == currentPeriodEnd ? _self.currentPeriodEnd : currentPeriodEnd // ignore: cast_nullable_to_non_nullable
+as DateTime?,cancelAtPeriodEnd: freezed == cancelAtPeriodEnd ? _self.cancelAtPeriodEnd : cancelAtPeriodEnd // ignore: cast_nullable_to_non_nullable
+as bool?,canceledAt: freezed == canceledAt ? _self.canceledAt : canceledAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,trialEnd: freezed == trialEnd ? _self.trialEnd : trialEnd // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -164,7 +164,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'plan_id')  String planId, @JsonKey(name: 'plan_name')  String planName,  String status, @JsonKey(name: 'billing_period')  String billingPeriod,  double amount, @JsonKey(name: 'current_period_start')  DateTime currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end')  bool cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'plan_id')  String? planId, @JsonKey(name: 'plan_name')  String? planName,  String? status, @JsonKey(name: 'billing_period')  String? billingPeriod, @JsonKey(defaultValue: 0.0)  double? amount, @JsonKey(name: 'current_period_start')  DateTime? currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime? currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end', defaultValue: false)  bool? cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionModel() when $default != null:
 return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status,_that.billingPeriod,_that.amount,_that.currentPeriodStart,_that.currentPeriodEnd,_that.cancelAtPeriodEnd,_that.canceledAt,_that.trialEnd);case _:
@@ -185,7 +185,7 @@ return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'plan_id')  String planId, @JsonKey(name: 'plan_name')  String planName,  String status, @JsonKey(name: 'billing_period')  String billingPeriod,  double amount, @JsonKey(name: 'current_period_start')  DateTime currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end')  bool cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'plan_id')  String? planId, @JsonKey(name: 'plan_name')  String? planName,  String? status, @JsonKey(name: 'billing_period')  String? billingPeriod, @JsonKey(defaultValue: 0.0)  double? amount, @JsonKey(name: 'current_period_start')  DateTime? currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime? currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end', defaultValue: false)  bool? cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionModel():
 return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status,_that.billingPeriod,_that.amount,_that.currentPeriodStart,_that.currentPeriodEnd,_that.cancelAtPeriodEnd,_that.canceledAt,_that.trialEnd);case _:
@@ -205,7 +205,7 @@ return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'tenant_id')  String tenantId, @JsonKey(name: 'plan_id')  String planId, @JsonKey(name: 'plan_name')  String planName,  String status, @JsonKey(name: 'billing_period')  String billingPeriod,  double amount, @JsonKey(name: 'current_period_start')  DateTime currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end')  bool cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id, @JsonKey(name: 'tenant_id')  String? tenantId, @JsonKey(name: 'plan_id')  String? planId, @JsonKey(name: 'plan_name')  String? planName,  String? status, @JsonKey(name: 'billing_period')  String? billingPeriod, @JsonKey(defaultValue: 0.0)  double? amount, @JsonKey(name: 'current_period_start')  DateTime? currentPeriodStart, @JsonKey(name: 'current_period_end')  DateTime? currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end', defaultValue: false)  bool? cancelAtPeriodEnd, @JsonKey(name: 'canceled_at')  DateTime? canceledAt, @JsonKey(name: 'trial_end')  DateTime? trialEnd)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionModel() when $default != null:
 return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status,_that.billingPeriod,_that.amount,_that.currentPeriodStart,_that.currentPeriodEnd,_that.cancelAtPeriodEnd,_that.canceledAt,_that.trialEnd);case _:
@@ -220,19 +220,19 @@ return $default(_that.id,_that.tenantId,_that.planId,_that.planName,_that.status
 @JsonSerializable()
 
 class _SubscriptionModel extends SubscriptionModel {
-  const _SubscriptionModel({required this.id, @JsonKey(name: 'tenant_id') required this.tenantId, @JsonKey(name: 'plan_id') required this.planId, @JsonKey(name: 'plan_name') required this.planName, required this.status, @JsonKey(name: 'billing_period') required this.billingPeriod, required this.amount, @JsonKey(name: 'current_period_start') required this.currentPeriodStart, @JsonKey(name: 'current_period_end') required this.currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end') required this.cancelAtPeriodEnd, @JsonKey(name: 'canceled_at') this.canceledAt, @JsonKey(name: 'trial_end') this.trialEnd}): super._();
+  const _SubscriptionModel({this.id, @JsonKey(name: 'tenant_id') this.tenantId, @JsonKey(name: 'plan_id') this.planId, @JsonKey(name: 'plan_name') this.planName, this.status, @JsonKey(name: 'billing_period') this.billingPeriod, @JsonKey(defaultValue: 0.0) this.amount, @JsonKey(name: 'current_period_start') this.currentPeriodStart, @JsonKey(name: 'current_period_end') this.currentPeriodEnd, @JsonKey(name: 'cancel_at_period_end', defaultValue: false) this.cancelAtPeriodEnd, @JsonKey(name: 'canceled_at') this.canceledAt, @JsonKey(name: 'trial_end') this.trialEnd}): super._();
   factory _SubscriptionModel.fromJson(Map<String, dynamic> json) => _$SubscriptionModelFromJson(json);
 
-@override final  String id;
-@override@JsonKey(name: 'tenant_id') final  String tenantId;
-@override@JsonKey(name: 'plan_id') final  String planId;
-@override@JsonKey(name: 'plan_name') final  String planName;
-@override final  String status;
-@override@JsonKey(name: 'billing_period') final  String billingPeriod;
-@override final  double amount;
-@override@JsonKey(name: 'current_period_start') final  DateTime currentPeriodStart;
-@override@JsonKey(name: 'current_period_end') final  DateTime currentPeriodEnd;
-@override@JsonKey(name: 'cancel_at_period_end') final  bool cancelAtPeriodEnd;
+@override final  String? id;
+@override@JsonKey(name: 'tenant_id') final  String? tenantId;
+@override@JsonKey(name: 'plan_id') final  String? planId;
+@override@JsonKey(name: 'plan_name') final  String? planName;
+@override final  String? status;
+@override@JsonKey(name: 'billing_period') final  String? billingPeriod;
+@override@JsonKey(defaultValue: 0.0) final  double? amount;
+@override@JsonKey(name: 'current_period_start') final  DateTime? currentPeriodStart;
+@override@JsonKey(name: 'current_period_end') final  DateTime? currentPeriodEnd;
+@override@JsonKey(name: 'cancel_at_period_end', defaultValue: false) final  bool? cancelAtPeriodEnd;
 @override@JsonKey(name: 'canceled_at') final  DateTime? canceledAt;
 @override@JsonKey(name: 'trial_end') final  DateTime? trialEnd;
 
@@ -269,7 +269,7 @@ abstract mixin class _$SubscriptionModelCopyWith<$Res> implements $SubscriptionM
   factory _$SubscriptionModelCopyWith(_SubscriptionModel value, $Res Function(_SubscriptionModel) _then) = __$SubscriptionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'tenant_id') String tenantId,@JsonKey(name: 'plan_id') String planId,@JsonKey(name: 'plan_name') String planName, String status,@JsonKey(name: 'billing_period') String billingPeriod, double amount,@JsonKey(name: 'current_period_start') DateTime currentPeriodStart,@JsonKey(name: 'current_period_end') DateTime currentPeriodEnd,@JsonKey(name: 'cancel_at_period_end') bool cancelAtPeriodEnd,@JsonKey(name: 'canceled_at') DateTime? canceledAt,@JsonKey(name: 'trial_end') DateTime? trialEnd
+ String? id,@JsonKey(name: 'tenant_id') String? tenantId,@JsonKey(name: 'plan_id') String? planId,@JsonKey(name: 'plan_name') String? planName, String? status,@JsonKey(name: 'billing_period') String? billingPeriod,@JsonKey(defaultValue: 0.0) double? amount,@JsonKey(name: 'current_period_start') DateTime? currentPeriodStart,@JsonKey(name: 'current_period_end') DateTime? currentPeriodEnd,@JsonKey(name: 'cancel_at_period_end', defaultValue: false) bool? cancelAtPeriodEnd,@JsonKey(name: 'canceled_at') DateTime? canceledAt,@JsonKey(name: 'trial_end') DateTime? trialEnd
 });
 
 
@@ -286,19 +286,19 @@ class __$SubscriptionModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tenantId = null,Object? planId = null,Object? planName = null,Object? status = null,Object? billingPeriod = null,Object? amount = null,Object? currentPeriodStart = null,Object? currentPeriodEnd = null,Object? cancelAtPeriodEnd = null,Object? canceledAt = freezed,Object? trialEnd = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? tenantId = freezed,Object? planId = freezed,Object? planName = freezed,Object? status = freezed,Object? billingPeriod = freezed,Object? amount = freezed,Object? currentPeriodStart = freezed,Object? currentPeriodEnd = freezed,Object? cancelAtPeriodEnd = freezed,Object? canceledAt = freezed,Object? trialEnd = freezed,}) {
   return _then(_SubscriptionModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,tenantId: null == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String,planId: null == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
-as String,planName: null == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,billingPeriod: null == billingPeriod ? _self.billingPeriod : billingPeriod // ignore: cast_nullable_to_non_nullable
-as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as double,currentPeriodStart: null == currentPeriodStart ? _self.currentPeriodStart : currentPeriodStart // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPeriodEnd: null == currentPeriodEnd ? _self.currentPeriodEnd : currentPeriodEnd // ignore: cast_nullable_to_non_nullable
-as DateTime,cancelAtPeriodEnd: null == cancelAtPeriodEnd ? _self.cancelAtPeriodEnd : cancelAtPeriodEnd // ignore: cast_nullable_to_non_nullable
-as bool,canceledAt: freezed == canceledAt ? _self.canceledAt : canceledAt // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
+as String?,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
+as String?,planName: freezed == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,billingPeriod: freezed == billingPeriod ? _self.billingPeriod : billingPeriod // ignore: cast_nullable_to_non_nullable
+as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double?,currentPeriodStart: freezed == currentPeriodStart ? _self.currentPeriodStart : currentPeriodStart // ignore: cast_nullable_to_non_nullable
+as DateTime?,currentPeriodEnd: freezed == currentPeriodEnd ? _self.currentPeriodEnd : currentPeriodEnd // ignore: cast_nullable_to_non_nullable
+as DateTime?,cancelAtPeriodEnd: freezed == cancelAtPeriodEnd ? _self.cancelAtPeriodEnd : cancelAtPeriodEnd // ignore: cast_nullable_to_non_nullable
+as bool?,canceledAt: freezed == canceledAt ? _self.canceledAt : canceledAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,trialEnd: freezed == trialEnd ? _self.trialEnd : trialEnd // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
