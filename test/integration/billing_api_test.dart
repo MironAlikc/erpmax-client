@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:erpmax_client/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:erpmax_client/features/billing/data/datasources/billing_remote_datasource.dart';
 import 'package:erpmax_client/features/billing/data/models/plan_model.dart';
-import 'package:erpmax_client/features/billing/data/models/subscription_model.dart';
 import 'package:erpmax_client/features/billing/data/models/checkout_response_model.dart';
 import 'package:erpmax_client/features/billing/data/models/invoice_model.dart';
 import 'config/test_config.dart';

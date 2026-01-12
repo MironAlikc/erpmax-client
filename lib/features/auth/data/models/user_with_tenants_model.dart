@@ -27,14 +27,14 @@ abstract class UserWithTenantsModel with _$UserWithTenantsModel {
 
   UserWithTenants toEntity() => UserWithTenants(
     user: UserModel(
-      id: this.id,
-      email: this.email,
-      fullName: this.fullName ?? '',
-      isActive: this.isActive,
-      isSuperuser: this.isSuperuser,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      id: id,
+      email: email,
+      fullName: fullName ?? '',
+      isActive: isActive,
+      isSuperuser: isSuperuser,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     ).toEntity(),
-    tenants: this.tenants.map((t) => t.toEntity()).toList(),
+    tenants: tenants.map((t) => t.toEntity()).toList(),
   );
 }

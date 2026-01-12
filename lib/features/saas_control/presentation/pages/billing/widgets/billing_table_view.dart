@@ -1,6 +1,5 @@
 import 'package:erpmax_client/core/constants/dimens.dart';
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
-import 'package:erpmax_client/core/theme/app_color_extension.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/buttons/app_icon_button.dart';
@@ -10,7 +9,7 @@ import 'package:erpmax_client/features/saas_control/presentation/pages/billing/w
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart'; // Ваша новая таблица
+import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
 
 class BillingTableView extends StatefulWidget {
   final List<Invoice> invoices;
