@@ -196,6 +196,30 @@ class _SignupFormState extends State<SignupForm> {
                 isLoading: isLoading,
                 isExpanded: true,
               ),
+
+              gapH16,
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    localizations.alreadyHaveAccount,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: context.theme.appColor.textPrimary,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => context.push(RouteNames.login),
+                    child: Text(
+                      localizations.signIn,
+                      style: AppTextStyles.link.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: context.theme.appColor.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         );
@@ -224,22 +248,22 @@ class _SignupHeader extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              localizations.alreadyHaveAccount,
-              style: AppTextStyles.bodySmall,
-            ),
-            GestureDetector(
-              onTap: () => context.push(RouteNames.login),
-              child: Text(
-                localizations.signIn,
-                style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text(
+        //       localizations.alreadyHaveAccount,
+        //       style: AppTextStyles.bodySmall,
+        //     ),
+        //     GestureDetector(
+        //       onTap: () => context.push(RouteNames.login),
+        //       child: Text(
+        //         localizations.signIn,
+        //         style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

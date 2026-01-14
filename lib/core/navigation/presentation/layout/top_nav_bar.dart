@@ -9,6 +9,7 @@ import 'package:erpmax_client/core/widgets/common/greeting_time_section.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/accounting_tabs/parties/widgets/app_avatar.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -454,29 +455,61 @@ class _UserAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.appColor;
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Column(
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final String name = state.maybeWhen(
+          authenticated: (user, _, __) => user.fullName,
+          orElse: () => 'Guest',
+        );
+
+        final String role = state.maybeWhen(
+          authenticated: (_, tenants, __) =>
+              tenants.firstOrNull?.role ?? 'User',
+          orElse: () => 'Member',
+        );
+
+        final String initials = state.maybeWhen(
+          authenticated: (user, _, __) => _getInitials(user.fullName),
+          orElse: () => '??',
+        );
+
+        return Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              'omelchenkoaleks',
-              style: AppTextStyles.bodySmallBold.copyWith(
-                color: theme.textPrimary,
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  name,
+                  style: AppTextStyles.bodySmallBold.copyWith(
+                    color: theme.textPrimary,
+                  ),
+                ),
+                Text(
+                  role.toUpperCase(),
+                  style: AppTextStyles.caption.copyWith(
+                    color: theme.textSecondary,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'user',
-              style: AppTextStyles.caption.copyWith(color: theme.textSecondary),
-            ),
+            const SizedBox(width: 12),
+            AppAvatar(initials: initials),
           ],
-        ),
-        const SizedBox(width: 12),
-        AppAvatar(initials: 'OM'),
-      ],
+        );
+      },
     );
+  }
+
+  String _getInitials(String name) {
+    if (name.isEmpty) return 'U';
+    final parts = name.trim().split(' ');
+    if (parts.length > 1) {
+      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    }
+    return parts[0][0].toUpperCase();
   }
 }
 

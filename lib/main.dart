@@ -9,6 +9,7 @@ import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/theme/theme_cubit.dart';
 import 'package:erpmax_client/features/accounting/presentation/widgets/common_widgets/side_panel/side_panel_cubit.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:erpmax_client/features/auth/presentation/bloc/auth_event.dart';
 import 'package:erpmax_client/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,13 +26,13 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (_) =>
-        //       getIt<AuthBloc>()..add(const AuthEvent.checkRequested()),
-        // ),
-        // ! Temporarily disabled auto check auth on app start
-        BlocProvider(create: (_) => getIt<AuthBloc>()),
+        BlocProvider(
+          create: (_) =>
+              getIt<AuthBloc>()..add(const AuthEvent.checkRequested()),
+        ),
 
+        // ! Temporarily disabled auto check auth on app start
+        // BlocProvider(create: (_) => getIt<AuthBloc>()),
         BlocProvider(create: (_) => getIt<LocaleCubit>()),
         BlocProvider(create: (_) => getIt<ThemeCubit>()),
         BlocProvider(create: (_) => getIt<SidePanelCubit>()),
