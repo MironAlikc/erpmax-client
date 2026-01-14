@@ -40,8 +40,7 @@ class _SSORemoteDataSource implements SSORemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SSOTokenModel _value;
     try {
-      final responseData = _result.data!['data'] as Map<String, dynamic>;
-      _value = SSOTokenModel.fromJson(responseData);
+      _value = SSOTokenModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

@@ -1,3 +1,4 @@
+import 'package:erpmax_client/core/di/injection.dart';
 import 'package:erpmax_client/core/navigation/presentation/layout/dashboard_shell.dart';
 import 'package:erpmax_client/core/navigation/router/fade_transition_page.dart';
 import 'package:erpmax_client/core/navigation/router/go_router_refresh_stream.dart';
@@ -11,8 +12,10 @@ import 'package:erpmax_client/features/auth/presentation/pages/reset_password_ne
 import 'package:erpmax_client/features/auth/presentation/pages/reset_password_success_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/signup_page.dart';
 import 'package:erpmax_client/features/auth/presentation/pages/verify_2fa_page.dart';
+import 'package:erpmax_client/features/saas_control/presentation/bloc/subscribers_bloc.dart';
 import 'package:erpmax_client/features/saas_control/presentation/pages/saas_admin_root_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 abstract final class RouteNames {
@@ -212,12 +215,26 @@ class AppRouter {
             const Center(child: Text('HR')),
           ),
 
+          // StatefulShellBranch(
+          //   navigatorKey: _shellSaas,
+          //   routes: [
+          //     GoRoute(
+          //       path: RouteNames.saasAdmin,
+          //       builder: (context, state) => const SaaSAdminRootPage(),
+          //     ),
+          //   ],
+          // ),
           StatefulShellBranch(
             navigatorKey: _shellSaas,
             routes: [
               GoRoute(
                 path: RouteNames.saasAdmin,
-                builder: (context, state) => const SaaSAdminRootPage(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) =>
+                      getIt<SubscribersBloc>()
+                        ..add(const SubscribersEvent.started()),
+                  child: const SaaSAdminRootPage(),
+                ),
               ),
             ],
           ),

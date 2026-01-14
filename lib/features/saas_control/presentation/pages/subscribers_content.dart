@@ -1,35 +1,11 @@
 import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
-
 import 'package:erpmax_client/core/widgets/table/universal_erp_table.dart';
+import 'package:erpmax_client/features/saas_control/data/models/subscriber_model.dart';
+import 'package:erpmax_client/features/saas_control/presentation/bloc/subscribers_bloc.dart';
 import 'package:flutter/material.dart';
-
-enum SubscriberStatus { active, expired, trial, suspended }
-
-class SubscriberModel {
-  final String companyName;
-  final String email;
-  final String planName;
-  final SubscriberStatus status;
-  final int currentUsers;
-  final int maxUsers;
-  final double currentStorage;
-  final double maxStorage;
-  final String renewalDate;
-
-  const SubscriberModel({
-    required this.companyName,
-    required this.email,
-    required this.planName,
-    required this.status,
-    required this.currentUsers,
-    required this.maxUsers,
-    required this.currentStorage,
-    required this.maxStorage,
-    required this.renewalDate,
-  });
-}
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SubscribersContent extends StatefulWidget {
   const SubscribersContent({super.key});
@@ -39,112 +15,41 @@ class SubscribersContent extends StatefulWidget {
 }
 
 class _SubscribersContentState extends State<SubscribersContent> {
-  // Состояние выбора строк
   Set<String> _selectedSubscriberIds = {};
-
-  static const List<SubscriberModel> _subscribers = [
-    SubscriberModel(
-      companyName: "Tech Solutions Co.",
-      email: "admin@techsolutions.com",
-      planName: "Enterprise",
-      status: SubscriberStatus.active,
-      currentUsers: 45,
-      maxUsers: 100,
-      currentStorage: 85,
-      maxStorage: 200,
-      renewalDate: "2024-12-01",
-    ),
-    SubscriberModel(
-      companyName: "Al-Amal Trading",
-      email: "info@alamal.com",
-      planName: "Professional",
-      status: SubscriberStatus.active,
-      currentUsers: 12,
-      maxUsers: 25,
-      currentStorage: 32,
-      maxStorage: 50,
-      renewalDate: "2024-11-15",
-    ),
-    SubscriberModel(
-      companyName: "Future Vision",
-      email: "contact@futurevision.sa",
-      planName: "Starter",
-      status: SubscriberStatus.expired,
-      currentUsers: 3,
-      maxUsers: 5,
-      currentStorage: 8,
-      maxStorage: 10,
-      renewalDate: "2024-01-20",
-    ),
-    SubscriberModel(
-      companyName: "Global Logistics",
-      email: "it@globallogistics.com",
-      planName: "Enterprise",
-      status: SubscriberStatus.active,
-      currentUsers: 120,
-      maxUsers: 150,
-      currentStorage: 180,
-      maxStorage: 200,
-      renewalDate: "2025-03-10",
-    ),
-    SubscriberModel(
-      companyName: "Smart Retail",
-      email: "admin@smartretail.sa",
-      planName: "Professional",
-      status: SubscriberStatus.trial,
-      currentUsers: 8,
-      maxUsers: 25,
-      currentStorage: 15,
-      maxStorage: 50,
-      renewalDate: "2024-02-15",
-    ),
-    SubscriberModel(
-      companyName: "Mazen Electronics",
-      email: "support@mazen.com",
-      planName: "Professional",
-      status: SubscriberStatus.suspended,
-      currentUsers: 15,
-      maxUsers: 25,
-      currentStorage: 28,
-      maxStorage: 50,
-      renewalDate: "2024-01-01",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    // Определение колонок для UniversalErpTable
     final List<ErpMaxColumn<SubscriberModel>> columns = [
       ErpMaxColumn(
         id: 'tenant',
         title: localizations.columnTenant,
         weight: 2.2,
-        valueGetter: (i) => i.companyName,
-        customCell: (item) => _buildTenantCell(context, item),
+        valueGetter: (i) => i.company,
+        customCell: (item) => buildTenantCell(context, item),
       ),
       ErpMaxColumn(
         id: 'plan',
         title: localizations.columnPlan,
         weight: 1.2,
-        valueGetter: (i) => i.planName,
-        customCell: (item) => _buildPlanBadge(context, item.planName),
+        valueGetter: (i) => i.plan,
+        customCell: (item) => buildPlanBadge(context, item.plan),
       ),
       ErpMaxColumn(
         id: 'status',
         title: localizations.status,
         weight: 1.2,
         valueGetter: (i) => i.status.name,
-        customCell: (item) => _buildStatusBadge(context, item.status),
+        customCell: (item) =>
+            buildStatusBadge(context, SubscriberStatus.active),
       ),
       ErpMaxColumn(
         id: 'users',
         title: localizations.columnUsers,
         weight: 1.6,
-        // Исправлено: используем 'i' (аргумент функции)
         valueGetter: (i) => "${i.currentUsers}/${i.maxUsers}",
-        customCell: (item) => _buildProgressCell(
+        customCell: (item) => buildProgressCell(
           context,
           item.currentUsers,
           item.maxUsers,
@@ -156,9 +61,8 @@ class _SubscribersContentState extends State<SubscribersContent> {
         id: 'storage',
         title: localizations.columnStorage,
         weight: 1.6,
-        // Исправлено: используем 'i', так как аргумент назван 'i'
         valueGetter: (i) => "${i.currentStorage}/${i.maxStorage}",
-        customCell: (item) => _buildProgressCell(
+        customCell: (item) => buildProgressCell(
           context,
           item.currentStorage.toInt(),
           item.maxStorage.toInt(),
@@ -170,8 +74,8 @@ class _SubscribersContentState extends State<SubscribersContent> {
         id: 'date',
         title: localizations.columnRenewalDate,
         weight: 1.5,
-        valueGetter: (i) => i.renewalDate,
-        customCell: (item) => _buildDateCell(context, item.renewalDate),
+        valueGetter: (i) => i.startDate,
+        customCell: (item) => buildDateCell(context, item.endDate),
       ),
       ErpMaxColumn(
         id: 'actions',
@@ -185,89 +89,132 @@ class _SubscribersContentState extends State<SubscribersContent> {
       ),
     ];
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTopStatsRow(context),
-          const SizedBox(height: 24),
-          _buildSearchField(context),
-          const SizedBox(height: 16),
-          // Сама таблица
-          UniversalErpTable<SubscriberModel>(
-            items: _subscribers,
-            columns: columns,
-            minWidth: 1100,
-            idGetter: (item) =>
-                item.email, // Используем email как уникальный ID
-            selectedIds: _selectedSubscriberIds,
-            onSelectionChanged: (newSelection) {
-              setState(() => _selectedSubscriberIds = newSelection);
-            },
-            showVerticalLines: true,
-            totals: {
-              'tenant': 'Total Subscribers: ${_subscribers.length}',
-              'users': 'Total Users: 203',
-            },
-            onRowTap: (item) {
-              debugPrint("Tapped on ${item.companyName}");
-            },
+    return BlocBuilder<SubscribersBloc, SubscribersState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const SizedBox.shrink(),
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.all(40.0),
+              child: CircularProgressIndicator(),
+            ),
           ),
-          const SizedBox(height: 16),
-        ],
-      ),
+          error: (message) => Center(
+            child: Column(
+              children: [
+                Text('Error: $message'),
+                ElevatedButton(
+                  onPressed: () => context.read<SubscribersBloc>().add(
+                    const SubscribersEvent.refreshRequested(),
+                  ),
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+          success: (subscribers) {
+            if (subscribers.isEmpty) {
+              return const Center(child: Text('No subscribers found'));
+            }
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildTopStatsRow(context, subscribers),
+                  const SizedBox(height: 24),
+                  buildSearchField(context),
+                  const SizedBox(height: 16),
+                  // Сама таблица
+                  UniversalErpTable<SubscriberModel>(
+                    items: subscribers,
+                    columns: columns,
+                    minWidth: 1100,
+                    idGetter: (item) => item.email,
+                    selectedIds: _selectedSubscriberIds,
+                    onSelectionChanged: (newSelection) {
+                      setState(() => _selectedSubscriberIds = newSelection);
+                    },
+                    showVerticalLines: true,
+                    totals: {
+                      'tenant': 'Total Subscribers: ${subscribers.length}',
+                      'users': 'Total Users: _',
+                    },
+                    onRowTap: (item) {
+                      debugPrint("Tapped on ${item.company}");
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
-  // --- Копируем ваши оригинальные виджеты ячеек (без изменений) ---
-
-  Widget _buildTopStatsRow(BuildContext context) {
+  Widget buildTopStatsRow(
+    BuildContext context,
+    List<SubscriberModel> subscribers,
+  ) {
     final localizations = AppLocalizations.of(context);
     final theme = context.theme.appColor;
 
+    final totalTenants = subscribers.length;
+    final activeSubscriptions = subscribers
+        .where((s) => s.status == SubscriberStatus.active)
+        .length;
+    final trialAccounts = subscribers
+        .where((s) => s.status == SubscriberStatus.trial)
+        .length;
+    final suspendedAccounts = subscribers
+        .where((s) => s.status == SubscriberStatus.suspended)
+        .length;
+
     return Row(
       children: [
-        _statCard(
+        statCard(
           context,
           localizations.statTotalTenants,
-          "6",
+          totalTenants.toString(),
           theme.indigoBg,
           theme.indigoText,
           Icons.business,
         ),
         const SizedBox(width: 16),
-        _statCard(
+        statCard(
           context,
           localizations.activeSubscriptions,
-          "3",
+          activeSubscriptions.toString(),
           theme.successLight,
           theme.success,
           Icons.check_circle_outline,
         ),
         const SizedBox(width: 16),
-        _statCard(
+        statCard(
           context,
           localizations.statTrialAccounts,
-          "1",
+          trialAccounts.toString(),
           theme.warningLight,
           theme.warning,
           Icons.access_time,
         ),
         const SizedBox(width: 16),
-        _statCard(
+        statCard(
           context,
           localizations.statusSuspended,
-          "1",
+          suspendedAccounts.toString(),
           theme.errorLight,
           theme.error,
           Icons.pause_circle_outline,
         ),
         const SizedBox(width: 16),
-        _statCard(
+        statCard(
           context,
           localizations.statMRR,
-          "11 500",
+          "0",
           theme.bgLight,
           theme.black,
           Icons.credit_card_outlined,
@@ -277,7 +224,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _statCard(
+  Widget statCard(
     BuildContext context,
     String title,
     String value,
@@ -351,7 +298,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildSearchField(BuildContext context) {
+  Widget buildSearchField(BuildContext context) {
     final theme = context.theme.appColor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -371,7 +318,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildTenantCell(BuildContext context, SubscriberModel item) {
+  Widget buildTenantCell(BuildContext context, SubscriberModel item) {
     final theme = context.theme.appColor;
     return Row(
       children: [
@@ -391,7 +338,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                item.companyName,
+                item.company,
                 style: AppTextStyles.bodyMediumBold.copyWith(
                   color: theme.textPrimary,
                 ),
@@ -410,7 +357,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildPlanBadge(BuildContext context, String plan) {
+  Widget buildPlanBadge(BuildContext context, String plan) {
     final theme = context.theme.appColor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -436,7 +383,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildStatusBadge(BuildContext context, SubscriberStatus status) {
+  Widget buildStatusBadge(BuildContext context, SubscriberStatus status) {
     final theme = context.theme.appColor;
     final localizations = AppLocalizations.of(context);
     Color bg;
@@ -494,7 +441,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildProgressCell(
+  Widget buildProgressCell(
     BuildContext context,
     int current,
     int max,
@@ -536,7 +483,7 @@ class _SubscribersContentState extends State<SubscribersContent> {
     );
   }
 
-  Widget _buildDateCell(BuildContext context, String date) {
+  Widget buildDateCell(BuildContext context, String date) {
     final theme = context.theme.appColor;
     return Row(
       children: [

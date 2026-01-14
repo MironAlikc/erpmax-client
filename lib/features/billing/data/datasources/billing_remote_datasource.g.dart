@@ -40,8 +40,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late PlansResponseModel _value;
     try {
-      final dataList = _result.data!['data'] as List<dynamic>;
-      _value = PlansResponseModel.fromJson({'data': dataList});
+      _value = PlansResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -69,8 +68,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SubscriptionModel _value;
     try {
-      final responseData = _result.data!['data'] as Map<String, dynamic>;
-      _value = SubscriptionModel.fromJson(responseData);
+      _value = SubscriptionModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -101,8 +99,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late CheckoutResponseModel _value;
     try {
-      final responseData = _result.data!['data'] as Map<String, dynamic>;
-      _value = CheckoutResponseModel.fromJson(responseData);
+      _value = CheckoutResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -157,8 +154,7 @@ class _BillingRemoteDataSource implements BillingRemoteDataSource {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late InvoicesResponseModel _value;
     try {
-      final dataList = _result.data!['data'] as List<dynamic>;
-      _value = InvoicesResponseModel.fromJson({'data': dataList});
+      _value = InvoicesResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

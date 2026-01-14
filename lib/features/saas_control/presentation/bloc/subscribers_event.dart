@@ -1,0 +1,7 @@
+part of 'subscribers_bloc.dart';
+
+@freezed
+class SubscribersEvent with _$SubscribersEvent {
+  const factory SubscribersEvent.started() = _Started;
+  const factory SubscribersEvent.refreshRequested() = _RefreshRequested;
+}

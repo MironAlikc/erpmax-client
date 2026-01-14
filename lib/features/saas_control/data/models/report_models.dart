@@ -35,27 +35,6 @@ class ReportSubscriber {
   });
 }
 
-class SubscriberModel extends SubscriberEntity {
-  const SubscriberModel({
-    required super.company,
-    required super.plan,
-    required super.status,
-    required super.startDate,
-    required super.endDate,
-    required super.price,
-  });
-
-  factory SubscriberModel.fromJson(Map<String, dynamic> json) =>
-      SubscriberModel(
-        company: json['company_name'] ?? '',
-        plan: json['plan'] ?? '',
-        status: json['status'] ?? '',
-        startDate: json['start_date'] ?? '',
-        endDate: json['end_date'] ?? '',
-        price: json['price'] ?? '',
-      );
-}
-
 class UsageModuleModel extends UsageModuleEntity {
   const UsageModuleModel({
     required super.moduleName,
