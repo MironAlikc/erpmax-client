@@ -63,6 +63,14 @@ import '../../features/provisioning/domain/usecases/get_jobs_usecase.dart'
     as _i516;
 import '../../features/provisioning/domain/usecases/retry_job_usecase.dart'
     as _i699;
+import '../../features/saas_control/data/repositories/subscriver_repository_impl.dart'
+    as _i659;
+import '../../features/saas_control/domain/repositories/subscriver_repository.dart'
+    as _i361;
+import '../../features/saas_control/domain/usecases/get_subscribers_usecase.dart'
+    as _i701;
+import '../../features/saas_control/presentation/bloc/subscribers_bloc.dart'
+    as _i256;
 import '../../features/sso/data/datasources/sso_remote_datasource.dart'
     as _i490;
 import '../../features/sso/data/repositories/sso_repository_impl.dart' as _i359;
@@ -178,6 +186,9 @@ extension GetItInjectableX on _i174.GetIt {
         remoteDataSource: gh<_i402.TenantRemoteDataSource>(),
       ),
     );
+    gh.lazySingleton<_i361.SubscriberRepository>(
+      () => _i659.SubscriberRepositoryImpl(gh<_i402.TenantRemoteDataSource>()),
+    );
     gh.lazySingleton<_i983.SSORepository>(
       () => _i359.SSORepositoryImpl(
         remoteDataSource: gh<_i490.SSORemoteDataSource>(),
@@ -233,6 +244,9 @@ extension GetItInjectableX on _i174.GetIt {
         switchTenantUseCase: gh<_i253.SwitchTenantUseCase>(),
       ),
     );
+    gh.factory<_i701.GetSubscribersUseCase>(
+      () => _i701.GetSubscribersUseCase(gh<_i361.SubscriberRepository>()),
+    );
     gh.factory<_i56.CancelJobUseCase>(
       () => _i56.CancelJobUseCase(gh<_i861.ProvisioningRepository>()),
     );
@@ -253,6 +267,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1042.ValidateSSOTokenUseCase>(
       () => _i1042.ValidateSSOTokenUseCase(gh<_i983.SSORepository>()),
+    );
+    gh.factory<_i256.SubscribersBloc>(
+      () => _i256.SubscribersBloc(gh<_i701.GetSubscribersUseCase>()),
     );
     return this;
   }

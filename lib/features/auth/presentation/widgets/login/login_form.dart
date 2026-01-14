@@ -127,6 +127,34 @@ class _LoginFormState extends State<LoginForm> {
                 isLoading: isLoading,
                 onPressed: isLoading ? null : _handleSignIn,
               ),
+
+              gapH16,
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    localizations.dontHaveAccount,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: context.theme.appColor.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () {
+                      debugPrint('Click by Link Sing Up');
+                      context.push(RouteNames.signup);
+                    },
+                    child: Text(
+                      localizations.signUp,
+                      style: AppTextStyles.link.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: context.theme.appColor.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         );
@@ -153,21 +181,32 @@ class _FormHeader extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(localizations.dontHaveAccount, style: AppTextStyles.bodySmall),
-            const SizedBox(width: 4),
-            GestureDetector(
-              onTap: () => context.push(RouteNames.signup),
-              child: Text(
-                localizations.signUp,
-                style: AppTextStyles.link.copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-        ),
+        // const SizedBox(height: 8),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text(
+        //       localizations.dontHaveAccount,
+        //       style: AppTextStyles.bodySmall.copyWith(
+        //         color: context.theme.appColor.textPrimary,
+        //       ),
+        //     ),
+        //     const SizedBox(width: 4),
+        //     GestureDetector(
+        //       onTap: () {
+        //         debugPrint('Click by Link Sing Up');
+        //         context.push(RouteNames.signup);
+        //       },
+        //       child: Text(
+        //         localizations.signUp,
+        //         style: AppTextStyles.link.copyWith(
+        //           fontWeight: FontWeight.w600,
+        //           color: context.theme.appColor.textPrimary,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

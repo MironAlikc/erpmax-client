@@ -2,7 +2,7 @@ import 'package:erpmax_client/core/l10n/gen/app_localizations.dart';
 import 'package:erpmax_client/core/theme/app_theme.dart';
 import 'package:erpmax_client/core/theme/text_style_source.dart';
 import 'package:erpmax_client/core/widgets/common/app_base_stat_card.dart';
-import 'package:erpmax_client/features/saas_control/presentation/pages/subscribers_content.dart';
+import 'package:erpmax_client/features/saas_control/data/models/subscriber_model.dart';
 import 'package:flutter/material.dart';
 
 class SubscriberStatsGrid extends StatelessWidget {
@@ -72,7 +72,7 @@ class TenantCell extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.companyName, style: AppTextStyles.bodyMediumBold),
+              Text(item.company, style: AppTextStyles.bodyMediumBold),
               Text(
                 item.email,
                 style: AppTextStyles.bodySmall.copyWith(
